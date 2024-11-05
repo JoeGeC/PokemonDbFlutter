@@ -3,5 +3,5 @@ import '../../models/Failure.dart';
 import '../../models/pokemon.dart';
 
 abstract class PokedexRepository {
-  Future<Either<Failure, List<Pokemon>>> getPokedex();
+  Future<Either<Failure, List<Pokemon>>> getPokedex(int id);
 }
