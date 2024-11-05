@@ -1,15 +1,15 @@
 class PokedexData {
   int id;
   String name;
-  List<PokedexPokemon> pokemon;
+  List<PokedexPokemonData> pokemon;
 
   PokedexData(this.id, this.name, this.pokemon);
 }
 
-class PokedexPokemon {
+class PokedexPokemonData {
   int entryNumber;
   String name;
-  String url;
+  String pokemonUrl;
 
-  PokedexPokemon(this.entryNumber, this.name, this.url);
+  PokedexPokemonData(this.entryNumber, this.name, this.pokemonUrl);
 }

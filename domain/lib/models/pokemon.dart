@@ -4,11 +4,11 @@ class Pokemon{
   String? imageUrl;
   List<String>? types;
 
-  Pokemon({
+  Pokemon(
     this.id,
     this.name,
     this.imageUrl,
     this.types,
-  });
+  );
 
 }
