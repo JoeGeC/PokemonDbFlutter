@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/boundary/repository/pokedex_repository.dart';
 import 'package:domain/models/Failure.dart';
-import 'package:domain/models/pokemon.dart';
+import 'package:domain/models/pokedex.dart';
+
 import 'boundary/remote/pokedex_api.dart';
 
 class PokedexRepositoryImpl implements PokedexRepository{
@@ -10,8 +11,11 @@ class PokedexRepositoryImpl implements PokedexRepository{
   PokedexRepositoryImpl(this.pokedexApi);
 
   @override
-  Future<Either<Failure, List<Pokemon>>> getPokedex(int id) async {
-    pokedexApi.getPokedex(id);
-    return Left(Failure(""));
+  Future<Either<Failure, Pokedex>> getPokedex(int id) async {
+    var result = await pokedexApi.getPokedex(id);
+    return result.fold(
+      (l) => Left(Failure(l.errorMessage)),
+      (r) => Right(Pokedex(1, "", [])),
+    );
   }
 }

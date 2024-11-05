@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/models/Failure.dart';
+import 'package:domain/models/pokedex.dart';
 import 'package:domain/models/pokemon.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:repository/models/pokedex_data.dart';
@@ -15,15 +16,35 @@ import 'pokedex_repository_should.mocks.dart';
 @GenerateMocks([PokedexApi])
 void main() {
   group("get pokedex", () {
-    var pokedexApi = MockPokedexApi();
-    var repository = PokedexRepositoryImpl(pokedexApi);
+    late MockPokedexApi mockPokedexApi;
+    late PokedexRepositoryImpl repository;
+    late int pokedexId;
 
-    test('get correct pokedex', () {
-      repository.getPokedex(4);
-
-      verify(pokedexApi.getPokedex(1));
+    setUp(() {
+      mockPokedexApi = MockPokedexApi();
+      repository = PokedexRepositoryImpl(mockPokedexApi);
+      pokedexId = 1;
     });
 
+    test('get correct pokedex', () async {
+      final result = PokedexData(1, "Sample Pokedex", []);
+      when(mockPokedexApi.getPokedex(1)).thenAnswer((_) async => Right(result));
 
+      await repository.getPokedex(pokedexId);
+
+      verify(mockPokedexApi.getPokedex(pokedexId)).called(1);
+    });
+
+    test('return Failure on failure result', () async {
+      var failureMessage = "Failure";
+      Either<Failure, PokedexData> apiResult = Left(Failure(failureMessage));
+      Either<Failure, Pokedex> expected = Left(Failure(failureMessage));
+
+      when(mockPokedexApi.getPokedex(pokedexId))
+          .thenAnswer((_) async => apiResult);
+
+      var result = await repository.getPokedex(pokedexId);
+      expect(result, expected);
+    });
   });
 }
