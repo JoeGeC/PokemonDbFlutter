@@ -1,6 +1,9 @@
 import 'package:domain/models/pokedex.dart';
-import '../../models/pokedex_data.dart';
+import 'package:repository/models/local/pokedex_local.dart';
+
+import '../../models/data/pokedex_data.dart';
 
 abstract class PokedexRepositoryConverter{
-  Pokedex convert(PokedexData pokedexData);
+  Pokedex convertToDomain(PokedexLocalModel pokedexLocal);
+  PokedexLocalModel convertToLocal(PokedexDataModel pokedexData);
 }
