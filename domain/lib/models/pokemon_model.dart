@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class PokemonModel extends Equatable{
+class PokemonModel extends Equatable {
   int? id;
   Map<String, int>? pokedexEntryNumbers;
   String? name;
