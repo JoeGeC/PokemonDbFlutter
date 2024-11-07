@@ -47,6 +47,7 @@ void main() {
   });
 
   group("convert to local", () {
+
     test('convert data model to local model', () {
       String pokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
       PokedexPokemonDataModel pokemonDataModel = PokedexPokemonDataModel(
@@ -61,5 +62,23 @@ void main() {
 
       expect(result, localPokemonList);
     });
+
+    test('return 0 if pokemon url is invalid', (){
+      String pokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/extra";
+
+      int result = pokemonConverter.getPokemonId(pokemonUrl);
+
+      expect(result, 0);
+    });
+
+    test('return id on large number', (){
+      int id = 2313452334;
+      String pokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/$id/";
+
+      int result = pokemonConverter.getPokemonId(pokemonUrl);
+
+      expect(result, id);
+    });
+
   });
 }
