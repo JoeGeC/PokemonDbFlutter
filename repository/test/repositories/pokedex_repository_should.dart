@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/models/Failure.dart';
-import 'package:domain/models/pokedex.dart';
-import 'package:domain/models/pokedex_pokemon.dart';
+import 'package:domain/models/pokedex_model.dart';
+import 'package:domain/models/pokemon_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -31,35 +31,41 @@ void main() {
     late PokedexDataModel pokedexDataModel;
     late PokedexPokemonLocalModel pokedexPokemonLocalModel;
     late PokedexLocalModel pokedexLocalModel;
-    late PokedexPokemon pokedexPokemonModel;
-    late Pokedex pokedexDomainModel;
+    late PokemonModel pokemonDomainModel;
+    late PokedexModel pokedexDomainModel;
     late Either<Failure, PokedexDataModel> mockApiResultSuccess;
     late Either<Failure, PokedexDataModel> mockApiResultFailure;
     late Either<Failure, PokedexLocalModel> mockLocalResultSuccess;
     late Either<Failure, PokedexLocalModel> mockLocalResultFailure;
-    late Either<Failure, Pokedex> expectedFailure;
-    late Either<Failure, Pokedex> expectedSuccess;
+    late Either<Failure, PokedexModel> expectedFailure;
+    late Either<Failure, PokedexModel> expectedSuccess;
 
     setUp(() {
       mockPokedexApi = MockPokedexApi();
       mockPokedexLocal = MockPokedexLocal();
       mockConverter = MockPokedexRepositoryConverter();
-      repository = PokedexRepositoryImpl(mockPokedexApi, mockPokedexLocal, mockConverter);
+      repository = PokedexRepositoryImpl(
+          mockPokedexApi, mockPokedexLocal, mockConverter);
       failureMessage = "Failure";
       pokedexId = 1;
       pokedexName = "Sample Pokedex";
       pokemonEntryId = 3;
       pokemonId = 2;
       pokemonName = "Sample Pokemon";
-      pokedexPokemonData = PokedexPokemonDataModel(pokemonId, pokemonName, "url");
-      pokedexDataModel = PokedexDataModel(pokedexId, pokedexName, [pokedexPokemonData]);
+      pokedexPokemonData =
+          PokedexPokemonDataModel(pokemonId, pokemonName, "url");
+      pokedexDataModel =
+          PokedexDataModel(pokedexId, pokedexName, [pokedexPokemonData]);
       pokedexPokemonLocalModel = PokedexPokemonLocalModel(
-          pokemonId, {pokedexId: pokemonEntryId}, pokemonName);
+          pokemonId, {pokemonName: pokemonEntryId}, pokemonName);
       pokedexLocalModel =
           PokedexLocalModel(pokedexId, pokemonName, [pokedexPokemonLocalModel]);
-      pokedexPokemonModel =
-          PokedexPokemon(pokemonId, {pokedexId: pokemonEntryId}, pokemonName);
-      pokedexDomainModel = Pokedex(pokedexId, pokedexName, [pokedexPokemonModel]);
+      pokemonDomainModel = PokemonModel(
+          id: pokemonId,
+          name: pokemonName,
+          pokedexEntryNumbers: {pokedexName: pokemonEntryId});
+      pokedexDomainModel =
+          PokedexModel(pokedexId, pokedexName, [pokemonDomainModel]);
       mockApiResultSuccess = Right(pokedexDataModel);
       mockApiResultFailure = Left(Failure(failureMessage));
       mockLocalResultSuccess = Right(pokedexLocalModel);
@@ -67,7 +73,6 @@ void main() {
       expectedSuccess = Right(pokedexDomainModel);
       expectedFailure = Left(Failure(failureMessage));
     });
-
 
     test('return pokedex from local', () async {
       when(mockPokedexLocal.get(pokedexId))
@@ -80,7 +85,6 @@ void main() {
       verifyNever(mockPokedexApi.get(pokedexId));
       expect(result, expectedSuccess);
     });
-
 
     test('get data from remote if not in local', () async {
       when(mockPokedexLocal.get(pokedexId))
@@ -97,7 +101,6 @@ void main() {
       verify(mockPokedexApi.get(pokedexId)).called(1);
       expect(result, expectedSuccess);
     });
-
 
     test('return Failure on failure result', () async {
       when(mockPokedexLocal.get(pokedexId))

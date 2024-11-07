@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/boundary/repository/pokedex_repository.dart';
 import 'package:domain/models/Failure.dart';
-import 'package:domain/models/pokedex.dart';
+import 'package:domain/models/pokedex_model.dart';
 import 'package:repository/boundary/local/pokedex_local.dart';
 import '../boundary/remote/pokedex_api.dart';
 import '../converters/pokedex/pokedex_repository_converter.dart';
@@ -14,7 +14,7 @@ class PokedexRepositoryImpl implements PokedexRepository{
   PokedexRepositoryImpl(this.pokedexApi, this.pokedexLocal, this.converter);
 
   @override
-  Future<Either<Failure, Pokedex>> getPokedex(int id) async {
+  Future<Either<Failure, PokedexModel>> getPokedex(int id) async {
     var localResult = await pokedexLocal.get(id);
     if(localResult.isLeft()) return getPokedexFromApi(id);
     return localResult.fold(
@@ -23,7 +23,7 @@ class PokedexRepositoryImpl implements PokedexRepository{
     );
   }
 
-  Future<Either<Failure, Pokedex>> getPokedexFromApi(int id) async {
+  Future<Either<Failure, PokedexModel>> getPokedexFromApi(int id) async {
     var result = await pokedexApi.get(id);
     return result.fold(
           (l) => Left(Failure(l.errorMessage)),
