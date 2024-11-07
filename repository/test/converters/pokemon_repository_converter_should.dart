@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter_impl.dart';
+import 'package:repository/converters/pokemon/pokemon_repository_converter.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter_impl.dart';
 import 'package:repository/models/data/pokedex_data.dart';
 import 'package:repository/models/local/pokedex_local.dart';
@@ -11,23 +12,17 @@ import 'package:repository/models/local/pokedex_pokemon_local.dart';
 
 import 'pokedex_repository_converter_should.mocks.dart';
 
-@GenerateMocks([PokemonRepositoryConverter])
 void main() {
-  late PokedexRepositoryConverterImpl pokedexConverter;
-  late MockPokemonRepositoryConverter mockPokemonConverter;
-  late int pokedexId;
+  late PokemonRepositoryConverterImpl pokemonConverter;
   late String pokedexName;
   late int pokemonId;
   late int pokemonEntryId;
   late String pokemonName;
   late PokedexPokemonLocalModel pokedexPokemonLocalModel;
   late List<PokedexPokemonLocalModel> localPokemonList;
-  late PokedexLocalModel pokedexLocalModel;
 
   setUp(() {
-    mockPokemonConverter = MockPokemonRepositoryConverter();
-    pokedexConverter = PokedexRepositoryConverterImpl(mockPokemonConverter);
-    pokedexId = 1;
+    pokemonConverter = PokemonRepositoryConverterImpl();
     pokedexName = "Sample Pokedex";
     pokemonId = 2;
     pokemonEntryId = 3;
@@ -35,8 +30,6 @@ void main() {
     pokedexPokemonLocalModel = PokedexPokemonLocalModel(
         pokemonId, {pokedexName: pokemonEntryId}, pokemonName);
     localPokemonList = [pokedexPokemonLocalModel];
-    pokedexLocalModel =
-        PokedexLocalModel(pokedexId, pokedexName, localPokemonList);
   });
 
   group("convert to domain", () {
@@ -44,36 +37,29 @@ void main() {
       PokemonModel pokemonDomainModel = PokemonModel(
           id: pokemonId,
           name: pokemonName,
-          pokedexEntryNumbers: {pokemonName: pokemonEntryId});
+          pokedexEntryNumbers: {pokedexName: pokemonEntryId});
       List<PokemonModel> domainPokemonList = [pokemonDomainModel];
-      PokedexModel pokedexModel =
-          PokedexModel(pokedexId, pokedexName, domainPokemonList);
 
-      when(mockPokemonConverter.convertToDomain(localPokemonList))
-          .thenReturn(domainPokemonList);
-      var result = pokedexConverter.convertToDomain(pokedexLocalModel);
+      var result = pokemonConverter.convertToDomain(localPokemonList);
 
-      expect(result, pokedexModel);
+      expect(result, domainPokemonList);
     });
   });
 
   group("convert to local", () {
     test('convert data model to local model', () {
-      String pokemonUrl = "url/$pokemonId/";
+      String pokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
       PokedexPokemonDataModel pokemonDataModel = PokedexPokemonDataModel(
         pokemonEntryId,
         pokemonName,
         pokemonUrl,
       );
       List<PokedexPokemonDataModel> dataPokemonList = [pokemonDataModel];
-      PokedexDataModel pokedexDataModel =
-          PokedexDataModel(pokedexId, pokedexName, dataPokemonList);
+      String pokedexName = "Sample Pokedex";
 
-      when(mockPokemonConverter.convertToLocal(dataPokemonList, pokedexName))
-          .thenReturn(localPokemonList);
-      var result = pokedexConverter.convertToLocal(pokedexDataModel);
+      var result = pokemonConverter.convertToLocal(dataPokemonList, pokedexName);
 
-      expect(result, pokedexLocalModel);
+      expect(result, localPokemonList);
     });
   });
 }
