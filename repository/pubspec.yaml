@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   dartz: ^0.10.1
   equatable: ^2.0.5
+  json_annotation: ^4.9.0
 
   domain:
     path: ../domain
@@ -23,6 +24,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   mockito: ^5.4.4
   build_runner: ^2.4.13
+  json_serializable: ^6.8.0
 
 flutter:
 

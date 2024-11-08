@@ -6,15 +6,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:repository/boundary/local/pokedex_local.dart';
-import 'package:repository/boundary/remote/pokedex_api.dart';
+import 'package:repository/boundary/remote/pokedex_data.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter.dart';
-import 'package:repository/models/data/pokedex_data.dart';
+import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
+import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 import 'package:repository/models/local/pokedex_local.dart';
 import 'package:repository/models/local/pokedex_pokemon_local.dart';
 import 'package:repository/repositories/pokedex_repository_impl.dart';
+
 import 'pokedex_repository_should.mocks.dart';
 
-@GenerateMocks([PokedexApi, PokedexLocal, PokedexRepositoryConverter])
+@GenerateMocks([PokedexData, PokedexLocal, PokedexRepositoryConverter])
 void main() {
   group("get pokedex", () {
     late PokedexRepositoryImpl repository;

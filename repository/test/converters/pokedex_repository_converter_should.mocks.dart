@@ -7,7 +7,6 @@ import 'package:domain/models/pokemon_model.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:repository/converters/pokemon/pokemon_repository_converter_impl.dart'
     as _i2;
-import 'package:repository/models/data/pokedex_data.dart' as _i5;
 import 'package:repository/models/local/pokedex_pokemon_local.dart' as _i4;
 
 // ignore_for_file: type=lint
@@ -45,7 +44,7 @@ class MockPokemonRepositoryConverter extends _i1.Mock
 
   @override
   List<_i4.PokedexPokemonLocalModel> convertToLocal(
-    List<_i5.PokedexPokemonDataModel>? pokemon,
+    List<dynamic>? pokemon,
     String? pokedexName,
   ) =>
       (super.noSuchMethod(

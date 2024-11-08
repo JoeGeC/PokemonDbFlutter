@@ -1,6 +1,6 @@
 import 'package:domain/models/pokemon_model.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter_impl.dart';
-import 'package:repository/models/data/pokedex_data.dart';
+import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
 import 'package:repository/models/local/pokedex_pokemon_local.dart';
 
 class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
@@ -20,7 +20,7 @@ class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
       List<PokedexPokemonDataModel> dataPokemonList, String pokedexName) {
     return dataPokemonList
         .map((pokemon) => PokedexPokemonLocalModel(
-            getPokemonId(pokemon.pokemonUrl),
+            getPokemonId(pokemon.url),
             getEntryNumberAsMap(pokemon.entryNumber, pokedexName),
             pokemon.name))
         .toList();

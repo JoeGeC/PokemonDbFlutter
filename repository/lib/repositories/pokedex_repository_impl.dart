@@ -3,11 +3,11 @@ import 'package:domain/boundary/repository/pokedex_repository.dart';
 import 'package:domain/models/Failure.dart';
 import 'package:domain/models/pokedex_model.dart';
 import 'package:repository/boundary/local/pokedex_local.dart';
-import '../boundary/remote/pokedex_api.dart';
+import '../boundary/remote/pokedex_data.dart';
 import '../converters/pokedex/pokedex_repository_converter.dart';
 
 class PokedexRepositoryImpl implements PokedexRepository{
-  final PokedexApi pokedexApi;
+  final PokedexData pokedexApi;
   final PokedexRepositoryConverter converter;
   final PokedexLocal pokedexLocal;
 
