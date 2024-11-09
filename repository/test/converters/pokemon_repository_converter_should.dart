@@ -2,6 +2,7 @@ import 'package:domain/models/pokemon_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter.dart';
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
+import 'package:repository/models/exceptions/NullException.dart';
 import 'package:repository/models/local/pokedex_pokemon_local.dart';
 
 void main() {
@@ -56,13 +57,21 @@ void main() {
       expect(result, localPokemonList);
     });
 
-    test('return 0 if pokemon url is invalid', () {
+    test('throw exception if invalid url', () {
       String pokemonUrl =
           "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/extra";
 
-      int result = pokemonConverter.getPokemonId(pokemonUrl);
+      expect(
+          () => pokemonConverter.getPokemonId(pokemonUrl),
+          throwsA(
+              predicate((e) => e is NullException && e.type == NullType.id)));
+    });
 
-      expect(result, 0);
+    test('throw exception if null url', () {
+      expect(
+          () => pokemonConverter.getPokemonId(null),
+          throwsA(
+              predicate((e) => e is NullException && e.type == NullType.id)));
     });
 
     test('return id on large number', () {
@@ -72,6 +81,13 @@ void main() {
       int result = pokemonConverter.getPokemonId(pokemonUrl);
 
       expect(result, id);
+    });
+
+    test('throw exception if entryNumber is null', () {
+      expect(
+          () => pokemonConverter.getEntryNumberAsMap(null, pokedexName),
+          throwsA(
+              predicate((e) => e is NullException && e.type == NullType.entryNumber)));
     });
   });
 }

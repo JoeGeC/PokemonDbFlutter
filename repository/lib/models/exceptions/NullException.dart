@@ -7,5 +7,5 @@ class NullException implements Exception{
 enum NullType{
   id,
   name,
-  pokemonEntries
+  pokemonEntries, entryNumber
 }
