@@ -57,6 +57,31 @@ void main() {
       expect(result, localPokemonList);
     });
 
+    test('dont include pokemon if null field', () {
+      String pokemonUrl =
+          "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
+      PokedexPokemonDataModel pokemonDataModel = PokedexPokemonDataModel(
+        pokemonEntryId,
+        pokemonName,
+        pokemonUrl,
+      );
+      PokedexPokemonDataModel pokemonNullDataModel = PokedexPokemonDataModel(
+        null,
+        pokemonName,
+        pokemonUrl,
+      );
+      List<PokedexPokemonDataModel> dataPokemonList = [
+        pokemonNullDataModel,
+        pokemonDataModel
+      ];
+      String pokedexName = "Sample Pokedex";
+
+      var result =
+          pokemonConverter.convertToLocal(dataPokemonList, pokedexName);
+
+      expect(result, localPokemonList);
+    });
+
     test('throw exception if invalid url', () {
       String pokemonUrl =
           "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/extra";
@@ -86,8 +111,15 @@ void main() {
     test('throw exception if entryNumber is null', () {
       expect(
           () => pokemonConverter.getEntryNumberAsMap(null, pokedexName),
+          throwsA(predicate(
+              (e) => e is NullException && e.type == NullType.entryNumber)));
+    });
+
+    test('throw exception if name is null', () {
+      expect(
+          () => pokemonConverter.getPokemonName(null),
           throwsA(
-              predicate((e) => e is NullException && e.type == NullType.entryNumber)));
+              predicate((e) => e is NullException && e.type == NullType.name)));
     });
   });
 }

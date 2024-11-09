@@ -21,15 +21,22 @@ class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
   List<PokedexPokemonLocalModel> convertToLocal(
       List<PokedexPokemonDataModel> dataPokemonList, String pokedexName) {
     return dataPokemonList
-        .map((pokemon) => PokedexPokemonLocalModel(
-            getPokemonId(pokemon.url),
-            getEntryNumberAsMap(pokemon.entryNumber, pokedexName),
-            pokemon.name!))
+        .map((pokemon) {
+          try {
+            return PokedexPokemonLocalModel(
+                getPokemonId(pokemon.url),
+                getEntryNumberAsMap(pokemon.entryNumber, pokedexName),
+                getPokemonName(pokemon.name));
+          } catch (e) {
+            return null;
+          }
+        })
+        .whereType<PokedexPokemonLocalModel>()
         .toList();
   }
 
   int getPokemonId(String? pokemonUrl) {
-    if(pokemonUrl == null) throw NullException(NullType.id);
+    if (pokemonUrl == null) throw NullException(NullType.id);
     RegExp regex = RegExp(r'(\d+)/$');
     final match = regex.firstMatch(pokemonUrl);
     if (match == null) {
@@ -40,7 +47,12 @@ class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
   }
 
   Map<String, int> getEntryNumberAsMap(int? entryNumber, String pokedexName) {
-    if(entryNumber == null) throw NullException(NullType.entryNumber);
+    if (entryNumber == null) throw NullException(NullType.entryNumber);
     return {pokedexName: entryNumber};
+  }
+
+  String getPokemonName(String? pokemonName) {
+    if (pokemonName == null) throw NullException(NullType.name);
+    return pokemonName;
   }
 }
