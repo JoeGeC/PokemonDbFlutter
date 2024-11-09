@@ -116,7 +116,6 @@ void main() {
       expect(result, expectedFailure);
     });
 
-
     test('return Failure if conversion to local fails', () async {
       when(mockPokedexLocal.get(pokedexId))
           .thenAnswer((_) async => mockLocalResultFailure);
@@ -131,5 +130,17 @@ void main() {
       expect(result, nullFailure);
     });
 
+    test('return Failure with empty message if null', () async {
+      when(mockPokedexLocal.get(pokedexId))
+          .thenAnswer((_) async => mockLocalResultFailure);
+      Either<DataFailure, PokedexDataModel> emptyMessageDataFailure =
+          Left(DataFailure(null));
+      when(mockPokedexData.get(pokedexId))
+          .thenAnswer((_) async => emptyMessageDataFailure);
+      var result = await repository.getPokedex(pokedexId);
+
+      var emptyMessageFailure = Left(Failure(""));
+      expect(result, emptyMessageFailure);
+    });
   });
 }

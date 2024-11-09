@@ -27,7 +27,7 @@ class PokedexRepositoryImpl implements PokedexRepository{
   Future<Either<Failure, PokedexModel>> getPokedexFromData(int id) async {
     var result = await pokedexApi.get(id);
     return result.fold(
-          (l) => Left(Failure(l.errorMessage!)), //TODO: Fix this
+          (l) => Left(Failure(l.errorMessage ?? "")),
           (r) {
             try {
               var localModel = converter.convertToLocal(r);
