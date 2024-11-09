@@ -1,16 +1,8 @@
-import 'package:domain/models/pokedex_model.dart';
 import 'package:domain/models/pokemon_model.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:repository/converters/pokedex/pokedex_repository_converter_impl.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter.dart';
-import 'package:repository/converters/pokemon/pokemon_repository_converter_impl.dart';
-import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
-import 'package:repository/models/local/pokedex_local.dart';
+import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 import 'package:repository/models/local/pokedex_pokemon_local.dart';
-
-import 'pokedex_repository_converter_should.mocks.dart';
 
 void main() {
   late PokemonRepositoryConverterImpl pokemonConverter;
@@ -47,9 +39,9 @@ void main() {
   });
 
   group("convert to local", () {
-
     test('convert data model to local model', () {
-      String pokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
+      String pokemonUrl =
+          "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
       PokedexPokemonDataModel pokemonDataModel = PokedexPokemonDataModel(
         pokemonEntryId,
         pokemonName,
@@ -58,20 +50,22 @@ void main() {
       List<PokedexPokemonDataModel> dataPokemonList = [pokemonDataModel];
       String pokedexName = "Sample Pokedex";
 
-      var result = pokemonConverter.convertToLocal(dataPokemonList, pokedexName);
+      var result =
+          pokemonConverter.convertToLocal(dataPokemonList, pokedexName);
 
       expect(result, localPokemonList);
     });
 
-    test('return 0 if pokemon url is invalid', (){
-      String pokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/extra";
+    test('return 0 if pokemon url is invalid', () {
+      String pokemonUrl =
+          "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/extra";
 
       int result = pokemonConverter.getPokemonId(pokemonUrl);
 
       expect(result, 0);
     });
 
-    test('return id on large number', (){
+    test('return id on large number', () {
       int id = 2313452334;
       String pokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/$id/";
 
@@ -79,6 +73,5 @@ void main() {
 
       expect(result, id);
     });
-
   });
 }

@@ -6,6 +6,8 @@ import 'package:mockito/mockito.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter_impl.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter_impl.dart';
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
+import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
+import 'package:repository/models/exceptions/NullException.dart';
 import 'package:repository/models/local/pokedex_local.dart';
 import 'package:repository/models/local/pokedex_pokemon_local.dart';
 
@@ -23,6 +25,9 @@ void main() {
   late PokedexPokemonLocalModel pokedexPokemonLocalModel;
   late List<PokedexPokemonLocalModel> localPokemonList;
   late PokedexLocalModel pokedexLocalModel;
+  late List<PokedexPokemonDataModel> dataPokemonList;
+  late PokedexPokemonDataModel pokemonDataModel;
+  late String pokemonUrl;
 
   setUp(() {
     mockPokemonConverter = MockPokemonRepositoryConverter();
@@ -37,6 +42,13 @@ void main() {
     localPokemonList = [pokedexPokemonLocalModel];
     pokedexLocalModel =
         PokedexLocalModel(pokedexId, pokedexName, localPokemonList);
+    pokemonUrl = "url/$pokemonId/";
+    pokemonDataModel = PokedexPokemonDataModel(
+      pokemonEntryId,
+      pokemonName,
+      pokemonUrl,
+    );
+    dataPokemonList = [pokemonDataModel];
   });
 
   group("convert to domain", () {
@@ -59,13 +71,6 @@ void main() {
 
   group("convert to local", () {
     test('convert data model to local model', () {
-      String pokemonUrl = "url/$pokemonId/";
-      PokedexPokemonDataModel pokemonDataModel = PokedexPokemonDataModel(
-        pokemonEntryId,
-        pokemonName,
-        pokemonUrl,
-      );
-      List<PokedexPokemonDataModel> dataPokemonList = [pokemonDataModel];
       PokedexDataModel pokedexDataModel =
           PokedexDataModel(pokedexId, pokedexName, dataPokemonList);
 
@@ -74,6 +79,36 @@ void main() {
       var result = pokedexConverter.convertToLocal(pokedexDataModel);
 
       expect(result, pokedexLocalModel);
+    });
+
+    test('throw exception if null id', () {
+      PokedexDataModel pokedexDataModel =
+          PokedexDataModel(null, pokedexName, dataPokemonList);
+
+      expect(
+          () => pokedexConverter.convertToLocal(pokedexDataModel),
+          throwsA(
+              predicate((e) => e is NullException && e.type == NullType.id)));
+    });
+
+    test('throw exception if null name', () {
+      PokedexDataModel pokedexDataModel =
+          PokedexDataModel(pokedexId, null, dataPokemonList);
+
+      expect(
+          () => pokedexConverter.convertToLocal(pokedexDataModel),
+          throwsA(
+              predicate((e) => e is NullException && e.type == NullType.name)));
+    });
+
+    test('throw exception if null pokemon entries', () {
+      PokedexDataModel pokedexDataModel =
+          PokedexDataModel(pokedexId, pokemonName, null);
+
+      expect(
+          () => pokedexConverter.convertToLocal(pokedexDataModel),
+          throwsA(predicate(
+              (e) => e is NullException && e.type == NullType.pokemonEntries)));
     });
   });
 }
