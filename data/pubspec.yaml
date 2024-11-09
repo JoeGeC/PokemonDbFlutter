@@ -13,7 +13,7 @@ dependencies:
   dio: ^5.7.0
   json_annotation: ^4.9.0
   dartz: ^0.10.1
-
+  get_it: ^8.0.2
 
   repository:
     path: ../repository
