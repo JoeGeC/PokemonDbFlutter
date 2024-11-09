@@ -6,13 +6,15 @@
 import 'dart:async' as _i6;
 
 import 'package:dartz/dartz.dart' as _i2;
+import 'package:domain/models/Failure.dart';
 import 'package:domain/models/pokedex_model.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:repository/boundary/local/pokedex_local.dart' as _i8;
+import 'package:repository/boundary/local/pokedex_local.dart' as _i9;
 import 'package:repository/boundary/remote/pokedex_data.dart' as _i5;
 import 'package:repository/converters/pokedex/pokedex_repository_converter.dart'
-    as _i9;
-import 'package:repository/models/data/pokedex/pokedex_data_model.dart' as _i7;
+    as _i10;
+import 'package:repository/models/data/data_failure.dart' as _i7;
+import 'package:repository/models/data/pokedex/pokedex_data_model.dart' as _i8;
 import 'package:repository/models/local/pokedex_local.dart' as _i4;
 
 // ignore_for_file: type=lint
@@ -68,28 +70,28 @@ class MockPokedexData extends _i1.Mock implements _i5.PokedexData {
   }
 
   @override
-  _i6.Future<_i2.Either<dynamic, _i7.PokedexDataModel>> get(int? id) =>
+  _i6.Future<_i2.Either<_i7.DataFailure, _i8.PokedexDataModel>> get(int? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #get,
           [id],
         ),
         returnValue:
-            _i6.Future<_i2.Either<dynamic, _i7.PokedexDataModel>>.value(
-                _FakeEither_0<dynamic, _i7.PokedexDataModel>(
+            _i6.Future<_i2.Either<_i7.DataFailure, _i8.PokedexDataModel>>.value(
+                _FakeEither_0<_i7.DataFailure, _i8.PokedexDataModel>(
           this,
           Invocation.method(
             #get,
             [id],
           ),
         )),
-      ) as _i6.Future<_i2.Either<dynamic, _i7.PokedexDataModel>>);
+      ) as _i6.Future<_i2.Either<_i7.DataFailure, _i8.PokedexDataModel>>);
 }
 
 /// A class which mocks [PokedexLocal].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPokedexLocal extends _i1.Mock implements _i8.PokedexLocal {
+class MockPokedexLocal extends _i1.Mock implements _i9.PokedexLocal {
   MockPokedexLocal() {
     _i1.throwOnMissingStub(this);
   }
@@ -104,29 +106,29 @@ class MockPokedexLocal extends _i1.Mock implements _i8.PokedexLocal {
       );
 
   @override
-  _i6.Future<_i2.Either<dynamic, _i4.PokedexLocalModel>> get(int? id) =>
+  _i6.Future<_i2.Either<Failure, _i4.PokedexLocalModel>> get(int? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #get,
           [id],
         ),
         returnValue:
-            _i6.Future<_i2.Either<dynamic, _i4.PokedexLocalModel>>.value(
-                _FakeEither_0<dynamic, _i4.PokedexLocalModel>(
+            _i6.Future<_i2.Either<Failure, _i4.PokedexLocalModel>>.value(
+                _FakeEither_0<Failure, _i4.PokedexLocalModel>(
           this,
           Invocation.method(
             #get,
             [id],
           ),
         )),
-      ) as _i6.Future<_i2.Either<dynamic, _i4.PokedexLocalModel>>);
+      ) as _i6.Future<_i2.Either<Failure, _i4.PokedexLocalModel>>);
 }
 
 /// A class which mocks [PokedexRepositoryConverter].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPokedexRepositoryConverter extends _i1.Mock
-    implements _i9.PokedexRepositoryConverter {
+    implements _i10.PokedexRepositoryConverter {
   MockPokedexRepositoryConverter() {
     _i1.throwOnMissingStub(this);
   }
@@ -148,7 +150,7 @@ class MockPokedexRepositoryConverter extends _i1.Mock
       ) as _i3.PokedexModel);
 
   @override
-  _i4.PokedexLocalModel convertToLocal(_i7.PokedexDataModel? pokedexData) =>
+  _i4.PokedexLocalModel convertToLocal(_i8.PokedexDataModel? pokedexData) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertToLocal,

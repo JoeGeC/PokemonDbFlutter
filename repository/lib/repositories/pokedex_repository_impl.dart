@@ -5,6 +5,7 @@ import 'package:domain/models/pokedex_model.dart';
 import 'package:repository/boundary/local/pokedex_local.dart';
 import '../boundary/remote/pokedex_data.dart';
 import '../converters/pokedex/pokedex_repository_converter.dart';
+import '../models/exceptions/NullException.dart';
 
 class PokedexRepositoryImpl implements PokedexRepository{
   final PokedexData pokedexApi;
@@ -16,21 +17,25 @@ class PokedexRepositoryImpl implements PokedexRepository{
   @override
   Future<Either<Failure, PokedexModel>> getPokedex(int id) async {
     var localResult = await pokedexLocal.get(id);
-    if(localResult.isLeft()) return getPokedexFromApi(id);
+    if(localResult.isLeft()) return getPokedexFromData(id);
     return localResult.fold(
         (l) => Left(Failure(l.errorMessage)),
         (r) => Right(converter.convertToDomain(r))
     );
   }
 
-  Future<Either<Failure, PokedexModel>> getPokedexFromApi(int id) async {
+  Future<Either<Failure, PokedexModel>> getPokedexFromData(int id) async {
     var result = await pokedexApi.get(id);
     return result.fold(
-          (l) => Left(Failure(l.errorMessage)),
+          (l) => Left(Failure(l.errorMessage!)), //TODO: Fix this
           (r) {
-            var localModel = converter.convertToLocal(r);
-            pokedexLocal.store(localModel);
-            return Right(converter.convertToDomain(localModel));
+            try {
+              var localModel = converter.convertToLocal(r);
+              pokedexLocal.store(localModel);
+              return Right(converter.convertToDomain(localModel));
+            } on NullException catch (e){
+              return Left(Failure(e.getErrorMessage()));
+            }
           },
     );
   }
