@@ -3,6 +3,7 @@ import 'package:domain/boundary/repository/pokedex_repository.dart';
 import 'package:domain/models/Failure.dart';
 import 'package:domain/models/pokedex_model.dart';
 import 'package:repository/boundary/local/pokedex_local.dart';
+
 import '../boundary/remote/pokedex_data.dart';
 import '../converters/pokedex/pokedex_repository_converter.dart';
 import '../models/exceptions/NullException.dart';
@@ -19,7 +20,7 @@ class PokedexRepositoryImpl implements PokedexRepository{
     var localResult = await pokedexLocal.get(id);
     if(localResult.isLeft()) return getPokedexFromData(id);
     return localResult.fold(
-        (l) => Left(Failure(l.errorMessage)),
+        (l) => Left(Failure(l.errorMessage ?? "")),
         (r) => Right(converter.convertToDomain(r))
     );
   }

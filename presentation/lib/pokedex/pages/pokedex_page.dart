@@ -4,6 +4,7 @@ import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/pokedex/bloc/pokedex_bloc.dart';
+import '../../common/empty_page.dart';
 import '../../common/error_page.dart';
 import '../../common/loading_page.dart';
 import '../../injections.dart';
@@ -47,7 +48,7 @@ class _PokedexPageState extends State<PokedexPage> {
             return switch (state) {
               PokedexLoadingState() => LoadingPage(),
               PokedexErrorState() => ErrorPage(),
-              PokedexState() => buildPokedexList(theme),
+              PokedexState() => buildSuccessPage(theme),
             };
           },
         ),
@@ -55,8 +56,12 @@ class _PokedexPageState extends State<PokedexPage> {
     );
   }
 
-  ListView buildPokedexList(ThemeData theme) {
-    List<PokemonModel> pokemonEntries = pokedex.pokemon;
+  StatelessWidget buildSuccessPage(ThemeData theme) => pokedex.pokemon.isEmpty
+      ? EmptyPage()
+      : buildEntriesList(pokedex.pokemon, theme);
+
+  ListView buildEntriesList(
+      List<PokemonModel> pokemonEntries, ThemeData theme) {
     return ListView.builder(
       itemCount: pokemonEntries.length,
       itemBuilder: (context, index) {

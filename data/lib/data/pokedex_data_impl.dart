@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:repository/boundary/remote/pokedex_data.dart';
-import 'package:repository/models/data/data_failure.dart';
+import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
 
 import '../api/api_response.dart';

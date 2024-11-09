@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 import 'package:repository/boundary/local/pokedex_local.dart';
 import 'package:repository/boundary/remote/pokedex_data.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter.dart';
-import 'package:repository/models/data/data_failure.dart';
+import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';
@@ -39,8 +39,8 @@ void main() {
     late PokedexModel pokedexDomainModel;
     late Either<DataFailure, PokedexDataModel> mockDataResultSuccess;
     late Either<DataFailure, PokedexDataModel> mockDataResultFailure;
-    late Either<Failure, PokedexLocalModel> mockLocalResultSuccess;
-    late Either<Failure, PokedexLocalModel> mockLocalResultFailure;
+    late Either<DataFailure, PokedexLocalModel> mockLocalResultSuccess;
+    late Either<DataFailure, PokedexLocalModel> mockLocalResultFailure;
     late Either<Failure, PokedexModel> expectedFailure;
     late Either<Failure, PokedexModel> expectedSuccess;
 
@@ -73,7 +73,7 @@ void main() {
       mockDataResultSuccess = Right(pokedexDataModel);
       mockDataResultFailure = Left(DataFailure(failureMessage));
       mockLocalResultSuccess = Right(pokedexLocalModel);
-      mockLocalResultFailure = Left(Failure(failureMessage));
+      mockLocalResultFailure = Left(DataFailure(failureMessage));
       expectedSuccess = Right(pokedexDomainModel);
       expectedFailure = Left(Failure(failureMessage));
     });

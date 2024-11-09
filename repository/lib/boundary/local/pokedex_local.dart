@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:domain/models/Failure.dart';
 import 'package:repository/models/local/pokedex_local.dart';
+
+import '../../models/data_failure.dart';
 
 abstract class PokedexLocal{
   void store(PokedexLocalModel model);
-  Future<Either<Failure, PokedexLocalModel>> get(int id);
+  Future<Either<DataFailure, PokedexLocalModel>> get(int id);
 }

@@ -5,9 +5,9 @@ class ApiService {
   ApiService.singleton();
 
   static final ApiService instance = ApiService.singleton();
-  late Dio dio;
+  static late Dio dio;
 
-  void initDio() {
+  static void initDio() {
     dio = Dio(BaseOptions(
       baseUrl: baseUrl,
       contentType: contentType,
