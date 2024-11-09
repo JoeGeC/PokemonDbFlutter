@@ -11,7 +11,8 @@ PokedexDataModel _$PokedexDataModelFromJson(Map<String, dynamic> json) =>
       (json['id'] as num?)?.toInt(),
       json['name'] as String?,
       (json['pokemon_entries'] as List<dynamic>?)
-          ?.map(PokedexPokemonDataModel.fromJson)
+          ?.map((e) =>
+              PokedexPokemonDataModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

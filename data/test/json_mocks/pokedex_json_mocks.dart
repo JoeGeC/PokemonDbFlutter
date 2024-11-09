@@ -9,7 +9,7 @@ class PokedexJsonMocks {
           {
             "entry_number": pokemonEntryNumber,
             "pokemon_species": {
-              {"name": pokemonName, "url": pokemonUrl}
+              "name": pokemonName, "url": pokemonUrl
             }
           }
         ]

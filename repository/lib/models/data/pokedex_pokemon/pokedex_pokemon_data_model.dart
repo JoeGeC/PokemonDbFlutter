@@ -1,18 +1,23 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../data_model.dart';
 
 part 'pokedex_pokemon_data_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class PokedexPokemonDataModel extends DataModel {
-  int? entryNumber;
-  String? name;
-  String? url;
+class PokedexPokemonDataModel extends Equatable {
+  final int? entryNumber;
+  final String? name;
+  final String? url;
 
-  PokedexPokemonDataModel(this.entryNumber, this.name, this.url);
+  const PokedexPokemonDataModel(this.entryNumber, this.name, this.url);
 
-  factory PokedexPokemonDataModel.fromJson(json) => _$PokedexPokemonDataModelFromJson(json);
+  factory PokedexPokemonDataModel.fromJson(Map<String, dynamic> json) {
+    return PokedexPokemonDataModel(
+      json['entry_number'],
+      json['pokemon_species']['name'],
+      json['pokemon_species']['url'],
+    );
+  }
 
   toJson() => _$PokedexPokemonDataModelToJson(this);
 
@@ -21,12 +26,5 @@ class PokedexPokemonDataModel extends DataModel {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (other is PokedexPokemonDataModel) return other.url == url;
-    return super == other;
-  }
-
-  @override
-  int get hashCode => url.hashCode;
-
+  List<Object?> get props => [entryNumber, name, url];
 }
