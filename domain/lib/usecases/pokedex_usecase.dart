@@ -5,17 +5,10 @@ import '../boundary/repository/pokedex_repository.dart';
 import '../models/pokedex_model.dart';
 
 class PokedexUseCase {
-  final PokedexRepository repository;
+  final PokedexRepository _repository;
 
-  PokedexUseCase(this.repository);
+  PokedexUseCase(this._repository);
 
-  @override
-  Future<Either<Failure, PokedexModel>> getPokedex(int id) async {
-    final result = await repository.getPokedex(id);
-    return result.fold((l) {
-      return Left(l);
-    }, (r) async {
-      return Right(r);
-    });
-  }
+  Future<Either<Failure, PokedexModel>> getPokedex(int id) async =>
+      await _repository.getPokedex(id);
 }
