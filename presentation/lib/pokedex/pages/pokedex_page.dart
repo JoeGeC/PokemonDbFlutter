@@ -4,8 +4,8 @@ import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/pokedex/bloc/pokedex_bloc.dart';
-import '../../common/empty_page.dart';
-import '../../common/error_page.dart';
+import '../../common/pages/empty_page.dart';
+import '../../common/pages/error_page.dart';
 import '../../common/loading_page.dart';
 import '../../injections.dart';
 
@@ -67,10 +67,19 @@ class _PokedexPageState extends State<PokedexPage> {
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8),
-          child: Text(pokemonEntries[index].name,
-              style: theme.textTheme.displaySmall!.copyWith()),
+          child: buildPokemonEntry(pokemonEntries, index, theme),
         );
       },
     );
+  }
+
+  Row buildPokemonEntry(
+      List<PokemonModel> pokemonEntries, int index, ThemeData theme) {
+    var pokemon = pokemonEntries[index];
+    return Row(children: [
+      Text(pokemon.pokedexEntryNumbers[pokedex.id])
+      Text(pokemon.name,
+          style: theme.textTheme.displaySmall!.copyWith()),
+    ]);
   }
 }

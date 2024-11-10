@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:domain/models/pokemon_model.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:repository/converters/pokemon/pokemon_repository_converter_impl.dart'
+import 'package:repository/converters/pokemon/pokemon_repository_converter.dart'
     as _i2;
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart'
     as _i5;

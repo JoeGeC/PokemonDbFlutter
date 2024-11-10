@@ -4,8 +4,8 @@ import 'package:repository/converters/pokedex/pokedex_repository_converter_impl.
 import 'package:repository/repositories/pokedex_repository_impl.dart';
 
 import 'converters/pokedex/pokedex_repository_converter.dart';
-import 'converters/pokemon/pokemon_repository_converter.dart';
 import 'converters/pokemon/pokemon_repository_converter_impl.dart';
+import 'converters/pokemon/pokemon_repository_converter.dart';
 
 final getIt = GetIt.instance;
 

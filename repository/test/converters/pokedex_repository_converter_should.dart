@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter_impl.dart';
-import 'package:repository/converters/pokemon/pokemon_repository_converter_impl.dart';
+import 'package:repository/converters/pokemon/pokemon_repository_converter.dart';
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';

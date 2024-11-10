@@ -9,7 +9,7 @@ part 'pokedex_state.dart';
 class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
   final PokedexUseCase _pokedexUseCase;
 
-  PokedexBloc({required PokedexUseCase pokedexUseCase})
+  PokedexBloc(PokedexUseCase pokedexUseCase, PokedexLocalConverter pokedexLocalConverter)
       : _pokedexUseCase = pokedexUseCase,
         super(PokedexLoadingState()) {
     on<GetPokedexEvent>(_getPokedexEvent);
@@ -23,8 +23,9 @@ class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
     final result = await _pokedexUseCase.getPokedex(3);
     result.fold((failure) {
       emitter(PokedexErrorState(failure.errorMessage));
-    }, (success) {
-      emitter(PokedexSuccessState(success));
+    }, (pokedexModel) {
+      var localPokedexModel =
+      emitter(PokedexSuccessState(pokedexModel));
     });
   }
 }

@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 class PokemonModel extends Equatable {
-  int id;
-  Map<String, int>? pokedexEntryNumbers;
-  String name;
-  String? imageUrl;
-  List<String>? types;
+  final int id;
+  final Map<String, int>? pokedexEntryNumbers;
+  final String name;
+  final String? imageUrl;
+  final List<String>? types;
 
-  PokemonModel({
+  const PokemonModel({
     required this.id,
     required this.name,
     this.pokedexEntryNumbers,

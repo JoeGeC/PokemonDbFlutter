@@ -12,11 +12,10 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.6
   get_it: ^8.0.2
+  equatable: ^2.0.5
 
   domain:
     path: ../domain
-  injections:
-    path: ../injections
 
 dev_dependencies:
   flutter_test:
