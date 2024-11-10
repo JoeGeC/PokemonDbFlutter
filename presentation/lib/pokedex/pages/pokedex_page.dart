@@ -39,18 +39,21 @@ class _PokedexPageState extends State<PokedexPage> {
 
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer<PokedexBloc, PokedexState>(
-          bloc: _bloc,
-          listener: (context, state) {
-            if (state is PokedexSuccessState) {
-              pokedex = state.pokedex;
-            }
-          },
-          builder: (context, state) => switch (state) {
-            PokedexLoadingState() => LoadingPage(),
-            PokedexErrorState() => ErrorPage(),
-            PokedexState() => buildSuccessPage(theme),
-          },
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: BlocConsumer<PokedexBloc, PokedexState>(
+            bloc: _bloc,
+            listener: (context, state) {
+              if (state is PokedexSuccessState) {
+                pokedex = state.pokedex;
+              }
+            },
+            builder: (context, state) => switch (state) {
+              PokedexLoadingState() => LoadingPage(),
+              PokedexErrorState() => ErrorPage(),
+              PokedexState() => buildSuccessPage(theme),
+            },
+          ),
         ),
       ),
     );
@@ -67,11 +70,15 @@ class _PokedexPageState extends State<PokedexPage> {
   Row buildPokemonEntry(PokedexPokemonLocalModel pokemon, ThemeData theme) =>
       Row(children: [
         Text(pokemon.pokedexEntryNumber,
-            style: theme.textTheme.displaySmall!.copyWith()),
+            style: theme.textTheme.labelMedium!.copyWith()),
         SizedBox(width: 10),
-        Text(pokemon.name, style: theme.textTheme.displaySmall!.copyWith()),
+        Text(
+          pokemon.name,
+          style: theme.textTheme.labelMedium!.copyWith(),
+        ),
       ]);
 
   Widget buildPokedexHeader(ThemeData theme, GlobalKey key) =>
-      Text(pokedex.name, key: key, style: theme.textTheme.displayMedium!.copyWith());
+      Text(pokedex.name,
+          key: key, style: theme.textTheme.titleMedium!.copyWith());
 }
