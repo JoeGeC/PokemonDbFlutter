@@ -5,6 +5,12 @@ import '../../pokedex/models/pokemon_local_model.dart';
 
 class PokemonLocalConverterImpl extends PokemonLocalConverter {
   @override
+  List<PokemonLocalModel> convertList(List<PokemonModel> pokemon) {
+    // TODO: implement convertList
+    throw UnimplementedError();
+  }
+
+  @override
   PokemonLocalModel convert(PokemonModel pokemon) {
     return PokemonLocalModel(
       id: pokemon.id,

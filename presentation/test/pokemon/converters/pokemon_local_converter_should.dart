@@ -6,7 +6,7 @@ import 'package:presentation/pokemon/converters/pokemon_local_converter_impl.dar
 void main() {
   setUp(() {});
 
-  test('convert pokedex', () {
+  test('convert pokemon', () {
     var converter = PokemonLocalConverterImpl();
     PokemonModel pokemonModel = PokemonModel(
       id: 1,

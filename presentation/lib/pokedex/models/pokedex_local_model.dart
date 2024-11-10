@@ -6,7 +6,8 @@ class PokedexLocalModel extends Equatable {
   final String name;
   final List<PokemonLocalModel> pokemon;
 
-  const PokedexLocalModel(this.id, this.name, this.pokemon);
+  const PokedexLocalModel(
+      {required this.id, required this.name, required this.pokemon});
 
   @override
   List<Object?> get props => [id, name, pokemon];
