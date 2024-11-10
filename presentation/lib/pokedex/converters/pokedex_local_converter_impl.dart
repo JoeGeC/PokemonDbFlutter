@@ -19,8 +19,8 @@ class PokedexLocalConverterImpl implements PokedexLocalConverter {
   }
 
   String convertName(String name) => switch(name){
-      "johto-original" => "Johto Original Pokedex",
-      String() => "Pokedex",
+      "original-johto" => "Original Johto",
+      String() => "",
     };
 
 }

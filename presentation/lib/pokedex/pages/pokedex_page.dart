@@ -1,6 +1,7 @@
 import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:presentation/common/pages/scroll_up_header_list_view.dart';
 import 'package:presentation/pokedex/bloc/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_local_converter.dart';
 import '../../common/pages/empty_page.dart';
@@ -45,43 +46,32 @@ class _PokedexPageState extends State<PokedexPage> {
               pokedex = state.pokedex;
             }
           },
-          builder: (context, state) {
-            return switch (state) {
-              PokedexLoadingState() => LoadingPage(),
-              PokedexErrorState() => ErrorPage(),
-              PokedexState() => buildSuccessPage(theme),
-            };
+          builder: (context, state) => switch (state) {
+            PokedexLoadingState() => LoadingPage(),
+            PokedexErrorState() => ErrorPage(),
+            PokedexState() => buildSuccessPage(theme),
           },
         ),
       ),
     );
   }
 
-  StatelessWidget buildSuccessPage(ThemeData theme) => pokedex.pokemon.isEmpty
+  Widget buildSuccessPage(ThemeData theme) => pokedex.pokemon.isEmpty
       ? EmptyPage()
-      : buildEntriesList(pokedex.pokemon, theme);
+      : ScrollUpHeaderListView(
+          headerBuilder: (headerKey) => buildPokedexHeader(theme, headerKey),
+          itemCount: pokedex.pokemon.length,
+          itemBuilder: (context, index) =>
+              buildPokemonEntry(pokedex.pokemon[index], theme));
 
-  ListView buildEntriesList(
-      List<PokedexPokemonLocalModel> pokemonEntries, ThemeData theme) {
-    return ListView.builder(
-      itemCount: pokemonEntries.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(8),
-          child: buildPokemonEntry(pokemonEntries, index, theme),
-        );
-      },
-    );
-  }
+  Row buildPokemonEntry(PokedexPokemonLocalModel pokemon, ThemeData theme) =>
+      Row(children: [
+        Text(pokemon.pokedexEntryNumber,
+            style: theme.textTheme.displaySmall!.copyWith()),
+        SizedBox(width: 10),
+        Text(pokemon.name, style: theme.textTheme.displaySmall!.copyWith()),
+      ]);
 
-  Row buildPokemonEntry(List<PokedexPokemonLocalModel> pokemonEntries,
-      int index, ThemeData theme) {
-    var pokemon = pokemonEntries[index];
-    return Row(children: [
-      Text(pokemon.pokedexEntryNumber,
-          style: theme.textTheme.displaySmall!.copyWith()),
-      SizedBox(width: 10),
-      Text(pokemon.name, style: theme.textTheme.displaySmall!.copyWith()),
-    ]);
-  }
+  Widget buildPokedexHeader(ThemeData theme, GlobalKey key) =>
+      Text(pokedex.name, key: key, style: theme.textTheme.displayMedium!.copyWith());
 }

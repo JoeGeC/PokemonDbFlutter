@@ -11,7 +11,7 @@ void main() {
 
   setUp(() {
     converter = PokedexPokemonLocalConverterImpl();
-    pokedexName = "johto-original";
+    pokedexName = "original-johto";
     pokemonModel = PokemonModel(
       id: 1,
       name: "pokemon",
