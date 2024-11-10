@@ -1,13 +1,14 @@
-import 'package:domain/models/pokedex_model.dart';
-import 'package:domain/models/pokemon_model.dart';
 import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/pokedex/bloc/pokedex_bloc.dart';
+import 'package:presentation/pokedex/converters/pokedex_local_converter.dart';
 import '../../common/pages/empty_page.dart';
 import '../../common/pages/error_page.dart';
-import '../../common/loading_page.dart';
+import '../../common/pages/loading_page.dart';
 import '../../injections.dart';
+import '../models/pokedex_local_model.dart';
+import '../models/pokemon_local_model.dart';
 
 class PokedexPage extends StatefulWidget {
   const PokedexPage({super.key});
@@ -18,8 +19,8 @@ class PokedexPage extends StatefulWidget {
 
 class _PokedexPageState extends State<PokedexPage> {
   final PokedexBloc _bloc =
-      PokedexBloc(pokedexUseCase: getIt<PokedexUseCase>());
-  late PokedexModel pokedex;
+      PokedexBloc(getIt<PokedexUseCase>(), getIt<PokedexLocalConverter>());
+  late PokedexLocalModel pokedex;
 
   @override
   void initState() {
@@ -61,7 +62,7 @@ class _PokedexPageState extends State<PokedexPage> {
       : buildEntriesList(pokedex.pokemon, theme);
 
   ListView buildEntriesList(
-      List<PokemonModel> pokemonEntries, ThemeData theme) {
+      List<PokedexPokemonLocalModel> pokemonEntries, ThemeData theme) {
     return ListView.builder(
       itemCount: pokemonEntries.length,
       itemBuilder: (context, index) {
@@ -74,10 +75,10 @@ class _PokedexPageState extends State<PokedexPage> {
   }
 
   Row buildPokemonEntry(
-      List<PokemonModel> pokemonEntries, int index, ThemeData theme) {
+      List<PokedexPokemonLocalModel> pokemonEntries, int index, ThemeData theme) {
     var pokemon = pokemonEntries[index];
     return Row(children: [
-      Text(pokemon.pokedexEntryNumbers[pokedex.id])
+      Text(pokemon.pokedexEntryNumber[pokedex.name]),
       Text(pokemon.name,
           style: theme.textTheme.displaySmall!.copyWith()),
     ]);

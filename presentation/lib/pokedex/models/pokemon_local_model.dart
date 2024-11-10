@@ -1,17 +1,17 @@
 import 'package:equatable/equatable.dart';
 
-class PokemonLocalModel extends Equatable {
+class PokedexPokemonLocalModel extends Equatable {
   final int id;
   final String nationalDexNumber;
-  final Map<String, String> pokedexEntryNumbers;
+  final String pokedexEntryNumber;
   final String name;
   final String? imageUrl;
   final List<String> types;
 
-  const PokemonLocalModel({
+  const PokedexPokemonLocalModel({
     required this.id,
     required this.nationalDexNumber,
-    required this.pokedexEntryNumbers,
+    required this.pokedexEntryNumber,
     required this.name,
     this.imageUrl,
     required this.types,
@@ -19,5 +19,5 @@ class PokemonLocalModel extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id, nationalDexNumber, pokedexEntryNumbers, name, imageUrl, types];
+      [id, nationalDexNumber, pokedexEntryNumber, name, imageUrl, types];
 }

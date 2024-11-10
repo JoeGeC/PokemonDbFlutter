@@ -3,17 +3,19 @@ import 'package:presentation/common/utils/utils.dart';
 import 'package:presentation/pokemon/converters/pokemon_local_converter.dart';
 import '../../pokedex/models/pokemon_local_model.dart';
 
-class PokemonLocalConverterImpl extends PokemonLocalConverter {
+class PokedexPokemonLocalConverterImpl extends PokemonLocalConverter {
   @override
-  List<PokemonLocalModel> convertList(List<PokemonModel> pokemonList) =>
-      pokemonList.map((pokemon) => convert(pokemon)).toList();
+  List<PokedexPokemonLocalModel> convertList(
+          List<PokemonModel> pokemonList, String pokedexName) =>
+      pokemonList.map((pokemon) => convert(pokemon, pokedexName)).toList();
 
   @override
-  PokemonLocalModel convert(PokemonModel pokemon) {
-    return PokemonLocalModel(
+  PokedexPokemonLocalModel convert(PokemonModel pokemon, String pokedexName) {
+    return PokedexPokemonLocalModel(
       id: pokemon.id,
       nationalDexNumber: convertNationalDexNumber(pokemon.id),
-      pokedexEntryNumbers: convertEntryNumbers(pokemon.pokedexEntryNumbers),
+      pokedexEntryNumber:
+          convertEntryNumber(pokemon.pokedexEntryNumbers, pokedexName),
       name: convertName(pokemon.name),
       imageUrl: pokemon.imageUrl,
       types: convertTypes(pokemon.types),
@@ -22,11 +24,9 @@ class PokemonLocalConverterImpl extends PokemonLocalConverter {
 
   String convertNationalDexNumber(int id) => id.toString().padLeft(4, '0');
 
-  Map<String, String> convertEntryNumbers(
-          Map<String, int>? pokedexEntryNumbers) =>
-      pokedexEntryNumbers?.map((pokedex, entryNumber) =>
-          MapEntry(pokedex, entryNumber.toString().padLeft(3, '0'))) ??
-      {};
+  String convertEntryNumber(
+          Map<String, int>? pokedexEntryNumbers, String pokedexName) =>
+      pokedexEntryNumbers?[pokedexName]?.toString().padLeft(3, '0') ?? "";
 
   String convertName(String name) => name.capitalise();
 

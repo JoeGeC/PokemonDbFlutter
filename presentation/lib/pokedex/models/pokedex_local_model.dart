@@ -4,7 +4,7 @@ import 'package:presentation/pokedex/models/pokemon_local_model.dart';
 class PokedexLocalModel extends Equatable {
   final int id;
   final String name;
-  final List<PokemonLocalModel> pokemon;
+  final List<PokedexPokemonLocalModel> pokemon;
 
   const PokedexLocalModel(
       {required this.id, required this.name, required this.pokemon});

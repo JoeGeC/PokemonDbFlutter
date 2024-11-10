@@ -14,7 +14,7 @@ class PokedexLocalConverterImpl implements PokedexLocalConverter {
     return PokedexLocalModel(
         id: pokedex.id,
         name: convertName(pokedex.name),
-        pokemon: pokemonConverter.convertList(pokedex.pokemon),
+        pokemon: pokemonConverter.convertList(pokedex.pokemon, pokedex.name),
     );
   }
 

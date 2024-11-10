@@ -15,28 +15,29 @@ void main() {
   setUp(() {});
 
   test('convert pokedex', () {
+    var pokedexName = "johto-original";
     var mockPokemonConverter = MockPokemonLocalConverter();
     PokemonModel pokemonModel = PokemonModel(
       id: 1,
       name: "pokemon",
-      pokedexEntryNumbers: {"johto-original": 2, "kanto": 1},
+      pokedexEntryNumbers: {pokedexName: 2, "kanto": 1},
       imageUrl: "url/asd/asd/asd/",
       types: ["grass", "flying"],
     );
-    PokemonLocalModel expectedPokemon = PokemonLocalModel(
+    PokedexPokemonLocalModel expectedPokemon = PokedexPokemonLocalModel(
         id: 1,
         nationalDexNumber: "0001",
-        pokedexEntryNumbers: {"johto-original": "002", "kanto": "001"},
+        pokedexEntryNumber: "002",
         name: "Pokemon",
         imageUrl: "url/asd/asd/asd/",
         types: ["Grass", "Flying"]);
     PokedexModel pokedexModel =
-        PokedexModel(id: 2, name: "johto-original", pokemon: [pokemonModel]);
+        PokedexModel(id: 2, name: pokedexName, pokemon: [pokemonModel]);
     PokedexLocalModel expected = PokedexLocalModel(
         id: 2, name: "Johto Original Pokedex", pokemon: [expectedPokemon]);
     var converter = PokedexLocalConverterImpl(mockPokemonConverter);
 
-    when(mockPokemonConverter.convertList([pokemonModel]))
+    when(mockPokemonConverter.convertList([pokemonModel], pokedexName))
         .thenReturn([expectedPokemon]);
     var result = converter.convert(pokedexModel);
 

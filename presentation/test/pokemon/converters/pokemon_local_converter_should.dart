@@ -4,23 +4,25 @@ import 'package:presentation/pokedex/models/pokemon_local_model.dart';
 import 'package:presentation/pokemon/converters/pokemon_local_converter_impl.dart';
 
 void main() {
-  late PokemonLocalConverterImpl converter;
+  late PokedexPokemonLocalConverterImpl converter;
   late PokemonModel pokemonModel;
-  late PokemonLocalModel pokemonLocalModel;
+  late PokedexPokemonLocalModel pokemonLocalModel;
+  late String pokedexName;
 
   setUp(() {
-    converter = PokemonLocalConverterImpl();
+    converter = PokedexPokemonLocalConverterImpl();
+    pokedexName = "johto-original";
     pokemonModel = PokemonModel(
       id: 1,
       name: "pokemon",
-      pokedexEntryNumbers: {"johto-original": 2, "kanto": 1},
+      pokedexEntryNumbers: {pokedexName: 2, "kanto": 1},
       imageUrl: "url/asd/asd/asd/",
       types: ["grass", "flying"],
     );
-    pokemonLocalModel = PokemonLocalModel(
+    pokemonLocalModel = PokedexPokemonLocalModel(
         id: 1,
         nationalDexNumber: "0001",
-        pokedexEntryNumbers: {"johto-original": "002", "kanto": "001"},
+        pokedexEntryNumber: "002",
         name: "Pokemon",
         imageUrl: "url/asd/asd/asd/",
         types: ["Grass", "Flying"]
@@ -28,7 +30,7 @@ void main() {
   });
 
   test('convert pokemon', () {
-    var result = converter.convert(pokemonModel);
+    var result = converter.convert(pokemonModel, pokedexName);
 
     expect(result, pokemonLocalModel);
   });
@@ -37,7 +39,7 @@ void main() {
     var pokemonModelList = [pokemonModel, pokemonModel];
     var pokemonLocalModelList = [pokemonLocalModel, pokemonLocalModel];
 
-    var result = converter.convertList(pokemonModelList);
+    var result = converter.convertList(pokemonModelList, pokedexName);
 
     expect(result, pokemonLocalModelList);
   });
