@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:domain/models/pokedex_model.dart';
 import 'package:domain/usecases/pokedex_usecase.dart';
 
 import '../converters/pokedex_local_converter.dart';
@@ -11,10 +10,12 @@ part 'pokedex_state.dart';
 
 class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
   final PokedexUseCase _pokedexUseCase;
+  final PokedexLocalConverter _pokedexConverter;
 
-  PokedexBloc(PokedexUseCase pokedexUseCase,
-      PokedexLocalConverter pokedexLocalConverter)
+  PokedexBloc(
+      PokedexUseCase pokedexUseCase, PokedexLocalConverter pokedexConverter)
       : _pokedexUseCase = pokedexUseCase,
+        _pokedexConverter = pokedexConverter,
         super(PokedexLoadingState()) {
     on<GetPokedexEvent>(_getPokedexEvent);
   }
@@ -28,7 +29,8 @@ class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
     result.fold((failure) {
       emitter(PokedexErrorState(failure.errorMessage));
     }, (pokedexModel) {
-      emitter(PokedexSuccessState(pokedexModel));
+      var localPokedex = _pokedexConverter.convert(pokedexModel);
+      emitter(PokedexSuccessState(localPokedex));
     });
   }
 }

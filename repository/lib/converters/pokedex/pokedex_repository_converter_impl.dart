@@ -12,8 +12,10 @@ class PokedexRepositoryConverterImpl implements PokedexRepositoryConverter {
 
   @override
   PokedexModel convertToDomain(PokedexLocalModel pokedexLocalModel) =>
-      PokedexModel(pokedexLocalModel.id, pokedexLocalModel.name,
-          pokemonConverter.convertToDomain(pokedexLocalModel.pokemon));
+      PokedexModel(
+          id: pokedexLocalModel.id,
+          name: pokedexLocalModel.name,
+          pokemon: pokemonConverter.convertToDomain(pokedexLocalModel.pokemon));
 
   @override
   PokedexLocalModel convertToLocal(PokedexDataModel pokedexDataModel) {

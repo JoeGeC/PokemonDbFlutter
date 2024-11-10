@@ -58,8 +58,8 @@ void main() {
           name: pokemonName,
           pokedexEntryNumbers: {pokemonName: pokemonEntryId});
       List<PokemonModel> domainPokemonList = [pokemonDomainModel];
-      PokedexModel pokedexModel =
-          PokedexModel(pokedexId, pokedexName, domainPokemonList);
+      PokedexModel pokedexModel = PokedexModel(
+          id: pokedexId, name: pokedexName, pokemon: domainPokemonList);
 
       when(mockPokemonConverter.convertToDomain(localPokemonList))
           .thenReturn(domainPokemonList);

@@ -74,13 +74,14 @@ class _PokedexPageState extends State<PokedexPage> {
     );
   }
 
-  Row buildPokemonEntry(
-      List<PokedexPokemonLocalModel> pokemonEntries, int index, ThemeData theme) {
+  Row buildPokemonEntry(List<PokedexPokemonLocalModel> pokemonEntries,
+      int index, ThemeData theme) {
     var pokemon = pokemonEntries[index];
     return Row(children: [
-      Text(pokemon.pokedexEntryNumber[pokedex.name]),
-      Text(pokemon.name,
+      Text(pokemon.pokedexEntryNumber,
           style: theme.textTheme.displaySmall!.copyWith()),
+      SizedBox(width: 10),
+      Text(pokemon.name, style: theme.textTheme.displaySmall!.copyWith()),
     ]);
   }
 }
