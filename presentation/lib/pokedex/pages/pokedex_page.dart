@@ -1,7 +1,8 @@
 import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:presentation/common/pages/scroll_up_header_list_view.dart';
+import 'package:presentation/common/widgets/pokemon_types.dart';
+import 'package:presentation/common/widgets/scroll_up_header_list_view.dart';
 import 'package:presentation/pokedex/bloc/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_local_converter.dart';
 import '../../common/pages/empty_page.dart';
@@ -67,16 +68,43 @@ class _PokedexPageState extends State<PokedexPage> {
           itemBuilder: (context, index) =>
               buildPokemonEntry(pokedex.pokemon[index], theme));
 
-  Row buildPokemonEntry(PokedexPokemonLocalModel pokemon, ThemeData theme) =>
-      Row(children: [
-        Text(pokemon.pokedexEntryNumber,
-            style: theme.textTheme.labelMedium!.copyWith()),
-        SizedBox(width: 10),
-        Text(
-          pokemon.name,
-          style: theme.textTheme.labelMedium!.copyWith(),
+  Widget buildPokemonEntry(PokedexPokemonLocalModel pokemon, ThemeData theme) =>
+      Padding(
+        padding: EdgeInsets.all(8),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Image(
+                image: AssetImage('assets/pokeball-background.png'),
+                opacity: const AlwaysStoppedAnimation(.4),
+                height: 100,
+                width: 100,
+              ),
+              SizedBox(width: 30),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        pokemon.pokedexEntryNumber,
+                        style: theme.textTheme.labelMedium!.copyWith(),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        pokemon.name,
+                        style: theme.textTheme.labelMedium!.copyWith(),
+                      ),
+                    ],
+                  ),
+                  buildPokemonTypes()
+                ],
+              )
+            ],
+          ),
         ),
-      ]);
+      );
 
   Widget buildPokedexHeader(ThemeData theme, GlobalKey key) =>
       Text(pokedex.name,

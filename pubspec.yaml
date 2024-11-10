@@ -45,8 +45,12 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter:
+  uses-material-design: true
+
   fonts:
     - family: PokemonBW
       fonts:
         - asset: fonts/pokemon-bw.ttf
-  uses-material-design: true
+
+  assets:
+    - assets/
