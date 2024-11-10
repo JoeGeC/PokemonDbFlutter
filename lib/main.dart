@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_db/injections.dart';
-import 'package:pokemon_db/text_styles.dart';
+import 'package:pokemon_db/theme/colors.dart';
+import 'package:pokemon_db/theme/text_styles.dart';
 import 'package:presentation/pokedex/pages/pokedex_page.dart';
 
 Future<void> main() async {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Pokemon DB',
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: lightColorScheme,
         textTheme: TextTheme(
           labelMedium: labelMedium,
           titleMedium: titleMedium,

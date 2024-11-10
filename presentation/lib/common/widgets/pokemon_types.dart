@@ -15,7 +15,7 @@ Widget buildTypeFallBack() {
   return FittedBox(
     fit: BoxFit.fill,
     child: Image(
-        image: AssetImage('assets/type-fallback.png'),
+        image: AssetImage('assets/pokemon_type_fallback.png'),
         opacity: const AlwaysStoppedAnimation(.4),
         height: 40,
         width: 80),

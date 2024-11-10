@@ -39,22 +39,20 @@ class _PokedexPageState extends State<PokedexPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: theme.colorScheme.primary,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: BlocConsumer<PokedexBloc, PokedexState>(
-            bloc: _bloc,
-            listener: (context, state) {
-              if (state is PokedexSuccessState) {
-                pokedex = state.pokedex;
-              }
-            },
-            builder: (context, state) => switch (state) {
-              PokedexLoadingState() => LoadingPage(),
-              PokedexErrorState() => ErrorPage(),
-              PokedexState() => buildSuccessPage(theme),
-            },
-          ),
+        child: BlocConsumer<PokedexBloc, PokedexState>(
+          bloc: _bloc,
+          listener: (context, state) {
+            if (state is PokedexSuccessState) {
+              pokedex = state.pokedex;
+            }
+          },
+          builder: (context, state) => switch (state) {
+            PokedexLoadingState() => LoadingPage(),
+            PokedexErrorState() => ErrorPage(),
+            PokedexState() => buildSuccessPage(theme),
+          },
         ),
       ),
     );
@@ -66,7 +64,9 @@ class _PokedexPageState extends State<PokedexPage> {
           headerBuilder: (headerKey) => buildPokedexHeader(theme, headerKey),
           itemCount: pokedex.pokemon.length,
           itemBuilder: (context, index) =>
-              buildPokemonEntry(pokedex.pokemon[index], theme));
+              buildPokemonEntry(pokedex.pokemon[index], theme),
+          background: theme.colorScheme.surface,
+        );
 
   Widget buildPokemonEntry(PokedexPokemonLocalModel pokemon, ThemeData theme) =>
       Padding(
@@ -76,7 +76,7 @@ class _PokedexPageState extends State<PokedexPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Image(
-                image: AssetImage('assets/pokeball-background.png'),
+                image: AssetImage('assets/pokeball_background.png'),
                 opacity: const AlwaysStoppedAnimation(.4),
                 height: 100,
                 width: 100,
@@ -106,7 +106,18 @@ class _PokedexPageState extends State<PokedexPage> {
         ),
       );
 
-  Widget buildPokedexHeader(ThemeData theme, GlobalKey key) =>
-      Text(pokedex.name,
-          key: key, style: theme.textTheme.titleMedium!.copyWith());
+  Widget buildPokedexHeader(ThemeData theme, GlobalKey key) => Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/pokedex_header_background.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Text(
+            pokedex.name,
+            key: key,
+            style: theme.textTheme.titleMedium!.copyWith(),
+            textAlign: TextAlign.center,
+          ),
+      );
 }
