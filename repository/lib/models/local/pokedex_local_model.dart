@@ -1,4 +1,4 @@
-import 'package:repository/models/local/pokedex_pokemon_local_model.dart';
+import 'package:repository/models/local/pokemon_local_model.dart';
 import 'package:equatable/equatable.dart';
 
 class PokedexLocalModel extends Equatable {

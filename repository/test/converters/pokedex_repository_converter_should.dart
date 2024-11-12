@@ -9,7 +9,7 @@ import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
-import 'package:repository/models/local/pokedex_pokemon_local_model.dart';
+import 'package:repository/models/local/pokemon_local_model.dart';
 
 import 'pokedex_repository_converter_should.mocks.dart';
 

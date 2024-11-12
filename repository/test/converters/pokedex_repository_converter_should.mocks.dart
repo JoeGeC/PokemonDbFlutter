@@ -9,7 +9,7 @@ import 'package:repository/converters/pokemon/pokemon_repository_converter.dart'
     as _i2;
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart'
     as _i5;
-import 'package:repository/models/local/pokedex_pokemon_local_model.dart' as _i4;
+import 'package:repository/models/local/pokemon_local_model.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
