@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter_impl.dart';
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';
-import 'package:repository/models/local/pokedex_pokemon_local.dart';
+import 'package:repository/models/local/pokedex_pokemon_local_model.dart';
 
 void main() {
   late PokemonRepositoryConverterImpl pokemonConverter;
@@ -11,8 +11,8 @@ void main() {
   late int pokemonId;
   late int pokemonEntryId;
   late String pokemonName;
-  late PokedexPokemonLocalModel pokedexPokemonLocalModel;
-  late List<PokedexPokemonLocalModel> localPokemonList;
+  late PokemonLocalModel pokedexPokemonLocalModel;
+  late List<PokemonLocalModel> localPokemonList;
 
   setUp(() {
     pokemonConverter = PokemonRepositoryConverterImpl();
@@ -20,8 +20,10 @@ void main() {
     pokemonId = 2;
     pokemonEntryId = 3;
     pokemonName = "Sample Pokemon";
-    pokedexPokemonLocalModel = PokedexPokemonLocalModel(
-        pokemonId, {pokedexName: pokemonEntryId}, pokemonName);
+    pokedexPokemonLocalModel = PokemonLocalModel(
+        id: pokemonId,
+        pokedexEntryNumbers: {pokedexName: pokemonEntryId},
+        name: pokemonName);
     localPokemonList = [pokedexPokemonLocalModel];
   });
 

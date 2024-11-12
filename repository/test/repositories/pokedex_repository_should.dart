@@ -12,8 +12,8 @@ import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';
-import 'package:repository/models/local/pokedex_local.dart';
-import 'package:repository/models/local/pokedex_pokemon_local.dart';
+import 'package:repository/models/local/pokedex_local_model.dart';
+import 'package:repository/models/local/pokedex_pokemon_local_model.dart';
 import 'package:repository/repositories/pokedex_repository_impl.dart';
 
 import 'pokedex_repository_should.mocks.dart';
@@ -33,7 +33,7 @@ void main() {
     late String pokemonName;
     late PokedexPokemonDataModel pokedexPokemonData;
     late PokedexDataModel pokedexDataModel;
-    late PokedexPokemonLocalModel pokedexPokemonLocalModel;
+    late PokemonLocalModel pokedexPokemonLocalModel;
     late PokedexLocalModel pokedexLocalModel;
     late PokemonModel pokemonDomainModel;
     late PokedexModel pokedexDomainModel;
@@ -60,8 +60,10 @@ void main() {
           PokedexPokemonDataModel(pokemonId, pokemonName, "url");
       pokedexDataModel =
           PokedexDataModel(pokedexId, pokedexName, [pokedexPokemonData]);
-      pokedexPokemonLocalModel = PokedexPokemonLocalModel(
-          pokemonId, {pokemonName: pokemonEntryId}, pokemonName);
+      pokedexPokemonLocalModel = PokemonLocalModel(
+          id: pokemonId,
+          pokedexEntryNumbers: {pokemonName: pokemonEntryId},
+          name: pokemonName);
       pokedexLocalModel =
           PokedexLocalModel(pokedexId, pokemonName, [pokedexPokemonLocalModel]);
       pokemonDomainModel = PokemonModel(

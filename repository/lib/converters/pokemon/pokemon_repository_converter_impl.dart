@@ -1,14 +1,14 @@
 import 'package:domain/models/pokemon_model.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter.dart';
 import 'package:repository/models/exceptions/NullException.dart';
-import 'package:repository/models/local/pokedex_pokemon_local.dart';
+import 'package:repository/models/local/pokedex_pokemon_local_model.dart';
 
 import '../../models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 
 class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
   @override
   List<PokemonModel> convertToDomain(
-          List<PokedexPokemonLocalModel> localPokemonList) =>
+          List<PokemonLocalModel> localPokemonList) =>
       localPokemonList
           .map((pokemon) => PokemonModel(
                 id: pokemon.id,
@@ -18,20 +18,20 @@ class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
           .toList();
 
   @override
-  List<PokedexPokemonLocalModel> convertToLocal(
+  List<PokemonLocalModel> convertToLocal(
       List<PokedexPokemonDataModel> dataPokemonList, String pokedexName) {
     return dataPokemonList
         .map((pokemon) {
           try {
-            return PokedexPokemonLocalModel(
-                getPokemonId(pokemon.url),
-                getEntryNumberAsMap(pokemon.entryNumber, pokedexName),
-                getPokemonName(pokemon.name));
+            return PokemonLocalModel(
+                id: getPokemonId(pokemon.url),
+                pokedexEntryNumbers: getEntryNumberAsMap(pokemon.entryNumber, pokedexName),
+                name: getPokemonName(pokemon.name));
           } catch (e) {
             return null;
           }
         })
-        .whereType<PokedexPokemonLocalModel>()
+        .whereType<PokemonLocalModel>()
         .toList();
   }
 

@@ -3,7 +3,7 @@ import 'package:repository/converters/pokedex/pokedex_repository_converter.dart'
 import 'package:repository/converters/pokemon/pokemon_repository_converter.dart';
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';
-import 'package:repository/models/local/pokedex_local.dart';
+import 'package:repository/models/local/pokedex_local_model.dart';
 
 class PokedexRepositoryConverterImpl implements PokedexRepositoryConverter {
   PokemonRepositoryConverter pokemonConverter;

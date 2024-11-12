@@ -14,7 +14,7 @@ import 'package:repository/converters/pokedex/pokedex_repository_converter.dart'
     as _i10;
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart' as _i8;
 import 'package:repository/models/data_failure.dart' as _i7;
-import 'package:repository/models/local/pokedex_local.dart' as _i4;
+import 'package:repository/models/local/pokedex_local_model.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
