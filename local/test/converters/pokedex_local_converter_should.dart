@@ -22,4 +22,38 @@ void main(){
       DatabaseColumnNames.name: pokedexName,
     });
   });
+
+  test('convert a PokedexLocalModel with an empty name to a map', () {
+    final pokedex = PokedexLocalModel(pokedexId, '', []);
+
+    final result = converter.convert(pokedex);
+
+    expect(result, {
+      DatabaseColumnNames.id: pokedexId,
+      DatabaseColumnNames.name: '',
+    });
+  });
+
+
+  test('handle negative ID gracefully', () {
+    final pokedex = PokedexLocalModel(-1, pokedexName, []);
+
+    final result = converter.convert(pokedex);
+
+    expect(result, {
+      DatabaseColumnNames.id: -1,
+      DatabaseColumnNames.name: pokedexName,
+    });
+  });
+
+  test('handles zero ID gracefully', () {
+    final pokedex = PokedexLocalModel(0, pokedexName, []);
+
+    final result = converter.convert(pokedex);
+
+    expect(result, {
+      DatabaseColumnNames.id: 0,
+      DatabaseColumnNames.name: pokedexName,
+    });
+  });
 }
