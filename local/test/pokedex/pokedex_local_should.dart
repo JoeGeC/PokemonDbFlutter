@@ -27,21 +27,40 @@ void main() {
   const String pokemonName = "Sample Pokemon";
   const String pokemonType1 = "Grass";
   const String pokemonType2 = "Flying";
+  const String pokemonType3 = "Poison";
   const String pokemonFrontSpriteUrl = "https://example.com/example.png";
-  const PokemonLocalModel pokemonModel = PokemonLocalModel(
-      id: pokemonId,
-      name: pokemonName,
-      pokedexEntryNumbers: {pokedexName: pokemonEntryNumber},
-      types: [pokemonType1, pokemonType2],
-      frontSpriteUrl: pokemonFrontSpriteUrl);
-  const PokedexLocalModel pokedexModel =
-      PokedexLocalModel(pokedexId, pokedexName, [pokemonModel]);
+  const pokemonId2 = 20;
+  const pokemonName2 = "SecondPokemon";
+  const pokemonEntryNumber2 = 6;
+  late PokedexLocalModel pokedexModel;
+  late PokemonLocalModel pokemonModel;
+  late PokemonLocalModel pokemonModel2;
+  late PokedexLocalModel multPokemonPokedexModel;
 
   setUp(() async {
+    sqfliteFfiInit();
     mockPokedexConverter = MockPokedexLocalConverter();
     mockPokemonConverter = MockPokemonLocalConverter();
-    sqfliteFfiInit();
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
+    pokemonModel = PokemonLocalModel(
+        id: pokemonId,
+        name: pokemonName,
+        pokedexEntryNumbers: {pokedexName: pokemonEntryNumber},
+        types: [pokemonType1, pokemonType2],
+        frontSpriteUrl: pokemonFrontSpriteUrl);
+    pokemonModel2 = PokemonLocalModel(
+      id: pokemonId2,
+      name: pokemonName2,
+      types: [pokemonType3],
+      frontSpriteUrl: null,
+      pokedexEntryNumbers: {pokedexName: pokemonEntryNumber2},
+    );
+    pokedexModel = PokedexLocalModel(pokedexId, pokedexName, [pokemonModel]);
+    multPokemonPokedexModel = PokedexLocalModel(pokedexId, pokedexName, [
+      pokemonModel,
+      pokemonModel2,
+    ]);
+
     await setupMockPokedexTable(database);
     await setupMockPokemonTable(database);
     await setupMockPokedexEntryNumbersTable(database);
@@ -76,27 +95,34 @@ void main() {
   });
 
   group('store data', () {
+    const pokedexMap = {
+      DatabaseColumnNames.id: pokedexId,
+      DatabaseColumnNames.name: pokedexName,
+    };
+
+    const pokemonMap = {
+      DatabaseColumnNames.id: pokemonId,
+      DatabaseColumnNames.name: pokemonName,
+      DatabaseColumnNames.types: "$pokemonType1,$pokemonType2",
+      DatabaseColumnNames.frontSpriteUrl: pokemonFrontSpriteUrl,
+    };
+
+    const pokemon2Map = {
+      DatabaseColumnNames.id: pokemonId2,
+      DatabaseColumnNames.name: pokemonName2,
+      DatabaseColumnNames.types: pokemonType3,
+    };
+
+    const pokedexEntryMap = {
+      DatabaseColumnNames.pokemonId: pokemonId,
+      DatabaseColumnNames.pokedexName: pokedexName,
+      DatabaseColumnNames.entryNumber: pokemonEntryNumber,
+    };
+
     test('store pokedex with pokemon', () async {
-      final pokedexMap = {
-        DatabaseColumnNames.id: pokedexId,
-        DatabaseColumnNames.name: pokedexName,
-      };
-
-      final pokemonMap = {
-        DatabaseColumnNames.id: pokemonId,
-        DatabaseColumnNames.name: pokemonName,
-        DatabaseColumnNames.types: "$pokemonType1,$pokemonType2",
-        DatabaseColumnNames.frontSpriteUrl: pokemonFrontSpriteUrl,
-      };
-
-      final pokedexEntryMap = {
-        DatabaseColumnNames.pokemonId: pokemonId,
-        DatabaseColumnNames.pokedexName: pokedexName,
-        DatabaseColumnNames.entryNumber: pokemonEntryNumber,
-      };
-
       when(mockPokedexConverter.convert(pokedexModel)).thenReturn(pokedexMap);
       when(mockPokemonConverter.convert(pokemonModel)).thenReturn(pokemonMap);
+
       await pokedexLocal.store(pokedexModel);
 
       final pokedexFromDatabase =
@@ -132,6 +158,31 @@ void main() {
       expect(pokedexFromDatabase, hasLength(1));
       expect(
           pokedexFromDatabase.first[DatabaseColumnNames.name], newPokedexName);
+    });
+
+    test('ignores duplicate pokemon data', () async {
+      when(mockPokedexConverter.convert(pokedexModel)).thenReturn(pokedexMap);
+      when(mockPokemonConverter.convert(pokemonModel)).thenReturn(pokemonMap);
+      await pokedexLocal.store(pokedexModel);
+      await pokedexLocal.store(pokedexModel);
+
+      final pokemonRows = await database.query(DatabaseTableNames.pokemon);
+
+      expect(pokemonRows, hasLength(1));
+    });
+
+    test('stores multiple pokemon in a single batch', () async {
+      when(mockPokedexConverter.convert(multPokemonPokedexModel)).thenReturn(pokedexMap);
+      when(mockPokemonConverter.convert(pokemonModel)).thenReturn(pokemonMap);
+      when(mockPokemonConverter.convert(pokemonModel2)).thenReturn(pokemon2Map);
+
+      await pokedexLocal.store(multPokemonPokedexModel);
+
+      final pokemonFromDatabase =
+          await database.query(DatabaseTableNames.pokemon);
+      expect(pokemonFromDatabase, hasLength(2));
+      expect(pokemonFromDatabase.map((row) => row[DatabaseColumnNames.name]),
+          containsAll([pokemonName, pokemonName2]));
     });
   });
 }
