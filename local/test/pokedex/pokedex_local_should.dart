@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:local/converters/pokedex_local_converter.dart';
@@ -5,6 +7,7 @@ import 'package:local/converters/pokemon_local_converter.dart';
 import 'package:local/database_constants.dart';
 import 'package:local/pokedex/pokedex_local_impl.dart';
 import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
@@ -19,6 +22,23 @@ void main() {
   late MockPokedexLocalConverter mockPokedexConverter;
   late MockPokemonLocalConverter mockPokemonConverter;
 
+  const int pokemonEntryNumber = 5;
+  const int pokedexId = 3;
+  const String pokedexName = "original-johto";
+  const int pokemonId = 1;
+  const String pokemonName = "Sample Pokemon";
+  const String pokemonType1 = "Grass";
+  const String pokemonType2 = "Flying";
+  const String pokemonFrontSpriteUrl = "https://example.com/example.png";
+  const PokemonLocalModel pokemonModel = PokemonLocalModel(
+      id: pokemonId,
+      name: pokemonName,
+      pokedexEntryNumbers: {pokedexName: pokemonEntryNumber},
+      types: [pokemonType1, pokemonType2],
+      frontSpriteUrl: pokemonFrontSpriteUrl);
+  const PokedexLocalModel pokedexModel =
+      PokedexLocalModel(pokedexId, pokedexName, [pokemonModel]);
+
   setUp(() async {
     mockPokedexConverter = MockPokedexLocalConverter();
     mockPokemonConverter = MockPokemonLocalConverter();
@@ -27,7 +47,8 @@ void main() {
     await setupMockPokedexTable(database);
     await setupMockPokemonTable(database);
     await setupMockPokedexEntryNumbersTable(database);
-    pokedexLocal = PokedexLocalImpl(database, mockPokedexConverter, mockPokemonConverter);
+    pokedexLocal =
+        PokedexLocalImpl(database, mockPokedexConverter, mockPokemonConverter);
   });
 
   tearDown(() async {
@@ -35,23 +56,6 @@ void main() {
   });
 
   group('get pokedex', () {
-    const int pokemonEntryNumber = 5;
-    const int pokedexId = 3;
-    const String pokedexName = "original-johto";
-    const int pokemonId = 1;
-    const String pokemonName = "Sample Pokemon";
-    const String pokemonType1 = "Grass";
-    const String pokemonType2 = "Flying";
-    const String pokemonFrontSpriteUrl = "https://example.com/example.png";
-    const PokemonLocalModel pokemonLocalModel = PokemonLocalModel(
-        id: pokemonId,
-        name: pokemonName,
-        pokedexEntryNumbers: {pokedexName: pokemonEntryNumber},
-        types: [pokemonType1, pokemonType2],
-        frontSpriteUrl: pokemonFrontSpriteUrl);
-    const PokedexLocalModel pokedexLocalModel =
-        PokedexLocalModel(pokedexId, pokedexName, [pokemonLocalModel]);
-
     test('return PokedexLocalModel when data is found', () async {
       await populatePokedexTable(database, pokedexId, pokedexName);
       await populatePokemonTable(database, pokemonId, pokemonName, pokemonType1,
@@ -61,7 +65,7 @@ void main() {
 
       final result = await pokedexLocal.get(pokedexId);
 
-      final expected = Right(pokedexLocalModel);
+      final expected = Right(pokedexModel);
       expect(result, expected);
     });
 
@@ -70,6 +74,47 @@ void main() {
 
       final expected = Left(DataFailure("No data"));
       expect(result, expected);
+    });
+  });
+
+  group('store data', () {
+    test('store pokedex with pokemon', () async {
+      final pokedexMap = {
+        DatabaseColumnNames.id: pokedexId,
+        DatabaseColumnNames.name: pokedexName,
+      };
+
+      final pokemonMap = {
+        DatabaseColumnNames.id: pokemonId,
+        DatabaseColumnNames.name: pokemonName,
+        DatabaseColumnNames.types: "$pokemonType1,$pokemonType2",
+        DatabaseColumnNames.frontSpriteUrl: pokemonFrontSpriteUrl,
+      };
+
+      final pokedexEntryMap = {
+        DatabaseColumnNames.pokemonId: pokemonId,
+        DatabaseColumnNames.pokedexName: pokedexName,
+        DatabaseColumnNames.entryNumber: pokemonEntryNumber,
+      };
+
+      when(mockPokedexConverter.convert(pokedexModel)).thenReturn(pokedexMap);
+      when(mockPokemonConverter.convert(pokemonModel)).thenReturn(pokemonMap);
+      await pokedexLocal.store(pokedexModel);
+
+      final pokedexFromDatabase =
+          await database.query(DatabaseTableNames.pokedex);
+      expect(pokedexFromDatabase, hasLength(1));
+      expect(pokedexFromDatabase.first, pokedexMap);
+
+      final pokemonFromDatabase =
+          await database.query(DatabaseTableNames.pokemon);
+      expect(pokemonFromDatabase, hasLength(1));
+      expect(pokemonFromDatabase.first, pokemonMap);
+
+      final pokedexEntryFromDatabase =
+          await database.query(DatabaseTableNames.pokedexEntryNumbers);
+      expect(pokedexEntryFromDatabase, hasLength(1));
+      expect(pokedexEntryFromDatabase.first, pokedexEntryMap);
     });
   });
 }
