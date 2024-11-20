@@ -9,8 +9,8 @@ import '../../common/pages/empty_page.dart';
 import '../../common/pages/error_page.dart';
 import '../../common/pages/loading_page.dart';
 import '../../injections.dart';
-import '../models/pokedex_local_model.dart';
-import '../models/pokemon_local_model.dart';
+import '../models/pokedex_presentation_model.dart';
+import '../models/pokedex_pokemon_presentation_model.dart';
 
 class PokedexPage extends StatefulWidget {
   const PokedexPage({super.key});
@@ -21,8 +21,8 @@ class PokedexPage extends StatefulWidget {
 
 class _PokedexPageState extends State<PokedexPage> {
   final PokedexBloc _bloc =
-      PokedexBloc(getIt<PokedexUseCase>(), getIt<PokedexLocalConverter>());
-  late PokedexLocalModel pokedex;
+      PokedexBloc(getIt<PokedexUseCase>(), getIt<PokedexPresentationConverter>());
+  late PokedexPresentationModel pokedex;
 
   @override
   void initState() {
@@ -68,7 +68,7 @@ class _PokedexPageState extends State<PokedexPage> {
           background: theme.colorScheme.surface,
         );
 
-  Widget buildPokemonEntry(PokedexPokemonLocalModel pokemon, ThemeData theme) =>
+  Widget buildPokemonEntry(PokedexPokemonPresentationModel pokemon, ThemeData theme) =>
       Padding(
         padding: EdgeInsets.all(8),
         child: IntrinsicHeight(

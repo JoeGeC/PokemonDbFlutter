@@ -1,12 +1,12 @@
 import 'package:domain/models/pokemon_model.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:presentation/pokedex/models/pokemon_local_model.dart';
-import 'package:presentation/pokemon/converters/pokemon_local_converter_impl.dart';
+import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
+import 'package:presentation/pokemon/converters/pokemon_presentation_converter_impl.dart';
 
 void main() {
   late PokedexPokemonLocalConverterImpl converter;
   late PokemonModel pokemonModel;
-  late PokedexPokemonLocalModel pokemonLocalModel;
+  late PokedexPokemonPresentationModel pokemonLocalModel;
   late String pokedexName;
 
   setUp(() {
@@ -19,7 +19,7 @@ void main() {
       imageUrl: "url/asd/asd/asd/",
       types: ["grass", "flying"],
     );
-    pokemonLocalModel = PokedexPokemonLocalModel(
+    pokemonLocalModel = PokedexPokemonPresentationModel(
         id: 1,
         nationalDexNumber: "0001",
         pokedexEntryNumber: "002",

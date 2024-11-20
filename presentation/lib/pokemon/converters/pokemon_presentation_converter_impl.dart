@@ -1,17 +1,17 @@
 import 'package:domain/models/pokemon_model.dart';
 import 'package:presentation/common/utils/utils.dart';
-import 'package:presentation/pokemon/converters/pokemon_local_converter.dart';
-import '../../pokedex/models/pokemon_local_model.dart';
+import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
+import '../../pokedex/models/pokedex_pokemon_presentation_model.dart';
 
-class PokedexPokemonLocalConverterImpl extends PokemonLocalConverter {
+class PokedexPokemonLocalConverterImpl extends PokemonPresentationConverter {
   @override
-  List<PokedexPokemonLocalModel> convertList(
+  List<PokedexPokemonPresentationModel> convertList(
           List<PokemonModel> pokemonList, String pokedexName) =>
       pokemonList.map((pokemon) => convert(pokemon, pokedexName)).toList();
 
   @override
-  PokedexPokemonLocalModel convert(PokemonModel pokemon, String pokedexName) {
-    return PokedexPokemonLocalModel(
+  PokedexPokemonPresentationModel convert(PokemonModel pokemon, String pokedexName) {
+    return PokedexPokemonPresentationModel(
       id: pokemon.id,
       nationalDexNumber: convertNationalDexNumber(pokemon.id),
       pokedexEntryNumber:

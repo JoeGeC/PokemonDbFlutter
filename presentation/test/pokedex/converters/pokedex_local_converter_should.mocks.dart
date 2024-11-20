@@ -5,8 +5,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:domain/models/pokemon_model.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:presentation/pokedex/models/pokemon_local_model.dart' as _i2;
-import 'package:presentation/pokemon/converters/pokemon_local_converter.dart'
+import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart' as _i2;
+import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart'
     as _i3;
 
 // ignore_for_file: type=lint
@@ -23,7 +23,7 @@ import 'package:presentation/pokemon/converters/pokemon_local_converter.dart'
 // ignore_for_file: subtype_of_sealed_class
 
 class _FakePokedexPokemonLocalModel_0 extends _i1.SmartFake
-    implements _i2.PokedexPokemonLocalModel {
+    implements _i2.PokedexPokemonPresentationModel {
   _FakePokedexPokemonLocalModel_0(
     Object parent,
     Invocation parentInvocation,
@@ -37,13 +37,13 @@ class _FakePokedexPokemonLocalModel_0 extends _i1.SmartFake
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPokemonLocalConverter extends _i1.Mock
-    implements _i3.PokemonLocalConverter {
+    implements _i3.PokemonPresentationConverter {
   MockPokemonLocalConverter() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  List<_i2.PokedexPokemonLocalModel> convertList(
+  List<_i2.PokedexPokemonPresentationModel> convertList(
     List<_i4.PokemonModel>? pokemonList,
     String? pokedexName,
   ) =>
@@ -55,11 +55,11 @@ class MockPokemonLocalConverter extends _i1.Mock
             pokedexName,
           ],
         ),
-        returnValue: <_i2.PokedexPokemonLocalModel>[],
-      ) as List<_i2.PokedexPokemonLocalModel>);
+        returnValue: <_i2.PokedexPokemonPresentationModel>[],
+      ) as List<_i2.PokedexPokemonPresentationModel>);
 
   @override
-  _i2.PokedexPokemonLocalModel convert(
+  _i2.PokedexPokemonPresentationModel convert(
     _i4.PokemonModel? pokemon,
     String? pokedexName,
   ) =>
@@ -81,5 +81,5 @@ class MockPokemonLocalConverter extends _i1.Mock
             ],
           ),
         ),
-      ) as _i2.PokedexPokemonLocalModel);
+      ) as _i2.PokedexPokemonPresentationModel);
 }

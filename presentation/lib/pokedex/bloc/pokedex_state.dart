@@ -13,7 +13,7 @@ class PokedexErrorState extends PokedexState {
 }
 
 class PokedexSuccessState extends PokedexState {
-  final PokedexLocalModel pokedex;
+  final PokedexPresentationModel pokedex;
 
   PokedexSuccessState(this.pokedex);
 }

@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:domain/usecases/pokedex_usecase.dart';
 
 import '../converters/pokedex_local_converter.dart';
-import '../models/pokedex_local_model.dart';
+import '../models/pokedex_presentation_model.dart';
 
 part 'pokedex_event.dart';
 
@@ -10,10 +10,10 @@ part 'pokedex_state.dart';
 
 class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
   final PokedexUseCase _pokedexUseCase;
-  final PokedexLocalConverter _pokedexConverter;
+  final PokedexPresentationConverter _pokedexConverter;
 
   PokedexBloc(
-      PokedexUseCase pokedexUseCase, PokedexLocalConverter pokedexConverter)
+      PokedexUseCase pokedexUseCase, PokedexPresentationConverter pokedexConverter)
       : _pokedexUseCase = pokedexUseCase,
         _pokedexConverter = pokedexConverter,
         super(PokedexLoadingState()) {

@@ -4,13 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:presentation/pokedex/converters/pokedex_local_converter_impl.dart';
-import 'package:presentation/pokedex/models/pokedex_local_model.dart';
-import 'package:presentation/pokedex/models/pokemon_local_model.dart';
-import 'package:presentation/pokemon/converters/pokemon_local_converter.dart';
+import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
+import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
+import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
 
 import 'pokedex_local_converter_should.mocks.dart';
 
-@GenerateMocks([PokemonLocalConverter])
+@GenerateMocks([PokemonPresentationConverter])
 void main() {
   setUp(() {});
 
@@ -24,7 +24,7 @@ void main() {
       imageUrl: "url/asd/asd/asd/",
       types: ["grass", "flying"],
     );
-    PokedexPokemonLocalModel expectedPokemon = PokedexPokemonLocalModel(
+    PokedexPokemonPresentationModel expectedPokemon = PokedexPokemonPresentationModel(
         id: 1,
         nationalDexNumber: "0001",
         pokedexEntryNumber: "002",
@@ -33,9 +33,9 @@ void main() {
         types: ["Grass", "Flying"]);
     PokedexModel pokedexModel =
         PokedexModel(id: 2, name: pokedexName, pokemon: [pokemonModel]);
-    PokedexLocalModel expected = PokedexLocalModel(
+    PokedexPresentationModel expected = PokedexPresentationModel(
         id: 2, name: "Original Johto", pokemon: [expectedPokemon]);
-    var converter = PokedexLocalConverterImpl(mockPokemonConverter);
+    var converter = PokedexPresentationConverterImpl(mockPokemonConverter);
 
     when(mockPokemonConverter.convertList([pokemonModel], pokedexName))
         .thenReturn([expectedPokemon]);

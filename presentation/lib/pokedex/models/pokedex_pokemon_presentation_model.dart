@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class PokedexPokemonLocalModel extends Equatable {
+class PokedexPokemonPresentationModel extends Equatable {
   final int id;
   final String nationalDexNumber;
   final String pokedexEntryNumber;
@@ -8,7 +8,7 @@ class PokedexPokemonLocalModel extends Equatable {
   final String? imageUrl;
   final List<String> types;
 
-  const PokedexPokemonLocalModel({
+  const PokedexPokemonPresentationModel({
     required this.id,
     required this.nationalDexNumber,
     required this.pokedexEntryNumber,
