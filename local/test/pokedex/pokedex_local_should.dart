@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:local/converters/pokedex_local_converter.dart';
@@ -115,6 +113,25 @@ void main() {
           await database.query(DatabaseTableNames.pokedexEntryNumbers);
       expect(pokedexEntryFromDatabase, hasLength(1));
       expect(pokedexEntryFromDatabase.first, pokedexEntryMap);
+    });
+
+    test('replaces existing pokedex data on conflict', () async {
+      const newPokedexName = "new-pokedex-name";
+      const newPokedexModel = PokedexLocalModel(pokedexId, newPokedexName, []);
+      final pokedexMap = {
+        DatabaseColumnNames.id: pokedexId,
+        DatabaseColumnNames.name: newPokedexName,
+      };
+
+      when(mockPokedexConverter.convert(newPokedexModel))
+          .thenReturn(pokedexMap);
+      await pokedexLocal.store(newPokedexModel);
+
+      final pokedexFromDatabase =
+          await database.query(DatabaseTableNames.pokedex);
+      expect(pokedexFromDatabase, hasLength(1));
+      expect(
+          pokedexFromDatabase.first[DatabaseColumnNames.name], newPokedexName);
     });
   });
 }
