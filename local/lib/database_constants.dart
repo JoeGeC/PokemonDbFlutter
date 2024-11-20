@@ -1,13 +1,19 @@
 class DatabaseConstants {
   static const String databaseName = 'pokemon.db';
-  static const String pokemonTableName = 'pokemon';
-  static const String pokedexTableName = 'pokedex';
-  static const String pokedexEntryNumbersTableName = 'pokedexEntryNumbers';
-  static const String columnPokemonId = 'pokemonId';
-  static const String columnId = 'id';
-  static const String columnName = 'name';
-  static const String columnTypes = 'types';
-  static const String columnFrontSpriteUrl = 'frontSpriteUrl';
-  static const String columnPokedexName = 'pokedexName';
-  static const String columnEntryNumber = 'entryNumber';
+}
+
+class DatabaseTableNames {
+  static const String pokemon = 'pokemon';
+  static const String pokedex = 'pokedex';
+  static const String pokedexEntryNumbers = 'pokedexEntryNumbers';
+}
+
+class DatabaseColumnNames {
+  static const String pokemonId = 'pokemonId';
+  static const String id = 'id';
+  static const String name = 'name';
+  static const String types = 'types';
+  static const String frontSpriteUrl = 'frontSpriteUrl';
+  static const String pokedexName = 'pokedexName';
+  static const String entryNumber = 'entryNumber';
 }

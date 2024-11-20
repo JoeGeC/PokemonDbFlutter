@@ -30,31 +30,31 @@ class DatabaseInitializer {
 
   Future<void> createPokedexTable(Database database) async {
     await database.execute('''
-      ${SqlCommands.createTable} IF NOT EXISTS ${DatabaseConstants.pokedexTableName} ( 
-        ${DatabaseConstants.columnId} ${SqlCommands.intPrimaryKey},
-        ${DatabaseConstants.columnName} ${SqlCommands.textType}
+      ${SqlCommands.createTable} IF NOT EXISTS ${DatabaseTableNames.pokedex} ( 
+        ${DatabaseColumnNames.id} ${SqlCommands.intPrimaryKey},
+        ${DatabaseColumnNames.name} ${SqlCommands.textType}
       )
     ''');
   }
 
   Future<void> createPokemonTable(Database database) async {
     await database.execute('''
-      ${SqlCommands.createTable} IF NOT EXISTS ${DatabaseConstants.pokemonTableName} ( 
-        ${DatabaseConstants.columnId} ${SqlCommands.intPrimaryKey}, 
-        ${DatabaseConstants.columnName} ${SqlCommands.textType},
-        ${DatabaseConstants.columnTypes} ${SqlCommands.textType},
-        ${DatabaseConstants.columnFrontSpriteUrl} ${SqlCommands.textType}
+      ${SqlCommands.createTable} IF NOT EXISTS ${DatabaseTableNames.pokemon} ( 
+        ${DatabaseColumnNames.id} ${SqlCommands.intPrimaryKey}, 
+        ${DatabaseColumnNames.name} ${SqlCommands.textType},
+        ${DatabaseColumnNames.types} ${SqlCommands.textType},
+        ${DatabaseColumnNames.frontSpriteUrl} ${SqlCommands.textType}
       )
     ''');
   }
 
   Future<void> createPokedexEntryNumbersTable(Database database) async {
     await database.execute('''
-      ${SqlCommands.createTable} IF NOT EXISTS ${DatabaseConstants.pokedexEntryNumbersTableName} ( 
-        ${DatabaseConstants.columnPokemonId} ${SqlCommands.intType}, 
-        ${DatabaseConstants.columnPokedexName} ${SqlCommands.textType},
-        ${DatabaseConstants.columnEntryNumber} ${SqlCommands.intType},
-        ${SqlCommands.foreignKey} (${DatabaseConstants.columnPokemonId}) ${SqlCommands.references} ${DatabaseConstants.pokemonTableName}(${DatabaseConstants.columnId}) ${SqlCommands.onDelete} ${SqlCommands.cascade}
+      ${SqlCommands.createTable} IF NOT EXISTS ${DatabaseTableNames.pokedexEntryNumbers} ( 
+        ${DatabaseColumnNames.pokemonId} ${SqlCommands.intType}, 
+        ${DatabaseColumnNames.pokedexName} ${SqlCommands.textType},
+        ${DatabaseColumnNames.entryNumber} ${SqlCommands.intType},
+        ${SqlCommands.foreignKey} (${DatabaseColumnNames.pokemonId}) ${SqlCommands.references} ${DatabaseTableNames.pokemon}(${DatabaseColumnNames.id}) ${SqlCommands.onDelete} ${SqlCommands.cascade}
       )
     ''');
   }

@@ -13,35 +13,37 @@ import 'package:sqflite/sqflite.dart';
 import '../converters/pokedex_local_converter.dart';
 
 class PokedexLocalImpl implements PokedexLocal{
-  PokemonLocalConverter pokemonConverter = PokemonLocalConverter();
-  PokedexLocalConverter pokedexConverter = PokedexLocalConverter();
+  final Database database;
+  final PokemonLocalConverter pokemonConverter;
+  final PokedexLocalConverter pokedexConverter;
+
+  PokedexLocalImpl(this.database, this.pokedexConverter, this.pokemonConverter);
 
   @override
   Future<Either<DataFailure, PokedexLocalModel>> get(int pokedexId) async {
-    final Database database = await DatabaseInitializer.instance.database;
     final pokedexQuery = await database.query(
-      DatabaseConstants.pokedexTableName,
-      where: '${DatabaseConstants.columnId} = ?',
+      DatabaseTableNames.pokedex,
+      where: '${DatabaseColumnNames.id} = ?',
       whereArgs: [pokedexId],
     );
 
     if (pokedexQuery.isEmpty) return Left(DataFailure("No data"));
 
     final pokedexRow = pokedexQuery.first;
-    final pokedexName = pokedexRow[DatabaseConstants.columnName] as String? ?? "";
+    final pokedexName = pokedexRow[DatabaseColumnNames.name] as String? ?? "";
 
     // Fetch all pokemon for this pokedex
     final pokemonQuery = await database.rawQuery('''
-    SELECT pokemon.${DatabaseConstants.columnId} AS pokemonId,
-           pokemon.${DatabaseConstants.columnName} AS pokemonName,
-           pokemon.${DatabaseConstants.columnTypes} AS pokemonTypes,
-           pokemon.${DatabaseConstants.columnFrontSpriteUrl} AS frontSpriteUrl,
-           pokedexEntry.${DatabaseConstants.columnPokedexName} AS pokedexName,
-           pokedexEntry.${DatabaseConstants.columnEntryNumber} AS entryNumber
-    FROM ${DatabaseConstants.pokemonTableName} pokemon
-    LEFT JOIN ${DatabaseConstants.pokedexEntryNumbersTableName} pokedexEntry
-    ON pokemon.${DatabaseConstants.columnId} = pokedexEntry.${DatabaseConstants.columnPokemonId}
-    WHERE pokedexEntry.${DatabaseConstants.columnPokedexName} = ?
+    SELECT pokemon.${DatabaseColumnNames.id} AS pokemonId,
+           pokemon.${DatabaseColumnNames.name} AS pokemonName,
+           pokemon.${DatabaseColumnNames.types} AS pokemonTypes,
+           pokemon.${DatabaseColumnNames.frontSpriteUrl} AS frontSpriteUrl,
+           pokedexEntry.${DatabaseColumnNames.pokedexName} AS pokedexName,
+           pokedexEntry.${DatabaseColumnNames.entryNumber} AS entryNumber
+    FROM ${DatabaseTableNames.pokemon} pokemon
+    LEFT JOIN ${DatabaseTableNames.pokedexEntryNumbers} pokedexEntry
+    ON pokemon.${DatabaseColumnNames.id} = pokedexEntry.${DatabaseColumnNames.pokemonId}
+    WHERE pokedexEntry.${DatabaseColumnNames.pokedexName} = ?
   ''', [pokedexName]);
 
     // Map each Pokemon to its pokedex entry numbers
@@ -68,26 +70,22 @@ class PokedexLocalImpl implements PokedexLocal{
     }
 
     return Right(PokedexLocalModel(
-      pokedexRow[DatabaseConstants.columnId] as int,
-      pokedexRow[DatabaseConstants.columnName] as String,
+      pokedexRow[DatabaseColumnNames.id] as int,
+      pokedexRow[DatabaseColumnNames.name] as String,
       pokemonMap.values.toList(),
     ));
   }
 
-
-
-
   @override
   Future<void> store(PokedexLocalModel pokedex) async {
-    final Database database = await DatabaseInitializer.instance.database;
     insertPokedex(database, pokedex);
     insertPokemon(database, pokedex);
   }
 
   void insertPokedex(Database database, PokedexLocalModel pokedex) {
     database.insert(
-      DatabaseConstants.pokedexTableName,
-      pokedexConverter.toMap(pokedex),
+      DatabaseTableNames.pokedex,
+      pokedexConverter.convert(pokedex),
       conflictAlgorithm: ConflictAlgorithm.replace
     );
   }
@@ -103,8 +101,8 @@ class PokedexLocalImpl implements PokedexLocal{
 
   void insertPokemonData(Batch batch, PokemonLocalModel pokemon) {
     batch.insert(
-      DatabaseConstants.pokemonTableName,
-      pokemonConverter.toMap(pokemon),
+      DatabaseTableNames.pokemon,
+      pokemonConverter.convert(pokemon),
       conflictAlgorithm: ConflictAlgorithm.ignore
     );
   }
@@ -117,11 +115,11 @@ class PokedexLocalImpl implements PokedexLocal{
 
   void insertPokedexEntryNumber(Batch batch, PokemonLocalModel pokemon, String pokedexName, int entryNumber) {
     batch.insert(
-      DatabaseConstants.pokedexEntryNumbersTableName,
+      DatabaseTableNames.pokedexEntryNumbers,
       {
-        DatabaseConstants.columnPokemonId: pokemon.id,
-        DatabaseConstants.columnPokedexName: pokedexName,
-        DatabaseConstants.columnEntryNumber: entryNumber,
+        DatabaseColumnNames.pokemonId: pokemon.id,
+        DatabaseColumnNames.pokedexName: pokedexName,
+        DatabaseColumnNames.entryNumber: entryNumber,
       },
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );

@@ -5,6 +5,7 @@ import 'package:pokemon_db/theme/text_styles.dart';
 import 'package:presentation/pokedex/pages/pokedex_page.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await setupDependencies();
   runApp(const MyApp());
 }
