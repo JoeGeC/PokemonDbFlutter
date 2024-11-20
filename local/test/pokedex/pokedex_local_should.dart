@@ -5,6 +5,7 @@ import 'package:local/converters/pokemon_local_converter.dart';
 import 'package:local/database_constants.dart';
 import 'package:local/pokedex/pokedex_local_impl.dart';
 import 'package:mockito/annotations.dart';
+import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -18,7 +19,7 @@ void main() {
   late MockPokedexLocalConverter mockPokedexConverter;
   late MockPokemonLocalConverter mockPokemonConverter;
 
-  setUpAll(() async {
+  setUp(() async {
     mockPokedexConverter = MockPokedexLocalConverter();
     mockPokemonConverter = MockPokemonLocalConverter();
     sqfliteFfiInit();
@@ -29,7 +30,7 @@ void main() {
     pokedexLocal = PokedexLocalImpl(database, mockPokedexConverter, mockPokemonConverter);
   });
 
-  tearDownAll(() async {
+  tearDown(() async {
     await database.close();
   });
 
@@ -61,18 +62,23 @@ void main() {
       final result = await pokedexLocal.get(pokedexId);
 
       final expected = Right(pokedexLocalModel);
+      expect(result, expected);
+    });
 
+    test('return DataFailure when no data is found', () async {
+      final result = await pokedexLocal.get(pokedexId);
+
+      final expected = Left(DataFailure("No data"));
       expect(result, expected);
     });
   });
 }
 
-Future<void> populatePokedexEntryNumbersTable(Database database,
-    String pokedexName, int pokemonId, int pokemonEntryNumber) async {
-  await database.insert(DatabaseTableNames.pokedexEntryNumbers, {
-    DatabaseColumnNames.pokedexName: pokedexName,
-    DatabaseColumnNames.pokemonId: pokemonId,
-    DatabaseColumnNames.entryNumber: pokemonEntryNumber,
+Future<void> populatePokedexTable(
+    Database database, int pokedexId, String pokedexName) async {
+  await database.insert(DatabaseTableNames.pokedex, {
+    DatabaseColumnNames.id: pokedexId,
+    DatabaseColumnNames.name: pokedexName,
   });
 }
 
@@ -91,11 +97,12 @@ Future<void> populatePokemonTable(
   });
 }
 
-Future<void> populatePokedexTable(
-    Database database, int pokedexId, String pokedexName) async {
-  await database.insert(DatabaseTableNames.pokedex, {
-    DatabaseColumnNames.id: pokedexId,
-    DatabaseColumnNames.name: pokedexName,
+Future<void> populatePokedexEntryNumbersTable(Database database,
+    String pokedexName, int pokemonId, int pokemonEntryNumber) async {
+  await database.insert(DatabaseTableNames.pokedexEntryNumbers, {
+    DatabaseColumnNames.pokedexName: pokedexName,
+    DatabaseColumnNames.pokemonId: pokemonId,
+    DatabaseColumnNames.entryNumber: pokemonEntryNumber,
   });
 }
 
