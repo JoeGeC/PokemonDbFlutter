@@ -22,14 +22,17 @@ void main() {
   late MockPokemonRepositoryConverter mockConverter;
 
   late PokemonModel pokemonDomainModel;
+  late PokemonModel pokemonDomainModelUndetailed;
   late PokemonLocalModel pokemonLocalModel;
-  late PokemonLocalModel pokemonLocalModelNotRelevant;
+  late PokemonLocalModel pokemonLocalModelUndetailed;
   late PokemonDataModel pokemonDataModel;
   late Either<DataFailure, PokemonLocalModel> mockLocalResultSuccess;
-  late Either<DataFailure, PokemonLocalModel> mockLocalResultSuccessNotRelevant;
+  late Either<DataFailure, PokemonLocalModel> mockLocalResultSuccessUndetailed;
   late Either<DataFailure, PokemonLocalModel> mockLocalResultFailure;
   late Either<DataFailure, PokemonDataModel> mockDataResultSuccess;
+  late Either<DataFailure, PokemonDataModel> mockDataResultFailure;
   late Either<Failure, PokemonModel> expectedSuccess;
+  late Either<Failure, PokemonModel> expectedSuccessUndetailed;
 
   const String errorMessage = "Error Message";
   const int pokemonId = 1;
@@ -52,7 +55,7 @@ void main() {
       frontSpriteUrl: pokemonFrontSpriteUrl,
       pokedexEntryNumbers: pokedexEntryNumbers,
     );
-    pokemonLocalModelNotRelevant = PokemonLocalModel(
+    pokemonLocalModelUndetailed = PokemonLocalModel(
       id: pokemonId,
       name: pokemonName,
       pokedexEntryNumbers: pokedexEntryNumbers,
@@ -64,6 +67,11 @@ void main() {
       imageUrl: pokemonFrontSpriteUrl,
       pokedexEntryNumbers: pokedexEntryNumbers,
     );
+    pokemonDomainModelUndetailed = PokemonModel(
+      id: pokemonId,
+      name: pokemonName,
+      pokedexEntryNumbers: pokedexEntryNumbers,
+    );
     pokemonDataModel = PokemonDataModel(
       pokemonId,
       pokemonName,
@@ -71,14 +79,16 @@ void main() {
       pokemonFrontSpriteUrl,
     );
     mockLocalResultSuccess = Right(pokemonLocalModel);
-    mockLocalResultSuccessNotRelevant = Right(pokemonLocalModelNotRelevant);
+    mockLocalResultSuccessUndetailed = Right(pokemonLocalModelUndetailed);
     mockLocalResultFailure = Left(DataFailure(errorMessage));
     mockDataResultSuccess = Right(pokemonDataModel);
+    mockDataResultFailure = Left(DataFailure(errorMessage));
     expectedSuccess = Right(pokemonDomainModel);
+    expectedSuccessUndetailed = Right(pokemonDomainModelUndetailed);
   });
 
   group("getPokemon", () {
-    test('return pokemon from local when all relevant data present', () async {
+    test('return pokemon from local when detailed data present', () async {
       when(mockPokemonLocal.get(pokemonId))
           .thenAnswer((_) async => mockLocalResultSuccess);
       when(mockConverter.convertToDomain(pokemonLocalModel))
@@ -90,9 +100,9 @@ void main() {
       expect(result, expectedSuccess);
     });
 
-    test('get pokemon from data when relevant data not present and store locally', () async {
+    test('get pokemon from data when detailed data not present and store locally', () async {
       when(mockPokemonLocal.get(pokemonId))
-          .thenAnswer((_) async => mockLocalResultSuccessNotRelevant);
+          .thenAnswer((_) async => mockLocalResultSuccessUndetailed);
       when(mockConverter.convertToDomain(pokemonLocalModel))
           .thenReturn(pokemonDomainModel);
       when(mockPokemonData.get(pokemonId))
@@ -124,6 +134,22 @@ void main() {
       verify(mockPokemonLocal.store(pokemonLocalModel)).called(1);
       verify(mockPokemonData.get(any)).called(1);
       expect(result, expectedSuccess);
+    });
+
+    test('return undetailed pokemon from local when no data response', () async {
+      when(mockPokemonLocal.get(pokemonId))
+          .thenAnswer((_) async => mockLocalResultSuccessUndetailed);
+      when(mockConverter.convertToDomain(pokemonLocalModelUndetailed))
+          .thenReturn(pokemonDomainModelUndetailed);
+      when(mockPokemonData.get(pokemonId))
+          .thenAnswer((_) async => mockDataResultFailure);
+
+      var result = await repository.getPokemon(pokemonId);
+
+      verify(mockPokemonLocal.get(any)).called(1);
+      verifyNever(mockPokemonLocal.store(any));
+      verify(mockPokemonData.get(any)).called(1);
+      expect(result, expectedSuccessUndetailed);
     });
   });
 }

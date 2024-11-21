@@ -16,27 +16,27 @@ class PokemonRepositoryImpl implements PokemonRepository {
   PokemonRepositoryImpl(this.pokemonData, this.pokemonLocal, this.converter);
 
   @override
-  Future<Either<Failure, PokemonModel>> getPokemon(int id) async {
-    var localResult = await pokemonLocal.get(id);
-    return localResult.fold(
-      (l) => getPokemonFromData(id),
-      (r) => isDetailed(r)
-          ? Right(converter.convertToDomain(r))
-          : getPokemonFromData(id),
-    );
-  }
+  Future<Either<Failure, PokemonModel>> getPokemon(int id) async =>
+      (await pokemonLocal.get(id)).fold(
+        (failure) => getPokemonFromData(id, null),
+        (localPokemon) => isDetailed(localPokemon)
+            ? Right(converter.convertToDomain(localPokemon))
+            : getPokemonFromData(id, localPokemon),
+      );
 
   bool isDetailed(PokemonLocalModel pokemon) =>
       pokemon.types != null || pokemon.frontSpriteUrl != null;
 
-  Future<Either<Failure, PokemonModel>> getPokemonFromData(int id) async {
-    var dataResult = await pokemonData.get(id);
-    return dataResult.fold(
-      (l) => Left(Failure("")),
-      (r) {
-        var localModel = converter.convertToLocal(r);
-        pokemonLocal.store(localModel);
-        return Right(converter.convertToDomain(localModel));
-      });
-  }
+  Future<Either<Failure, PokemonModel>> getPokemonFromData(
+          int id, PokemonLocalModel? undetailedPokemonModel) async =>
+      (await pokemonData.get(id)).fold(
+        (failure) => undetailedPokemonModel != null
+            ? Right(converter.convertToDomain(undetailedPokemonModel))
+            : Left(Failure("")),
+        (dataPokemon) {
+          var localModel = converter.convertToLocal(dataPokemon);
+          pokemonLocal.store(localModel);
+          return Right(converter.convertToDomain(localModel));
+        },
+      );
 }
