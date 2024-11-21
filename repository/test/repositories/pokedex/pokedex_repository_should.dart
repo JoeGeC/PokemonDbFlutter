@@ -92,7 +92,7 @@ void main() {
       expect(result, expectedSuccess);
     });
 
-    test('get data from remote if not in local', () async {
+    test('get data from remote if not in local and store locally', () async {
       when(mockPokedexLocal.get(pokedexId))
           .thenAnswer((_) async => mockLocalResultFailure);
       when(mockPokedexData.get(pokedexId))
@@ -105,6 +105,7 @@ void main() {
 
       verify(mockPokedexLocal.get(pokedexId)).called(1);
       verify(mockPokedexData.get(pokedexId)).called(1);
+      verify(mockPokedexLocal.store(pokedexLocalModel)).called(1);
       expect(result, expectedSuccess);
     });
 

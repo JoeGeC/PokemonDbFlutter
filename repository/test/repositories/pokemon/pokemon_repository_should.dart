@@ -87,7 +87,7 @@ void main() {
       expect(result, expectedSuccess);
     });
 
-    test('get pokemon from data when relevant data not present', () async {
+    test('get pokemon from data when relevant data not present and store locally', () async {
       when(mockPokemonLocal.get(pokemonId))
           .thenAnswer((_) async => mockLocalResultSuccessNotRelevant);
       when(mockConverter.convertToDomain(pokemonLocalModel))
@@ -100,6 +100,7 @@ void main() {
       var result = await repository.getPokemon(pokemonId);
 
       verify(mockPokemonLocal.get(any)).called(1);
+      verify(mockPokemonLocal.store(pokemonLocalModel)).called(1);
       verify(mockPokemonData.get(any)).called(1);
       expect(result, expectedSuccess);
     });

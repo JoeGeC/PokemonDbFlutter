@@ -35,6 +35,7 @@ class PokemonRepositoryImpl implements PokemonRepository {
       (l) => Left(Failure("")),
       (r) {
         var localModel = converter.convertToLocal(r);
+        pokemonLocal.store(localModel);
         return Right(converter.convertToDomain(localModel));
       });
   }
