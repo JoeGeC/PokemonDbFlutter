@@ -4,8 +4,9 @@ import 'package:repository/models/local/pokemon_local_model.dart';
 import '../../models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 
 abstract class PokemonRepositoryConverter {
-  List<PokemonModel> convertToDomain(List<PokemonLocalModel> pokemon);
+  List<PokemonModel> convertListToDomain(List<PokemonLocalModel> pokemon);
+  PokemonModel convertToDomain(PokemonLocalModel pokemon);
 
-  List<PokemonLocalModel> convertToLocal(
+  List<PokemonLocalModel> convertListToLocal(
       List<PokedexPokemonDataModel> pokemon, String pokedexName);
 }

@@ -63,7 +63,7 @@ void main() {
       PokedexModel pokedexModel = PokedexModel(
           id: pokedexId, name: pokedexName, pokemon: domainPokemonList);
 
-      when(mockPokemonConverter.convertToDomain(localPokemonList))
+      when(mockPokemonConverter.convertListToDomain(localPokemonList))
           .thenReturn(domainPokemonList);
       var result = pokedexConverter.convertToDomain(pokedexLocalModel);
 
@@ -76,7 +76,7 @@ void main() {
       PokedexDataModel pokedexDataModel =
           PokedexDataModel(pokedexId, pokedexName, dataPokemonList);
 
-      when(mockPokemonConverter.convertToLocal(dataPokemonList, pokedexName))
+      when(mockPokemonConverter.convertListToLocal(dataPokemonList, pokedexName))
           .thenReturn(localPokemonList);
       var result = pokedexConverter.convertToLocal(pokedexDataModel);
 

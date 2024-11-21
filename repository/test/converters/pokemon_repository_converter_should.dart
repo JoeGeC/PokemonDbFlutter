@@ -35,7 +35,7 @@ void main() {
           pokedexEntryNumbers: {pokedexName: pokemonEntryId});
       List<PokemonModel> domainPokemonList = [pokemonDomainModel];
 
-      var result = pokemonConverter.convertToDomain(localPokemonList);
+      var result = pokemonConverter.convertListToDomain(localPokemonList);
 
       expect(result, domainPokemonList);
     });
@@ -54,7 +54,7 @@ void main() {
       String pokedexName = "Sample Pokedex";
 
       var result =
-          pokemonConverter.convertToLocal(dataPokemonList, pokedexName);
+          pokemonConverter.convertListToLocal(dataPokemonList, pokedexName);
 
       expect(result, localPokemonList);
     });
@@ -79,7 +79,7 @@ void main() {
       String pokedexName = "Sample Pokedex";
 
       var result =
-          pokemonConverter.convertToLocal(dataPokemonList, pokedexName);
+          pokemonConverter.convertListToLocal(dataPokemonList, pokedexName);
 
       expect(result, localPokemonList);
     });
