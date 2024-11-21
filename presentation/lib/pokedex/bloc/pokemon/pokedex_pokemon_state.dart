@@ -4,12 +4,19 @@ abstract class PokedexPokemonState{
   const PokedexPokemonState();
 }
 
-class PokedexPokemonLoadingState extends PokedexPokemonState {}
+class PokedexPokemonInitialState extends PokedexPokemonState {}
+
+class PokedexPokemonLoadingState extends PokedexPokemonState {
+  final int pokemonId;
+
+  const PokedexPokemonLoadingState({required this.pokemonId});
+}
 
 class PokedexPokemonErrorState extends PokedexPokemonState {
+  final int pokemonId;
   final String errorMessage;
 
-  PokedexPokemonErrorState(this.errorMessage);
+  const PokedexPokemonErrorState(this.pokemonId, this.errorMessage);
 }
 
 class PokedexPokemonSuccessState extends PokedexPokemonState {

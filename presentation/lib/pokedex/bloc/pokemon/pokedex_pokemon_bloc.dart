@@ -12,34 +12,26 @@ class PokedexPokemonBloc
     extends Bloc<PokedexPokemonEvent, PokedexPokemonState> {
   final PokemonUseCase _pokemonUseCase;
   final PokedexPokemonPresentationConverter _pokemonConverter;
-  final int _pokemonId;
-  final String _pokedexName;
 
-  PokedexPokemonBloc(
-      PokemonUseCase pokedexPokemonUseCase,
-      PokedexPokemonPresentationConverter pokedexPokemonConverter,
-      int pokemonId,
-      String pokedexName)
+  PokedexPokemonBloc(PokemonUseCase pokedexPokemonUseCase,
+      PokedexPokemonPresentationConverter pokedexPokemonConverter)
       : _pokemonUseCase = pokedexPokemonUseCase,
         _pokemonConverter = pokedexPokemonConverter,
-        _pokemonId = pokemonId,
-        _pokedexName = pokedexName,
-        super(PokedexPokemonLoadingState()) {
+        super(PokedexPokemonInitialState()) {
     on<GetPokedexPokemonEvent>(_getPokedexPokemonEvent);
   }
 
-  _getPokedexPokemonEvent(GetPokedexPokemonEvent event,
-      Emitter<PokedexPokemonState> emitter) async {
-    if (event.isLoading) {
-      emitter(PokedexPokemonLoadingState());
-    }
+  _getPokedexPokemonEvent(
+      GetPokedexPokemonEvent event, Emitter<PokedexPokemonState> emit) async {
+    emit(PokedexPokemonLoadingState(pokemonId: event.pokemonId));
 
-    final result = await _pokemonUseCase.getPokemon(_pokemonId);
+    final result = await _pokemonUseCase.getPokemon(event.pokemonId);
     result.fold((failure) {
-      emitter(PokedexPokemonErrorState(failure.errorMessage));
+      emit(PokedexPokemonErrorState(event.pokemonId, failure.errorMessage));
     }, (pokemonModel) {
-      var localPokemon = _pokemonConverter.convert(pokemonModel, _pokedexName);
-      emitter(PokedexPokemonSuccessState(localPokemon));
+      var localPokemon =
+          _pokemonConverter.convert(pokemonModel, event.pokedexName);
+      emit(PokedexPokemonSuccessState(localPokemon));
     });
   }
 }

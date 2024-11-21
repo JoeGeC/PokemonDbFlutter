@@ -5,7 +5,8 @@ abstract class PokedexPokemonEvent {
 }
 
 class GetPokedexPokemonEvent extends PokedexPokemonEvent {
-  final bool isLoading;
+  final int pokemonId;
+  final String pokedexName;
 
-  GetPokedexPokemonEvent({ this.isLoading = true });
+  GetPokedexPokemonEvent(this.pokemonId, this.pokedexName);
 }

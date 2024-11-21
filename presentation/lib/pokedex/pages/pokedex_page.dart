@@ -66,7 +66,7 @@ class _PokedexPageState extends State<PokedexPage> {
               buildPokedexHeader(theme, headerKey, pokedex.name),
           itemCount: pokedex.pokemon.length,
           itemBuilder: (context, index) =>
-              buildPokemonEntry(pokedex.pokemon[index], theme),
+              buildPokemonEntry(pokedex.pokemon[index], pokedex.name, theme),
           background: theme.colorScheme.surface,
         );
 }

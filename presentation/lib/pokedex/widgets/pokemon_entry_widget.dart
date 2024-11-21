@@ -1,9 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:presentation/pokedex/bloc/pokemon/pokedex_pokemon_bloc.dart';
+import 'package:presentation/pokedex/widgets/pokemon_image_with_background.dart';
 
 import '../../common/widgets/pokemon_types_widget.dart';
+import '../../common/widgets/two_spaced_texts_row.dart';
+import '../../injections.dart';
 import '../models/pokedex_pokemon_presentation_model.dart';
 
-Widget buildPokemonEntry(
+Widget buildPokemonEntry(PokedexPokemonPresentationModel pokemon,
+    String pokedexName, ThemeData theme) {
+  return BlocProvider(
+    create: (_) => getIt<PokedexPokemonBloc>(),
+    child: BlocBuilder<PokedexPokemonBloc, PokedexPokemonState>(
+      builder: (context, state) {
+        final pokemonBloc = context.read<PokedexPokemonBloc>();
+        getPokemonOnStart(state, pokemonBloc, pokemon, pokedexName);
+        return pokemonEntryWidget(state, pokemon, theme);
+      },
+    ),
+  );
+}
+
+void getPokemonOnStart(
+    PokedexPokemonState state,
+    PokedexPokemonBloc pokemonBloc,
+    PokedexPokemonPresentationModel pokemon,
+    String pokedexName) {
+  if (state is PokedexPokemonInitialState) {
+    pokemonBloc.add(GetPokedexPokemonEvent(pokemon.id, pokedexName));
+  }
+}
+
+Widget pokemonEntryWidget(PokedexPokemonState state,
         PokedexPokemonPresentationModel pokemon, ThemeData theme) =>
     Padding(
       padding: EdgeInsets.all(8),
@@ -11,30 +40,14 @@ Widget buildPokemonEntry(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image(
-              image: AssetImage('assets/pokeball_background.png'),
-              opacity: const AlwaysStoppedAnimation(.4),
-              height: 100,
-              width: 100,
-            ),
+            buildPokemonImageWithBackground(state, pokemon.imageUrl),
             SizedBox(width: 30),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      pokemon.pokedexEntryNumber,
-                      style: theme.textTheme.labelMedium!.copyWith(),
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      pokemon.name,
-                      style: theme.textTheme.labelMedium!.copyWith(),
-                    ),
-                  ],
-                ),
-                buildPokemonTypes()
+                TwoSpacedTextsRow(pokemon.pokedexEntryNumber, pokemon.name,
+                    theme.textTheme.labelMedium!),
+                buildPokemonTypes(pokemon.types, theme)
               ],
             )
           ],
