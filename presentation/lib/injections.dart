@@ -7,6 +7,6 @@ import 'package:presentation/pokemon/converters/pokemon_presentation_converter_i
 final getIt = GetIt.instance;
 
 setupPresentationInjections(){
-  getIt.registerSingleton<PokemonPresentationConverter>(PokedexPokemonLocalConverterImpl());
+  getIt.registerSingleton<PokemonPresentationConverter>(PokedexPokemonPresentationConverterImpl());
   getIt.registerSingleton<PokedexPresentationConverter>(PokedexPresentationConverterImpl(getIt()));
 }

@@ -4,13 +4,13 @@ import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.d
 import 'package:presentation/pokemon/converters/pokemon_presentation_converter_impl.dart';
 
 void main() {
-  late PokedexPokemonLocalConverterImpl converter;
+  late PokedexPokemonPresentationConverterImpl converter;
   late PokemonModel pokemonModel;
   late PokedexPokemonPresentationModel pokemonLocalModel;
   late String pokedexName;
 
   setUp(() {
-    converter = PokedexPokemonLocalConverterImpl();
+    converter = PokedexPokemonPresentationConverterImpl();
     pokedexName = "original-johto";
     pokemonModel = PokemonModel(
       id: 1,

@@ -8,7 +8,7 @@ import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
 import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
 
-import 'pokedex_local_converter_should.mocks.dart';
+import 'pokedex_presentation_converter_should.mocks.dart';
 
 @GenerateMocks([PokemonPresentationConverter])
 void main() {
