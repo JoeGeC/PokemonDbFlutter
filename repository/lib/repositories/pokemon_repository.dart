@@ -19,7 +19,7 @@ class PokemonRepositoryImpl implements PokemonRepository {
   Future<Either<Failure, PokemonModel>> getPokemon(int id) async {
     var localResult = await pokemonLocal.get(id);
     return localResult.fold(
-      (l) => Left(Failure("")),
+      (l) => getPokemonFromData(id),
       (r) => isDetailed(r)
           ? Right(converter.convertToDomain(r))
           : getPokemonFromData(id),

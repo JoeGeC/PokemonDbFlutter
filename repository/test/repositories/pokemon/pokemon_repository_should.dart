@@ -27,9 +27,11 @@ void main() {
   late PokemonDataModel pokemonDataModel;
   late Either<DataFailure, PokemonLocalModel> mockLocalResultSuccess;
   late Either<DataFailure, PokemonLocalModel> mockLocalResultSuccessNotRelevant;
+  late Either<DataFailure, PokemonLocalModel> mockLocalResultFailure;
   late Either<DataFailure, PokemonDataModel> mockDataResultSuccess;
   late Either<Failure, PokemonModel> expectedSuccess;
 
+  const String errorMessage = "Error Message";
   const int pokemonId = 1;
   const String pokemonName = "Sample Pokemon";
   const List<String> pokemonTypes = ["Grass", "Poison"];
@@ -70,6 +72,7 @@ void main() {
     );
     mockLocalResultSuccess = Right(pokemonLocalModel);
     mockLocalResultSuccessNotRelevant = Right(pokemonLocalModelNotRelevant);
+    mockLocalResultFailure = Left(DataFailure(errorMessage));
     mockDataResultSuccess = Right(pokemonDataModel);
     expectedSuccess = Right(pokemonDomainModel);
   });
@@ -90,6 +93,24 @@ void main() {
     test('get pokemon from data when relevant data not present and store locally', () async {
       when(mockPokemonLocal.get(pokemonId))
           .thenAnswer((_) async => mockLocalResultSuccessNotRelevant);
+      when(mockConverter.convertToDomain(pokemonLocalModel))
+          .thenReturn(pokemonDomainModel);
+      when(mockPokemonData.get(pokemonId))
+          .thenAnswer((_) async => mockDataResultSuccess);
+      when(mockConverter.convertToLocal(pokemonDataModel))
+          .thenReturn(pokemonLocalModel);
+
+      var result = await repository.getPokemon(pokemonId);
+
+      verify(mockPokemonLocal.get(any)).called(1);
+      verify(mockPokemonLocal.store(pokemonLocalModel)).called(1);
+      verify(mockPokemonData.get(any)).called(1);
+      expect(result, expectedSuccess);
+    });
+
+    test('get pokemon from data when not in local and store locally', () async {
+      when(mockPokemonLocal.get(pokemonId))
+          .thenAnswer((_) async => mockLocalResultFailure);
       when(mockConverter.convertToDomain(pokemonLocalModel))
           .thenReturn(pokemonDomainModel);
       when(mockPokemonData.get(pokemonId))
