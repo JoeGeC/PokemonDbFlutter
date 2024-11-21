@@ -33,6 +33,7 @@ void main() {
   late Either<DataFailure, PokemonDataModel> mockDataResultFailure;
   late Either<Failure, PokemonModel> expectedSuccess;
   late Either<Failure, PokemonModel> expectedSuccessUndetailed;
+  late Either<Failure, PokemonModel> expectedFailure;
 
   const String errorMessage = "Error Message";
   const int pokemonId = 1;
@@ -85,6 +86,7 @@ void main() {
     mockDataResultFailure = Left(DataFailure(errorMessage));
     expectedSuccess = Right(pokemonDomainModel);
     expectedSuccessUndetailed = Right(pokemonDomainModelUndetailed);
+    expectedFailure = Left(Failure(errorMessage));
   });
 
   group("getPokemon", () {
@@ -150,6 +152,20 @@ void main() {
       verifyNever(mockPokemonLocal.store(any));
       verify(mockPokemonData.get(any)).called(1);
       expect(result, expectedSuccessUndetailed);
+    });
+
+    test('return failure when no data', () async {
+      when(mockPokemonLocal.get(pokemonId))
+          .thenAnswer((_) async => mockLocalResultFailure);
+      when(mockPokemonData.get(pokemonId))
+          .thenAnswer((_) async => mockDataResultFailure);
+
+      var result = await repository.getPokemon(pokemonId);
+
+      verify(mockPokemonLocal.get(any)).called(1);
+      verifyNever(mockPokemonLocal.store(any));
+      verify(mockPokemonData.get(any)).called(1);
+      expect(result, expectedFailure);
     });
   });
 }

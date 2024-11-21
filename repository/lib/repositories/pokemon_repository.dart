@@ -32,7 +32,7 @@ class PokemonRepositoryImpl implements PokemonRepository {
       (await pokemonData.get(id)).fold(
         (failure) => undetailedPokemonModel != null
             ? Right(converter.convertToDomain(undetailedPokemonModel))
-            : Left(Failure("")),
+            : Left(Failure(failure.errorMessage ?? "")),
         (dataPokemon) {
           var localModel = converter.convertToLocal(dataPokemon);
           pokemonLocal.store(localModel);
