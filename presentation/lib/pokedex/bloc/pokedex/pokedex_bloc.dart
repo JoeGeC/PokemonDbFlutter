@@ -1,11 +1,10 @@
-import 'package:bloc/bloc.dart';
 import 'package:domain/usecases/pokedex_usecase.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../converters/pokedex_local_converter.dart';
-import '../models/pokedex_presentation_model.dart';
+import '../../converters/pokedex_presentation_converter.dart';
+import '../../models/pokedex_presentation_model.dart';
 
 part 'pokedex_event.dart';
-
 part 'pokedex_state.dart';
 
 class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {

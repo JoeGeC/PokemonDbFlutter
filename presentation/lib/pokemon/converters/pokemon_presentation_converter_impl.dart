@@ -3,7 +3,7 @@ import 'package:presentation/common/utils/utils.dart';
 import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
 import '../../pokedex/models/pokedex_pokemon_presentation_model.dart';
 
-class PokedexPokemonPresentationConverterImpl extends PokemonPresentationConverter {
+class PokedexPokemonPresentationConverterImpl extends PokedexPokemonPresentationConverter {
   @override
   List<PokedexPokemonPresentationModel> convertList(
           List<PokemonModel> pokemonList, String pokedexName) =>

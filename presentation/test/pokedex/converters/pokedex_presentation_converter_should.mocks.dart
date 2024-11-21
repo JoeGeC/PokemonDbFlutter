@@ -37,7 +37,7 @@ class _FakePokedexPokemonLocalModel_0 extends _i1.SmartFake
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPokemonLocalConverter extends _i1.Mock
-    implements _i3.PokemonPresentationConverter {
+    implements _i3.PokedexPokemonPresentationConverter {
   MockPokemonLocalConverter() {
     _i1.throwOnMissingStub(this);
   }

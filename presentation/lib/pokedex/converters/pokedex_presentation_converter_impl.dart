@@ -1,11 +1,11 @@
 import 'package:domain/models/pokedex_model.dart';
-import 'package:presentation/pokedex/converters/pokedex_local_converter.dart';
+import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 
 import '../../pokemon/converters/pokemon_presentation_converter.dart';
 
 class PokedexPresentationConverterImpl implements PokedexPresentationConverter {
-  late PokemonPresentationConverter pokemonConverter;
+  late PokedexPokemonPresentationConverter pokemonConverter;
 
   PokedexPresentationConverterImpl(this.pokemonConverter);
 

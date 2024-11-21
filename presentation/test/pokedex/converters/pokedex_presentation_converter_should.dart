@@ -3,14 +3,14 @@ import 'package:domain/models/pokemon_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:presentation/pokedex/converters/pokedex_local_converter_impl.dart';
+import 'package:presentation/pokedex/converters/pokedex_presentation_converter_impl.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
 import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
 
 import 'pokedex_presentation_converter_should.mocks.dart';
 
-@GenerateMocks([PokemonPresentationConverter])
+@GenerateMocks([PokedexPokemonPresentationConverter])
 void main() {
   setUp(() {});
 
