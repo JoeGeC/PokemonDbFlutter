@@ -95,6 +95,7 @@ void main() {
           .thenAnswer((_) async => mockLocalResultSuccess);
       when(mockConverter.convertToDomain(pokemonLocalModel))
           .thenReturn(pokemonDomainModel);
+
       var result = await repository.getPokemon(pokemonId);
 
       verify(mockPokemonLocal.get(any)).called(1);

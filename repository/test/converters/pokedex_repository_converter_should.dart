@@ -76,7 +76,7 @@ void main() {
       PokedexDataModel pokedexDataModel =
           PokedexDataModel(pokedexId, pokedexName, dataPokemonList);
 
-      when(mockPokemonConverter.convertListToLocal(dataPokemonList, pokedexName))
+      when(mockPokemonConverter.convertPokedexListToLocal(dataPokemonList, pokedexName))
           .thenReturn(localPokemonList);
       var result = pokedexConverter.convertToLocal(pokedexDataModel);
 

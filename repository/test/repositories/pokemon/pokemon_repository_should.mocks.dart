@@ -178,7 +178,7 @@ class MockPokemonRepositoryConverter extends _i1.Mock
       ) as List<_i3.PokemonModel>);
 
   @override
-  List<_i4.PokemonLocalModel> convertListToLocal(
+  List<_i4.PokemonLocalModel> convertPokedexListToLocal(
     List<_i11.PokedexPokemonDataModel>? pokemon,
     String? pokedexName,
   ) =>

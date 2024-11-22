@@ -23,7 +23,7 @@ class PokedexRepositoryConverterImpl implements PokedexRepositoryConverter {
     return PokedexLocalModel(
         pokedexDataModel.id!,
         pokedexDataModel.name!,
-        pokemonConverter.convertListToLocal(
+        pokemonConverter.convertPokedexListToLocal(
             pokedexDataModel.pokemonEntries!, pokedexDataModel.name!));
   }
 
