@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:presentation/pokedex/bloc/pokemon/pokedex_pokemon_bloc.dart';
 import 'package:presentation/pokedex/widgets/pokemon_image_with_background.dart';
 
 import '../../common/widgets/pokemon_types_widget.dart';
 import '../../common/widgets/two_spaced_texts_row.dart';
 import '../../injections.dart';
+import '../bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
 import '../models/pokedex_pokemon_presentation_model.dart';
 
 Widget buildPokemonEntry(PokedexPokemonPresentationModel pokemon,

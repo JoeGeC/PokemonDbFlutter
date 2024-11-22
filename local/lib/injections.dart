@@ -3,7 +3,9 @@ import 'package:local/converters/pokedex_local_converter.dart';
 import 'package:local/converters/pokemon_local_converter.dart';
 import 'package:local/database_initializer.dart';
 import 'package:local/pokedex/pokedex_local_impl.dart';
+import 'package:local/pokemon/pokemon_local_impl.dart';
 import 'package:repository/boundary/local/pokedex_local.dart';
+import 'package:repository/boundary/local/pokemon_local.dart';
 import 'package:sqflite/sqflite.dart';
 
 final getIt = GetIt.instance;
@@ -14,4 +16,5 @@ setupLocalDependencies() async {
   getIt.registerSingleton<Database>(await DatabaseInitializer.instance.database);
 
   getIt.registerSingleton<PokedexLocal>(PokedexLocalImpl(getIt(), getIt(), getIt()));
+  getIt.registerSingleton<PokemonLocal>(PokemonLocalImpl(getIt(), getIt()));
 }

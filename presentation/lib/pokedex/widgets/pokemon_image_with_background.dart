@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../common/assetConstants.dart';
-import '../bloc/pokemon/pokedex_pokemon_bloc.dart';
+import '../bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
 
 Widget buildPokemonImageWithBackground(PokedexPokemonState state, String? imageUrl) {
   return Stack(
