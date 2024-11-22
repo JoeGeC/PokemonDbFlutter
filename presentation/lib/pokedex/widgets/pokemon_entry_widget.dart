@@ -11,11 +11,14 @@ import '../models/pokedex_pokemon_presentation_model.dart';
 Widget buildPokemonEntry(PokedexPokemonPresentationModel pokemon,
     String pokedexName, ThemeData theme) {
   return BlocProvider(
-    create: (_) => getIt<PokedexPokemonBloc>(),
+    create: (_) => PokedexPokemonBloc(getIt(), getIt()),
     child: BlocBuilder<PokedexPokemonBloc, PokedexPokemonState>(
       builder: (context, state) {
         final pokemonBloc = context.read<PokedexPokemonBloc>();
         getPokemonOnStart(state, pokemonBloc, pokemon, pokedexName);
+        if(state is PokedexPokemonSuccessState) {
+          return pokemonEntryWidget(state, state.pokemon, theme);
+        }
         return pokemonEntryWidget(state, pokemon, theme);
       },
     ),
