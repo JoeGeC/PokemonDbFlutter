@@ -36,14 +36,14 @@ class MockDatabase {
   ''');
   }
 
-  Future<void> populatePokedexTable(int pokedexId, String pokedexName) async {
+  Future<void> insertPokedex(int pokedexId, String pokedexName) async {
     await database.insert(DatabaseTableNames.pokedex, {
       DatabaseColumnNames.id: pokedexId,
       DatabaseColumnNames.name: pokedexName,
     });
   }
 
-  Future<void> populatePokemonTable(
+  Future<void> insertDetailedPokemon(
       int pokemonId,
       String pokemonName,
       String pokemonType1,
@@ -57,7 +57,16 @@ class MockDatabase {
     });
   }
 
-  Future<void> populatePokedexEntryNumbersTable(
+  Future<void> insertUndetailedPokemon(
+      int pokemonId,
+      String pokemonName) async {
+    await database.insert(DatabaseTableNames.pokemon, {
+      DatabaseColumnNames.id: pokemonId,
+      DatabaseColumnNames.name: pokemonName,
+    });
+  }
+
+  Future<void> insertPokedexEntry(
       String pokedexName, int pokemonId, int pokemonEntryNumber) async {
     await database.insert(DatabaseTableNames.pokedexEntryNumbers, {
       DatabaseColumnNames.pokedexName: pokedexName,

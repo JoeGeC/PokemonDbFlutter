@@ -77,10 +77,10 @@ void main() {
 
   group('get pokedex', () {
     test('return PokedexLocalModel when data is found', () async {
-      await mockDatabase.populatePokedexTable(pokedexId, pokedexName);
-      await mockDatabase.populatePokemonTable(pokemonId, pokemonName,
+      await mockDatabase.insertPokedex(pokedexId, pokedexName);
+      await mockDatabase.insertDetailedPokemon(pokemonId, pokemonName,
           pokemonType1, pokemonType2, pokemonFrontSpriteUrl);
-      await mockDatabase.populatePokedexEntryNumbersTable(
+      await mockDatabase.insertPokedexEntry(
           pokedexName, pokemonId, pokemonEntryNumber);
 
       final result = await pokedexLocal.get(pokedexId);

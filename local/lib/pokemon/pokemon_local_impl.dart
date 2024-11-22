@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:local/database_constants.dart';
-import 'package:local/sql_commands.dart';
 import 'package:repository/boundary/local/pokemon_local.dart';
 import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
@@ -37,7 +36,30 @@ class PokemonLocalImpl implements PokemonLocal {
       );
 
   @override
-  void store(PokemonLocalModel model) {
-    // TODO: implement store
+  Future store(PokemonLocalModel pokemonModel) async {
+    var pokemonMap = pokemonConverter.convert(pokemonModel);
+    upsertPokemon(pokemonMap);
   }
+
+  Future<void> upsertPokemon(Map<String, dynamic> pokemonData) async {
+    await database.rawInsert('''
+    INSERT INTO ${DatabaseTableNames.pokemon} (
+      ${DatabaseColumnNames.id}, 
+      ${DatabaseColumnNames.name}, 
+      ${DatabaseColumnNames.types}, 
+      ${DatabaseColumnNames.frontSpriteUrl}
+    )
+    VALUES (?, ?, ?, ?)
+    ON CONFLICT(${DatabaseColumnNames.id}) DO UPDATE SET
+      ${DatabaseColumnNames.name} = excluded.${DatabaseColumnNames.name},
+      ${DatabaseColumnNames.types} = excluded.${DatabaseColumnNames.types},
+      ${DatabaseColumnNames.frontSpriteUrl} = excluded.${DatabaseColumnNames.frontSpriteUrl};
+  ''', [
+      pokemonData[DatabaseColumnNames.id],
+      pokemonData[DatabaseColumnNames.name],
+      pokemonData[DatabaseColumnNames.types],
+      pokemonData[DatabaseColumnNames.frontSpriteUrl],
+    ]);
+  }
+
 }
