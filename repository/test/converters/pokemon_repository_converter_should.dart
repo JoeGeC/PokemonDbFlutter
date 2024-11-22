@@ -2,28 +2,40 @@ import 'package:domain/models/pokemon_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter_impl.dart';
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
+import 'package:repository/models/data/pokemon/pokemon_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
 
 void main() {
   late PokemonRepositoryConverterImpl pokemonConverter;
-  late final String pokedexName = "sample-pokedex";
-  late final int pokemonId = 1;
-  late final int pokemonEntryId = 2;
-  late final String pokemonName = "Sample Pokemon";
-  late final String pokemonType1 = "Grass";
-  late final String pokemonType2 = "Poison";
-  late final String frontSpriteUrl = "https://sample/pokemon.png";
+  final String pokedexName = "sample-pokedex";
+  final int pokemonId = 1;
+  final int pokemonEntryId = 2;
+  final String pokemonName = "Sample Pokemon";
+  final String pokemonType1 = "Grass";
+  final String pokemonType2 = "Poison";
+  final String frontSpriteUrl = "https://sample/pokemon.png";
+  final String pokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
+  late PokemonLocalModel pokedexPokemonLocalModel;
   late PokemonLocalModel pokemonLocalModel;
   late PokemonModel pokemonDomainModel;
+  late PokemonDataModel pokemonDataModel;
+  late PokedexPokemonDataModel pokedexPokemonDataModel;
   late List<PokemonLocalModel> pokemonLocalList;
   late List<PokemonModel> pokemonDomainList;
+  late List<PokedexPokemonDataModel> dataPokemonList;
 
   setUp(() {
     pokemonConverter = PokemonRepositoryConverterImpl();
-    pokemonLocalModel = PokemonLocalModel(
+    pokedexPokemonLocalModel = PokemonLocalModel(
       id: pokemonId,
       pokedexEntryNumbers: {pokedexName: pokemonEntryId},
+      name: pokemonName,
+      types: [pokemonType1, pokemonType2],
+      frontSpriteUrl: frontSpriteUrl,
+    );
+    pokemonLocalModel = PokemonLocalModel(
+      id: pokemonId,
       name: pokemonName,
       types: [pokemonType1, pokemonType2],
       frontSpriteUrl: frontSpriteUrl,
@@ -35,13 +47,25 @@ void main() {
       types: [pokemonType1, pokemonType2],
       imageUrl: frontSpriteUrl,
     );
+    pokemonDataModel = PokemonDataModel(
+      pokemonId,
+      pokemonName,
+      [pokemonType1, pokemonType2],
+      pokemonUrl,
+    );
+    pokedexPokemonDataModel = PokedexPokemonDataModel(
+      pokemonEntryId,
+      pokemonName,
+      pokemonUrl,
+    );
+    dataPokemonList = [pokedexPokemonDataModel];
     pokemonDomainList = [pokemonDomainModel];
-    pokemonLocalList = [pokemonLocalModel];
+    pokemonLocalList = [pokedexPokemonLocalModel];
   });
 
   group("convert to domain", () {
     test('convert local model to domain model', () {
-      var result = pokemonConverter.convertToDomain(pokemonLocalModel);
+      var result = pokemonConverter.convertToDomain(pokedexPokemonLocalModel);
 
       expect(result, pokemonDomainModel);
     });
@@ -53,17 +77,15 @@ void main() {
     });
   });
 
+
   group("convert to local", () {
     test('convert data model to local model', () {
-      String pokemonUrl =
-          "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
-      PokedexPokemonDataModel pokemonDataModel = PokedexPokemonDataModel(
-        pokemonEntryId,
-        pokemonName,
-        pokemonUrl,
-      );
-      List<PokedexPokemonDataModel> dataPokemonList = [pokemonDataModel];
+      var result = pokemonConverter.convertToLocal(pokemonDataModel);
 
+      expect(result, pokemonLocalModel);
+    });
+
+    test('convert data list to local list', () {
       var result =
           pokemonConverter.convertPokedexListToLocal(dataPokemonList, pokedexName);
 
@@ -71,13 +93,6 @@ void main() {
     });
 
     test('dont include pokemon if null field', () {
-      String pokemonUrl =
-          "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
-      PokedexPokemonDataModel pokemonDataModel = PokedexPokemonDataModel(
-        pokemonEntryId,
-        pokemonName,
-        pokemonUrl,
-      );
       PokedexPokemonDataModel pokemonNullDataModel = PokedexPokemonDataModel(
         null,
         pokemonName,
@@ -85,7 +100,7 @@ void main() {
       );
       List<PokedexPokemonDataModel> dataPokemonList = [
         pokemonNullDataModel,
-        pokemonDataModel
+        pokedexPokemonDataModel
       ];
 
       var result =
@@ -95,11 +110,11 @@ void main() {
     });
 
     test('throw exception if invalid url', () {
-      String pokemonUrl =
+      String invalidUrl =
           "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/extra";
 
       expect(
-          () => pokemonConverter.getPokemonIdFromUrl(pokemonUrl),
+          () => pokemonConverter.getPokemonIdFromUrl(invalidUrl),
           throwsA(
               predicate((e) => e is NullException && e.type == NullType.id)));
     });
@@ -113,9 +128,9 @@ void main() {
 
     test('return id on large number', () {
       int id = 2313452334;
-      String pokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/$id/";
+      String longIdUrl = "https://pokeapi.co/api/v2/pokemon-species/$id/";
 
-      int result = pokemonConverter.getPokemonIdFromUrl(pokemonUrl);
+      int result = pokemonConverter.getPokemonIdFromUrl(longIdUrl);
 
       expect(result, id);
     });
@@ -132,6 +147,13 @@ void main() {
           () => pokemonConverter.getPokemonName(null),
           throwsA(
               predicate((e) => e is NullException && e.type == NullType.name)));
+    });
+
+    test('throw exception if id is null', () {
+      expect(
+          () => pokemonConverter.getPokemonId(null),
+          throwsA(
+              predicate((e) => e is NullException && e.type == NullType.id)));
     });
   });
 }
