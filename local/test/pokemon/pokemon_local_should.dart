@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:local/converters/pokemon_local_converter.dart';
 import 'package:local/pokemon/pokemon_local_impl.dart';
 import 'package:mockito/annotations.dart';
+import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -22,8 +23,6 @@ void main() {
   const String pokemonType1 = "Grass";
   const String pokemonType2 = "Poison";
   const String pokemonFrontSpriteUrl = "https://sample/pokemon.png";
-  const String pokedexName = "sample-pokedex";
-  const int pokemonEntryNumber = 2;
 
   setUp(() async {
     sqfliteFfiInit();
@@ -45,15 +44,23 @@ void main() {
   });
 
   group('GetPokemon', () {
+
     test('return PokemonLocalModel when data is found', () async {
       await mockDatabase.populatePokemonTable(pokemonId, pokemonName,
           pokemonType1, pokemonType2, pokemonFrontSpriteUrl);
-      await mockDatabase.populatePokedexEntryNumbersTable(
-          pokedexName, pokemonId, pokemonEntryNumber);
 
       var result = await pokemonLocal.get(pokemonId);
 
       expect(result, Right(pokemonModel));
     });
+
+    test('return DataFailure when no data is found', () async {
+      final result = await pokemonLocal.get(pokemonId);
+
+      final expected = Left(DataFailure("No data"));
+      expect(result, expected);
+    });
+
   });
+
 }

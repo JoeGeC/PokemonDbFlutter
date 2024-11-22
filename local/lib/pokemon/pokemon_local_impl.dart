@@ -17,6 +17,7 @@ class PokemonLocalImpl implements PokemonLocal {
   @override
   Future<Either<DataFailure, PokemonLocalModel>> get(int id) async {
     var result = await getPokemonFromDatabase(id);
+    if(result.isEmpty) return Left(DataFailure("No data"));
     final pokemonMap = result.first;
     return Right(buildPokemonModel(pokemonMap));
   }
