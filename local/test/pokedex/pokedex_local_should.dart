@@ -11,11 +11,13 @@ import 'package:repository/models/local/pokedex_local_model.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+import '../mock_database.dart';
 import 'pokedex_local_should.mocks.dart';
 
 @GenerateMocks([PokedexLocalConverter, PokemonLocalConverter])
 void main() {
   late Database database;
+  late MockDatabase mockDatabase;
   late PokedexLocalImpl pokedexLocal;
   late MockPokedexLocalConverter mockPokedexConverter;
   late MockPokemonLocalConverter mockPokemonConverter;
@@ -42,6 +44,7 @@ void main() {
     mockPokedexConverter = MockPokedexLocalConverter();
     mockPokemonConverter = MockPokemonLocalConverter();
     database = await databaseFactoryFfi.openDatabase(inMemoryDatabasePath);
+    mockDatabase = MockDatabase(database);
     pokemonModel = PokemonLocalModel(
         id: pokemonId,
         name: pokemonName,
@@ -61,24 +64,24 @@ void main() {
       pokemonModel2,
     ]);
 
-    await setupMockPokedexTable(database);
-    await setupMockPokemonTable(database);
-    await setupMockPokedexEntryNumbersTable(database);
+    await mockDatabase.setupMockPokedexTable();
+    await mockDatabase.setupMockPokemonTable();
+    await mockDatabase.setupMockPokedexEntryNumbersTable();
     pokedexLocal =
         PokedexLocalImpl(database, mockPokedexConverter, mockPokemonConverter);
   });
 
   tearDown(() async {
-    await database.close();
+    await mockDatabase.close();
   });
 
   group('get pokedex', () {
     test('return PokedexLocalModel when data is found', () async {
-      await populatePokedexTable(database, pokedexId, pokedexName);
-      await populatePokemonTable(database, pokemonId, pokemonName, pokemonType1,
-          pokemonType2, pokemonFrontSpriteUrl);
-      await populatePokedexEntryNumbersTable(
-          database, pokedexName, pokemonId, pokemonEntryNumber);
+      await mockDatabase.populatePokedexTable(pokedexId, pokedexName);
+      await mockDatabase.populatePokemonTable(pokemonId, pokemonName,
+          pokemonType1, pokemonType2, pokemonFrontSpriteUrl);
+      await mockDatabase.populatePokedexEntryNumbersTable(
+          pokedexName, pokemonId, pokemonEntryNumber);
 
       final result = await pokedexLocal.get(pokedexId);
 
@@ -172,7 +175,8 @@ void main() {
     });
 
     test('stores multiple pokemon in a single batch', () async {
-      when(mockPokedexConverter.convert(multPokemonPokedexModel)).thenReturn(pokedexMap);
+      when(mockPokedexConverter.convert(multPokemonPokedexModel))
+          .thenReturn(pokedexMap);
       when(mockPokemonConverter.convert(pokemonModel)).thenReturn(pokemonMap);
       when(mockPokemonConverter.convert(pokemonModel2)).thenReturn(pokemon2Map);
 
@@ -185,66 +189,4 @@ void main() {
           containsAll([pokemonName, pokemonName2]));
     });
   });
-}
-
-Future<void> populatePokedexTable(
-    Database database, int pokedexId, String pokedexName) async {
-  await database.insert(DatabaseTableNames.pokedex, {
-    DatabaseColumnNames.id: pokedexId,
-    DatabaseColumnNames.name: pokedexName,
-  });
-}
-
-Future<void> populatePokemonTable(
-    Database database,
-    int pokemonId,
-    String pokemonName,
-    String pokemonType1,
-    String pokemonType2,
-    String pokemonFrontSpriteUrl) async {
-  await database.insert(DatabaseTableNames.pokemon, {
-    DatabaseColumnNames.id: pokemonId,
-    DatabaseColumnNames.name: pokemonName,
-    DatabaseColumnNames.types: '$pokemonType1,$pokemonType2',
-    DatabaseColumnNames.frontSpriteUrl: pokemonFrontSpriteUrl,
-  });
-}
-
-Future<void> populatePokedexEntryNumbersTable(Database database,
-    String pokedexName, int pokemonId, int pokemonEntryNumber) async {
-  await database.insert(DatabaseTableNames.pokedexEntryNumbers, {
-    DatabaseColumnNames.pokedexName: pokedexName,
-    DatabaseColumnNames.pokemonId: pokemonId,
-    DatabaseColumnNames.entryNumber: pokemonEntryNumber,
-  });
-}
-
-Future<void> setupMockPokedexTable(Database database) async {
-  await database.execute('''
-      CREATE TABLE ${DatabaseTableNames.pokedex} (
-      ${DatabaseColumnNames.id} INTEGER PRIMARY KEY,
-      ${DatabaseColumnNames.name} TEXT
-    )
-  ''');
-}
-
-Future<void> setupMockPokemonTable(Database database) async {
-  await database.execute('''
-      CREATE TABLE ${DatabaseTableNames.pokemon} (
-      ${DatabaseColumnNames.id} INTEGER PRIMARY KEY,
-      ${DatabaseColumnNames.name} TEXT,
-      ${DatabaseColumnNames.types} TEXT,
-      ${DatabaseColumnNames.frontSpriteUrl} TEXT
-    )
-  ''');
-}
-
-Future<void> setupMockPokedexEntryNumbersTable(Database database) async {
-  await database.execute('''
-      CREATE TABLE ${DatabaseTableNames.pokedexEntryNumbers} (
-      ${DatabaseColumnNames.pokedexName} TEXT,
-      ${DatabaseColumnNames.pokemonId} INTEGER,
-      ${DatabaseColumnNames.entryNumber} INTEGER
-    )
-  ''');
 }

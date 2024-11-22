@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:local/converters/pokemon_local_converter.dart';
 import 'package:local/database_constants.dart';
+import 'package:local/sql_commands.dart';
 import 'package:repository/boundary/local/pokedex_local.dart';
 import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
@@ -51,16 +52,8 @@ class PokedexLocalImpl implements PokedexLocal {
   Future<List<Map<String, Object?>>> _getPokemonInPokedex(
           String pokedexName) async =>
       await database.rawQuery('''
-    SELECT pokemon.${DatabaseColumnNames.id} AS pokemonId,
-           pokemon.${DatabaseColumnNames.name} AS pokemonName,
-           pokemon.${DatabaseColumnNames.types} AS pokemonTypes,
-           pokemon.${DatabaseColumnNames.frontSpriteUrl} AS frontSpriteUrl,
-           pokedexEntry.${DatabaseColumnNames.pokedexName} AS pokedexName,
-           pokedexEntry.${DatabaseColumnNames.entryNumber} AS entryNumber
-    FROM ${DatabaseTableNames.pokemon} pokemon
-    LEFT JOIN ${DatabaseTableNames.pokedexEntryNumbers} pokedexEntry
-    ON pokemon.${DatabaseColumnNames.id} = pokedexEntry.${DatabaseColumnNames.pokemonId}
-    WHERE pokedexEntry.${DatabaseColumnNames.pokedexName} = ?
+    ${SqlCommands.selectPokemonWithEntryNumbers}
+    WHERE ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.pokedexName} = ?
       ''', [pokedexName]);
 
   Map<int, PokemonLocalModel> _mapQueryResultsToPokemon(
