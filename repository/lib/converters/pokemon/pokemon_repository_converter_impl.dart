@@ -21,13 +21,17 @@ class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
       imageUrl: pokemon.frontSpriteUrl);
 
   @override
-  PokemonLocalModel convertToLocal(PokemonDataModel pokemon) {
-    return PokemonLocalModel(
-      id: getPokemonId(pokemon.id),
-      name: getPokemonName(pokemon.name),
-      types: pokemon.types,
-      frontSpriteUrl: pokemon.frontSpriteUrl,
-    );
+  PokemonLocalModel? convertToLocal(PokemonDataModel pokemon) {
+    try {
+      return PokemonLocalModel(
+        id: getPokemonId(pokemon.id),
+        name: getPokemonName(pokemon.name),
+        types: pokemon.types,
+        frontSpriteUrl: pokemon.frontSpriteUrl,
+      );
+    } catch(e){
+      return null;
+    }
   }
 
   int getPokemonId(int? id) =>

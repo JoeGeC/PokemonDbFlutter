@@ -15,7 +15,8 @@ void main() {
   final String pokemonType1 = "Grass";
   final String pokemonType2 = "Poison";
   final String frontSpriteUrl = "https://sample/pokemon.png";
-  final String pokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
+  final String pokemonUrl =
+      "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
   late PokemonLocalModel pokedexPokemonLocalModel;
   late PokemonLocalModel pokemonLocalModel;
   late PokemonModel pokemonDomainModel;
@@ -77,7 +78,6 @@ void main() {
     });
   });
 
-
   group("convert to local", () {
     test('convert data model to local model', () {
       var result = pokemonConverter.convertToLocal(pokemonDataModel);
@@ -85,9 +85,37 @@ void main() {
       expect(result, pokemonLocalModel);
     });
 
+    test('return null if id null', () {
+      PokemonDataModel invalidIdPokemonDataModel =
+          PokemonDataModel(null, pokemonName, [pokemonType1], frontSpriteUrl);
+
+      var result = pokemonConverter.convertToLocal(invalidIdPokemonDataModel);
+
+      expect(result, null);
+    });
+
+
+    test('return null if name null', () {
+      PokemonDataModel invalidIdPokemonDataModel =
+          PokemonDataModel(pokemonId, null, [pokemonType1], frontSpriteUrl);
+
+      var result = pokemonConverter.convertToLocal(invalidIdPokemonDataModel);
+
+      expect(result, null);
+    });
+
+    test('throw exception if id is null', () {
+      expect(
+          () => pokemonConverter.getPokemonId(null),
+          throwsA(
+              predicate((e) => e is NullException && e.type == NullType.id)));
+    });
+  });
+
+  group("convert to local list", () {
     test('convert data list to local list', () {
-      var result =
-          pokemonConverter.convertPokedexListToLocal(dataPokemonList, pokedexName);
+      var result = pokemonConverter.convertPokedexListToLocal(
+          dataPokemonList, pokedexName);
 
       expect(result, pokemonLocalList);
     });
@@ -103,8 +131,8 @@ void main() {
         pokedexPokemonDataModel
       ];
 
-      var result =
-          pokemonConverter.convertPokedexListToLocal(dataPokemonList, pokedexName);
+      var result = pokemonConverter.convertPokedexListToLocal(
+          dataPokemonList, pokedexName);
 
       expect(result, pokemonLocalList);
     });
@@ -147,13 +175,6 @@ void main() {
           () => pokemonConverter.getPokemonName(null),
           throwsA(
               predicate((e) => e is NullException && e.type == NullType.name)));
-    });
-
-    test('throw exception if id is null', () {
-      expect(
-          () => pokemonConverter.getPokemonId(null),
-          throwsA(
-              predicate((e) => e is NullException && e.type == NullType.id)));
     });
   });
 }
