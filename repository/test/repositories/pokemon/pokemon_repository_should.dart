@@ -168,5 +168,23 @@ void main() {
       verify(mockPokemonData.get(any)).called(1);
       expect(result, expectedFailure);
     });
+
+    test('return failure when local conversion fails', () async {
+      when(mockPokemonLocal.get(pokemonId))
+          .thenAnswer((_) async => mockLocalResultFailure);
+      when(mockConverter.convertToDomain(pokemonLocalModel))
+          .thenReturn(pokemonDomainModel);
+      when(mockPokemonData.get(pokemonId))
+          .thenAnswer((_) async => mockDataResultSuccess);
+      when(mockConverter.convertToLocal(pokemonDataModel))
+          .thenReturn(null);
+
+      var result = await repository.getPokemon(pokemonId);
+
+      verify(mockPokemonLocal.get(any)).called(1);
+      verifyNever(mockPokemonLocal.store(any));
+      verify(mockPokemonData.get(any)).called(1);
+      expect(result, Left(Failure("Conversion failed")));
+    });
   });
 }

@@ -35,6 +35,7 @@ class PokemonRepositoryImpl implements PokemonRepository {
             : Left(Failure(failure.errorMessage ?? "")),
         (dataPokemon) {
           var localModel = converter.convertToLocal(dataPokemon);
+          if(localModel == null) return Left(Failure("Conversion failed"));
           pokemonLocal.store(localModel);
           return Right(converter.convertToDomain(localModel));
         },

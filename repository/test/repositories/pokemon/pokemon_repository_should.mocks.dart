@@ -3,20 +3,20 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:domain/models/pokemon_model.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:repository/boundary/local/pokemon_local.dart' as _i9;
-import 'package:repository/boundary/remote/pokemon_data.dart' as _i5;
+import 'package:repository/boundary/local/pokemon_local.dart' as _i8;
+import 'package:repository/boundary/remote/pokemon_data.dart' as _i4;
 import 'package:repository/converters/pokemon/pokemon_repository_converter.dart'
     as _i10;
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart'
     as _i11;
-import 'package:repository/models/data/pokemon/pokemon_data_model.dart' as _i8;
-import 'package:repository/models/data_failure.dart' as _i7;
-import 'package:repository/models/local/pokemon_local_model.dart' as _i4;
+import 'package:repository/models/data/pokemon/pokemon_data_model.dart' as _i7;
+import 'package:repository/models/data_failure.dart' as _i6;
+import 'package:repository/models/local/pokemon_local_model.dart' as _i9;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -51,54 +51,43 @@ class _FakePokemonModel_1 extends _i1.SmartFake implements _i3.PokemonModel {
         );
 }
 
-class _FakePokemonLocalModel_2 extends _i1.SmartFake
-    implements _i4.PokemonLocalModel {
-  _FakePokemonLocalModel_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [PokemonData].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPokemonData extends _i1.Mock implements _i5.PokemonData {
+class MockPokemonData extends _i1.Mock implements _i4.PokemonData {
   MockPokemonData() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<_i2.Either<_i7.DataFailure, _i8.PokemonDataModel>> get(int? id) =>
+  _i5.Future<_i2.Either<_i6.DataFailure, _i7.PokemonDataModel>> get(int? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #get,
           [id],
         ),
         returnValue:
-            _i6.Future<_i2.Either<_i7.DataFailure, _i8.PokemonDataModel>>.value(
-                _FakeEither_0<_i7.DataFailure, _i8.PokemonDataModel>(
+            _i5.Future<_i2.Either<_i6.DataFailure, _i7.PokemonDataModel>>.value(
+                _FakeEither_0<_i6.DataFailure, _i7.PokemonDataModel>(
           this,
           Invocation.method(
             #get,
             [id],
           ),
         )),
-      ) as _i6.Future<_i2.Either<_i7.DataFailure, _i8.PokemonDataModel>>);
+      ) as _i5.Future<_i2.Either<_i6.DataFailure, _i7.PokemonDataModel>>);
 }
 
 /// A class which mocks [PokemonLocal].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPokemonLocal extends _i1.Mock implements _i9.PokemonLocal {
+class MockPokemonLocal extends _i1.Mock implements _i8.PokemonLocal {
   MockPokemonLocal() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  void store(_i4.PokemonLocalModel? model) => super.noSuchMethod(
+  void store(_i9.PokemonLocalModel? model) => super.noSuchMethod(
         Invocation.method(
           #store,
           [model],
@@ -107,22 +96,22 @@ class MockPokemonLocal extends _i1.Mock implements _i9.PokemonLocal {
       );
 
   @override
-  _i6.Future<_i2.Either<_i7.DataFailure, _i4.PokemonLocalModel>> get(int? id) =>
+  _i5.Future<_i2.Either<_i6.DataFailure, _i9.PokemonLocalModel>> get(int? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #get,
           [id],
         ),
-        returnValue: _i6
-            .Future<_i2.Either<_i7.DataFailure, _i4.PokemonLocalModel>>.value(
-            _FakeEither_0<_i7.DataFailure, _i4.PokemonLocalModel>(
+        returnValue: _i5
+            .Future<_i2.Either<_i6.DataFailure, _i9.PokemonLocalModel>>.value(
+            _FakeEither_0<_i6.DataFailure, _i9.PokemonLocalModel>(
           this,
           Invocation.method(
             #get,
             [id],
           ),
         )),
-      ) as _i6.Future<_i2.Either<_i7.DataFailure, _i4.PokemonLocalModel>>);
+      ) as _i5.Future<_i2.Either<_i6.DataFailure, _i9.PokemonLocalModel>>);
 }
 
 /// A class which mocks [PokemonRepositoryConverter].
@@ -135,7 +124,7 @@ class MockPokemonRepositoryConverter extends _i1.Mock
   }
 
   @override
-  _i3.PokemonModel convertToDomain(_i4.PokemonLocalModel? pokemon) =>
+  _i3.PokemonModel convertToDomain(_i9.PokemonLocalModel? pokemon) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertToDomain,
@@ -151,24 +140,15 @@ class MockPokemonRepositoryConverter extends _i1.Mock
       ) as _i3.PokemonModel);
 
   @override
-  _i4.PokemonLocalModel convertToLocal(_i8.PokemonDataModel? pokemon) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #convertToLocal,
-          [pokemon],
-        ),
-        returnValue: _FakePokemonLocalModel_2(
-          this,
-          Invocation.method(
-            #convertToLocal,
-            [pokemon],
-          ),
-        ),
-      ) as _i4.PokemonLocalModel);
+  _i9.PokemonLocalModel? convertToLocal(_i7.PokemonDataModel? pokemon) =>
+      (super.noSuchMethod(Invocation.method(
+        #convertToLocal,
+        [pokemon],
+      )) as _i9.PokemonLocalModel?);
 
   @override
   List<_i3.PokemonModel> convertListToDomain(
-          List<_i4.PokemonLocalModel>? pokemon) =>
+          List<_i9.PokemonLocalModel>? pokemon) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertListToDomain,
@@ -178,18 +158,18 @@ class MockPokemonRepositoryConverter extends _i1.Mock
       ) as List<_i3.PokemonModel>);
 
   @override
-  List<_i4.PokemonLocalModel> convertPokedexListToLocal(
+  List<_i9.PokemonLocalModel> convertPokedexListToLocal(
     List<_i11.PokedexPokemonDataModel>? pokemon,
     String? pokedexName,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #convertListToLocal,
+          #convertPokedexListToLocal,
           [
             pokemon,
             pokedexName,
           ],
         ),
-        returnValue: <_i4.PokemonLocalModel>[],
-      ) as List<_i4.PokemonLocalModel>);
+        returnValue: <_i9.PokemonLocalModel>[],
+      ) as List<_i9.PokemonLocalModel>);
 }

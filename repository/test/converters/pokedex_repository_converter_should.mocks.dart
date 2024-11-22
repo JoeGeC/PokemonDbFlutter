@@ -6,11 +6,11 @@
 import 'package:domain/models/pokemon_model.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:repository/converters/pokemon/pokemon_repository_converter.dart'
-    as _i4;
+    as _i3;
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart'
     as _i6;
 import 'package:repository/models/data/pokemon/pokemon_data_model.dart' as _i5;
-import 'package:repository/models/local/pokemon_local_model.dart' as _i3;
+import 'package:repository/models/local/pokemon_local_model.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -35,28 +35,17 @@ class _FakePokemonModel_0 extends _i1.SmartFake implements _i2.PokemonModel {
         );
 }
 
-class _FakePokemonLocalModel_1 extends _i1.SmartFake
-    implements _i3.PokemonLocalModel {
-  _FakePokemonLocalModel_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [PokemonRepositoryConverter].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPokemonRepositoryConverter extends _i1.Mock
-    implements _i4.PokemonRepositoryConverter {
+    implements _i3.PokemonRepositoryConverter {
   MockPokemonRepositoryConverter() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.PokemonModel convertToDomain(_i3.PokemonLocalModel? pokemon) =>
+  _i2.PokemonModel convertToDomain(_i4.PokemonLocalModel? pokemon) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertToDomain,
@@ -72,24 +61,15 @@ class MockPokemonRepositoryConverter extends _i1.Mock
       ) as _i2.PokemonModel);
 
   @override
-  _i3.PokemonLocalModel convertToLocal(_i5.PokemonDataModel? pokemon) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #convertToLocal,
-          [pokemon],
-        ),
-        returnValue: _FakePokemonLocalModel_1(
-          this,
-          Invocation.method(
-            #convertToLocal,
-            [pokemon],
-          ),
-        ),
-      ) as _i3.PokemonLocalModel);
+  _i4.PokemonLocalModel? convertToLocal(_i5.PokemonDataModel? pokemon) =>
+      (super.noSuchMethod(Invocation.method(
+        #convertToLocal,
+        [pokemon],
+      )) as _i4.PokemonLocalModel?);
 
   @override
   List<_i2.PokemonModel> convertListToDomain(
-          List<_i3.PokemonLocalModel>? pokemon) =>
+          List<_i4.PokemonLocalModel>? pokemon) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertListToDomain,
@@ -99,18 +79,18 @@ class MockPokemonRepositoryConverter extends _i1.Mock
       ) as List<_i2.PokemonModel>);
 
   @override
-  List<_i3.PokemonLocalModel> convertPokedexListToLocal(
+  List<_i4.PokemonLocalModel> convertPokedexListToLocal(
     List<_i6.PokedexPokemonDataModel>? pokemon,
     String? pokedexName,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #convertListToLocal,
+          #convertPokedexListToLocal,
           [
             pokemon,
             pokedexName,
           ],
         ),
-        returnValue: <_i3.PokemonLocalModel>[],
-      ) as List<_i3.PokemonLocalModel>);
+        returnValue: <_i4.PokemonLocalModel>[],
+      ) as List<_i4.PokemonLocalModel>);
 }
