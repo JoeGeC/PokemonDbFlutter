@@ -39,7 +39,10 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
   @override
   Widget build(BuildContext context) => Stack(
         children: [
-          Positioned.fill(child: Container(color: widget.background)),
+          Positioned.fill(child: Image(
+            image: AssetImage('assets/pokedex_background.png'),
+            fit: BoxFit.cover,
+          )),
           CustomScrollView(
             slivers: [
               _buildHeader(),

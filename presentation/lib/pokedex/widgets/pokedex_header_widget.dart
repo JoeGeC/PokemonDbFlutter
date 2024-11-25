@@ -6,6 +6,7 @@ Widget buildPokedexHeader(ThemeData theme, GlobalKey key, String pokedexName) =>
         image: DecorationImage(
           image: AssetImage('assets/pokedex_header_background.png'),
           fit: BoxFit.cover,
+          alignment: Alignment.bottomCenter,
         ),
       ),
       child: Text(
