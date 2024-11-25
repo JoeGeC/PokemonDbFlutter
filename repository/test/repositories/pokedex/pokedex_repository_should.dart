@@ -62,14 +62,14 @@ void main() {
           PokedexDataModel(pokedexId, pokedexName, [pokedexPokemonData]);
       pokedexPokemonLocalModel = PokemonLocalModel(
           id: pokemonId,
-          pokedexEntryNumbers: {pokemonName: pokemonEntryId},
+          pokedexEntryNumbers: {pokedexId: pokemonEntryId},
           name: pokemonName);
       pokedexLocalModel =
           PokedexLocalModel(pokedexId, pokemonName, [pokedexPokemonLocalModel]);
       pokemonDomainModel = PokemonModel(
           id: pokemonId,
           name: pokemonName,
-          pokedexEntryNumbers: {pokedexName: pokemonEntryId});
+          pokedexEntryNumbers: {pokedexId: pokemonEntryId});
       pokedexDomainModel = PokedexModel(
           id: pokedexId, name: pokedexName, pokemon: [pokemonDomainModel]);
       mockDataResultSuccess = Right(pokedexDataModel);

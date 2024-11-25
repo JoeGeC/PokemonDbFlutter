@@ -40,7 +40,7 @@ void main() {
   const String pokemonName = "Sample Pokemon";
   const List<String> pokemonTypes = ["Grass", "Poison"];
   const String pokemonFrontSpriteUrl = "https://sample-pokemon/dfsa.png";
-  const Map<String, int> pokedexEntryNumbers = {"original-johto": 25};
+  const Map<int, int> pokedexEntryNumbers = {5: 25};
 
   setUp(() {
     mockPokemonData = MockPokemonData();

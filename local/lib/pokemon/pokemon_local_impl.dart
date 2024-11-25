@@ -29,21 +29,21 @@ class PokemonLocalImpl implements PokemonLocal {
         WHERE ${DatabaseColumnNames.id} = ?
       ''', [id]);
 
-  Map<String, int> _extractEntryNumbers(
+  Map<int, int> _extractEntryNumbers(
       List<Map<String, Object?>> pokemonFromDatabase) {
-    final pokedexEntryNumbers = <String, int>{};
+    final pokedexEntryNumbers = <int, int>{};
     for (final pokemon in pokemonFromDatabase) {
-      final pokedexName = pokemon[DatabaseColumnNames.pokedexName] as String?;
+      final pokedexId = pokemon[DatabaseColumnNames.pokedexId] as int?;
       final entryNumber = pokemon[DatabaseColumnNames.entryNumber] as int?;
-      if (pokedexName != null && entryNumber != null) {
-        pokedexEntryNumbers[pokedexName] = entryNumber;
+      if (pokedexId != null && entryNumber != null) {
+        pokedexEntryNumbers[pokedexId] = entryNumber;
       }
     }
     return pokedexEntryNumbers;
   }
 
   PokemonLocalModel _buildPokemonModel(
-          Map<String, Object?> pokemon, Map<String, int> entryNumbers) =>
+          Map<String, Object?> pokemon, Map<int, int> entryNumbers) =>
       PokemonLocalModel(
         id: pokemon[DatabaseColumnNames.pokemonId] as int,
         name: pokemon[DatabaseColumnNames.pokemonName] as String,

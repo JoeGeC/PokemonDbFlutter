@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class PokemonLocalModel extends Equatable {
   final int id;
-  final Map<String, int>? pokedexEntryNumbers;
+  final Map<int, int>? pokedexEntryNumbers;
   final String name;
   final List<String>? types;
   final String? frontSpriteUrl;

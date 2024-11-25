@@ -39,7 +39,7 @@ void main() {
     pokemonName = "Sample Pokemon";
     pokedexPokemonLocalModel = PokemonLocalModel(
         id: pokemonId,
-        pokedexEntryNumbers: {pokedexName: pokemonEntryId},
+        pokedexEntryNumbers: {pokedexId: pokemonEntryId},
         name: pokemonName);
     localPokemonList = [pokedexPokemonLocalModel];
     pokedexLocalModel =
@@ -58,7 +58,7 @@ void main() {
       PokemonModel pokemonDomainModel = PokemonModel(
           id: pokemonId,
           name: pokemonName,
-          pokedexEntryNumbers: {pokemonName: pokemonEntryId});
+          pokedexEntryNumbers: {pokedexId: pokemonEntryId});
       List<PokemonModel> domainPokemonList = [pokemonDomainModel];
       PokedexModel pokedexModel = PokedexModel(
           id: pokedexId, name: pokedexName, pokemon: domainPokemonList);
@@ -76,7 +76,7 @@ void main() {
       PokedexDataModel pokedexDataModel =
           PokedexDataModel(pokedexId, pokedexName, dataPokemonList);
 
-      when(mockPokemonConverter.convertPokedexListToLocal(dataPokemonList, pokedexName))
+      when(mockPokemonConverter.convertPokedexListToLocal(dataPokemonList, pokedexId))
           .thenReturn(localPokemonList);
       var result = pokedexConverter.convertToLocal(pokedexDataModel);
 

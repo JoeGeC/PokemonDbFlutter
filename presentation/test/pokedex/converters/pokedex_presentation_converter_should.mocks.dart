@@ -5,7 +5,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:domain/models/pokemon_model.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart' as _i2;
+import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart'
+    as _i2;
 import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart'
     as _i3;
 
@@ -22,9 +23,9 @@ import 'package:presentation/pokemon/converters/pokemon_presentation_converter.d
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakePokedexPokemonLocalModel_0 extends _i1.SmartFake
+class _FakePokedexPokemonPresentationModel_0 extends _i1.SmartFake
     implements _i2.PokedexPokemonPresentationModel {
-  _FakePokedexPokemonLocalModel_0(
+  _FakePokedexPokemonPresentationModel_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -33,26 +34,26 @@ class _FakePokedexPokemonLocalModel_0 extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [PokemonLocalConverter].
+/// A class which mocks [PokedexPokemonPresentationConverter].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPokemonLocalConverter extends _i1.Mock
+class MockPokedexPokemonPresentationConverter extends _i1.Mock
     implements _i3.PokedexPokemonPresentationConverter {
-  MockPokemonLocalConverter() {
+  MockPokedexPokemonPresentationConverter() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
   List<_i2.PokedexPokemonPresentationModel> convertList(
     List<_i4.PokemonModel>? pokemonList,
-    String? pokedexName,
+    int? pokedexId,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertList,
           [
             pokemonList,
-            pokedexName,
+            pokedexId,
           ],
         ),
         returnValue: <_i2.PokedexPokemonPresentationModel>[],
@@ -61,23 +62,23 @@ class MockPokemonLocalConverter extends _i1.Mock
   @override
   _i2.PokedexPokemonPresentationModel convert(
     _i4.PokemonModel? pokemon,
-    String? pokedexName,
+    int? pokedexId,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
           #convert,
           [
             pokemon,
-            pokedexName,
+            pokedexId,
           ],
         ),
-        returnValue: _FakePokedexPokemonLocalModel_0(
+        returnValue: _FakePokedexPokemonPresentationModel_0(
           this,
           Invocation.method(
             #convert,
             [
               pokemon,
-              pokedexName,
+              pokedexId,
             ],
           ),
         ),

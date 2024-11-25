@@ -6,7 +6,7 @@ abstract class PokedexPokemonEvent {
 
 class GetPokedexPokemonEvent extends PokedexPokemonEvent {
   final int pokemonId;
-  final String pokedexName;
+  final int pokedexId;
 
-  GetPokedexPokemonEvent(this.pokemonId, this.pokedexName);
+  GetPokedexPokemonEvent(this.pokemonId, this.pokedexId);
 }

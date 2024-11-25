@@ -48,7 +48,7 @@ void main() {
     pokemonModel = PokemonLocalModel(
         id: pokemonId,
         name: pokemonName,
-        pokedexEntryNumbers: {pokedexName: pokemonEntryNumber},
+        pokedexEntryNumbers: {pokedexId: pokemonEntryNumber},
         types: [pokemonType1, pokemonType2],
         frontSpriteUrl: pokemonFrontSpriteUrl);
     pokemonModel2 = PokemonLocalModel(
@@ -56,7 +56,7 @@ void main() {
       name: pokemonName2,
       types: [pokemonType3],
       frontSpriteUrl: null,
-      pokedexEntryNumbers: {pokedexName: pokemonEntryNumber2},
+      pokedexEntryNumbers: {pokedexId: pokemonEntryNumber2},
     );
     pokedexModel = PokedexLocalModel(pokedexId, pokedexName, [pokemonModel]);
     multPokemonPokedexModel = PokedexLocalModel(pokedexId, pokedexName, [
@@ -81,7 +81,7 @@ void main() {
       await mockDatabase.insertDetailedPokemon(pokemonId, pokemonName,
           pokemonType1, pokemonType2, pokemonFrontSpriteUrl);
       await mockDatabase.insertPokedexEntry(
-          pokedexName, pokemonId, pokemonEntryNumber);
+          pokedexId, pokemonId, pokemonEntryNumber);
 
       final result = await pokedexLocal.get(pokedexId);
 
@@ -118,7 +118,7 @@ void main() {
 
     const pokedexEntryMap = {
       DatabaseColumnNames.pokemonId: pokemonId,
-      DatabaseColumnNames.pokedexName: pokedexName,
+      DatabaseColumnNames.pokedexId: pokedexId,
       DatabaseColumnNames.entryNumber: pokemonEntryNumber,
     };
 

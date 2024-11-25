@@ -30,7 +30,7 @@ class PokedexPokemonBloc
       emit(PokedexPokemonErrorState(event.pokemonId, failure.errorMessage));
     }, (pokemonModel) {
       var localPokemon =
-          _pokemonConverter.convert(pokemonModel, event.pokedexName);
+          _pokemonConverter.convert(pokemonModel, event.pokedexId);
       emit(PokedexPokemonSuccessState(localPokemon));
     });
   }

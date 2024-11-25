@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter_impl.dart';
-import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
+import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
 
 import 'pokedex_presentation_converter_should.mocks.dart';
@@ -16,28 +16,30 @@ void main() {
 
   test('convert pokedex', () {
     var pokedexName = "original-johto";
-    var mockPokemonConverter = MockPokemonLocalConverter();
+    var pokedexId = 11;
+    var mockPokemonConverter = MockPokedexPokemonPresentationConverter();
     PokemonModel pokemonModel = PokemonModel(
       id: 1,
       name: "pokemon",
-      pokedexEntryNumbers: {pokedexName: 2, "kanto": 1},
+      pokedexEntryNumbers: {pokedexId: 2, 12: 1},
       imageUrl: "url/asd/asd/asd/",
       types: ["grass", "flying"],
     );
-    PokedexPokemonPresentationModel expectedPokemon = PokedexPokemonPresentationModel(
-        id: 1,
-        nationalDexNumber: "0001",
-        pokedexEntryNumber: "002",
-        name: "Pokemon",
-        imageUrl: "url/asd/asd/asd/",
-        types: ["Grass", "Flying"]);
+    PokedexPokemonPresentationModel expectedPokemon =
+        PokedexPokemonPresentationModel(
+            id: 1,
+            nationalDexNumber: "0001",
+            pokedexEntryNumber: "002",
+            name: "Pokemon",
+            imageUrl: "url/asd/asd/asd/",
+            types: ["Grass", "Flying"]);
     PokedexModel pokedexModel =
-        PokedexModel(id: 2, name: pokedexName, pokemon: [pokemonModel]);
+        PokedexModel(id: pokedexId, name: pokedexName, pokemon: [pokemonModel]);
     PokedexPresentationModel expected = PokedexPresentationModel(
-        id: 2, name: "Original Johto", pokemon: [expectedPokemon]);
+        id: pokedexId, name: "Original Johto", pokemon: [expectedPokemon]);
     var converter = PokedexPresentationConverterImpl(mockPokemonConverter);
 
-    when(mockPokemonConverter.convertList([pokemonModel], pokedexName))
+    when(mockPokemonConverter.convertList([pokemonModel], pokedexId))
         .thenReturn([expectedPokemon]);
     var result = converter.convert(pokedexModel);
 

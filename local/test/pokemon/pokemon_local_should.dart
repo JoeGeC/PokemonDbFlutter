@@ -26,9 +26,9 @@ void main() {
   const String pokemonType1 = "Grass";
   const String pokemonType2 = "Poison";
   const String pokemonFrontSpriteUrl = "https://sample/pokemon.png";
-  const String pokedexName1 = "original-johto";
+  const int pokedexId1 = 11;
   const int pokedexEntryNumber1 = 5;
-  const String pokedexName2 = "kanto";
+  const int pokedexId2 = 12;
   const int pokedexEntryNumber2 = 10;
 
   setUp(() async {
@@ -44,15 +44,15 @@ void main() {
         name: pokemonName,
         types: [pokemonType1, pokemonType2],
         frontSpriteUrl: pokemonFrontSpriteUrl,
-        pokedexEntryNumbers: {pokedexName1: pokedexEntryNumber1});
+        pokedexEntryNumbers: {pokedexId1: pokedexEntryNumber1});
     pokemonModelWithMultiplePokedexEntries = PokemonLocalModel(
         id: pokemonId,
         name: pokemonName,
         types: [pokemonType1, pokemonType2],
         frontSpriteUrl: pokemonFrontSpriteUrl,
         pokedexEntryNumbers: {
-          pokedexName1: pokedexEntryNumber1,
-          pokedexName2: pokedexEntryNumber2
+          pokedexId1: pokedexEntryNumber1,
+          pokedexId2: pokedexEntryNumber2
         });
   });
 
@@ -65,7 +65,7 @@ void main() {
       await mockDatabase.insertDetailedPokemon(pokemonId, pokemonName,
           pokemonType1, pokemonType2, pokemonFrontSpriteUrl);
       await mockDatabase.insertPokedexEntry(
-          pokedexName1, pokemonId, pokedexEntryNumber1);
+          pokedexId1, pokemonId, pokedexEntryNumber1);
 
       var result = await pokemonLocal.get(pokemonId);
 
@@ -77,9 +77,9 @@ void main() {
       await mockDatabase.insertDetailedPokemon(pokemonId, pokemonName,
           pokemonType1, pokemonType2, pokemonFrontSpriteUrl);
       await mockDatabase.insertPokedexEntry(
-          pokedexName1, pokemonId, pokedexEntryNumber1);
+          pokedexId1, pokemonId, pokedexEntryNumber1);
       await mockDatabase.insertPokedexEntry(
-          pokedexName2, pokemonId, pokedexEntryNumber2);
+          pokedexId2, pokemonId, pokedexEntryNumber2);
 
       var result = await pokemonLocal.get(pokemonId);
 

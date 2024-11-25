@@ -9,13 +9,13 @@ import '../bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
 import '../models/pokedex_pokemon_presentation_model.dart';
 
 Widget buildPokemonEntry(PokedexPokemonPresentationModel pokemon,
-    String pokedexName, ThemeData theme) {
+    int pokedexId, ThemeData theme) {
   return BlocProvider(
     create: (_) => PokedexPokemonBloc(getIt(), getIt()),
     child: BlocBuilder<PokedexPokemonBloc, PokedexPokemonState>(
       builder: (context, state) {
         final pokemonBloc = context.read<PokedexPokemonBloc>();
-        getPokemonOnStart(state, pokemonBloc, pokemon, pokedexName);
+        getPokemonOnStart(state, pokemonBloc, pokemon, pokedexId);
         if(state is PokedexPokemonSuccessState) {
           return pokemonEntryWidget(state, state.pokemon, theme);
         }
@@ -29,9 +29,9 @@ void getPokemonOnStart(
     PokedexPokemonState state,
     PokedexPokemonBloc pokemonBloc,
     PokedexPokemonPresentationModel pokemon,
-    String pokedexName) {
+    int pokedexId) {
   if (state is PokedexPokemonInitialState) {
-    pokemonBloc.add(GetPokedexPokemonEvent(pokemon.id, pokedexName));
+    pokemonBloc.add(GetPokedexPokemonEvent(pokemon.id, pokedexId));
   }
 }
 

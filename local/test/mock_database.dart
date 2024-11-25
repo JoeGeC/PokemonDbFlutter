@@ -29,7 +29,7 @@ class MockDatabase {
   Future<void> setupMockPokedexEntryNumbersTable() async {
     await database.execute('''
       CREATE TABLE ${DatabaseTableNames.pokedexEntryNumbers} (
-      ${DatabaseColumnNames.pokedexName} TEXT,
+      ${DatabaseColumnNames.pokedexId} INTEGER,
       ${DatabaseColumnNames.pokemonId} INTEGER,
       ${DatabaseColumnNames.entryNumber} INTEGER
     )
@@ -67,9 +67,9 @@ class MockDatabase {
   }
 
   Future<void> insertPokedexEntry(
-      String pokedexName, int pokemonId, int pokemonEntryNumber) async {
+      int pokedexId, int pokemonId, int pokemonEntryNumber) async {
     await database.insert(DatabaseTableNames.pokedexEntryNumbers, {
-      DatabaseColumnNames.pokedexName: pokedexName,
+      DatabaseColumnNames.pokedexId: pokedexId,
       DatabaseColumnNames.pokemonId: pokemonId,
       DatabaseColumnNames.entryNumber: pokemonEntryNumber,
     });

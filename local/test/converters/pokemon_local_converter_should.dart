@@ -6,11 +6,12 @@ import 'package:local/database_constants.dart';
 void main() {
   late PokemonLocalConverter converter;
   const int pokemonId = 1;
+  const int pokedexId = 2;
   const String pokemonName = "Sample Pokemon";
   const List<String> pokemonTypes = ["Grass", "Poison"];
   const String pokemonTypesAsString = "Grass,Poison";
   const String pokemonFrontSpriteUrl = "https://example.com/example.png";
-  const Map<String, int> pokedexEntryNumbers = {'original-johto': 5};
+  const Map<int, int> pokedexEntryNumbers = {pokedexId: 5};
 
   setUp(() {
     converter = PokemonLocalConverter();

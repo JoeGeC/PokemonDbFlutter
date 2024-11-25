@@ -7,15 +7,15 @@ void main() {
   late PokedexPokemonPresentationConverterImpl converter;
   late PokemonModel pokemonModel;
   late PokedexPokemonPresentationModel pokemonLocalModel;
-  late String pokedexName;
+
+  const int pokedexId = 11;
 
   setUp(() {
     converter = PokedexPokemonPresentationConverterImpl();
-    pokedexName = "original-johto";
     pokemonModel = PokemonModel(
       id: 1,
       name: "pokemon",
-      pokedexEntryNumbers: {pokedexName: 2, "kanto": 1},
+      pokedexEntryNumbers: {pokedexId : 2, 12: 1},
       imageUrl: "url/asd/asd/asd/",
       types: ["grass", "flying"],
     );
@@ -30,7 +30,7 @@ void main() {
   });
 
   test('convert pokemon', () {
-    var result = converter.convert(pokemonModel, pokedexName);
+    var result = converter.convert(pokemonModel, pokedexId);
 
     expect(result, pokemonLocalModel);
   });
@@ -39,7 +39,7 @@ void main() {
     var pokemonModelList = [pokemonModel, pokemonModel];
     var pokemonLocalModelList = [pokemonLocalModel, pokemonLocalModel];
 
-    var result = converter.convertList(pokemonModelList, pokedexName);
+    var result = converter.convertList(pokemonModelList, pokedexId);
 
     expect(result, pokemonLocalModelList);
   });

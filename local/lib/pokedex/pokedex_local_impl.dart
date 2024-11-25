@@ -36,11 +36,11 @@ class PokedexLocalImpl implements PokedexLocal {
   Future<Right<DataFailure, PokedexLocalModel>> buildPokedexLocalModel(
       List<Map<String, Object?>> pokedexListMap) async {
     final pokedexMap = pokedexListMap.first;
-    final pokedexName = pokedexMap[DatabaseColumnNames.name] as String? ?? "";
+    final pokedexId = pokedexMap[DatabaseColumnNames.id] as int;
     List<Map<String, Object?>> pokemonFromDatabase =
-        await _getPokemonInPokedex(pokedexName);
+        await _getPokemonInPokedex(pokedexId);
     Map<int, PokemonLocalModel> pokemonMap =
-        _mapQueryResultsToPokemon(pokemonFromDatabase, pokedexName);
+        _mapQueryResultsToPokemon(pokemonFromDatabase, pokedexId);
 
     return Right(PokedexLocalModel(
       pokedexMap[DatabaseColumnNames.id] as int,
@@ -50,33 +50,33 @@ class PokedexLocalImpl implements PokedexLocal {
   }
 
   Future<List<Map<String, Object?>>> _getPokemonInPokedex(
-          String pokedexName) async =>
+          int pokedexId) async =>
       await database.rawQuery('''
     ${SqlCommands.selectPokemonWithEntryNumbers}
-    WHERE ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.pokedexName} = ?
-      ''', [pokedexName]);
+    WHERE ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.pokedexId} = ?
+      ''', [pokedexId]);
 
   Map<int, PokemonLocalModel> _mapQueryResultsToPokemon(
-      List<Map<String, Object?>> pokemonFromDatabase, String pokedexName) {
+      List<Map<String, Object?>> pokemonFromDatabase, int pokedexId) {
     final Map<int, PokemonLocalModel> result = {};
     for (final pokemon in pokemonFromDatabase) {
       final pokemonId = pokemon['pokemonId'] as int;
       final entryNumber = pokemon['entryNumber'] as int?;
       final pokedexEntryNumbers = result[pokemonId]?.pokedexEntryNumbers ?? {};
-      _assignEntryNumberTo(pokedexEntryNumbers, pokedexName, entryNumber);
+      _assignEntryNumberTo(pokedexEntryNumbers, pokedexId, entryNumber);
       _addPokemonTo(result, pokemonId, pokemon, pokedexEntryNumbers);
     }
     return result;
   }
 
-  void _assignEntryNumberTo(Map<String, int> pokedexEntryNumbers,
-      String pokedexName, int? entryNumber) {
+  void _assignEntryNumberTo(
+      Map<int, int> pokedexEntryNumbers, int pokedexId, int? entryNumber) {
     if (entryNumber == null) return;
-    pokedexEntryNumbers[pokedexName] = entryNumber;
+    pokedexEntryNumbers[pokedexId] = entryNumber;
   }
 
   void _addPokemonTo(Map<int, PokemonLocalModel> pokemonMap, int pokemonId,
-      Map<String, Object?> pokemon, Map<String, int> pokedexEntryNumbers) {
+      Map<String, Object?> pokemon, Map<int, int> pokedexEntryNumbers) {
     if (pokemonMap.containsKey(pokemonId)) return;
     pokemonMap[pokemonId] = PokemonLocalModel(
       id: pokemonId,
@@ -117,12 +117,12 @@ class PokedexLocalImpl implements PokedexLocal {
   }
 
   void _insertPokedexEntryNumbers(PokemonLocalModel pokemon, Batch batch) {
-    pokemon.pokedexEntryNumbers?.forEach((pokedexName, entryNumber) {
+    pokemon.pokedexEntryNumbers?.forEach((pokedexId, entryNumber) {
       batch.insert(
         DatabaseTableNames.pokedexEntryNumbers,
         {
           DatabaseColumnNames.pokemonId: pokemon.id,
-          DatabaseColumnNames.pokedexName: pokedexName,
+          DatabaseColumnNames.pokedexId: pokedexId,
           DatabaseColumnNames.entryNumber: entryNumber,
         },
         conflictAlgorithm: ConflictAlgorithm.ignore,

@@ -39,14 +39,14 @@ class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
 
   @override
   List<PokemonLocalModel> convertPokedexListToLocal(
-      List<PokedexPokemonDataModel> dataPokemonList, String pokedexName) {
+      List<PokedexPokemonDataModel> dataPokemonList, int pokedexId) {
     return dataPokemonList
         .map((pokemon) {
           try {
             return PokemonLocalModel(
                 id: getPokemonIdFromUrl(pokemon.url),
                 pokedexEntryNumbers:
-                    getEntryNumberAsMap(pokemon.entryNumber, pokedexName),
+                    getEntryNumberAsMap(pokemon.entryNumber, pokedexId),
                 name: getPokemonName(pokemon.name));
           } catch (e) {
             return null;
@@ -67,8 +67,8 @@ class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
     }
   }
 
-  Map<String, int> getEntryNumberAsMap(int? entryNumber, String pokedexName) =>
-      {pokedexName: entryNumber ?? (throw NullException(NullType.entryNumber))};
+  Map<int, int> getEntryNumberAsMap(int? entryNumber, int pokedexId) =>
+      {pokedexId: entryNumber ?? (throw NullException(NullType.entryNumber))};
 
   String getPokemonName(String? pokemonName) =>
       pokemonName ?? (throw NullException(NullType.name));

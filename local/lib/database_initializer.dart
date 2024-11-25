@@ -52,7 +52,7 @@ class DatabaseInitializer {
     await database.execute('''
       ${SqlCommands.createTable} IF NOT EXISTS ${DatabaseTableNames.pokedexEntryNumbers} ( 
         ${DatabaseColumnNames.pokemonId} ${SqlCommands.intType}, 
-        ${DatabaseColumnNames.pokedexName} ${SqlCommands.textType},
+        ${DatabaseColumnNames.pokedexId} ${SqlCommands.intType},
         ${DatabaseColumnNames.entryNumber} ${SqlCommands.intType},
         ${SqlCommands.foreignKey} (${DatabaseColumnNames.pokemonId}) ${SqlCommands.references} ${DatabaseTableNames.pokemon}(${DatabaseColumnNames.id}) ${SqlCommands.onDelete} ${SqlCommands.cascade}
       )

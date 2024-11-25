@@ -9,5 +9,5 @@ abstract class PokemonRepositoryConverter {
   PokemonLocalModel? convertToLocal(PokemonDataModel pokemon);
   List<PokemonModel> convertListToDomain(List<PokemonLocalModel> pokemon);
   List<PokemonLocalModel> convertPokedexListToLocal(
-      List<PokedexPokemonDataModel> pokemon, String pokedexName);
+      List<PokedexPokemonDataModel> pokemon, int pokedexId);
 }

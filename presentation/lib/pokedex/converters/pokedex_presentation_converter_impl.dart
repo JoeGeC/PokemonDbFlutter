@@ -14,7 +14,7 @@ class PokedexPresentationConverterImpl implements PokedexPresentationConverter {
     return PokedexPresentationModel(
         id: pokedex.id,
         name: convertName(pokedex.name),
-        pokemon: pokemonConverter.convertList(pokedex.pokemon, pokedex.name),
+        pokemon: pokemonConverter.convertList(pokedex.pokemon, pokedex.id),
     );
   }
 

@@ -21,7 +21,7 @@ class SqlCommands {
            ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.name} AS ${DatabaseColumnNames.pokemonName},
            ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.types} AS ${DatabaseColumnNames.pokemonTypes},
            ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.frontSpriteUrl} AS ${DatabaseColumnNames.frontSpriteUrl},
-           ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.pokedexName} AS ${DatabaseColumnNames.pokedexName},
+           ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.pokedexId} AS ${DatabaseColumnNames.pokedexId},
            ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.entryNumber} AS ${DatabaseColumnNames.entryNumber}
     FROM ${DatabaseTableNames.pokemon} ${DatabaseTableNames.pokemon}
     LEFT JOIN ${DatabaseTableNames.pokedexEntryNumbers} ${DatabaseTableNames.pokedexEntryNumbers}

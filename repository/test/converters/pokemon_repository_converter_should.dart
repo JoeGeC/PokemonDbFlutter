@@ -8,7 +8,7 @@ import 'package:repository/models/local/pokemon_local_model.dart';
 
 void main() {
   late PokemonRepositoryConverterImpl pokemonConverter;
-  final String pokedexName = "sample-pokedex";
+  final int pokedexId = 5;
   final int pokemonId = 1;
   final int pokemonEntryId = 2;
   final String pokemonName = "Sample Pokemon";
@@ -30,7 +30,7 @@ void main() {
     pokemonConverter = PokemonRepositoryConverterImpl();
     pokedexPokemonLocalModel = PokemonLocalModel(
       id: pokemonId,
-      pokedexEntryNumbers: {pokedexName: pokemonEntryId},
+      pokedexEntryNumbers: {pokedexId: pokemonEntryId},
       name: pokemonName,
       types: [pokemonType1, pokemonType2],
       frontSpriteUrl: frontSpriteUrl,
@@ -44,7 +44,7 @@ void main() {
     pokemonDomainModel = PokemonModel(
       id: pokemonId,
       name: pokemonName,
-      pokedexEntryNumbers: {pokedexName: pokemonEntryId},
+      pokedexEntryNumbers: {pokedexId: pokemonEntryId},
       types: [pokemonType1, pokemonType2],
       imageUrl: frontSpriteUrl,
     );
@@ -115,7 +115,7 @@ void main() {
   group("convert to local list", () {
     test('convert data list to local list', () {
       var result = pokemonConverter.convertPokedexListToLocal(
-          dataPokemonList, pokedexName);
+          dataPokemonList, pokedexId);
 
       expect(result, pokemonLocalList);
     });
@@ -132,7 +132,7 @@ void main() {
       ];
 
       var result = pokemonConverter.convertPokedexListToLocal(
-          dataPokemonList, pokedexName);
+          dataPokemonList, pokedexId);
 
       expect(result, pokemonLocalList);
     });
@@ -165,7 +165,7 @@ void main() {
 
     test('throw exception if entryNumber is null', () {
       expect(
-          () => pokemonConverter.getEntryNumberAsMap(null, pokedexName),
+          () => pokemonConverter.getEntryNumberAsMap(null, pokedexId),
           throwsA(predicate(
               (e) => e is NullException && e.type == NullType.entryNumber)));
     });
