@@ -17,12 +17,12 @@ class SqlCommands {
   static const String cascade = 'CASCADE';
 
   static const String selectPokemonWithEntryNumbers = '''
-    SELECT ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.id} AS pokemonId,
-           ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.name} AS pokemonName,
-           ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.types} AS pokemonTypes,
-           ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.frontSpriteUrl} AS frontSpriteUrl,
-           ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.pokedexName} AS pokedexName,
-           ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.entryNumber} AS entryNumber
+    SELECT ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.id} AS ${DatabaseColumnNames.pokemonId},
+           ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.name} AS ${DatabaseColumnNames.pokemonName},
+           ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.types} AS ${DatabaseColumnNames.pokemonTypes},
+           ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.frontSpriteUrl} AS ${DatabaseColumnNames.frontSpriteUrl},
+           ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.pokedexName} AS ${DatabaseColumnNames.pokedexName},
+           ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.entryNumber} AS ${DatabaseColumnNames.entryNumber}
     FROM ${DatabaseTableNames.pokemon} ${DatabaseTableNames.pokemon}
     LEFT JOIN ${DatabaseTableNames.pokedexEntryNumbers} ${DatabaseTableNames.pokedexEntryNumbers}
     ON ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.id} = ${DatabaseTableNames.pokedexEntryNumbers}.${DatabaseColumnNames.pokemonId}

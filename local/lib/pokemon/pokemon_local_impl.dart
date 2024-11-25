@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:local/database_constants.dart';
+import 'package:local/sql_commands.dart';
 import 'package:repository/boundary/local/pokemon_local.dart';
 import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
@@ -15,24 +16,41 @@ class PokemonLocalImpl implements PokemonLocal {
 
   @override
   Future<Either<DataFailure, PokemonLocalModel>> get(int id) async {
-    var result = await getPokemonFromDatabase(id);
-    if(result.isEmpty) return Left(DataFailure("No data"));
-    final pokemonMap = result.first;
-    return Right(buildPokemonModel(pokemonMap));
+    var pokemonFromDatabase = await _getPokemonFromDatabase(id);
+    if (pokemonFromDatabase.isEmpty) return Left(DataFailure("No data"));
+    var entryNumbers = _extractEntryNumbers(pokemonFromDatabase);
+    var result = _buildPokemonModel(pokemonFromDatabase.first, entryNumbers);
+    return Right(result);
   }
 
-  Future<List<Map<String, Object?>>> getPokemonFromDatabase(int id) async =>
+  Future<List<Map<String, Object?>>> _getPokemonFromDatabase(int id) async =>
       await database.rawQuery('''
-        SELECT * FROM ${DatabaseTableNames.pokemon}
+        ${SqlCommands.selectPokemonWithEntryNumbers}
         WHERE ${DatabaseColumnNames.id} = ?
       ''', [id]);
 
-  PokemonLocalModel buildPokemonModel(Map<String, Object?> pokemon) =>
+  Map<String, int> _extractEntryNumbers(
+      List<Map<String, Object?>> pokemonFromDatabase) {
+    final pokedexEntryNumbers = <String, int>{};
+    for (final pokemon in pokemonFromDatabase) {
+      final pokedexName = pokemon[DatabaseColumnNames.pokedexName] as String?;
+      final entryNumber = pokemon[DatabaseColumnNames.entryNumber] as int?;
+      if (pokedexName != null && entryNumber != null) {
+        pokedexEntryNumbers[pokedexName] = entryNumber;
+      }
+    }
+    return pokedexEntryNumbers;
+  }
+
+  PokemonLocalModel _buildPokemonModel(
+          Map<String, Object?> pokemon, Map<String, int> entryNumbers) =>
       PokemonLocalModel(
-        id: pokemon[DatabaseColumnNames.id] as int,
-        name: pokemon[DatabaseColumnNames.name] as String,
-        types: (pokemon[DatabaseColumnNames.types] as String?)?.split(','),
+        id: pokemon[DatabaseColumnNames.pokemonId] as int,
+        name: pokemon[DatabaseColumnNames.pokemonName] as String,
+        types:
+            (pokemon[DatabaseColumnNames.pokemonTypes] as String?)?.split(','),
         frontSpriteUrl: pokemon[DatabaseColumnNames.frontSpriteUrl] as String?,
+        pokedexEntryNumbers: entryNumbers,
       );
 
   @override
@@ -61,5 +79,4 @@ class PokemonLocalImpl implements PokemonLocal {
       pokemonData[DatabaseColumnNames.frontSpriteUrl],
     ]);
   }
-
 }

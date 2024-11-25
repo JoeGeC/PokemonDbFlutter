@@ -19,12 +19,17 @@ void main() {
   late PokemonLocalImpl pokemonLocal;
   late MockPokemonLocalConverter mockPokemonConverter;
   late PokemonLocalModel pokemonModel;
+  late PokemonLocalModel pokemonModelWithMultiplePokedexEntries;
 
   const int pokemonId = 1;
   const String pokemonName = "Sample Pokemon";
   const String pokemonType1 = "Grass";
   const String pokemonType2 = "Poison";
   const String pokemonFrontSpriteUrl = "https://sample/pokemon.png";
+  const String pokedexName1 = "original-johto";
+  const int pokedexEntryNumber1 = 5;
+  const String pokedexName2 = "kanto";
+  const int pokedexEntryNumber2 = 10;
 
   setUp(() async {
     sqfliteFfiInit();
@@ -38,7 +43,17 @@ void main() {
         id: pokemonId,
         name: pokemonName,
         types: [pokemonType1, pokemonType2],
-        frontSpriteUrl: pokemonFrontSpriteUrl);
+        frontSpriteUrl: pokemonFrontSpriteUrl,
+        pokedexEntryNumbers: {pokedexName1: pokedexEntryNumber1});
+    pokemonModelWithMultiplePokedexEntries = PokemonLocalModel(
+        id: pokemonId,
+        name: pokemonName,
+        types: [pokemonType1, pokemonType2],
+        frontSpriteUrl: pokemonFrontSpriteUrl,
+        pokedexEntryNumbers: {
+          pokedexName1: pokedexEntryNumber1,
+          pokedexName2: pokedexEntryNumber2
+        });
   });
 
   tearDown(() async {
@@ -49,10 +64,26 @@ void main() {
     test('return PokemonLocalModel when data is found', () async {
       await mockDatabase.insertDetailedPokemon(pokemonId, pokemonName,
           pokemonType1, pokemonType2, pokemonFrontSpriteUrl);
+      await mockDatabase.insertPokedexEntry(
+          pokedexName1, pokemonId, pokedexEntryNumber1);
 
       var result = await pokemonLocal.get(pokemonId);
 
       expect(result, Right(pokemonModel));
+    });
+
+    test('return PokemonLocalModel when multiple pokedex entries found',
+        () async {
+      await mockDatabase.insertDetailedPokemon(pokemonId, pokemonName,
+          pokemonType1, pokemonType2, pokemonFrontSpriteUrl);
+      await mockDatabase.insertPokedexEntry(
+          pokedexName1, pokemonId, pokedexEntryNumber1);
+      await mockDatabase.insertPokedexEntry(
+          pokedexName2, pokemonId, pokedexEntryNumber2);
+
+      var result = await pokemonLocal.get(pokemonId);
+
+      expect(result, Right(pokemonModelWithMultiplePokedexEntries));
     });
 
     test('return DataFailure when no data is found', () async {
@@ -82,7 +113,8 @@ void main() {
       expect(pokemonFromDatabase.first, pokemonMap);
     });
 
-    test('store pokemon details when pokemon in database but undetailed', () async {
+    test('store pokemon details when pokemon in database but undetailed',
+        () async {
       mockDatabase.insertUndetailedPokemon(pokemonId, pokemonName);
 
       when(mockPokemonConverter.convert(pokemonModel)).thenReturn(pokemonMap);
@@ -95,7 +127,8 @@ void main() {
       expect(pokemonFromDatabase.first, pokemonMap);
     });
 
-    test('store pokemon details when pokemon in database but undetailed', () async {
+    test('store pokemon details when pokemon in database but undetailed',
+        () async {
       mockDatabase.insertUndetailedPokemon(pokemonId, pokemonName);
 
       when(mockPokemonConverter.convert(pokemonModel)).thenReturn(pokemonMap);

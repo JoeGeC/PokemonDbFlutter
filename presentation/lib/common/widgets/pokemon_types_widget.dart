@@ -17,11 +17,16 @@ Widget _buildTypeBoxes(List<String> types, ThemeData theme) => Row(
           .toList(),
     );
 
-Widget _buildTypeBox(String type, ThemeData theme) => Stack(
-      children: [
-        _buildTypeFallBack(), //TODO: Change this
-        _buildCenterText(type, theme),
-      ],
+Widget _buildTypeBox(String type, ThemeData theme) => Container(
+    height: 40,
+      width: 80,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          _buildTypeFallBack(), //TODO: Change this
+          _buildCenterText(type, theme),
+        ],
+      ),
     );
 
 Widget _buildUnknownTypeBox(ThemeData theme) => Stack(
@@ -31,13 +36,10 @@ Widget _buildUnknownTypeBox(ThemeData theme) => Stack(
       ],
     );
 
-Positioned _buildCenterText(String text, ThemeData theme) => Positioned.fill(
-      child: Align(
-        alignment: Alignment.center,
-        child: Text(
-          text,
-          style: theme.textTheme.displayMedium!.copyWith(),
-        ),
+Widget _buildCenterText(String text, ThemeData theme) => Center(
+      child: Text(
+        text,
+        style: theme.textTheme.labelMedium!.copyWith(),
       ),
     );
 
