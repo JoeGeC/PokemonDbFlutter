@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/common/assetConstants.dart';
 
 class ScrollUpHeaderListView extends StatefulWidget {
   final Widget Function(GlobalKey headerKey) headerBuilder;
@@ -40,7 +41,7 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
   Widget build(BuildContext context) => Stack(
         children: [
           Positioned.fill(child: Image(
-            image: AssetImage('assets/pokedex_background.png'),
+            image: AssetImage(AssetConstants.pokedexBackground),
             fit: BoxFit.cover,
           )),
           CustomScrollView(

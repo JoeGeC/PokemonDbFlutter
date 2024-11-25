@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/common/assetConstants.dart';
 
 Widget buildPokedexHeader(ThemeData theme, GlobalKey key, String pokedexName) =>
     Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/pokedex_header_background.png'),
+          image: AssetImage(AssetConstants.pokedexHeaderBackground),
           fit: BoxFit.cover,
           alignment: Alignment.bottomCenter,
         ),
