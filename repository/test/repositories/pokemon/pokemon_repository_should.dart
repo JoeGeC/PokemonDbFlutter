@@ -23,7 +23,8 @@ void main() {
 
   late PokemonModel pokemonDomainModel;
   late PokemonModel pokemonDomainModelUndetailed;
-  late PokemonLocalModel pokemonLocalModel;
+  late PokemonLocalModel pokemonLocalModelWithEntries;
+  late PokemonLocalModel pokemonLocalModelNoEntries;
   late PokemonLocalModel pokemonLocalModelUndetailed;
   late PokemonDataModel pokemonDataModel;
   late Either<DataFailure, PokemonLocalModel> mockLocalResultSuccess;
@@ -49,12 +50,18 @@ void main() {
     repository =
         PokemonRepositoryImpl(mockPokemonData, mockPokemonLocal, mockConverter);
 
-    pokemonLocalModel = PokemonLocalModel(
+    pokemonLocalModelWithEntries = PokemonLocalModel(
       id: pokemonId,
       name: pokemonName,
       types: pokemonTypes,
       frontSpriteUrl: pokemonFrontSpriteUrl,
       pokedexEntryNumbers: pokedexEntryNumbers,
+    );
+    pokemonLocalModelNoEntries = PokemonLocalModel(
+      id: pokemonId,
+      name: pokemonName,
+      types: pokemonTypes,
+      frontSpriteUrl: pokemonFrontSpriteUrl,
     );
     pokemonLocalModelUndetailed = PokemonLocalModel(
       id: pokemonId,
@@ -79,7 +86,7 @@ void main() {
       pokemonTypes,
       pokemonFrontSpriteUrl,
     );
-    mockLocalResultSuccess = Right(pokemonLocalModel);
+    mockLocalResultSuccess = Right(pokemonLocalModelWithEntries);
     mockLocalResultSuccessUndetailed = Right(pokemonLocalModelUndetailed);
     mockLocalResultFailure = Left(DataFailure(errorMessage));
     mockDataResultSuccess = Right(pokemonDataModel);
@@ -93,7 +100,7 @@ void main() {
     test('return pokemon from local when detailed data present', () async {
       when(mockPokemonLocal.get(pokemonId))
           .thenAnswer((_) async => mockLocalResultSuccess);
-      when(mockConverter.convertToDomain(pokemonLocalModel))
+      when(mockConverter.convertToDomain(pokemonLocalModelWithEntries))
           .thenReturn(pokemonDomainModel);
 
       var result = await repository.getPokemon(pokemonId);
@@ -103,43 +110,50 @@ void main() {
       expect(result, expectedSuccess);
     });
 
-    test('get pokemon from data when detailed data not present and store locally', () async {
+    test('get pokemon from data when detailed data not present', () async {
+      var localGetResults = [mockLocalResultSuccessUndetailed, mockLocalResultSuccess];
       when(mockPokemonLocal.get(pokemonId))
-          .thenAnswer((_) async => mockLocalResultSuccessUndetailed);
-      when(mockConverter.convertToDomain(pokemonLocalModel))
-          .thenReturn(pokemonDomainModel);
+          .thenAnswer((_) async => localGetResults.removeAt(0));
       when(mockPokemonData.get(pokemonId))
           .thenAnswer((_) async => mockDataResultSuccess);
       when(mockConverter.convertToLocal(pokemonDataModel))
-          .thenReturn(pokemonLocalModel);
+          .thenReturn(pokemonLocalModelNoEntries);
+      when(mockPokemonLocal.store(pokemonLocalModelNoEntries))
+          .thenAnswer((_) async => Future.value);
+      when(mockConverter.convertToDomain(pokemonLocalModelWithEntries))
+          .thenReturn(pokemonDomainModel);
 
       var result = await repository.getPokemon(pokemonId);
 
-      verify(mockPokemonLocal.get(any)).called(1);
-      verify(mockPokemonLocal.store(pokemonLocalModel)).called(1);
+      verify(mockPokemonLocal.get(any)).called(2);
+      verify(mockPokemonLocal.store(pokemonLocalModelNoEntries)).called(1);
       verify(mockPokemonData.get(any)).called(1);
       expect(result, expectedSuccess);
     });
 
     test('get pokemon from data when not in local and store locally', () async {
+      var localGetResults = [mockLocalResultFailure, mockLocalResultSuccess];
       when(mockPokemonLocal.get(pokemonId))
-          .thenAnswer((_) async => mockLocalResultFailure);
-      when(mockConverter.convertToDomain(pokemonLocalModel))
-          .thenReturn(pokemonDomainModel);
+          .thenAnswer((_) async => localGetResults.removeAt(0));
       when(mockPokemonData.get(pokemonId))
           .thenAnswer((_) async => mockDataResultSuccess);
       when(mockConverter.convertToLocal(pokemonDataModel))
-          .thenReturn(pokemonLocalModel);
+          .thenReturn(pokemonLocalModelNoEntries);
+      when(mockPokemonLocal.store(pokemonLocalModelNoEntries))
+          .thenAnswer((_) async => Future.value);
+      when(mockConverter.convertToDomain(pokemonLocalModelWithEntries))
+          .thenReturn(pokemonDomainModel);
 
       var result = await repository.getPokemon(pokemonId);
 
-      verify(mockPokemonLocal.get(any)).called(1);
-      verify(mockPokemonLocal.store(pokemonLocalModel)).called(1);
+      verify(mockPokemonLocal.get(any)).called(2);
+      verify(mockPokemonLocal.store(pokemonLocalModelNoEntries)).called(1);
       verify(mockPokemonData.get(any)).called(1);
       expect(result, expectedSuccess);
     });
 
-    test('return undetailed pokemon from local when no data response', () async {
+    test('return undetailed pokemon from local when no data response',
+        () async {
       when(mockPokemonLocal.get(pokemonId))
           .thenAnswer((_) async => mockLocalResultSuccessUndetailed);
       when(mockConverter.convertToDomain(pokemonLocalModelUndetailed))
@@ -172,12 +186,11 @@ void main() {
     test('return failure when local conversion fails', () async {
       when(mockPokemonLocal.get(pokemonId))
           .thenAnswer((_) async => mockLocalResultFailure);
-      when(mockConverter.convertToDomain(pokemonLocalModel))
+      when(mockConverter.convertToDomain(pokemonLocalModelWithEntries))
           .thenReturn(pokemonDomainModel);
       when(mockPokemonData.get(pokemonId))
           .thenAnswer((_) async => mockDataResultSuccess);
-      when(mockConverter.convertToLocal(pokemonDataModel))
-          .thenReturn(null);
+      when(mockConverter.convertToLocal(pokemonDataModel)).thenReturn(null);
 
       var result = await repository.getPokemon(pokemonId);
 

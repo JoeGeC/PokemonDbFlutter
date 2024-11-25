@@ -33,11 +33,17 @@ class PokemonRepositoryImpl implements PokemonRepository {
         (failure) => undetailedPokemonModel != null
             ? Right(converter.convertToDomain(undetailedPokemonModel))
             : Left(Failure(failure.errorMessage ?? "")),
-        (dataPokemon) {
+        (dataPokemon) async {
           var localModel = converter.convertToLocal(dataPokemon);
-          if(localModel == null) return Left(Failure("Conversion failed"));
-          pokemonLocal.store(localModel);
-          return Right(converter.convertToDomain(localModel));
+          if (localModel == null) return Left(Failure("Conversion failed"));
+          await pokemonLocal.store(localModel);
+          var detailedPokemon = await pokemonLocal.get(id);
+          var result = detailedPokemon.fold(
+              (failure) => undetailedPokemonModel,
+              (success) => success,
+          );
+          if(result == null) return Left(Failure("Null from local"));
+          return Right(converter.convertToDomain(result));
         },
       );
 }

@@ -87,13 +87,14 @@ class MockPokemonLocal extends _i1.Mock implements _i8.PokemonLocal {
   }
 
   @override
-  void store(_i9.PokemonLocalModel? model) => super.noSuchMethod(
+  _i5.Future<dynamic> store(_i9.PokemonLocalModel? model) =>
+      (super.noSuchMethod(
         Invocation.method(
           #store,
           [model],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
   _i5.Future<_i2.Either<_i6.DataFailure, _i9.PokemonLocalModel>> get(int? id) =>

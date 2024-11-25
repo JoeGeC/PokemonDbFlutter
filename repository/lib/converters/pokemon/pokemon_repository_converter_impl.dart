@@ -29,13 +29,12 @@ class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
         types: pokemon.types,
         frontSpriteUrl: pokemon.frontSpriteUrl,
       );
-    } catch(e){
+    } catch (e) {
       return null;
     }
   }
 
-  int getPokemonId(int? id) =>
-      id ?? (throw NullException(NullType.id));
+  int getPokemonId(int? id) => id ?? (throw NullException(NullType.id));
 
   @override
   List<PokemonLocalModel> convertPokedexListToLocal(
