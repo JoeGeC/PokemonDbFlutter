@@ -13,4 +13,5 @@ const ColorScheme lightColorScheme = ColorScheme(
   surface: Colors.grey,
   onSurface: Colors.black,
   shadow: Color(0xFFB7B3B8),
+  onSurfaceVariant: Color(0xFF7A7C80),
 );

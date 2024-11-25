@@ -11,7 +11,7 @@ Widget buildPokedexHeader(ThemeData theme, GlobalKey key, String pokedexName) =>
       child: Text(
         pokedexName,
         key: key,
-        style: theme.textTheme.titleMedium!.copyWith(),
+        style: theme.textTheme.headlineMedium!.copyWith(),
         textAlign: TextAlign.center,
       ),
     );

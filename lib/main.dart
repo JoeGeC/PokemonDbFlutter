@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_db/injections.dart';
 import 'package:pokemon_db/theme/colors.dart';
 import 'package:pokemon_db/theme/text_styles.dart';
+import 'package:presentation/common/text_theme.dart';
 import 'package:presentation/pokedex/pages/pokedex_page.dart';
 
 Future<void> main() async {
@@ -15,15 +16,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = TextTheme(
+          headlineMedium: headlineMedium,
+          titleMedium: titleMedium,
+          labelSmall: labelSmall,
+        );
+    CustomTextTheme().initialize(textTheme);
     return MaterialApp(
       title: 'Pokemon DB',
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: lightColorScheme,
-        textTheme: TextTheme(
-          labelMedium: labelMedium,
-          titleMedium: titleMedium,
-        ),
+        textTheme: textTheme,
       ),
       home: const PokedexPage(),
     );

@@ -49,7 +49,7 @@ Widget pokemonEntryWidget(PokedexPokemonState state,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TwoSpacedTextsRow(pokemon.pokedexEntryNumber, pokemon.name,
-                    theme.textTheme.labelMedium!),
+                    theme.textTheme.titleMedium!),
                 buildPokemonTypes(pokemon.types, theme)
               ],
             )
