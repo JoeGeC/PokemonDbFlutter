@@ -16,20 +16,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Pokemon DB',
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: lightColorScheme,
+        textTheme: initialiseTextTheme(),
+      ),
+      home: PokedexPage(),
+    );
+  }
+
+  TextTheme initialiseTextTheme() {
     var textTheme = TextTheme(
           headlineMedium: headlineMedium,
           titleMedium: titleMedium,
           labelSmall: labelSmall,
         );
     CustomTextTheme().initialize(textTheme);
-    return MaterialApp(
-      title: 'Pokemon DB',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: lightColorScheme,
-        textTheme: textTheme,
-      ),
-      home: const PokedexPage(),
-    );
+    return textTheme;
   }
 }

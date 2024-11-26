@@ -24,6 +24,7 @@ class _PokedexPageState extends State<PokedexPage> {
   final PokedexBloc _bloc = PokedexBloc(
       getIt<PokedexUseCase>(), getIt<PokedexPresentationConverter>());
   late PokedexPresentationModel pokedex;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -40,7 +41,9 @@ class _PokedexPageState extends State<PokedexPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: theme.colorScheme.primary,
+      drawer: buildDrawer(),
       body: SafeArea(
         child: BlocConsumer<PokedexBloc, PokedexState>(
           bloc: _bloc,
@@ -63,10 +66,44 @@ class _PokedexPageState extends State<PokedexPage> {
       ? EmptyPage()
       : ScrollUpHeaderListView(
           headerBuilder: (headerKey) =>
-              buildPokedexHeader(theme, headerKey, pokedex.name),
+              buildPokedexHeader(theme, headerKey, pokedex.name, _scaffoldKey),
           itemCount: pokedex.pokemon.length,
           itemBuilder: (context, index) =>
               buildPokemonEntry(pokedex.pokemon[index], pokedex.id, theme),
           background: theme.colorScheme.surface,
         );
+
+  Drawer buildDrawer() => Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Sidebar Header',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      );
 }
