@@ -21,17 +21,19 @@ class PokedexListBloc extends Bloc<PokedexListEvent, PokedexListState> {
     on<GetPokedexListEvent>(_getPokedexListEvent);
   }
 
-  Stream<PokedexListState> _getPokedexListEvent(
-      GetPokedexListEvent event, Emitter<PokedexListState> emitter) async* {
-    yield PokedexListLoadingState();
+  void _getPokedexListEvent(
+      GetPokedexListEvent event, Emitter<PokedexListState> emit) async {
+    emit(PokedexListLoadingState());
 
-    await for (var result in _pokedexListUseCase.getAllPokedexes()) {
-      yield result.fold(
-        (failure) => PokedexListErrorState(failure.errorMessage),
-        (pokedexList) => PokedexListSuccessState(pokedexList
-            .map((pokedex) => _pokedexConverter.convert(pokedex))
-            .toList()),
-      );
-    }
+    await for (final result in _pokedexListUseCase.getAllPokedexes()) {
+        result.fold(
+          (failure) => emit(PokedexListErrorState(failure.errorMessage)),
+          (pokedexList) => emit(PokedexListSuccessState(
+            pokedexList
+                .map((pokedex) => _pokedexConverter.convert(pokedex))
+                .toList(),
+          )),
+        );
+      }
   }
 }

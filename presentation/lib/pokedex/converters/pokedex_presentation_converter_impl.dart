@@ -20,7 +20,7 @@ class PokedexPresentationConverterImpl implements PokedexPresentationConverter {
 
   String convertName(String name) => switch(name){
       "original-johto" => "Original Johto",
-      String() => "",
+      String() => name,
     };
 
 }

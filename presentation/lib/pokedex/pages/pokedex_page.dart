@@ -80,15 +80,10 @@ class _PokedexPageState extends State<PokedexPage> {
         child: SafeArea(
           child: Container(
             color: theme.colorScheme.surface,
-            child: ListView(
-              padding: EdgeInsets.zero,
+            child: Column(
               children: <Widget>[
                 buildHeader(
-                  child: Text(
-                    "Pokedex",
-                    style: theme.textTheme.headlineMedium,
-                    textAlign: TextAlign.center,
-                  ),
+                  child: _buildDrawerHeader(theme),
                 ),
                 buildPokedexList(),
               ],
@@ -97,30 +92,43 @@ class _PokedexPageState extends State<PokedexPage> {
         ),
       );
 
-  BlocProvider<PokedexListBloc> buildPokedexList() {
-    return BlocProvider(
-      create: (context) => PokedexListBloc(getIt(), getIt()),
-      child: BlocBuilder<PokedexListBloc, PokedexListState>(
-        builder: (context, state) {
-          if (state is PokedexListInitialState) {
-            return Center(child: Text('Welcome to the Pokedex'));
-          } else if (state is PokedexListLoadingState) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is PokedexListErrorState) {
-            return Center(child: Text('Error: ${state.errorMessage}'));
-          } else if (state is PokedexListSuccessState) {
-            return ListView.builder(
-              itemCount: state.pokedexList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(state.pokedexList[index].name),
-                );
-              },
-            );
-          }
-          return Container();
+  SizedBox _buildDrawerHeader(ThemeData theme) => SizedBox(
+        width: double.infinity,
+        child: Text(
+          "Pokedex",
+          style: theme.textTheme.headlineMedium,
+          textAlign: TextAlign.center,
+        ),
+      );
+
+  BlocProvider<PokedexListBloc> buildPokedexList() => BlocProvider(
+        create: (context) {
+          final bloc = PokedexListBloc(getIt(), getIt());
+          bloc.add(GetPokedexListEvent());
+          return bloc;
         },
-      ),
-    );
-  }
+        child: BlocBuilder<PokedexListBloc, PokedexListState>(
+          builder: (context, state) {
+            if (state is PokedexListInitialState) {
+              return Center(child: Text('Welcome to the Pokedex'));
+            } else if (state is PokedexListLoadingState) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is PokedexListErrorState) {
+              return Center(child: Text('Error: ${state.errorMessage}'));
+            } else if (state is PokedexListSuccessState) {
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: state.pokedexList.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(state.pokedexList[index].name),
+                    );
+                  },
+                ),
+              );
+            }
+            return Container();
+          },
+        ),
+      );
 }
