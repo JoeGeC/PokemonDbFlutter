@@ -210,7 +210,7 @@ class MockPokedexRepositoryConverter extends _i1.Mock
 
   @override
   List<_i4.PokedexLocalModel> convertListToLocal(
-          List<_i11.PokedexDataModel>? pokedexDataList) =>
+          _i8.PokedexListDataModel? pokedexDataList) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertListToLocal,

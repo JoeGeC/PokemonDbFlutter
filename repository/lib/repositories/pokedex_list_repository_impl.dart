@@ -6,7 +6,7 @@ import 'package:domain/models/pokedex_model.dart';
 import '../boundary/local/pokedex_local.dart';
 import '../boundary/remote/pokedex_list_data.dart';
 import '../converters/pokedex/pokedex_repository_converter.dart';
-import '../models/data/pokedex/pokedex_data_model.dart';
+import '../models/data/pokedex_list/pokedex_list_data_model.dart';
 import '../models/data_failure.dart';
 import '../models/local/pokedex_local_model.dart';
 
@@ -36,7 +36,7 @@ class PokedexListRepositoryImpl implements PokedexListRepository {
 
   Stream<Either<Failure, List<PokedexModel>>> _fetchData(
       Either<DataFailure, List<PokedexLocalModel>> localResult,
-      Either<DataFailure, List<PokedexDataModel>> dataResult) async* {
+      Either<DataFailure, PokedexListDataModel> dataResult) async* {
     if (dataResult.isLeft() && localResult.isLeft()) {
       yield Left(Failure());
     } else if (dataResult.isRight()) {
@@ -48,8 +48,10 @@ class PokedexListRepositoryImpl implements PokedexListRepository {
     }
   }
 
-  Future<void> storeDataSuccess(Either<DataFailure, List<PokedexDataModel>> dataResult) async {
-    final dataResultValue = dataResult.getOrElse(() => []);
+  Future<void> storeDataSuccess(
+      Either<DataFailure, PokedexListDataModel> dataResult) async {
+    final dataResultValue =
+        dataResult.getOrElse(() => PokedexListDataModel([]));
     final localModels = converter.convertListToLocal(dataResultValue);
     await pokedexLocal.storeList(localModels);
   }

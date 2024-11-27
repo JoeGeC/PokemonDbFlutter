@@ -2,10 +2,15 @@ import 'package:domain/models/pokedex_model.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter.dart';
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
+import 'package:repository/models/data/pokedex_list/pokedex_list_item_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
 
-class PokedexRepositoryConverterImpl implements PokedexRepositoryConverter {
+import '../../models/data/pokedex_list/pokedex_list_data_model.dart';
+import '../BaseRepositoryConverter.dart';
+
+class PokedexRepositoryConverterImpl extends BaseRepositoryConverter
+    implements PokedexRepositoryConverter {
   PokemonRepositoryConverter pokemonConverter;
 
   PokedexRepositoryConverterImpl(this.pokemonConverter);
@@ -41,6 +46,15 @@ class PokedexRepositoryConverterImpl implements PokedexRepositoryConverter {
 
   @override
   List<PokedexLocalModel> convertListToLocal(
-          List<PokedexDataModel> pokedexDataList) =>
-      pokedexDataList.map((pokedex) => convertToLocal(pokedex)).toList();
+          PokedexListDataModel pokedexDataList) =>
+      pokedexDataList.results
+          ?.map((pokedex) => convertListItemToLocal(pokedex))
+          .toList() ??
+      [];
+
+  PokedexLocalModel convertListItemToLocal(PokedexListItemDataModel pokedex) =>
+      PokedexLocalModel(
+        id: getIdFromUrl(pokedex.url),
+        name: pokedex.name,
+      );
 }

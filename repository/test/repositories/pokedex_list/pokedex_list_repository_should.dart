@@ -8,7 +8,8 @@ import 'package:mockito/mockito.dart';
 import 'package:repository/boundary/local/pokedex_local.dart';
 import 'package:repository/boundary/remote/pokedex_list_data.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter.dart';
-import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
+import 'package:repository/models/data/pokedex_list/pokedex_list_data_model.dart';
+import 'package:repository/models/data/pokedex_list/pokedex_list_item_data_model.dart';
 import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
 import 'package:repository/repositories/pokedex_list_repository_impl.dart';
@@ -25,9 +26,9 @@ void main() {
   late PokedexLocalModel pokedexLocalModel2;
   late List<PokedexLocalModel> pokedexLocalModels1;
   late List<PokedexLocalModel> pokedexLocalModels2;
-  late PokedexDataModel pokedexDataModel1;
-  late PokedexDataModel pokedexDataModel2;
-  late List<PokedexDataModel> pokedexDataModels;
+  late PokedexListItemDataModel pokedexDataModel1;
+  late PokedexListItemDataModel pokedexDataModel2;
+  late PokedexListDataModel pokedexListDataModel;
   late PokedexModel pokedexDomainModel1;
   late PokedexModel pokedexDomainModel2;
   late List<PokedexModel> pokedexDomainModels1;
@@ -35,13 +36,15 @@ void main() {
   late Either<DataFailure, List<PokedexLocalModel>> mockLocalResultFailure;
   late Either<DataFailure, List<PokedexLocalModel>> mockLocalResultSuccess1;
   late Either<DataFailure, List<PokedexLocalModel>> mockLocalResultSuccess2;
-  late Either<DataFailure, List<PokedexDataModel>> mockDataResultSuccess;
-  late Either<DataFailure, List<PokedexDataModel>> mockDataResultFailure;
+  late Either<DataFailure, PokedexListDataModel> mockDataResultSuccess;
+  late Either<DataFailure, PokedexListDataModel> mockDataResultFailure;
 
-  const int pokedexId1 = 1;
   const String pokedexName1 = "Sample Pokedex";
-  const int pokedexId2 = 2;
   const String pokedexName2 = "Sample Pokedex 2";
+  const int pokedexId1 = 1;
+  const int pokedexId2 = 2;
+  const String pokedexUrl1 = "https://pokeapi.co/api/v2/pokedex/$pokedexId1/";
+  const String pokedexUrl2 = "https://pokeapi.co/api/v2/pokedex/$pokedexId2/";
   const String errorMessage = "No data";
 
   setUp(() {
@@ -54,9 +57,10 @@ void main() {
     pokedexLocalModel2 = PokedexLocalModel(id: pokedexId2, name: pokedexName2);
     pokedexLocalModels1 = [pokedexLocalModel1];
     pokedexLocalModels2 = [pokedexLocalModel1, pokedexLocalModel2];
-    pokedexDataModel1 = PokedexDataModel(pokedexId1, pokedexName1, null);
-    pokedexDataModel2 = PokedexDataModel(pokedexId2, pokedexName2, null);
-    pokedexDataModels = [pokedexDataModel1, pokedexDataModel2];
+    pokedexDataModel1 = PokedexListItemDataModel(pokedexName1, pokedexUrl1);
+    pokedexDataModel2 = PokedexListItemDataModel(pokedexName2, pokedexUrl2);
+    pokedexListDataModel =
+        PokedexListDataModel([pokedexDataModel1, pokedexDataModel2]);
     pokedexDomainModel1 =
         PokedexModel(id: pokedexId1, name: pokedexName1, pokemon: []);
     pokedexDomainModel2 =
@@ -66,7 +70,7 @@ void main() {
     mockLocalResultFailure = Left(DataFailure(errorMessage));
     mockLocalResultSuccess1 = Right(pokedexLocalModels1);
     mockLocalResultSuccess2 = Right(pokedexLocalModels2);
-    mockDataResultSuccess = Right(pokedexDataModels);
+    mockDataResultSuccess = Right(pokedexListDataModel);
     mockDataResultFailure = Left(DataFailure(errorMessage));
   });
 
@@ -78,7 +82,7 @@ void main() {
 
       when(mockConverter.convertListToDomain(pokedexLocalModels1))
           .thenReturn(pokedexDomainModels1);
-      when(mockConverter.convertListToLocal(pokedexDataModels))
+      when(mockConverter.convertListToLocal(pokedexListDataModel))
           .thenReturn(pokedexLocalModels2);
       when(mockConverter.convertListToDomain(pokedexLocalModels2))
           .thenReturn(pokedexDomainModels2);
@@ -110,7 +114,7 @@ void main() {
 
       when(mockConverter.convertListToDomain(pokedexLocalModels1))
           .thenReturn(pokedexDomainModels1);
-      when(mockConverter.convertListToLocal(pokedexDataModels))
+      when(mockConverter.convertListToLocal(pokedexListDataModel))
           .thenReturn(pokedexLocalModels2);
       when(mockConverter.convertListToDomain(pokedexLocalModels2))
           .thenReturn(pokedexDomainModels2);
@@ -177,6 +181,5 @@ void main() {
       verifyNever(mockPokedexLocal.store(any));
       verifyNever(mockPokedexLocal.storeList(any));
     });
-
   });
 }

@@ -17,18 +17,25 @@ void main() {
   final String frontSpriteUrl = "https://sample/pokemon.png";
   final String pokemonUrl =
       "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
-  late PokemonLocalModel pokedexPokemonLocalModel;
+  late PokemonLocalModel undetailedPokedexPokemonLocalModel;
+  late PokemonLocalModel detailedPokedexPokemonLocalModel;
   late PokemonLocalModel pokemonLocalModel;
   late PokemonModel pokemonDomainModel;
   late PokemonDataModel pokemonDataModel;
   late PokedexPokemonDataModel pokedexPokemonDataModel;
-  late List<PokemonLocalModel> pokemonLocalList;
+  late List<PokemonLocalModel> detailedPokemonLocalList;
+  late List<PokemonLocalModel> undetailedPokemonLocalList;
   late List<PokemonModel> pokemonDomainList;
   late List<PokedexPokemonDataModel> dataPokemonList;
 
   setUp(() {
     pokemonConverter = PokemonRepositoryConverterImpl();
-    pokedexPokemonLocalModel = PokemonLocalModel(
+    undetailedPokedexPokemonLocalModel = PokemonLocalModel(
+      id: pokemonId,
+      pokedexEntryNumbers: {pokedexId: pokemonEntryId},
+      name: pokemonName,
+    );
+    detailedPokedexPokemonLocalModel = PokemonLocalModel(
       id: pokemonId,
       pokedexEntryNumbers: {pokedexId: pokemonEntryId},
       name: pokemonName,
@@ -52,7 +59,7 @@ void main() {
       pokemonId,
       pokemonName,
       [pokemonType1, pokemonType2],
-      pokemonUrl,
+      frontSpriteUrl,
     );
     pokedexPokemonDataModel = PokedexPokemonDataModel(
       pokemonEntryId,
@@ -61,18 +68,19 @@ void main() {
     );
     dataPokemonList = [pokedexPokemonDataModel];
     pokemonDomainList = [pokemonDomainModel];
-    pokemonLocalList = [pokedexPokemonLocalModel];
+    detailedPokemonLocalList = [detailedPokedexPokemonLocalModel];
+    undetailedPokemonLocalList = [undetailedPokedexPokemonLocalModel];
   });
 
   group("convert to domain", () {
     test('convert local model to domain model', () {
-      var result = pokemonConverter.convertToDomain(pokedexPokemonLocalModel);
+      var result = pokemonConverter.convertToDomain(detailedPokedexPokemonLocalModel);
 
       expect(result, pokemonDomainModel);
     });
 
     test('convert local model list to domain model list', () {
-      var result = pokemonConverter.convertListToDomain(pokemonLocalList);
+      var result = pokemonConverter.convertListToDomain(detailedPokemonLocalList);
 
       expect(result, pokemonDomainList);
     });
@@ -116,7 +124,7 @@ void main() {
       var result = pokemonConverter.convertPokedexListToLocal(
           dataPokemonList, pokedexId);
 
-      expect(result, pokemonLocalList);
+      expect(result, undetailedPokemonLocalList);
     });
 
     test('dont include pokemon if null field', () {
@@ -133,7 +141,7 @@ void main() {
       var result = pokemonConverter.convertPokedexListToLocal(
           dataPokemonList, pokedexId);
 
-      expect(result, pokemonLocalList);
+      expect(result, undetailedPokemonLocalList);
     });
 
     test('throw exception if invalid url', () {
@@ -141,14 +149,14 @@ void main() {
           "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/extra";
 
       expect(
-          () => pokemonConverter.getPokemonIdFromUrl(invalidUrl),
+          () => pokemonConverter.getIdFromUrl(invalidUrl),
           throwsA(
               predicate((e) => e is NullException && e.type == NullType.id)));
     });
 
     test('throw exception if null url', () {
       expect(
-          () => pokemonConverter.getPokemonIdFromUrl(null),
+          () => pokemonConverter.getIdFromUrl(null),
           throwsA(
               predicate((e) => e is NullException && e.type == NullType.id)));
     });
@@ -157,7 +165,7 @@ void main() {
       int id = 2313452334;
       String longIdUrl = "https://pokeapi.co/api/v2/pokemon-species/$id/";
 
-      int result = pokemonConverter.getPokemonIdFromUrl(longIdUrl);
+      int result = pokemonConverter.getIdFromUrl(longIdUrl);
 
       expect(result, id);
     });

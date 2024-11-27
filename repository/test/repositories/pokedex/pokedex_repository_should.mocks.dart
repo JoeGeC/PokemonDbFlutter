@@ -13,6 +13,8 @@ import 'package:repository/boundary/remote/pokedex_data.dart' as _i5;
 import 'package:repository/converters/pokedex/pokedex_repository_converter.dart'
     as _i10;
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart' as _i8;
+import 'package:repository/models/data/pokedex_list/pokedex_list_data_model.dart'
+    as _i11;
 import 'package:repository/models/data_failure.dart' as _i7;
 import 'package:repository/models/local/pokedex_local_model.dart' as _i4;
 
@@ -208,7 +210,7 @@ class MockPokedexRepositoryConverter extends _i1.Mock
 
   @override
   List<_i4.PokedexLocalModel> convertListToLocal(
-          List<_i8.PokedexDataModel>? pokedexDataList) =>
+          _i11.PokedexListDataModel? pokedexDataList) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertListToLocal,

@@ -11,5 +11,5 @@ class PokemonDataImpl extends BaseData<PokemonDataModel>
 
   @override
   Future<Either<DataFailure, PokemonDataModel>> get(int id) =>
-      fetch("/pokemon/$id/", PokemonDataModel.fromJson);
+      fetch(endpoint: "/pokemon/$id/", fromJson: PokemonDataModel.fromJson);
 }
