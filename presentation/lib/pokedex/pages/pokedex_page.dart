@@ -1,6 +1,7 @@
 import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:presentation/common/widgets/header.dart';
 import 'package:presentation/common/widgets/scroll_up_header_list_widget.dart';
 import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
@@ -43,7 +44,7 @@ class _PokedexPageState extends State<PokedexPage> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: theme.colorScheme.primary,
-      drawer: buildDrawer(),
+      drawer: buildDrawer(theme),
       body: SafeArea(
         child: BlocConsumer<PokedexBloc, PokedexState>(
           bloc: _bloc,
@@ -73,37 +74,38 @@ class _PokedexPageState extends State<PokedexPage> {
           background: theme.colorScheme.surface,
         );
 
-  Drawer buildDrawer() => Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Sidebar Header',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+  Drawer buildDrawer(ThemeData theme) => Drawer(
+        backgroundColor: theme.colorScheme.primary,
+        child: SafeArea(
+          child: Container(
+            color: theme.colorScheme.surface,
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                buildHeader(
+                  child: Text(
+                    "Pokedex",
+                    style: theme.textTheme.headlineMedium,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
+                ListTile(
+                  leading: Icon(Icons.home),
+                  title: Text('Home'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text('Settings'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
             ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+          ),
         ),
       );
 }
