@@ -9,8 +9,8 @@ import '../../models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
   @override
   List<PokemonModel> convertListToDomain(
-          List<PokemonLocalModel> localPokemonList) =>
-      localPokemonList.map((pokemon) => convertToDomain(pokemon)).toList();
+          List<PokemonLocalModel>? localPokemonList) =>
+      localPokemonList?.map(convertToDomain).toList() ?? [];
 
   @override
   PokemonModel convertToDomain(PokemonLocalModel pokemon) => PokemonModel(

@@ -176,5 +176,9 @@ void main() {
           throwsA(
               predicate((e) => e is NullException && e.type == NullType.name)));
     });
+
+    test('return empty list if pokemon list is null', () {
+      expect(pokemonConverter.convertListToDomain(null), []);
+    });
   });
 }
