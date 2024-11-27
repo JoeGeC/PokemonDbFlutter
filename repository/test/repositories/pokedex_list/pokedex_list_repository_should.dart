@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:repository/boundary/local/pokedex_local.dart';
-import 'package:repository/boundary/remote/pokedex_data.dart';
+import 'package:repository/boundary/remote/pokedex_list_data.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter.dart';
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
 import 'package:repository/models/data_failure.dart';
@@ -15,10 +15,10 @@ import 'package:repository/repositories/pokedex_list_repository_impl.dart';
 
 import 'pokedex_list_repository_should.mocks.dart';
 
-@GenerateMocks([PokedexData, PokedexLocal, PokedexRepositoryConverter])
+@GenerateMocks([PokedexListData, PokedexLocal, PokedexRepositoryConverter])
 void main() {
   late PokedexListRepository repository;
-  late MockPokedexData mockPokedexData;
+  late MockPokedexListData mockPokedexListData;
   late MockPokedexLocal mockPokedexLocal;
   late MockPokedexRepositoryConverter mockConverter;
   late PokedexLocalModel pokedexLocalModel1;
@@ -45,11 +45,11 @@ void main() {
   const String errorMessage = "No data";
 
   setUp(() {
-    mockPokedexData = MockPokedexData();
+    mockPokedexListData = MockPokedexListData();
     mockPokedexLocal = MockPokedexLocal();
     mockConverter = MockPokedexRepositoryConverter();
     repository = PokedexListRepositoryImpl(
-        mockPokedexData, mockPokedexLocal, mockConverter);
+        mockPokedexListData, mockPokedexLocal, mockConverter);
     pokedexLocalModel1 = PokedexLocalModel(id: pokedexId1, name: pokedexName1);
     pokedexLocalModel2 = PokedexLocalModel(id: pokedexId2, name: pokedexName2);
     pokedexLocalModels1 = [pokedexLocalModel1];
@@ -83,7 +83,7 @@ void main() {
       when(mockConverter.convertListToDomain(pokedexLocalModels2))
           .thenReturn(pokedexDomainModels2);
 
-      when(mockPokedexData.getALl())
+      when(mockPokedexListData.getAll())
           .thenAnswer((_) async => mockDataResultSuccess);
       when(mockPokedexLocal.storeList(pokedexLocalModels2))
           .thenAnswer((_) async => Future.value());
@@ -99,7 +99,7 @@ void main() {
         ]),
       );
       verify(mockPokedexLocal.getAll()).called(2);
-      verify(mockPokedexData.getALl()).called(1);
+      verify(mockPokedexListData.getAll()).called(1);
       verify(mockPokedexLocal.storeList(any)).called(1);
     });
 
@@ -115,7 +115,7 @@ void main() {
       when(mockConverter.convertListToDomain(pokedexLocalModels2))
           .thenReturn(pokedexDomainModels2);
 
-      when(mockPokedexData.getALl())
+      when(mockPokedexListData.getAll())
           .thenAnswer((_) async => mockDataResultSuccess);
       when(mockPokedexLocal.storeList(pokedexLocalModels2))
           .thenAnswer((_) async => Future.value());
@@ -130,7 +130,7 @@ void main() {
         ]),
       );
       verify(mockPokedexLocal.getAll()).called(2);
-      verify(mockPokedexData.getALl()).called(1);
+      verify(mockPokedexListData.getAll()).called(1);
       verify(mockPokedexLocal.storeList(any)).called(1);
     });
 
@@ -139,7 +139,7 @@ void main() {
           .thenAnswer((_) async => mockLocalResultSuccess1);
       when(mockConverter.convertListToDomain(pokedexLocalModels1))
           .thenReturn(pokedexDomainModels1);
-      when(mockPokedexData.getALl())
+      when(mockPokedexListData.getAll())
           .thenAnswer((_) async => mockDataResultFailure);
 
       var result = repository.getAllPokedexes();
@@ -152,7 +152,7 @@ void main() {
         ]),
       );
       verify(mockPokedexLocal.getAll()).called(1);
-      verify(mockPokedexData.getALl()).called(1);
+      verify(mockPokedexListData.getAll()).called(1);
       verifyNever(mockPokedexLocal.store(any));
       verifyNever(mockPokedexLocal.storeList(any));
     });
@@ -160,7 +160,7 @@ void main() {
     test('return failure when local and data are failures', () async {
       when(mockPokedexLocal.getAll())
           .thenAnswer((_) async => mockLocalResultFailure);
-      when(mockPokedexData.getALl())
+      when(mockPokedexListData.getAll())
           .thenAnswer((_) async => mockDataResultFailure);
 
       var result = repository.getAllPokedexes();
@@ -173,7 +173,7 @@ void main() {
         ]),
       );
       verify(mockPokedexLocal.getAll()).called(1);
-      verify(mockPokedexData.getALl()).called(1);
+      verify(mockPokedexListData.getAll()).called(1);
       verifyNever(mockPokedexLocal.store(any));
       verifyNever(mockPokedexLocal.storeList(any));
     });

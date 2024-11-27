@@ -4,19 +4,19 @@ import 'package:domain/models/Failure.dart';
 import 'package:domain/models/pokedex_model.dart';
 
 import '../boundary/local/pokedex_local.dart';
-import '../boundary/remote/pokedex_data.dart';
+import '../boundary/remote/pokedex_list_data.dart';
 import '../converters/pokedex/pokedex_repository_converter.dart';
 import '../models/data/pokedex/pokedex_data_model.dart';
 import '../models/data_failure.dart';
 import '../models/local/pokedex_local_model.dart';
 
 class PokedexListRepositoryImpl implements PokedexListRepository {
-  final PokedexData pokedexesApi;
+  final PokedexListData pokedexListApi;
   final PokedexLocal pokedexLocal;
   final PokedexRepositoryConverter converter;
 
   PokedexListRepositoryImpl(
-      this.pokedexesApi, this.pokedexLocal, this.converter);
+      this.pokedexListApi, this.pokedexLocal, this.converter);
 
   @override
   Stream<Either<Failure, List<PokedexModel>>> getAllPokedexes() async* {
@@ -24,7 +24,7 @@ class PokedexListRepositoryImpl implements PokedexListRepository {
     if (localResult.isRight()) {
       yield* _yieldLocalSuccess(localResult);
     }
-    final dataResult = await pokedexesApi.getALl();
+    final dataResult = await pokedexListApi.getAll();
     yield* _fetchData(localResult, dataResult);
   }
 

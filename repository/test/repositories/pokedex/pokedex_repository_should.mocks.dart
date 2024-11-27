@@ -85,26 +85,6 @@ class MockPokedexData extends _i1.Mock implements _i5.PokedexData {
           ),
         )),
       ) as _i6.Future<_i2.Either<_i7.DataFailure, _i8.PokedexDataModel>>);
-
-  @override
-  _i6.Future<_i2.Either<_i7.DataFailure, List<_i8.PokedexDataModel>>>
-      getALl() => (super.noSuchMethod(
-            Invocation.method(
-              #getALl,
-              [],
-            ),
-            returnValue: _i6.Future<
-                    _i2
-                    .Either<_i7.DataFailure, List<_i8.PokedexDataModel>>>.value(
-                _FakeEither_0<_i7.DataFailure, List<_i8.PokedexDataModel>>(
-              this,
-              Invocation.method(
-                #getALl,
-                [],
-              ),
-            )),
-          ) as _i6
-              .Future<_i2.Either<_i7.DataFailure, List<_i8.PokedexDataModel>>>);
 }
 
 /// A class which mocks [PokedexLocal].

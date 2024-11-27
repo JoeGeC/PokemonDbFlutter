@@ -14,25 +14,19 @@ import 'pokedex_data_should.mocks.dart';
 @GenerateMocks([Dio])
 void main() {
   late MockDio mockDio;
-  late int pokedexId;
-  late String path;
-  late PokedexDataImpl pokedexDataImpl;
-  late String pokedexName;
   late List<PokedexPokemonDataModel> pokemonEntries;
   late PokedexPokemonDataModel pokedexPokemonDataModel;
-  late int pokemonEntryNumber;
-  late String pokemonName;
-  late String pokemonUrl;
+  late PokedexDataImpl pokedexDataImpl;
+  const int pokedexId1 = 1;
+  const String pokedexName1 = "Sample Pokedex";
+  const int pokemonEntryNumber = 1;
+  const String pokemonName = "Sample Pokemon";
+  const String pokemonUrl = "https://sample-pokemon/url/1/";
+  const String pokedexPath = "/pokedex/$pokedexId1/";
 
   setUp(() {
     mockDio = MockDio();
-    pokedexId = 3;
-    path = "/pokedex/$pokedexId/";
     pokedexDataImpl = PokedexDataImpl(mockDio);
-    pokedexName = "Sample Pokedex";
-    pokemonEntryNumber = 1;
-    pokemonName = "Sample Pokemon";
-    pokemonUrl = "url";
     pokedexPokemonDataModel =
         PokedexPokemonDataModel(pokemonEntryNumber, pokemonName, pokemonUrl);
     pokemonEntries = [pokedexPokemonDataModel];
@@ -44,8 +38,8 @@ void main() {
           Response(requestOptions: RequestOptions(), data: null);
       final expectedFailureResult = Left(DataFailure("ServerError"));
 
-      when(mockDio.get(path)).thenAnswer((_) async => nullResponse);
-      var result = await pokedexDataImpl.get(pokedexId);
+      when(mockDio.get(pokedexPath)).thenAnswer((_) async => nullResponse);
+      var result = await pokedexDataImpl.get(pokedexId1);
 
       expect(result, expectedFailureResult);
     });
@@ -54,9 +48,9 @@ void main() {
       var errorMessage = "Error";
       final expectedFailureResult = Left(DataFailure(errorMessage));
 
-      when(mockDio.get(path)).thenThrow(DioException(
+      when(mockDio.get(pokedexPath)).thenThrow(DioException(
           requestOptions: RequestOptions(), message: errorMessage));
-      var result = await pokedexDataImpl.get(pokedexId);
+      var result = await pokedexDataImpl.get(pokedexId1);
 
       expect(result, expectedFailureResult);
     });
@@ -65,9 +59,9 @@ void main() {
       var errorMessage = "ParsingError";
       final expectedFailureResult = Left(DataFailure(errorMessage));
 
-      when(mockDio.get(path)).thenThrow(DioException(
+      when(mockDio.get(pokedexPath)).thenThrow(DioException(
           requestOptions: RequestOptions(), message: errorMessage));
-      var result = await pokedexDataImpl.get(pokedexId);
+      var result = await pokedexDataImpl.get(pokedexId1);
 
       expect(result, expectedFailureResult);
     });
@@ -76,15 +70,16 @@ void main() {
       final successResponse = Response(
           requestOptions: RequestOptions(),
           statusCode: 200,
-          data: PokedexJsonMocks.pokedexJson(pokedexId, pokedexName,
+          data: PokedexJsonMocks.pokedexJson(pokedexId1, pokedexName1,
               pokemonEntryNumber, pokemonName, pokemonUrl));
 
-      when(mockDio.get(path)).thenAnswer((_) async => successResponse);
-      var result = await pokedexDataImpl.get(pokedexId);
+      when(mockDio.get(pokedexPath)).thenAnswer((_) async => successResponse);
+      var result = await pokedexDataImpl.get(pokedexId1);
 
       final expected =
-          Right(PokedexDataModel(pokedexId, pokedexName, pokemonEntries));
+          Right(PokedexDataModel(pokedexId1, pokedexName1, pokemonEntries));
       expect(result, expected);
     });
   });
+
 }
