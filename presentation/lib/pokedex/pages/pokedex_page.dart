@@ -10,6 +10,7 @@ import '../../common/pages/empty_page.dart';
 import '../../common/pages/error_page.dart';
 import '../../common/pages/loading_page.dart';
 import '../../injections.dart';
+import '../bloc/pokedex_list/pokedex_list_bloc.dart';
 import '../models/pokedex_presentation_model.dart';
 import '../widgets/pokedex_header_widget.dart';
 import '../widgets/pokemon_entry_widget.dart';
@@ -89,23 +90,37 @@ class _PokedexPageState extends State<PokedexPage> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text('Home'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text('Settings'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                buildPokedexList(),
               ],
             ),
           ),
         ),
       );
+
+  BlocProvider<PokedexListBloc> buildPokedexList() {
+    return BlocProvider(
+      create: (context) => PokedexListBloc(getIt(), getIt()),
+      child: BlocBuilder<PokedexListBloc, PokedexListState>(
+        builder: (context, state) {
+          if (state is PokedexListInitialState) {
+            return Center(child: Text('Welcome to the Pokedex'));
+          } else if (state is PokedexListLoadingState) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is PokedexListErrorState) {
+            return Center(child: Text('Error: ${state.errorMessage}'));
+          } else if (state is PokedexListSuccessState) {
+            return ListView.builder(
+              itemCount: state.pokedexList.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(state.pokedexList[index].name),
+                );
+              },
+            );
+          }
+          return Container();
+        },
+      ),
+    );
+  }
 }

@@ -3,7 +3,7 @@ import 'package:domain/usecases/pokedex_list_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 
-import '../../pokedex/converters/pokedex_presentation_converter.dart';
+import '../../converters/pokedex_presentation_converter.dart';
 
 part 'pokedex_list_event.dart';
 
