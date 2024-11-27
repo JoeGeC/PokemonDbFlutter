@@ -18,9 +18,8 @@ class PokedexRepositoryImpl implements PokedexRepository{
   @override
   Future<Either<Failure, PokedexModel>> getPokedex(int id) async {
     var localResult = await pokedexLocal.get(id);
-    if(localResult.isLeft()) return getPokedexFromData(id);
     return localResult.fold(
-        (l) => Left(Failure(l.errorMessage ?? "")),
+        (l) => getPokedexFromData(id),
         (r) => Right(converter.convertToDomain(r))
     );
   }

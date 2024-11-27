@@ -3,7 +3,7 @@ import 'package:local/converters/pokedex_local_converter.dart';
 import 'package:local/database_constants.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
 
-void main(){
+void main() {
   const int pokedexId = 1;
   const String pokedexName = 'original-johto';
   late PokedexLocalConverter converter;
@@ -13,7 +13,8 @@ void main(){
   });
 
   test('convert a valid PokedexLocalModel to a map', () {
-    final pokedex = PokedexLocalModel(pokedexId, pokedexName, []);
+    final pokedex =
+        PokedexLocalModel(id: pokedexId, name: pokedexName, pokemon: []);
 
     final result = converter.convert(pokedex);
 
@@ -24,7 +25,7 @@ void main(){
   });
 
   test('convert a PokedexLocalModel with an empty name to a map', () {
-    final pokedex = PokedexLocalModel(pokedexId, '', []);
+    final pokedex = PokedexLocalModel(id: pokedexId, name: '', pokemon: []);
 
     final result = converter.convert(pokedex);
 
@@ -34,9 +35,8 @@ void main(){
     });
   });
 
-
   test('handle negative ID gracefully', () {
-    final pokedex = PokedexLocalModel(-1, pokedexName, []);
+    final pokedex = PokedexLocalModel(id: -1, name: pokedexName, pokemon: []);
 
     final result = converter.convert(pokedex);
 
@@ -47,7 +47,7 @@ void main(){
   });
 
   test('handles zero ID gracefully', () {
-    final pokedex = PokedexLocalModel(0, pokedexName, []);
+    final pokedex = PokedexLocalModel(id: 0, name: pokedexName, pokemon: []);
 
     final result = converter.convert(pokedex);
 

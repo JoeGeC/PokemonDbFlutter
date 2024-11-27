@@ -21,9 +21,9 @@ class PokedexRepositoryConverterImpl implements PokedexRepositoryConverter {
   PokedexLocalModel convertToLocal(PokedexDataModel pokedexDataModel) {
     _validateNotNull(pokedexDataModel);
     return PokedexLocalModel(
-        pokedexDataModel.id!,
-        pokedexDataModel.name!,
-        pokemonConverter.convertPokedexListToLocal(
+        id: pokedexDataModel.id!,
+        name: pokedexDataModel.name!,
+        pokemon: pokemonConverter.convertPokedexListToLocal(
             pokedexDataModel.pokemonEntries!, pokedexDataModel.id!));
   }
 
@@ -33,5 +33,17 @@ class PokedexRepositoryConverterImpl implements PokedexRepositoryConverter {
     if (pokedexDataModel.pokemonEntries == null) {
       throw NullException(NullType.pokemonEntries);
     }
+  }
+
+  @override
+  List<PokedexModel> convertListToDomain(List<PokedexLocalModel> pokedexLocalList) {
+    // TODO: implement convertListToDomain
+    throw UnimplementedError();
+  }
+
+  @override
+  List<PokedexLocalModel> convertListToLocal(List<PokedexDataModel> pokedexDataList) {
+    // TODO: implement convertListToLocal
+    throw UnimplementedError();
   }
 }

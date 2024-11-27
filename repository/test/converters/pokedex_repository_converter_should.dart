@@ -42,8 +42,8 @@ void main() {
         pokedexEntryNumbers: {pokedexId: pokemonEntryId},
         name: pokemonName);
     localPokemonList = [pokedexPokemonLocalModel];
-    pokedexLocalModel =
-        PokedexLocalModel(pokedexId, pokedexName, localPokemonList);
+    pokedexLocalModel = PokedexLocalModel(
+        id: pokedexId, name: pokedexName, pokemon: localPokemonList);
     pokemonUrl = "url/$pokemonId/";
     pokemonDataModel = PokedexPokemonDataModel(
       pokemonEntryId,
@@ -76,7 +76,8 @@ void main() {
       PokedexDataModel pokedexDataModel =
           PokedexDataModel(pokedexId, pokedexName, dataPokemonList);
 
-      when(mockPokemonConverter.convertPokedexListToLocal(dataPokemonList, pokedexId))
+      when(mockPokemonConverter.convertPokedexListToLocal(
+              dataPokemonList, pokedexId))
           .thenReturn(localPokemonList);
       var result = pokedexConverter.convertToLocal(pokedexDataModel);
 

@@ -10,7 +10,7 @@ import 'package:repository/converters/pokemon/pokemon_repository_converter.dart'
 import 'package:repository/models/data/pokemon/pokemon_data_model.dart';
 import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
-import 'package:repository/repositories/pokemon_repository.dart';
+import 'package:repository/repositories/pokemon_repository_impl.dart';
 
 import 'pokemon_repository_should.mocks.dart';
 

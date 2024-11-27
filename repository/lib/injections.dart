@@ -3,7 +3,7 @@ import 'package:domain/boundary/repository/pokemon_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter_impl.dart';
 import 'package:repository/repositories/pokedex_repository_impl.dart';
-import 'package:repository/repositories/pokemon_repository.dart';
+import 'package:repository/repositories/pokemon_repository_impl.dart';
 
 import 'converters/pokedex/pokedex_repository_converter.dart';
 import 'converters/pokemon/pokemon_repository_converter_impl.dart';

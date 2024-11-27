@@ -64,8 +64,10 @@ void main() {
           id: pokemonId,
           pokedexEntryNumbers: {pokedexId: pokemonEntryId},
           name: pokemonName);
-      pokedexLocalModel =
-          PokedexLocalModel(pokedexId, pokemonName, [pokedexPokemonLocalModel]);
+      pokedexLocalModel = PokedexLocalModel(
+          id: pokedexId,
+          name: pokemonName,
+          pokemon: [pokedexPokemonLocalModel]);
       pokemonDomainModel = PokemonModel(
           id: pokemonId,
           name: pokemonName,
