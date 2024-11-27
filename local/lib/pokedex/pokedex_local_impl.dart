@@ -43,9 +43,9 @@ class PokedexLocalImpl implements PokedexLocal {
         _mapQueryResultsToPokemon(pokemonFromDatabase, pokedexId);
 
     return Right(PokedexLocalModel(
-      pokedexMap[DatabaseColumnNames.id] as int,
-      pokedexMap[DatabaseColumnNames.name] as String,
-      pokemonMap.values.toList(),
+      id: pokedexMap[DatabaseColumnNames.id] as int,
+      name: pokedexMap[DatabaseColumnNames.name] as String,
+      pokemon: pokemonMap.values.toList(),
     ));
   }
 
@@ -100,8 +100,9 @@ class PokedexLocalImpl implements PokedexLocal {
   }
 
   Future<void> _insertPokemon(PokedexLocalModel pokedex) async {
+    if(pokedex.pokemon == null) return;
     final batch = database.batch();
-    for (var pokemon in pokedex.pokemon) {
+    for (var pokemon in pokedex.pokemon!) {
       _insertPokemonData(batch, pokemon);
       _insertPokedexEntryNumbers(pokemon, batch);
     }

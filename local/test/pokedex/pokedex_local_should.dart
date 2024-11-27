@@ -58,8 +58,10 @@ void main() {
       frontSpriteUrl: null,
       pokedexEntryNumbers: {pokedexId: pokemonEntryNumber2},
     );
-    pokedexModel = PokedexLocalModel(pokedexId, pokedexName, [pokemonModel]);
-    multPokemonPokedexModel = PokedexLocalModel(pokedexId, pokedexName, [
+    pokedexModel = PokedexLocalModel(
+        id: pokedexId, name: pokedexName, pokemon: [pokemonModel]);
+    multPokemonPokedexModel =
+        PokedexLocalModel(id: pokedexId, name: pokedexName, pokemon: [
       pokemonModel,
       pokemonModel2,
     ]);
@@ -146,7 +148,8 @@ void main() {
 
     test('replaces existing pokedex data on conflict', () async {
       const newPokedexName = "new-pokedex-name";
-      const newPokedexModel = PokedexLocalModel(pokedexId, newPokedexName, []);
+      const newPokedexModel =
+          PokedexLocalModel(id: pokedexId, name: newPokedexName, pokemon: []);
       final pokedexMap = {
         DatabaseColumnNames.id: pokedexId,
         DatabaseColumnNames.name: newPokedexName,
@@ -187,6 +190,26 @@ void main() {
       expect(pokemonFromDatabase, hasLength(2));
       expect(pokemonFromDatabase.map((row) => row[DatabaseColumnNames.name]),
           containsAll([pokemonName, pokemonName2]));
+    });
+
+    test('not store pokemon when null', () async {
+      var nullPokemonPokedexModel =
+          PokedexLocalModel(id: pokedexId, name: pokedexName, pokemon: null);
+      when(mockPokedexConverter.convert(nullPokemonPokedexModel))
+          .thenReturn(pokedexMap);
+
+      await pokedexLocal.store(nullPokemonPokedexModel);
+
+      final pokedexFromDatabase =
+          await database.query(DatabaseTableNames.pokedex);
+      expect(pokedexFromDatabase, hasLength(1));
+      expect(pokedexFromDatabase.first, pokedexMap);
+      final pokemonFromDatabase =
+          await database.query(DatabaseTableNames.pokemon);
+      expect(pokemonFromDatabase, hasLength(0));
+      final pokedexEntriesFromDatabase =
+          await database.query(DatabaseTableNames.pokedexEntryNumbers);
+      expect(pokedexEntriesFromDatabase, hasLength(0));
     });
   });
 }
