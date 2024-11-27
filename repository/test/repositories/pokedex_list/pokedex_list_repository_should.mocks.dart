@@ -9,7 +9,7 @@ import 'package:dartz/dartz.dart' as _i2;
 import 'package:domain/models/pokedex_model.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:repository/boundary/local/pokedex_local.dart' as _i9;
-import 'package:repository/boundary/remote/pokedexes_data.dart' as _i5;
+import 'package:repository/boundary/remote/pokedex_data.dart' as _i5;
 import 'package:repository/converters/pokedex/pokedex_repository_converter.dart'
     as _i10;
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart' as _i8;
@@ -60,13 +60,31 @@ class _FakePokedexLocalModel_2 extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [PokedexesData].
+/// A class which mocks [PokedexData].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPokedexesData extends _i1.Mock implements _i5.PokedexesData {
-  MockPokedexesData() {
+class MockPokedexData extends _i1.Mock implements _i5.PokedexData {
+  MockPokedexData() {
     _i1.throwOnMissingStub(this);
   }
+
+  @override
+  _i6.Future<_i2.Either<_i7.DataFailure, _i8.PokedexDataModel>> get(int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #get,
+          [id],
+        ),
+        returnValue:
+            _i6.Future<_i2.Either<_i7.DataFailure, _i8.PokedexDataModel>>.value(
+                _FakeEither_0<_i7.DataFailure, _i8.PokedexDataModel>(
+          this,
+          Invocation.method(
+            #get,
+            [id],
+          ),
+        )),
+      ) as _i6.Future<_i2.Either<_i7.DataFailure, _i8.PokedexDataModel>>);
 
   @override
   _i6.Future<_i2.Either<_i7.DataFailure, List<_i8.PokedexDataModel>>>

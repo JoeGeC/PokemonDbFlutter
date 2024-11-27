@@ -5,7 +5,7 @@ import '../models/Failure.dart';
 import '../models/pokedex_model.dart';
 
 class PokedexesUseCase {
-  final PokedexesRepository _repository;
+  final PokedexListRepository _repository;
 
   PokedexesUseCase(this._repository);
 

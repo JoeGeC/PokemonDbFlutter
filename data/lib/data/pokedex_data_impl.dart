@@ -12,4 +12,10 @@ class PokedexDataImpl extends BaseData<PokedexDataModel>
   @override
   Future<Either<DataFailure, PokedexDataModel>> get(int id) =>
       fetch("/pokedex/$id/", PokedexDataModel.fromJson);
+
+  @override
+  Future<Either<DataFailure, List<PokedexDataModel>>> getALl() {
+    // TODO: implement getALl
+    throw UnimplementedError();
+  }
 }
