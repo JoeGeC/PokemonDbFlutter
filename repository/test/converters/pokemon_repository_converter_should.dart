@@ -94,7 +94,6 @@ void main() {
       expect(result, null);
     });
 
-
     test('return null if name null', () {
       PokemonDataModel invalidIdPokemonDataModel =
           PokemonDataModel(pokemonId, null, [pokemonType1], frontSpriteUrl);
@@ -177,6 +176,12 @@ void main() {
               predicate((e) => e is NullException && e.type == NullType.name)));
     });
 
+    test('return null if list is null', () {
+      expect(pokemonConverter.convertPokedexListToLocal(null, pokedexId), null);
+    });
+  });
+
+  group('convert list to domain', () {
     test('return empty list if pokemon list is null', () {
       expect(pokemonConverter.convertListToDomain(null), []);
     });

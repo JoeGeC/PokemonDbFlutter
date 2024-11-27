@@ -37,10 +37,8 @@ class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
   int getPokemonId(int? id) => id ?? (throw NullException(NullType.id));
 
   @override
-  List<PokemonLocalModel> convertPokedexListToLocal(
-      List<PokedexPokemonDataModel> dataPokemonList, int pokedexId) {
-    return dataPokemonList
-        .map((pokemon) {
+  List<PokemonLocalModel>? convertPokedexListToLocal(List<PokedexPokemonDataModel>? dataPokemonList, int pokedexId) {
+    return dataPokemonList?.map((pokemon) {
           try {
             return PokemonLocalModel(
                 id: getPokemonIdFromUrl(pokemon.url),
@@ -71,4 +69,5 @@ class PokemonRepositoryConverterImpl implements PokemonRepositoryConverter {
 
   String getPokemonName(String? pokemonName) =>
       pokemonName ?? (throw NullException(NullType.name));
+
 }
