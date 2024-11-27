@@ -22,9 +22,9 @@ class PokedexesRepositoryImpl implements PokedexesRepository {
       yield Right(converter.convertListToDomain(localResultValue));
     }
     final dataResult = await pokedexesApi.getALl();
-    if(dataResult.isLeft()){
-      yield Left(Failure(""));
-    } else {
+    if(dataResult.isLeft() && localResult.isLeft()) {
+      yield Left(Failure());
+    } else if(dataResult.isRight()){
       var dataResultValue = dataResult.getOrElse(() => []);
       var localModels = converter.convertListToLocal(dataResultValue);
       await pokedexesLocal.store(localModels);
