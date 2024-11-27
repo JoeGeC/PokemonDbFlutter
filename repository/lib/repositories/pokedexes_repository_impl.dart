@@ -3,20 +3,20 @@ import 'package:domain/boundary/repository/pokedexes_repository.dart';
 import 'package:domain/models/Failure.dart';
 import 'package:domain/models/pokedex_model.dart';
 
-import '../boundary/local/pokedexes_local.dart';
+import '../boundary/local/pokedex_local.dart';
 import '../boundary/remote/pokedexes_data.dart';
 import '../converters/pokedex/pokedex_repository_converter.dart';
 
 class PokedexesRepositoryImpl implements PokedexesRepository {
   final PokedexesData pokedexesApi;
-  final PokedexesLocal pokedexesLocal;
+  final PokedexLocal pokedexLocal;
   final PokedexRepositoryConverter converter;
 
-  PokedexesRepositoryImpl(this.pokedexesApi, this.pokedexesLocal, this.converter);
+  PokedexesRepositoryImpl(this.pokedexesApi, this.pokedexLocal, this.converter);
 
   @override
   Stream<Either<Failure, List<PokedexModel>>> getAllPokedexes() async* {
-    final localResult = await pokedexesLocal.getAll();
+    final localResult = await pokedexLocal.getAll();
     if(localResult.isRight()) {
       var localResultValue = localResult.getOrElse(() => []);
       yield Right(converter.convertListToDomain(localResultValue));
@@ -27,8 +27,8 @@ class PokedexesRepositoryImpl implements PokedexesRepository {
     } else if(dataResult.isRight()){
       var dataResultValue = dataResult.getOrElse(() => []);
       var localModels = converter.convertListToLocal(dataResultValue);
-      await pokedexesLocal.store(localModels);
-      final localResult = await pokedexesLocal.getAll();
+      await pokedexLocal.storeList(localModels);
+      final localResult = await pokedexLocal.getAll();
       if(localResult.isRight()) {
         var localResultValue = localResult.getOrElse(() => []);
         yield Right(converter.convertListToDomain(localResultValue));

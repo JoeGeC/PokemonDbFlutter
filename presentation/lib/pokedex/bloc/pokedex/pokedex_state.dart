@@ -7,7 +7,7 @@ abstract class PokedexState{
 class PokedexLoadingState extends PokedexState {}
 
 class PokedexErrorState extends PokedexState {
-  final String errorMessage;
+  final String? errorMessage;
 
   PokedexErrorState(this.errorMessage);
 }

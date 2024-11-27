@@ -8,7 +8,7 @@ import 'dart:async' as _i6;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:domain/models/pokedex_model.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:repository/boundary/local/pokedexes_local.dart' as _i9;
+import 'package:repository/boundary/local/pokedex_local.dart' as _i9;
 import 'package:repository/boundary/remote/pokedexes_data.dart' as _i5;
 import 'package:repository/converters/pokedex/pokedex_repository_converter.dart'
     as _i10;
@@ -89,24 +89,51 @@ class MockPokedexesData extends _i1.Mock implements _i5.PokedexesData {
               .Future<_i2.Either<_i7.DataFailure, List<_i8.PokedexDataModel>>>);
 }
 
-/// A class which mocks [PokedexesLocal].
+/// A class which mocks [PokedexLocal].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPokedexesLocal extends _i1.Mock implements _i9.PokedexesLocal {
-  MockPokedexesLocal() {
+class MockPokedexLocal extends _i1.Mock implements _i9.PokedexLocal {
+  MockPokedexLocal() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<void> store(List<_i4.PokedexLocalModel>? models) =>
-      (super.noSuchMethod(
+  void store(_i4.PokedexLocalModel? model) => super.noSuchMethod(
         Invocation.method(
           #store,
+          [model],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i6.Future<void> storeList(List<_i4.PokedexLocalModel>? models) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #storeList,
           [models],
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
       ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<_i2.Either<_i7.DataFailure, _i4.PokedexLocalModel>> get(int? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #get,
+          [id],
+        ),
+        returnValue: _i6
+            .Future<_i2.Either<_i7.DataFailure, _i4.PokedexLocalModel>>.value(
+            _FakeEither_0<_i7.DataFailure, _i4.PokedexLocalModel>(
+          this,
+          Invocation.method(
+            #get,
+            [id],
+          ),
+        )),
+      ) as _i6.Future<_i2.Either<_i7.DataFailure, _i4.PokedexLocalModel>>);
 
   @override
   _i6.Future<_i2.Either<_i7.DataFailure, List<_i4.PokedexLocalModel>>>

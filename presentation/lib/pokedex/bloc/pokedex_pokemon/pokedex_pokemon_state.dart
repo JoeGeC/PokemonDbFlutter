@@ -14,7 +14,7 @@ class PokedexPokemonLoadingState extends PokedexPokemonState {
 
 class PokedexPokemonErrorState extends PokedexPokemonState {
   final int pokemonId;
-  final String errorMessage;
+  final String? errorMessage;
 
   const PokedexPokemonErrorState(this.pokemonId, this.errorMessage);
 }

@@ -105,6 +105,17 @@ class MockPokedexLocal extends _i1.Mock implements _i9.PokedexLocal {
       );
 
   @override
+  _i6.Future<void> storeList(List<_i4.PokedexLocalModel>? models) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #storeList,
+          [models],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
   _i6.Future<_i2.Either<_i7.DataFailure, _i4.PokedexLocalModel>> get(int? id) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -121,6 +132,26 @@ class MockPokedexLocal extends _i1.Mock implements _i9.PokedexLocal {
           ),
         )),
       ) as _i6.Future<_i2.Either<_i7.DataFailure, _i4.PokedexLocalModel>>);
+
+  @override
+  _i6.Future<_i2.Either<_i7.DataFailure, List<_i4.PokedexLocalModel>>>
+      getAll() => (super.noSuchMethod(
+            Invocation.method(
+              #getAll,
+              [],
+            ),
+            returnValue: _i6.Future<
+                    _i2.Either<_i7.DataFailure,
+                        List<_i4.PokedexLocalModel>>>.value(
+                _FakeEither_0<_i7.DataFailure, List<_i4.PokedexLocalModel>>(
+              this,
+              Invocation.method(
+                #getAll,
+                [],
+              ),
+            )),
+          ) as _i6.Future<
+              _i2.Either<_i7.DataFailure, List<_i4.PokedexLocalModel>>>);
 }
 
 /// A class which mocks [PokedexRepositoryConverter].

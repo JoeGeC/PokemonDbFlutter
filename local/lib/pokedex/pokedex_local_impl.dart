@@ -20,6 +20,12 @@ class PokedexLocalImpl implements PokedexLocal {
   PokedexLocalImpl(this.database, this.pokedexConverter, this.pokemonConverter);
 
   @override
+  Future<Either<DataFailure, List<PokedexLocalModel>>> getAll() {
+    // TODO: implement getAll
+    throw UnimplementedError();
+  }
+
+  @override
   Future<Either<DataFailure, PokedexLocalModel>> get(int pokedexId) async {
     final pokedexMap = await _getPokedexById(pokedexId);
     if (pokedexMap.isEmpty) return Left(DataFailure("No data"));
@@ -85,6 +91,12 @@ class PokedexLocalImpl implements PokedexLocal {
       frontSpriteUrl: pokemon['frontSpriteUrl'] as String?,
       pokedexEntryNumbers: pokedexEntryNumbers,
     );
+  }
+
+  @override
+  Future<void> storeList(List<PokedexLocalModel> models) {
+    // TODO: implement storeList
+    throw UnimplementedError();
   }
 
   @override
