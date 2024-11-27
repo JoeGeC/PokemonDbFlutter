@@ -11,11 +11,13 @@ class PokedexRepositoryConverterImpl implements PokedexRepositoryConverter {
   PokedexRepositoryConverterImpl(this.pokemonConverter);
 
   @override
-  PokedexModel convertToDomain(PokedexLocalModel pokedexLocalModel) =>
+  PokedexModel convertToDomain(
+          PokedexLocalModel pokedexLocalModel) =>
       PokedexModel(
           id: pokedexLocalModel.id,
           name: pokedexLocalModel.name,
-          pokemon: pokemonConverter.convertListToDomain(pokedexLocalModel.pokemon));
+          pokemon:
+              pokemonConverter.convertListToDomain(pokedexLocalModel.pokemon));
 
   @override
   PokedexLocalModel convertToLocal(PokedexDataModel pokedexDataModel) {
@@ -24,26 +26,21 @@ class PokedexRepositoryConverterImpl implements PokedexRepositoryConverter {
         id: pokedexDataModel.id!,
         name: pokedexDataModel.name!,
         pokemon: pokemonConverter.convertPokedexListToLocal(
-            pokedexDataModel.pokemonEntries!, pokedexDataModel.id!));
+            pokedexDataModel.pokemonEntries, pokedexDataModel.id!));
   }
 
   void _validateNotNull(PokedexDataModel pokedexDataModel) {
     if (pokedexDataModel.id == null) throw NullException(NullType.id);
     if (pokedexDataModel.name == null) throw NullException(NullType.name);
-    if (pokedexDataModel.pokemonEntries == null) {
-      throw NullException(NullType.pokemonEntries);
-    }
   }
 
   @override
-  List<PokedexModel> convertListToDomain(List<PokedexLocalModel> pokedexLocalList) {
-    // TODO: implement convertListToDomain
-    throw UnimplementedError();
-  }
+  List<PokedexModel> convertListToDomain(
+          List<PokedexLocalModel> pokedexLocalList) =>
+      pokedexLocalList.map((pokedex) => convertToDomain(pokedex)).toList();
 
   @override
-  List<PokedexLocalModel> convertListToLocal(List<PokedexDataModel> pokedexDataList) {
-    // TODO: implement convertListToLocal
-    throw UnimplementedError();
-  }
+  List<PokedexLocalModel> convertListToLocal(
+          List<PokedexDataModel> pokedexDataList) =>
+      pokedexDataList.map((pokedex) => convertToLocal(pokedex)).toList();
 }

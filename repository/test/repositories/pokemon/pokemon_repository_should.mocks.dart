@@ -159,18 +159,15 @@ class MockPokemonRepositoryConverter extends _i1.Mock
       ) as List<_i3.PokemonModel>);
 
   @override
-  List<_i9.PokemonLocalModel> convertPokedexListToLocal(
+  List<_i9.PokemonLocalModel>? convertPokedexListToLocal(
     List<_i11.PokedexPokemonDataModel>? pokemon,
     int? pokedexId,
   ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #convertPokedexListToLocal,
-          [
-            pokemon,
-            pokedexId,
-          ],
-        ),
-        returnValue: <_i9.PokemonLocalModel>[],
-      ) as List<_i9.PokemonLocalModel>);
+      (super.noSuchMethod(Invocation.method(
+        #convertPokedexListToLocal,
+        [
+          pokemon,
+          pokedexId,
+        ],
+      )) as List<_i9.PokemonLocalModel>?);
 }
