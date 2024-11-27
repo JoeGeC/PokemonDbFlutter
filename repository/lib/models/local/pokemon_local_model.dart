@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 
 class PokemonLocalModel extends Equatable {
@@ -16,5 +17,14 @@ class PokemonLocalModel extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, pokedexEntryNumbers, name];
+  List<Object?> get props => [
+        id,
+        pokedexEntryNumbers == null
+            ? null
+            : const MapEquality()
+                .equals(pokedexEntryNumbers, pokedexEntryNumbers),
+        name,
+        types == null ? null : const ListEquality().equals(types, types),
+        frontSpriteUrl,
+      ];
 }

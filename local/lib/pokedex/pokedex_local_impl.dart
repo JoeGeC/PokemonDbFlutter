@@ -16,20 +16,27 @@ class PokedexLocalImpl implements PokedexLocal {
   final Database database;
   final PokemonLocalConverter pokemonConverter;
   final PokedexLocalConverter pokedexConverter;
+  String noDataMessage = "No data";
 
   PokedexLocalImpl(this.database, this.pokedexConverter, this.pokemonConverter);
 
   @override
-  Future<Either<DataFailure, List<PokedexLocalModel>>> getAll() {
-    // TODO: implement getAll
-    throw UnimplementedError();
+  Future<Either<DataFailure, List<PokedexLocalModel>>> getAll() async {
+    final pokedexListMap = await database.query(DatabaseTableNames.pokedex);
+    if (pokedexListMap.isEmpty) return Left(DataFailure(noDataMessage));
+    final result = pokedexListMap
+        .map((pokedexMap) => _buildPokedexLocalModel(pokedexMap, null))
+        .toList();
+    return Right(result);
   }
 
   @override
   Future<Either<DataFailure, PokedexLocalModel>> get(int pokedexId) async {
-    final pokedexMap = await _getPokedexById(pokedexId);
-    if (pokedexMap.isEmpty) return Left(DataFailure("No data"));
-    return await buildPokedexLocalModel(pokedexMap);
+    final pokedexListMap = await _getPokedexById(pokedexId);
+    if (pokedexListMap.isEmpty) return Left(DataFailure(noDataMessage));
+    var pokedexMap = pokedexListMap.first;
+    final pokemonMap = await _buildPokemonLocalModel(pokedexMap);
+    return Right(_buildPokedexLocalModel(pokedexMap, pokemonMap));
   }
 
   Future<List<Map<String, Object?>>> _getPokedexById(int pokedexId) async =>
@@ -39,21 +46,24 @@ class PokedexLocalImpl implements PokedexLocal {
         whereArgs: [pokedexId],
       );
 
-  Future<Right<DataFailure, PokedexLocalModel>> buildPokedexLocalModel(
-      List<Map<String, Object?>> pokedexListMap) async {
-    final pokedexMap = pokedexListMap.first;
+  Future<Map<int, PokemonLocalModel>> _buildPokemonLocalModel(
+    Map<String, Object?> pokedexMap,
+  ) async {
     final pokedexId = pokedexMap[DatabaseColumnNames.id] as int;
     List<Map<String, Object?>> pokemonFromDatabase =
         await _getPokemonInPokedex(pokedexId);
-    Map<int, PokemonLocalModel> pokemonMap =
-        _mapQueryResultsToPokemon(pokemonFromDatabase, pokedexId);
-
-    return Right(PokedexLocalModel(
-      id: pokedexMap[DatabaseColumnNames.id] as int,
-      name: pokedexMap[DatabaseColumnNames.name] as String,
-      pokemon: pokemonMap.values.toList(),
-    ));
+    return _mapQueryResultsToPokemon(pokemonFromDatabase, pokedexId);
   }
+
+  PokedexLocalModel _buildPokedexLocalModel(
+    Map<String, Object?> pokedexMap,
+    Map<int, PokemonLocalModel>? pokemonMap,
+  ) =>
+      PokedexLocalModel(
+        id: pokedexMap[DatabaseColumnNames.id] as int,
+        name: pokedexMap[DatabaseColumnNames.name] as String,
+        pokemon: pokemonMap?.values.toList(),
+      );
 
   Future<List<Map<String, Object?>>> _getPokemonInPokedex(
           int pokedexId) async =>
@@ -94,9 +104,16 @@ class PokedexLocalImpl implements PokedexLocal {
   }
 
   @override
-  Future<void> storeList(List<PokedexLocalModel> models) {
-    // TODO: implement storeList
-    throw UnimplementedError();
+  Future<void> storeList(List<PokedexLocalModel> pokedexList) async {
+    final batch = database.batch();
+    for (var pokedex in pokedexList) {
+      batch.insert(
+        DatabaseTableNames.pokedex,
+        pokedexConverter.convert(pokedex),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+    await batch.commit(noResult: true);
   }
 
   @override
@@ -112,7 +129,7 @@ class PokedexLocalImpl implements PokedexLocal {
   }
 
   Future<void> _insertPokemon(PokedexLocalModel pokedex) async {
-    if(pokedex.pokemon == null) return;
+    if (pokedex.pokemon == null) return;
     final batch = database.batch();
     for (var pokemon in pokedex.pokemon!) {
       _insertPokemonData(batch, pokemon);
