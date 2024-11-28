@@ -70,11 +70,12 @@ class PokedexListPage extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: ListTile(
-              title:
-                  Text(pokedex.regionName, style: theme.textTheme.labelSmall),
-              subtitle: Text(pokedex.versionAbbreviation,
-                  style: theme.textTheme.labelSmall),
-              onTap: () {},
+              subtitle: Column(
+                  children: [
+                ...pokedex.displayNames.map((displayName) {
+                  return Text(displayName, style: theme.textTheme.labelSmall);
+                }),
+              ]),
             ),
           );
         }),

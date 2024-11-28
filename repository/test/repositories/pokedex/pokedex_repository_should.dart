@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/models/Failure.dart';
+import 'package:domain/models/pokedex_constants/pokedex_name.dart';
+import 'package:domain/models/pokedex_constants/pokemon_region.dart';
+import 'package:domain/models/pokedex_constants/pokemon_version.dart';
 import 'package:domain/models/pokedex_model.dart';
 import 'package:domain/models/pokemon_model.dart';
-import 'package:domain/models/pokemon_region.dart';
-import 'package:domain/models/pokemon_version.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -29,7 +30,8 @@ void main() {
     late MockPokedexRepositoryConverter mockConverter;
     late String failureMessage;
     late int pokedexId;
-    late String pokedexName;
+    late String pokedexDataName;
+    late PokedexName pokedexName = PokedexName.originalJohto;
     late int pokemonEntryId;
     late int pokemonId;
     late String pokemonName;
@@ -56,14 +58,14 @@ void main() {
           mockPokedexData, mockPokedexLocal, mockConverter);
       failureMessage = "Failure";
       pokedexId = 1;
-      pokedexName = "Sample Pokedex";
+      pokedexDataName = "Sample Pokedex";
       pokemonEntryId = 3;
       pokemonId = 2;
       pokemonName = "Sample Pokemon";
       pokedexPokemonData =
           PokedexPokemonDataModel(pokemonId, pokemonName, "url");
       pokedexDataModel =
-          PokedexDataModel(pokedexId, pokedexName, [pokedexPokemonData]);
+          PokedexDataModel(pokedexId, pokedexDataName, [pokedexPokemonData]);
       pokedexPokemonLocalModel = PokemonLocalModel(
           id: pokemonId,
           pokedexEntryNumbers: {pokedexId: pokemonEntryId},

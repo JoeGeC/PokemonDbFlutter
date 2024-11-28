@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/boundary/repository/pokedexes_repository.dart';
 import 'package:domain/models/Failure.dart';
+import 'package:domain/models/pokedex_constants/pokedex_name.dart';
+import 'package:domain/models/pokedex_constants/pokemon_region.dart';
+import 'package:domain/models/pokedex_constants/pokemon_version.dart';
 import 'package:domain/models/pokedex_model.dart';
-import 'package:domain/models/pokemon_region.dart';
-import 'package:domain/models/pokemon_version.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -41,8 +42,10 @@ void main() {
   late Either<DataFailure, PokedexListDataModel> mockDataResultSuccess;
   late Either<DataFailure, PokedexListDataModel> mockDataResultFailure;
 
-  const String pokedexName1 = "Sample Pokedex";
-  const String pokedexName2 = "Sample Pokedex 2";
+  const String pokedexDataName1 = "kanto";
+  const String pokedexDataName2 = "original-johto";
+  const PokedexName pokedexName1 = PokedexName.kanto;
+  const PokedexName pokedexName2 = PokedexName.originalJohto;
   const int pokedexId1 = 1;
   const int pokedexId2 = 2;
   const String pokedexUrl1 = "https://pokeapi.co/api/v2/pokedex/$pokedexId1/";
@@ -57,12 +60,12 @@ void main() {
     mockConverter = MockPokedexRepositoryConverter();
     repository = PokedexListRepositoryImpl(
         mockPokedexListData, mockPokedexLocal, mockConverter);
-    pokedexLocalModel1 = PokedexLocalModel(id: pokedexId1, name: pokedexName1);
-    pokedexLocalModel2 = PokedexLocalModel(id: pokedexId2, name: pokedexName2);
+    pokedexLocalModel1 = PokedexLocalModel(id: pokedexId1, name: pokedexDataName1);
+    pokedexLocalModel2 = PokedexLocalModel(id: pokedexId2, name: pokedexDataName2);
     pokedexLocalModels1 = [pokedexLocalModel1];
     pokedexLocalModels2 = [pokedexLocalModel1, pokedexLocalModel2];
-    pokedexDataModel1 = PokedexListItemDataModel(pokedexName1, pokedexUrl1);
-    pokedexDataModel2 = PokedexListItemDataModel(pokedexName2, pokedexUrl2);
+    pokedexDataModel1 = PokedexListItemDataModel(pokedexDataName1, pokedexUrl1);
+    pokedexDataModel2 = PokedexListItemDataModel(pokedexDataName2, pokedexUrl2);
     pokedexListDataModel =
         PokedexListDataModel([pokedexDataModel1, pokedexDataModel2]);
     pokedexDomainModel1 = PokedexModel(

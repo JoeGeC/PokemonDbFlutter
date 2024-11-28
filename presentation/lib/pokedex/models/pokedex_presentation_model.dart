@@ -5,12 +5,14 @@ class PokedexPresentationModel extends Equatable {
   final int id;
   final String regionName;
   final String versionAbbreviation;
+  final List<String> displayNames;
   final List<PokedexPokemonPresentationModel> pokemon;
 
   const PokedexPresentationModel({
     required this.id,
     required this.regionName,
     required this.versionAbbreviation,
+    required this.displayNames,
     required this.pokemon,
   });
 

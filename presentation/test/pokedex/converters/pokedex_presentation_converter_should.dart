@@ -1,7 +1,8 @@
+import 'package:domain/models/pokedex_constants/pokedex_name.dart';
+import 'package:domain/models/pokedex_constants/pokemon_region.dart';
+import 'package:domain/models/pokedex_constants/pokemon_version.dart';
 import 'package:domain/models/pokedex_model.dart';
 import 'package:domain/models/pokemon_model.dart';
-import 'package:domain/models/pokemon_region.dart';
-import 'package:domain/models/pokemon_version.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -17,9 +18,13 @@ void main() {
   var pokedexId1 = 11;
   var pokedexId2 = 12;
   var pokedexId3 = 13;
-  var pokedexName1 = "kanto";
-  var pokedexName2 = "original-johto";
-  var pokedexName3 = "updated-johto";
+  var pokedexName1 = PokedexName.kanto;
+  var pokedexName2 = PokedexName.originalJohto;
+  var pokedexName3 = PokedexName.updatedJohto;
+  var displayNameRBY = "Red, Blue, Yellow";
+  var displayNameFRLG = "FireRed, LeafGreen";
+  var displayNameGSC = "Gold, Silver, Crystal";
+  var displayNameHGSS = "HeartGold, SoulSilver";
   PokemonModel pokemonModel = PokemonModel(
     id: 1,
     name: "pokemon",
@@ -60,18 +65,21 @@ void main() {
     id: pokedexId1,
     regionName: "Kanto",
     versionAbbreviation: "RBY & FRLG",
+    displayNames: [displayNameFRLG, displayNameFRLG],
     pokemon: [pokedexPokemonPresentation],
   );
   PokedexPresentationModel pokedexPresentationModel2 = PokedexPresentationModel(
     id: pokedexId2,
     regionName: "Johto",
     versionAbbreviation: "GSC",
+    displayNames: [displayNameGSC],
     pokemon: [],
   );
   PokedexPresentationModel pokedexPresentationModel3 = PokedexPresentationModel(
     id: pokedexId3,
     regionName: "Johto",
     versionAbbreviation: "HGSS",
+    displayNames: [displayNameHGSS],
     pokemon: [],
   );
   var mockPokemonConverter = MockPokedexPokemonPresentationConverter();

@@ -1,7 +1,8 @@
+import 'package:domain/models/pokedex_constants/pokedex_name.dart';
+import 'package:domain/models/pokedex_constants/pokemon_region.dart';
+import 'package:domain/models/pokedex_constants/pokemon_version.dart';
 import 'package:domain/models/pokedex_model.dart';
 import 'package:domain/models/pokemon_model.dart';
-import 'package:domain/models/pokemon_region.dart';
-import 'package:domain/models/pokemon_version.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -39,9 +40,11 @@ void main() {
   late PokedexListDataModel pokedexListDataModel;
 
   const int pokedexId1 = 1;
-  const String pokedexName1 = "kanto";
+  const String pokedexDataName1 = "kanto";
+  const PokedexName pokedexDomainName1 = PokedexName.kanto;
   const int pokedexId2 = 2;
-  const String pokedexName2 = "original-johto";
+  const String pokedexDataName2 = "original-johto";
+  const PokedexName pokedexDomainName2 = PokedexName.originalJohto;
   const int pokemonId = 10;
   const int pokemonEntryId = 11;
   const String pokemonName = "Sample Pokemon";
@@ -66,11 +69,11 @@ void main() {
         name: pokemonName);
     pokemonLocalList = [pokedexPokemonLocalModel];
     detailedPokedexLocalModel = PokedexLocalModel(
-        id: pokedexId1, name: pokedexName1, pokemon: pokemonLocalList);
+        id: pokedexId1, name: pokedexDataName1, pokemon: pokemonLocalList);
     undetailedPokedexLocalModel1 =
-        PokedexLocalModel(id: pokedexId1, name: pokedexName1);
+        PokedexLocalModel(id: pokedexId1, name: pokedexDataName1);
     undetailedPokedexLocalModel2 =
-        PokedexLocalModel(id: pokedexId2, name: pokedexName2);
+        PokedexLocalModel(id: pokedexId2, name: pokedexDataName2);
     undetailedPokedexLocalList = [
       undetailedPokedexLocalModel1,
       undetailedPokedexLocalModel2
@@ -86,13 +89,13 @@ void main() {
     pokemonDomainList = [pokemonDomainModel];
     pokedexDomainModel1 = PokedexModel(
         id: pokedexId1,
-        name: pokedexName1,
+        name: pokedexDomainName1,
         region: region1,
         versions: versions1,
         pokemon: pokemonDomainList);
     pokedexDomainModel2 = PokedexModel(
         id: pokedexId2,
-        name: pokedexName2,
+        name: pokedexDomainName2,
         region: region2,
         versions: versions2,
         pokemon: []);
@@ -104,11 +107,11 @@ void main() {
     );
     pokemonDataList = [pokemonDataModel];
     pokedexDataModel1 =
-        PokedexDataModel(pokedexId1, pokedexName1, pokemonDataList);
+        PokedexDataModel(pokedexId1, pokedexDataName1, pokemonDataList);
     var pokedexListItemDataModel1 =
-        PokedexListItemDataModel(pokedexName1, pokedexUrl1);
+        PokedexListItemDataModel(pokedexDataName1, pokedexUrl1);
     var pokedexListItemDataModel2 =
-        PokedexListItemDataModel(pokedexName2, pokedexUrl2);
+        PokedexListItemDataModel(pokedexDataName2, pokedexUrl2);
     pokedexListDataModel = PokedexListDataModel(
         [pokedexListItemDataModel1, pokedexListItemDataModel2]);
   });
@@ -147,7 +150,7 @@ void main() {
 
     test('throw exception if null id', () {
       PokedexDataModel pokedexDataModel =
-          PokedexDataModel(null, pokedexName1, pokemonDataList);
+          PokedexDataModel(null, pokedexDataName1, pokemonDataList);
 
       expect(
           () => pokedexConverter.convertToLocal(pokedexDataModel),

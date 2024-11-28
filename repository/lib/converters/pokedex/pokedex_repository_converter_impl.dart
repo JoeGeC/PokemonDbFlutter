@@ -1,6 +1,7 @@
+import 'package:domain/models/pokedex_constants/pokedex_name.dart';
 import 'package:domain/models/pokedex_model.dart';
-import 'package:domain/models/pokemon_region.dart';
-import 'package:domain/models/pokemon_version.dart';
+import 'package:domain/models/pokedex_constants/pokemon_region.dart';
+import 'package:domain/models/pokedex_constants/pokemon_version.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter.dart';
 import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
@@ -21,7 +22,7 @@ class PokedexRepositoryConverterImpl extends BaseRepositoryConverter
   PokedexModel convertToDomain(PokedexLocalModel pokedexLocalModel) =>
       PokedexModel(
           id: pokedexLocalModel.id,
-          name: pokedexLocalModel.name,
+          name: convertName(pokedexLocalModel.name),
           versions: getVersionsFromName(pokedexLocalModel.name),
           region: getRegionFromName(pokedexLocalModel.name),
           pokemon:
@@ -176,4 +177,36 @@ class PokedexRepositoryConverterImpl extends BaseRepositoryConverter
         "crown-tundra" => PokemonRegion.galar,
         String() => null,
       };
+
+  PokedexName? convertName(String name) => switch(name) {
+      "national"  => PokedexName.national,
+      "kanto"  => PokedexName.kanto,
+      "original-johto"  => PokedexName.originalJohto,
+      "hoenn"  => PokedexName.hoenn,
+      "original-sinnoh"  => PokedexName.originalSinnoh,
+      "extended-sinnoh"  => PokedexName.extendedSinnoh,
+      "updated-johto"  => PokedexName.updatedJohto,
+      "original-unova"  => PokedexName.originalUnova,
+      "updated-unova"  => PokedexName.updatedUnova,
+      "conquest-gallery"  => PokedexName.conquestGallery,
+      "kalos-central"  => PokedexName.kalosCentral,
+      "kalos-coastal"  => PokedexName.kalosCoastal,
+      "kalos-mountain"  => PokedexName.kalosMountain,
+      "updated-hoenn"  => PokedexName.updatedHoenn,
+      "original-alola"  => PokedexName.originalAlola,
+      "original-melemele"  => PokedexName.originalMelemele,
+      "original-akala"  => PokedexName.originalAlola,
+      "original-ulaula"  => PokedexName.originalUlaula,
+      "original-poni"  => PokedexName.originalPoni,
+      "updated-akala"  => PokedexName.updatedAkala,
+      "updated-ulaula"  => PokedexName.updatedUlaula,
+      "updated-poni"  => PokedexName.updatedPoni,
+      "updated-alola"  => PokedexName.updatedAkala,
+      "updated-melemele"  => PokedexName.updatedMelemele,
+      "letsgo-kanto"  => PokedexName.letsGoKanto,
+      "galar"  => PokedexName.galar,
+      "isle-of-armor"  => PokedexName.isleOfArmor,
+      "crown-tundra"  => PokedexName.crownTundra,
+      String() => null,
+    };
 }
