@@ -109,17 +109,20 @@ class _PokedexListExpandState extends State<PokedexListPage> {
         ],
       );
 
-  InkWell _buildTappableGroupTitle(
+  Widget _buildTappableGroupTitle(
           PokedexGroupPresentationModel pokedexGroup, ThemeData theme) =>
-      InkWell(
-        onTap: () => toggleExpanded(pokedexGroup),
+      Material(
+        color: Colors.transparent,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: SizedBox(
-            width: double.infinity,
-            child: Text(
-              pokedexGroup.title,
-              style: theme.textTheme.labelMedium,
+          child: InkWell(
+            onTap: () => toggleExpanded(pokedexGroup),
+            child: SizedBox(
+              width: double.infinity,
+              child: Text(
+                pokedexGroup.title,
+                style: theme.textTheme.labelMedium,
+              ),
             ),
           ),
         ),
@@ -129,9 +132,10 @@ class _PokedexListExpandState extends State<PokedexListPage> {
           ThemeData theme, PokedexPresentationModel pokedex) =>
       Column(
         children: [
-          buildRowWithStartColor(
-            theme.colorScheme.primary,
-            width: 10,
+          AnimatedRowWithStartColor(
+            startColor: theme.colorScheme.primary,
+            initialWidth: 10,
+            expandedWidth: MediaQuery.of(context).size.width,
             children: [
               SizedBox(width: 16),
               Column(
