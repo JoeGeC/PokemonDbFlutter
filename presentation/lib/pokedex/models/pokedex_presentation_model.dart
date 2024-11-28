@@ -3,12 +3,17 @@ import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.d
 
 class PokedexPresentationModel extends Equatable {
   final int id;
-  final String name;
+  final String regionName;
+  final String versionAbbreviation;
   final List<PokedexPokemonPresentationModel> pokemon;
 
-  const PokedexPresentationModel(
-      {required this.id, required this.name, required this.pokemon});
+  const PokedexPresentationModel({
+    required this.id,
+    required this.regionName,
+    required this.versionAbbreviation,
+    required this.pokemon,
+  });
 
   @override
-  List<Object?> get props => [id, name, pokemon];
+  List<Object?> get props => [id, regionName, versionAbbreviation, pokemon];
 }

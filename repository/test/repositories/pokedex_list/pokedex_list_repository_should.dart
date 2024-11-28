@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:domain/boundary/repository/pokedexes_repository.dart';
 import 'package:domain/models/Failure.dart';
 import 'package:domain/models/pokedex_model.dart';
+import 'package:domain/models/pokemon_region.dart';
+import 'package:domain/models/pokemon_version.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -46,6 +48,8 @@ void main() {
   const String pokedexUrl1 = "https://pokeapi.co/api/v2/pokedex/$pokedexId1/";
   const String pokedexUrl2 = "https://pokeapi.co/api/v2/pokedex/$pokedexId2/";
   const String errorMessage = "No data";
+  const PokemonRegion region = PokemonRegion.johto;
+  const List<PokemonVersion> versions = [PokemonVersion.goldSilverCrystal];
 
   setUp(() {
     mockPokedexListData = MockPokedexListData();
@@ -61,10 +65,18 @@ void main() {
     pokedexDataModel2 = PokedexListItemDataModel(pokedexName2, pokedexUrl2);
     pokedexListDataModel =
         PokedexListDataModel([pokedexDataModel1, pokedexDataModel2]);
-    pokedexDomainModel1 =
-        PokedexModel(id: pokedexId1, name: pokedexName1, pokemon: []);
-    pokedexDomainModel2 =
-        PokedexModel(id: pokedexId2, name: pokedexName2, pokemon: []);
+    pokedexDomainModel1 = PokedexModel(
+        id: pokedexId1,
+        name: pokedexName1,
+        region: region,
+        versions: versions,
+        pokemon: []);
+    pokedexDomainModel2 = PokedexModel(
+        id: pokedexId2,
+        name: pokedexName2,
+        region: region,
+        versions: versions,
+        pokemon: []);
     pokedexDomainModels1 = [pokedexDomainModel1];
     pokedexDomainModels2 = [pokedexDomainModel1, pokedexDomainModel2];
     mockLocalResultFailure = Left(DataFailure(errorMessage));

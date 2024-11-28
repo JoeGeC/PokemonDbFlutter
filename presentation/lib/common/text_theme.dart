@@ -11,6 +11,16 @@ class CustomTextTheme {
     _baseTextTheme = textTheme;
   }
 
+  TextStyle get labelMediumAlt => _baseTextTheme?.labelMedium!.copyWith(
+    color: Colors.white,
+    shadows: [
+      Shadow(
+        offset: Offset(2.0, 2.0),
+        color: Color(0x80000000),
+      ),
+    ],
+  ) ?? TextStyle();
+
   TextStyle get labelSmallAlt => _baseTextTheme?.labelSmall!.copyWith(
     color: Colors.white,
     shadows: [

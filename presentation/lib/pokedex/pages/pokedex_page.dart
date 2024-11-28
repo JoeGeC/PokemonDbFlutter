@@ -67,8 +67,8 @@ class _PokedexPageState extends State<PokedexPage> {
   Widget _buildSuccessPage(ThemeData theme) => pokedex.pokemon.isEmpty
       ? EmptyPage()
       : ScrollUpHeaderListView(
-          headerBuilder: (headerKey) =>
-              buildPokedexHeader(theme, headerKey, pokedex.name, _scaffoldKey),
+          headerBuilder: (headerKey) => buildPokedexHeader(
+              theme, headerKey, pokedex.regionName, _scaffoldKey),
           itemCount: pokedex.pokemon.length,
           itemBuilder: (context, index) =>
               buildPokemonEntry(pokedex.pokemon[index], pokedex.id, theme),
@@ -85,7 +85,7 @@ class _PokedexPageState extends State<PokedexPage> {
                 buildHeader(
                   child: _buildDrawerHeader(theme),
                 ),
-                buildPokedexList(),
+                buildPokedexList(theme),
               ],
             ),
           ),
@@ -101,7 +101,8 @@ class _PokedexPageState extends State<PokedexPage> {
         ),
       );
 
-  BlocProvider<PokedexListBloc> buildPokedexList() => BlocProvider(
+  BlocProvider<PokedexListBloc> buildPokedexList(ThemeData theme) =>
+      BlocProvider(
         create: (context) {
           final bloc = PokedexListBloc(getIt(), getIt());
           bloc.add(GetPokedexListEvent());
@@ -109,6 +110,7 @@ class _PokedexPageState extends State<PokedexPage> {
         },
         child: BlocBuilder<PokedexListBloc, PokedexListState>(
           builder: (context, state) {
+            //TODO change states
             if (state is PokedexListInitialState) {
               return Center(child: Text('Welcome to the Pokedex'));
             } else if (state is PokedexListLoadingState) {
@@ -121,7 +123,16 @@ class _PokedexPageState extends State<PokedexPage> {
                   itemCount: state.pokedexList.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(state.pokedexList[index].name),
+                      title: Row(
+                        children: [
+                          Text(
+                            state.pokedexList[index].regionName,
+                            style: theme.textTheme.labelMedium,
+                          ),
+                          Padding(padding: EdgeInsets.all(4)),
+                          buildVersionLabel(state, index, theme)
+                        ],
+                      ),
                     );
                   },
                 ),
@@ -131,4 +142,16 @@ class _PokedexPageState extends State<PokedexPage> {
           },
         ),
       );
+
+  Widget buildVersionLabel(
+      PokedexListSuccessState state, int index, ThemeData theme) {
+    var versionAbbreviation = state.pokedexList[index].versionAbbreviation;
+    if (versionAbbreviation.isNotEmpty) {
+      return Text(
+        "($versionAbbreviation)",
+        style: theme.textTheme.labelSmall,
+      );
+    }
+    return SizedBox.shrink();
+  }
 }

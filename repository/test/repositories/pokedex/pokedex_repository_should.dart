@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:domain/models/Failure.dart';
 import 'package:domain/models/pokedex_model.dart';
 import 'package:domain/models/pokemon_model.dart';
+import 'package:domain/models/pokemon_region.dart';
+import 'package:domain/models/pokemon_version.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -43,6 +45,8 @@ void main() {
     late Either<DataFailure, PokedexLocalModel> mockLocalResultFailure;
     late Either<Failure, PokedexModel> expectedFailure;
     late Either<Failure, PokedexModel> expectedSuccess;
+    const PokemonRegion region = PokemonRegion.johto;
+    const List<PokemonVersion> versions = [PokemonVersion.goldSilverCrystal];
 
     setUp(() {
       mockPokedexData = MockPokedexData();
@@ -73,7 +77,8 @@ void main() {
           name: pokemonName,
           pokedexEntryNumbers: {pokedexId: pokemonEntryId});
       pokedexDomainModel = PokedexModel(
-          id: pokedexId, name: pokedexName, pokemon: [pokemonDomainModel]);
+          id: pokedexId, name: pokedexName, region: region,
+          versions: versions, pokemon: [pokemonDomainModel]);
       mockDataResultSuccess = Right(pokedexDataModel);
       mockDataResultFailure = Left(DataFailure(failureMessage));
       mockLocalResultSuccess = Right(pokedexLocalModel);

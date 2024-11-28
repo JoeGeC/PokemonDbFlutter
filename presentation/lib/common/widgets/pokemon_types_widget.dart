@@ -49,5 +49,5 @@ Widget _buildTypeBoxBackground({String? type}) => RoundedBox(
 
 Widget _buildTypeText(String text, ThemeData theme) => Text(
       text,
-      style: CustomTextTheme().labelSmallAlt
+      style: CustomTextTheme().labelMediumAlt
     );

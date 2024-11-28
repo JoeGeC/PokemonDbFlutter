@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
     var textTheme = TextTheme(
           headlineMedium: headlineMedium,
           titleMedium: titleMedium,
+          labelMedium: labelMedium,
           labelSmall: labelSmall,
         );
     CustomTextTheme().initialize(textTheme);

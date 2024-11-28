@@ -1,0 +1,18 @@
+enum PokemonRegion {
+  national,
+  kanto,
+  johto,
+  hoenn,
+  sinnoh,
+  unova,
+  ransei,
+  kalos,
+  alola,
+  melemele,
+  akala,
+  ulaula,
+  poni,
+  galar,
+  hisui,
+  paldea,
+}
