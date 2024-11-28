@@ -43,7 +43,7 @@ TextStyle labelSmall = TextStyle(
   color: currentColorScheme.onSurface,
   shadows: <Shadow>[
     Shadow(
-      offset: Offset(2.0, 2.0),
+      offset: Offset(1.0, 1.0),
       color: Color.fromARGB(255, 180, 180, 180),
     ),
   ],

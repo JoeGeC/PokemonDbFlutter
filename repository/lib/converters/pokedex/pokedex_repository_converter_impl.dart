@@ -195,7 +195,7 @@ class PokedexRepositoryConverterImpl extends BaseRepositoryConverter
       "updated-hoenn"  => PokedexName.updatedHoenn,
       "original-alola"  => PokedexName.originalAlola,
       "original-melemele"  => PokedexName.originalMelemele,
-      "original-akala"  => PokedexName.originalAlola,
+      "original-akala"  => PokedexName.originalAkala,
       "original-ulaula"  => PokedexName.originalUlaula,
       "original-poni"  => PokedexName.originalPoni,
       "updated-akala"  => PokedexName.updatedAkala,

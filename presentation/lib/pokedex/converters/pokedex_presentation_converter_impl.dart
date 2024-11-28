@@ -7,6 +7,7 @@ import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:collection/collection.dart';
 
 import '../../pokemon/converters/pokemon_presentation_converter.dart';
+import '../models/pokedex_group_presentation_model.dart';
 
 class PokedexPresentationConverterImpl implements PokedexPresentationConverter {
   late PokedexPokemonPresentationConverter pokemonConverter;
@@ -14,11 +15,14 @@ class PokedexPresentationConverterImpl implements PokedexPresentationConverter {
   PokedexPresentationConverterImpl(this.pokemonConverter);
 
   @override
-  Map<String, List<PokedexPresentationModel>> convertAndOrder(
+  List<PokedexGroupPresentationModel> convertAndOrder(
       List<PokedexModel> pokedexList) {
     return pokedexList
         .map(convert)
-        .groupListsBy((pokedex) => pokedex.regionName);
+        .groupListsBy((pokedex) => pokedex.regionName)
+        .entries
+        .map((entry) => PokedexGroupPresentationModel(entry.key, entry.value))
+        .toList();
   }
 
   @override
@@ -84,6 +88,8 @@ class PokedexPresentationConverterImpl implements PokedexPresentationConverter {
   };
 
   List<String> _getDisplayNames(PokedexName? pokedexName) {
+    var sunMoon = "Sun & Moon";
+    var ultraSunUltraMoon = "Ultra Sun & Ultra Moon";
     return switch (pokedexName) {
       PokedexName.national => ["National"],
       PokedexName.kanto => ["Red, Blue & Yellow", "FireRed & LeafGreen"],
@@ -103,14 +109,15 @@ class PokedexPresentationConverterImpl implements PokedexPresentationConverter {
       PokedexName.kalosCoastal => ["Coastal"],
       PokedexName.kalosMountain => ["Mountain"],
       PokedexName.updatedHoenn => ["Omega Ruby & Alpha Sapphire"],
-      PokedexName.originalAlola => ["Sun & Moon"],
-      PokedexName.originalMelemele => ["Sun & Moon"],
-      PokedexName.originalUlaula => ["Sun & Moon"],
-      PokedexName.originalPoni => ["Sun & Moon"],
-      PokedexName.updatedAkala => ["Ultra Sun & Ultra Moon"],
-      PokedexName.updatedUlaula => ["Ultra Sun & Ultra Moon"],
-      PokedexName.updatedPoni => ["Ultra Sun & Ultra Moon"],
-      PokedexName.updatedMelemele => ["Ultra Sun & Ultra Moon"],
+      PokedexName.originalAlola => [sunMoon],
+      PokedexName.originalMelemele => [sunMoon],
+      PokedexName.originalUlaula => [sunMoon],
+      PokedexName.originalPoni => [sunMoon],
+      PokedexName.originalAkala => [sunMoon],
+      PokedexName.updatedAkala => [ultraSunUltraMoon],
+      PokedexName.updatedUlaula => [ultraSunUltraMoon],
+      PokedexName.updatedPoni => [ultraSunUltraMoon],
+      PokedexName.updatedMelemele => [ultraSunUltraMoon],
       PokedexName.galar => ["Sword & Shield"],
       PokedexName.isleOfArmor => ["Isle of Armor"],
       PokedexName.crownTundra => ["Crown Tundra"],

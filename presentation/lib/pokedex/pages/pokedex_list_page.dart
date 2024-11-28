@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../injections.dart';
-import '../bloc/pokedex_list/pokedex_list_bloc.dart';
+import 'package:presentation/common/assetConstants.dart';
+import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 
-class PokedexListPage extends StatelessWidget {
+import '../../common/widgets/animated_list.dart';
+import '../../common/widgets/row_with_start_color.dart';
+import '../../injections.dart';
+import '../bloc/pokedex_list/pokedex_list_bloc.dart';
+
+class PokedexListPage extends StatefulWidget {
   const PokedexListPage({super.key});
 
+  @override
+  State<StatefulWidget> createState() => _PokedexListExpandState();
+}
+
+class _PokedexListExpandState extends State<PokedexListPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -38,54 +47,104 @@ class PokedexListPage extends StatelessWidget {
     );
   }
 
-  ListView buildPokedexList(PokedexListSuccessState state, ThemeData theme) {
-    var pokedexMap = state.pokedexMap;
-    return ListView.builder(
-      itemCount: pokedexMap.length,
-      itemBuilder: (context, index) {
-        final regionName = pokedexMap.keys.elementAt(index);
-        final pokedexList = pokedexMap.values.elementAt(index);
-        if (pokedexList.length > 1) {
-          return _buildRegionList(theme, regionName, pokedexList);
-        } else {
-          return _buildSingleItem(theme, pokedexList.first);
-        }
-      },
-    );
-  }
-
-  Column _buildRegionList(ThemeData theme, String regionName,
-      List<PokedexPresentationModel> pokedexList) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildPokedexList(PokedexListSuccessState state, ThemeData theme) {
+    var pokedexGroups = state.pokedexGroups;
+    return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(
-            regionName,
-            style: theme.textTheme.labelMedium,
+        Positioned.fill(
+          child: Image.asset(
+            AssetConstants.pokedexBackground,
+            fit: BoxFit.cover,
           ),
         ),
-        ...pokedexList.map((pokedex) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: ListTile(
-              subtitle: Column(
-                  children: [
-                ...pokedex.displayNames.map((displayName) {
-                  return Text(displayName, style: theme.textTheme.labelSmall);
-                }),
-              ]),
-            ),
-          );
-        }),
+        ListView.builder(
+          itemCount: pokedexGroups.length,
+          itemBuilder: (context, index) {
+            final pokedexGroup = pokedexGroups.elementAt(index);
+            if (pokedexGroup.title == "National") {
+              return _buildSingleItem(theme, pokedexGroup.pokedexList.first);
+            } else {
+              return _buildRegionList(theme, pokedexGroup);
+            }
+          },
+        ),
       ],
     );
   }
 
-  Widget _buildSingleItem(ThemeData theme, PokedexPresentationModel pokedex) =>
-      ListTile(
-        title: Text(pokedex.regionName, style: theme.textTheme.labelMedium),
-        onTap: () {},
+  Column _buildRegionList(
+          ThemeData theme, PokedexGroupPresentationModel pokedexGroup) =>
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildTappableGroupTitle(pokedexGroup, theme),
+          buildDivider(),
+          buildAnimatedList(pokedexGroup, children: [
+            ...pokedexGroup.pokedexList
+                .map((pokedex) => _buildPokedexGroupItem(theme, pokedex))
+          ]),
+        ],
       );
+
+  InkWell _buildTappableGroupTitle(
+          PokedexGroupPresentationModel pokedexGroup, ThemeData theme) =>
+      InkWell(
+        onTap: () => toggleExpanded(pokedexGroup),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: SizedBox(
+            width: double.infinity,
+            child: Text(
+              pokedexGroup.title,
+              style: theme.textTheme.labelMedium,
+            ),
+          ),
+        ),
+      );
+
+  Widget _buildPokedexGroupItem(
+          ThemeData theme, PokedexPresentationModel pokedex) =>
+      Column(
+        children: [
+          buildRowWithStartColor(
+            theme.colorScheme.primary,
+            width: 10,
+            children: [
+              SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ...pokedex.displayNames.map((displayName) =>
+                      Text(displayName, style: theme.textTheme.labelSmall)),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 4),
+        ],
+      );
+
+  Divider buildDivider() => Divider(
+        color: Colors.black,
+        thickness: 2,
+        indent: 16,
+        endIndent: 16,
+      );
+
+  Widget _buildSingleItem(ThemeData theme, PokedexPresentationModel pokedex) =>
+      Column(
+        children: [
+          ListTile(
+            title: Text(pokedex.regionName, style: theme.textTheme.labelMedium),
+            onTap: () {},
+          ),
+          buildDivider(),
+        ],
+      );
+
+  void toggleExpanded(PokedexGroupPresentationModel pokedexGroup) {
+    setState(() {
+      pokedexGroup.isExpanded = !pokedexGroup.isExpanded;
+    });
+  }
 }

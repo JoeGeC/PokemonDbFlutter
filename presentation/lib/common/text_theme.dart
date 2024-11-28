@@ -11,6 +11,11 @@ class CustomTextTheme {
     _baseTextTheme = textTheme;
   }
 
+  TextStyle get labelMediumBold => _baseTextTheme?.labelMedium!.copyWith(
+      fontWeight: FontWeight.bold,
+      shadows: []
+  ) ?? TextStyle();
+
   TextStyle get labelMediumAlt => _baseTextTheme?.labelMedium!.copyWith(
     color: Colors.white,
     shadows: [

@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter_impl.dart';
+import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
@@ -33,13 +34,13 @@ void main() {
     types: ["grass", "flying"],
   );
   PokedexPokemonPresentationModel pokedexPokemonPresentation =
-  PokedexPokemonPresentationModel(
-      id: 1,
-      nationalDexNumber: "0001",
-      pokedexEntryNumber: "002",
-      name: "Pokemon",
-      imageUrl: "url/asd/asd/asd/",
-      types: ["Grass", "Flying"]);
+      PokedexPokemonPresentationModel(
+          id: 1,
+          nationalDexNumber: "0001",
+          pokedexEntryNumber: "002",
+          name: "Pokemon",
+          imageUrl: "url/asd/asd/asd/",
+          types: ["Grass", "Flying"]);
   PokedexModel pokedexModel1 = PokedexModel(
     id: pokedexId1,
     name: pokedexName1,
@@ -102,18 +103,21 @@ void main() {
     test('order list', () {
       when(mockPokemonConverter.convertList([pokemonModel], pokedexId1))
           .thenReturn([pokedexPokemonPresentation]);
-      when(mockPokemonConverter.convertList([], any))
-          .thenReturn([]);
+      when(mockPokemonConverter.convertList([], any)).thenReturn([]);
 
-      var result = converter.convertAndOrder(
-          [pokedexModel1, pokedexModel2, pokedexModel3]);
+      var result = converter
+          .convertAndOrder([pokedexModel1, pokedexModel2, pokedexModel3]);
 
-      var expectedMap = {
-        "Kanto": [pokedexPresentationModel1],
-        "Johto": [pokedexPresentationModel2, pokedexPresentationModel3]
-      };
+      var expected = [
+        PokedexGroupPresentationModel(
+            title: "Kanto", pokedexList: [pokedexPresentationModel1]),
+        PokedexGroupPresentationModel(title: "Johto", pokedexList: [
+          pokedexPresentationModel2,
+          pokedexPresentationModel3
+        ]),
+      ];
 
-      expect(result, expectedMap);
+      expect(result, expected);
     });
   });
 }

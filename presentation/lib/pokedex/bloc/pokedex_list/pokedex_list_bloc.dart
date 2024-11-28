@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 
 import '../../converters/pokedex_presentation_converter.dart';
+import '../../models/pokedex_group_presentation_model.dart';
 
 part 'pokedex_list_event.dart';
 part 'pokedex_list_state.dart';
