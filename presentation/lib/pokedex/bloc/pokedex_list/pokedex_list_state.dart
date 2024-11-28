@@ -4,8 +4,6 @@ abstract class PokedexListState{
   const PokedexListState();
 }
 
-class PokedexListInitialState extends PokedexListState {}
-
 class PokedexListLoadingState extends PokedexListState {}
 
 class PokedexListErrorState extends PokedexListState {

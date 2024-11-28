@@ -5,14 +5,14 @@ class ScrollUpHeaderListView extends StatefulWidget {
   final Widget Function(GlobalKey headerKey) headerBuilder;
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
-  final Color background;
+  final String backgroundAsset;
 
   const ScrollUpHeaderListView({
     super.key,
     required this.headerBuilder,
     required this.itemCount,
     required this.itemBuilder,
-    required this.background,
+    required this.backgroundAsset,
   });
 
   @override
@@ -41,7 +41,7 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
   Widget build(BuildContext context) => Stack(
         children: [
           Positioned.fill(child: Image(
-            image: AssetImage(AssetConstants.pokedexBackground),
+            image: AssetImage(widget.backgroundAsset),
             fit: BoxFit.cover,
           )),
           CustomScrollView(

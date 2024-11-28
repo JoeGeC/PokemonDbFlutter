@@ -16,7 +16,7 @@ class PokedexListBloc extends Bloc<PokedexListEvent, PokedexListState> {
       PokedexPresentationConverter pokedexConverter)
       : _pokedexListUseCase = pokedexListUseCase,
         _pokedexConverter = pokedexConverter,
-        super(PokedexListInitialState()) {
+        super(PokedexListLoadingState()) {
     on<GetPokedexListEvent>(_getPokedexListEvent);
   }
 

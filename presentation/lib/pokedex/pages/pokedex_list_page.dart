@@ -4,6 +4,8 @@ import 'package:presentation/common/assetConstants.dart';
 import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 
+import '../../common/pages/error_page.dart';
+import '../../common/pages/loading_page.dart';
 import '../../common/widgets/animated_list.dart';
 import '../../common/widgets/row_with_start_color.dart';
 import '../../injections.dart';
@@ -28,26 +30,47 @@ class _PokedexListExpandState extends State<PokedexListPage> {
         return bloc;
       },
       child: BlocBuilder<PokedexListBloc, PokedexListState>(
-        builder: (context, state) {
-          //TODO change states
-          if (state is PokedexListInitialState) {
-            return Center(child: Text('Welcome to the Pokedex'));
-          } else if (state is PokedexListLoadingState) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is PokedexListErrorState) {
-            return Center(child: Text('Error: ${state.errorMessage}'));
-          } else if (state is PokedexListSuccessState) {
-            return Expanded(
-              child: buildPokedexList(state, theme),
-            );
-          }
-          return Container();
-        },
+        builder: (context, state) => _buildBackground(
+          state,
+          theme,
+          children: _buildState(state, theme),
+        ),
       ),
     );
   }
 
-  Widget buildPokedexList(PokedexListSuccessState state, ThemeData theme) {
+  Expanded _buildBackground(PokedexListState state, ThemeData theme,
+          {children = const <Widget>[]}) =>
+      Expanded(
+        child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Image.asset(
+                  AssetConstants.pokedexBackground,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              children
+            ],
+          ),
+        ),
+      );
+
+  Widget _buildState(PokedexListState state, ThemeData theme) {
+    switch (state) {
+      case PokedexListLoadingState():
+        return LoadingPage();
+      case PokedexListSuccessState():
+        return Expanded(child: _buildPokedexList(state, theme));
+      default:
+        return ErrorPage();
+    }
+  }
+
+  Widget _buildPokedexList(PokedexListSuccessState state, ThemeData theme) {
     var pokedexGroups = state.pokedexGroups;
     return Stack(
       children: [

@@ -5,6 +5,12 @@ class ErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Something went wrong :("));
+    var theme = Theme.of(context);
+    return Center(
+      child: Text(
+        "Something went wrong :(",
+        style: theme.textTheme.labelMedium,
+      ),
+    );
   }
 }
