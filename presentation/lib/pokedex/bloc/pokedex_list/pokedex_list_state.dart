@@ -15,7 +15,7 @@ class PokedexListErrorState extends PokedexListState {
 }
 
 class PokedexListSuccessState extends PokedexListState {
-  final List<PokedexPresentationModel> pokedexList;
+  final Map<String, List<PokedexPresentationModel>> pokedexMap;
 
-  PokedexListSuccessState(this.pokedexList);
+  PokedexListSuccessState(this.pokedexMap);
 }

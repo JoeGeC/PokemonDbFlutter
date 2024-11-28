@@ -26,14 +26,11 @@ class PokedexListBloc extends Bloc<PokedexListEvent, PokedexListState> {
     emit(PokedexListLoadingState());
 
     await for (final result in _pokedexListUseCase.getAllPokedexes()) {
-        result.fold(
-          (failure) => emit(PokedexListErrorState(failure.errorMessage)),
-          (pokedexList) => emit(PokedexListSuccessState(
-            pokedexList
-                .map((pokedex) => _pokedexConverter.convert(pokedex))
-                .toList(),
-          )),
-        );
-      }
+      result.fold(
+        (failure) => emit(PokedexListErrorState(failure.errorMessage)),
+        (pokedexList) => emit(PokedexListSuccessState(
+            _pokedexConverter.convertAndOrder(pokedexList))),
+      );
+    }
   }
 }

@@ -5,12 +5,12 @@ import 'package:presentation/common/widgets/header.dart';
 import 'package:presentation/common/widgets/scroll_up_header_list_widget.dart';
 import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
+import 'package:presentation/pokedex/pages/pokedex_list_page.dart';
 
 import '../../common/pages/empty_page.dart';
 import '../../common/pages/error_page.dart';
 import '../../common/pages/loading_page.dart';
 import '../../injections.dart';
-import '../bloc/pokedex_list/pokedex_list_bloc.dart';
 import '../models/pokedex_presentation_model.dart';
 import '../widgets/pokedex_header_widget.dart';
 import '../widgets/pokemon_entry_widget.dart';
@@ -85,7 +85,7 @@ class _PokedexPageState extends State<PokedexPage> {
                 buildHeader(
                   child: _buildDrawerHeader(theme),
                 ),
-                buildPokedexList(theme),
+                PokedexListPage(),
               ],
             ),
           ),
@@ -101,57 +101,4 @@ class _PokedexPageState extends State<PokedexPage> {
         ),
       );
 
-  BlocProvider<PokedexListBloc> buildPokedexList(ThemeData theme) =>
-      BlocProvider(
-        create: (context) {
-          final bloc = PokedexListBloc(getIt(), getIt());
-          bloc.add(GetPokedexListEvent());
-          return bloc;
-        },
-        child: BlocBuilder<PokedexListBloc, PokedexListState>(
-          builder: (context, state) {
-            //TODO change states
-            if (state is PokedexListInitialState) {
-              return Center(child: Text('Welcome to the Pokedex'));
-            } else if (state is PokedexListLoadingState) {
-              return Center(child: CircularProgressIndicator());
-            } else if (state is PokedexListErrorState) {
-              return Center(child: Text('Error: ${state.errorMessage}'));
-            } else if (state is PokedexListSuccessState) {
-              return Expanded(
-                child: ListView.builder(
-                  itemCount: state.pokedexList.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Row(
-                        children: [
-                          Text(
-                            state.pokedexList[index].regionName,
-                            style: theme.textTheme.labelMedium,
-                          ),
-                          Padding(padding: EdgeInsets.all(4)),
-                          buildVersionLabel(state, index, theme)
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              );
-            }
-            return Container();
-          },
-        ),
-      );
-
-  Widget buildVersionLabel(
-      PokedexListSuccessState state, int index, ThemeData theme) {
-    var versionAbbreviation = state.pokedexList[index].versionAbbreviation;
-    if (versionAbbreviation.isNotEmpty) {
-      return Text(
-        "($versionAbbreviation)",
-        style: theme.textTheme.labelSmall,
-      );
-    }
-    return SizedBox.shrink();
-  }
 }
