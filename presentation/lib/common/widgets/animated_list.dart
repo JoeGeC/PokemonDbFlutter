@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../pokedex/models/pokedex_group_presentation_model.dart';
+import '../models/expandable.dart';
 
 AnimatedSize buildAnimatedList(Expandable expandable,
         {children = const <Widget>[], int milliseconds = 300}) =>

@@ -109,12 +109,9 @@ void main() {
           .convertAndOrder([pokedexModel1, pokedexModel2, pokedexModel3]);
 
       var expected = [
+        PokedexGroupPresentationModel("Kanto", [pokedexPresentationModel1]),
         PokedexGroupPresentationModel(
-            title: "Kanto", pokedexList: [pokedexPresentationModel1]),
-        PokedexGroupPresentationModel(title: "Johto", pokedexList: [
-          pokedexPresentationModel2,
-          pokedexPresentationModel3
-        ]),
+            "Johto", [pokedexPresentationModel2, pokedexPresentationModel3]),
       ];
 
       expect(result, expected);
