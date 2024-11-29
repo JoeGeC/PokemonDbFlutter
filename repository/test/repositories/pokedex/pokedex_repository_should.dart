@@ -39,11 +39,15 @@ void main() {
     late PokedexDataModel pokedexDataModel;
     late PokemonLocalModel pokedexPokemonLocalModel;
     late PokedexLocalModel pokedexLocalModel;
+    late PokedexLocalModel pokedexLocalModelNoPokemon;
+    late PokedexLocalModel pokedexLocalModelNullPokemon;
     late PokemonModel pokemonDomainModel;
     late PokedexModel pokedexDomainModel;
     late Either<DataFailure, PokedexDataModel> mockDataResultSuccess;
     late Either<DataFailure, PokedexDataModel> mockDataResultFailure;
     late Either<DataFailure, PokedexLocalModel> mockLocalResultSuccess;
+    late Either<DataFailure, PokedexLocalModel> mockLocalResultSuccessNoPokemon;
+    late Either<DataFailure, PokedexLocalModel> mockLocalResultSuccessNullPokemon;
     late Either<DataFailure, PokedexLocalModel> mockLocalResultFailure;
     late Either<Failure, PokedexModel> expectedFailure;
     late Either<Failure, PokedexModel> expectedSuccess;
@@ -74,6 +78,14 @@ void main() {
           id: pokedexId,
           name: pokemonName,
           pokemon: [pokedexPokemonLocalModel]);
+      pokedexLocalModelNoPokemon = PokedexLocalModel(
+          id: pokedexId,
+          name: pokemonName,
+          pokemon: []);
+      pokedexLocalModelNullPokemon = PokedexLocalModel(
+          id: pokedexId,
+          name: pokemonName,
+          pokemon: null);
       pokemonDomainModel = PokemonModel(
           id: pokemonId,
           name: pokemonName,
@@ -84,6 +96,8 @@ void main() {
       mockDataResultSuccess = Right(pokedexDataModel);
       mockDataResultFailure = Left(DataFailure(failureMessage));
       mockLocalResultSuccess = Right(pokedexLocalModel);
+      mockLocalResultSuccessNoPokemon = Right(pokedexLocalModelNoPokemon);
+      mockLocalResultSuccessNullPokemon = Right(pokedexLocalModelNullPokemon);
       mockLocalResultFailure = Left(DataFailure(failureMessage));
       expectedSuccess = Right(pokedexDomainModel);
       expectedFailure = Left(Failure(failureMessage));
@@ -104,6 +118,40 @@ void main() {
     test('get data from remote if not in local and store locally', () async {
       when(mockPokedexLocal.get(pokedexId))
           .thenAnswer((_) async => mockLocalResultFailure);
+      when(mockPokedexData.get(pokedexId))
+          .thenAnswer((_) async => mockDataResultSuccess);
+      when(mockConverter.convertToLocal(pokedexDataModel))
+          .thenReturn(pokedexLocalModel);
+      when(mockConverter.convertToDomain(pokedexLocalModel))
+          .thenReturn(pokedexDomainModel);
+      var result = await repository.getPokedex(pokedexId);
+
+      verify(mockPokedexLocal.get(pokedexId)).called(1);
+      verify(mockPokedexData.get(pokedexId)).called(1);
+      verify(mockPokedexLocal.store(pokedexLocalModel)).called(1);
+      expect(result, expectedSuccess);
+    });
+
+    test('get data from remote if no pokemon in local and store locally', () async {
+      when(mockPokedexLocal.get(pokedexId))
+          .thenAnswer((_) async => mockLocalResultSuccessNoPokemon);
+      when(mockPokedexData.get(pokedexId))
+          .thenAnswer((_) async => mockDataResultSuccess);
+      when(mockConverter.convertToLocal(pokedexDataModel))
+          .thenReturn(pokedexLocalModel);
+      when(mockConverter.convertToDomain(pokedexLocalModel))
+          .thenReturn(pokedexDomainModel);
+      var result = await repository.getPokedex(pokedexId);
+
+      verify(mockPokedexLocal.get(pokedexId)).called(1);
+      verify(mockPokedexData.get(pokedexId)).called(1);
+      verify(mockPokedexLocal.store(pokedexLocalModel)).called(1);
+      expect(result, expectedSuccess);
+    });
+
+    test('get data from remote if null pokemon in local and store locally', () async {
+      when(mockPokedexLocal.get(pokedexId))
+          .thenAnswer((_) async => mockLocalResultSuccessNullPokemon);
       when(mockPokedexData.get(pokedexId))
           .thenAnswer((_) async => mockDataResultSuccess);
       when(mockConverter.convertToLocal(pokedexDataModel))
