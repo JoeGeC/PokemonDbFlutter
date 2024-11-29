@@ -33,11 +33,8 @@ class _PokedexListExpandState extends State<PokedexListPage> {
         return bloc;
       },
       child: BlocBuilder<PokedexListBloc, PokedexListState>(
-        builder: (context, state) => _buildBackground(
-          state,
-          theme,
-          children: _buildState(state, theme),
-        ),
+        builder: (context, state) =>
+            _buildBackground(state, theme, children: _buildState(state, theme)),
       ),
     );
   }
@@ -146,12 +143,10 @@ class _PokedexListExpandState extends State<PokedexListPage> {
           ThemeData theme, PokedexPresentationModel pokedex) =>
       Column(
         children: [
-          AnimatedRowWithStartColor(
+          RowWithStartColor(
             startColor: theme.colorScheme.primary,
-            initialWidth: 10,
-            expandedWidth: MediaQuery.of(context).size.width,
+            startColorWidth: 10,
             onTapped: widget.onSelected,
-            isAnimating: widget.isAnimating,
             id: pokedex.id,
             children: [
               SizedBox(width: 16),
