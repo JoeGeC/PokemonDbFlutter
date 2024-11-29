@@ -4,7 +4,10 @@ class PokemonJsonMocks {
       String type1, String type2, String frontSpriteUrl) =>
       {
         "id": id,
-        "name": name,
+        "species": {
+          "name": name,
+          "url": "https://pokeapi.co/api/v2/pokemon-species/172/"
+        },
         "sprites": {
           "front_default": frontSpriteUrl,
         },
