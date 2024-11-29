@@ -32,7 +32,7 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (headerKey.currentContext != null) {
         RenderBox renderBox =
-        headerKey.currentContext!.findRenderObject() as RenderBox;
+            headerKey.currentContext!.findRenderObject() as RenderBox;
         setState(() {
           headerHeight = renderBox.size.height;
         });
@@ -43,7 +43,8 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
   @override
   Widget build(BuildContext context) => Stack(
         children: [
-          Positioned.fill(child: Image(
+          Positioned.fill(
+              child: Image(
             image: AssetImage(widget.backgroundAsset),
             fit: BoxFit.cover,
           )),
@@ -62,15 +63,14 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
       );
 
   SliverAppBar _buildHeader() => SliverAppBar(
-        floating: true,
-        pinned: true,
-        stretch: true,
-        toolbarHeight: 0.0,
-        expandedHeight: headerHeight ?? 100,
-        elevation: 4.0,
-        backgroundColor: Colors.transparent,
-        scrolledUnderElevation: 0,
-        flexibleSpace: widget.headerBuilder(headerKey),
-      );
-
+      floating: true,
+      pinned: true,
+      stretch: true,
+      toolbarHeight: 0.0,
+      expandedHeight: headerHeight ?? 100,
+      elevation: 4.0,
+      backgroundColor: Colors.transparent,
+      scrolledUnderElevation: 0,
+      flexibleSpace:
+          FlexibleSpaceBar(background: widget.headerBuilder(headerKey)));
 }
