@@ -153,14 +153,23 @@ class _PokedexListExpandState extends State<PokedexListPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ...pokedex.displayNames.map((displayName) =>
-                      Text(displayName, style: theme.textTheme.labelSmall)),
+                  ...pokedex.displayNames.map(
+                    (displayName) =>
+                        _buildPokedexVersionLabel(displayName, theme),
+                  ),
                 ],
               ),
             ],
           ),
           SizedBox(height: 4),
         ],
+      );
+
+  Text _buildPokedexVersionLabel(String displayName, ThemeData theme) => Text(
+        displayName,
+        style: theme.textTheme.labelSmall,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
       );
 
   Divider buildDivider() => Divider(

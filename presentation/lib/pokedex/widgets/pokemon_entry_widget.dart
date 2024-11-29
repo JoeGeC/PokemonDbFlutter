@@ -8,15 +8,15 @@ import '../../injections.dart';
 import '../bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
 import '../models/pokedex_pokemon_presentation_model.dart';
 
-Widget buildPokemonEntry(PokedexPokemonPresentationModel pokemon,
-    int pokedexId, ThemeData theme) {
+Widget buildPokemonEntry(
+    PokedexPokemonPresentationModel pokemon, int pokedexId, ThemeData theme) {
   return BlocProvider(
     create: (_) => PokedexPokemonBloc(getIt(), getIt()),
     child: BlocBuilder<PokedexPokemonBloc, PokedexPokemonState>(
       builder: (context, state) {
         final pokemonBloc = context.read<PokedexPokemonBloc>();
         getPokemonOnStart(state, pokemonBloc, pokemon, pokedexId);
-        if(state is PokedexPokemonSuccessState) {
+        if (state is PokedexPokemonSuccessState) {
           return pokemonEntryWidget(state, state.pokemon, theme);
         }
         return pokemonEntryWidget(state, pokemon, theme);
@@ -38,22 +38,22 @@ void getPokemonOnStart(
 Widget pokemonEntryWidget(PokedexPokemonState state,
         PokedexPokemonPresentationModel pokemon, ThemeData theme) =>
     Padding(
-      padding: EdgeInsets.all(8),
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            buildPokemonImageWithBackground(state, pokemon.imageUrl),
-            SizedBox(width: 30),
-            Column(
+      padding: const EdgeInsets.all(8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildPokemonImageWithBackground(state, pokemon.imageUrl),
+          const SizedBox(width: 30),
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TwoSpacedTextsRow(pokemon.pokedexEntryNumber, pokemon.name,
                     theme.textTheme.titleMedium!),
                 buildPokemonTypes(pokemon.types, theme)
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
