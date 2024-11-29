@@ -87,7 +87,8 @@ class _PokedexListExpandState extends State<PokedexListPage> {
             itemBuilder: (context, index) {
               final pokedexGroup = pokedexGroups.elementAt(index);
               if (pokedexGroup.title == "National") {
-                return _buildTappableGroupTitle(theme, pokedexGroup);
+                return _buildTappableGroupTitle(theme, pokedexGroup.title,
+                    () => selectPokedex(pokedexGroup.pokedexList.first.id));
               } else {
                 return _buildRegionList(theme, pokedexGroup);
               }
@@ -98,12 +99,19 @@ class _PokedexListExpandState extends State<PokedexListPage> {
     );
   }
 
+  selectPokedex(int id) {
+    if (widget.onSelected != null) {
+      widget.onSelected!(id);
+    }
+  }
+
   Column _buildRegionList(
           ThemeData theme, PokedexGroupPresentationModel pokedexGroup) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTappableGroupTitle(theme, pokedexGroup),
+          _buildTappableGroupTitle(
+              theme, pokedexGroup.title, () => toggleExpanded(pokedexGroup)),
           buildAnimatedList(pokedexGroup, children: [
             ...pokedexGroup.pokedexList
                 .map((pokedex) => _buildPokedexGroupItem(theme, pokedex))
@@ -112,7 +120,7 @@ class _PokedexListExpandState extends State<PokedexListPage> {
       );
 
   Widget _buildTappableGroupTitle(
-          ThemeData theme, PokedexGroupPresentationModel pokedexGroup) =>
+          ThemeData theme, String title, Function() onTap) =>
       Column(
         children: [
           Material(
@@ -121,13 +129,13 @@ class _PokedexListExpandState extends State<PokedexListPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: InkWell(
                 borderRadius: BorderRadius.circular(8),
-                onTap: () => toggleExpanded(pokedexGroup),
+                onTap: onTap,
                 child: SizedBox(
                   width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: Text(
-                      pokedexGroup.title,
+                      title,
                       style: theme.textTheme.labelMedium,
                     ),
                   ),
