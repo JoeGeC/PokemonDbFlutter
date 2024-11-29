@@ -24,7 +24,7 @@ class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
       emitter(PokedexLoadingState());
     }
 
-    final result = await _pokedexUseCase.getPokedex(3);
+    final result = await _pokedexUseCase.getPokedex(event.id);
     result.fold((failure) {
       emitter(PokedexErrorState(failure.errorMessage));
     }, (pokedexModel) {

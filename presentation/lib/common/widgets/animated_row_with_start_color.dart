@@ -5,13 +5,19 @@ class AnimatedRowWithStartColor extends StatefulWidget {
   final List<Widget> children;
   final double initialWidth;
   final double expandedWidth;
+  final int id;
+  final Function(int)? onTapped;
+  final Function(bool)? isAnimating;
 
   const AnimatedRowWithStartColor({
-    required this.startColor,
+    super.key,
+    this.startColor = Colors.red,
     this.children = const <Widget>[],
     this.initialWidth = 20,
     this.expandedWidth = 100,
-    super.key,
+    this.id = 0,
+    this.onTapped,
+    this.isAnimating,
   });
 
   @override
@@ -19,13 +25,52 @@ class AnimatedRowWithStartColor extends StatefulWidget {
       _AnimatedRowWithStartColorState();
 }
 
-class _AnimatedRowWithStartColorState extends State<AnimatedRowWithStartColor> {
+class _AnimatedRowWithStartColorState extends State<AnimatedRowWithStartColor>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
   bool _isExpanded = false;
 
-  void _toggleExpansion() {
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 600),
+    );
+  }
+
+  void _onTap() {
+    _startAnimation();
+    _toggleExpanded();
+    _tapCallback();
+  }
+
+  Future<void> _startAnimation() async {
+    if(widget.isAnimating != null) {
+      widget.isAnimating!(true);
+    }
+    await _controller.forward();
+    if(widget.isAnimating != null) {
+      widget.isAnimating!(false);
+    }
+  }
+
+  void _toggleExpanded() {
     setState(() {
       _isExpanded = !_isExpanded;
     });
+  }
+
+  void _tapCallback() {
+    if (widget.onTapped != null) {
+      widget.onTapped!(widget.id);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -35,7 +80,7 @@ class _AnimatedRowWithStartColorState extends State<AnimatedRowWithStartColor> {
         var expandedWidth = constraints.maxWidth;
 
         return InkWell(
-          onTap: _toggleExpansion,
+          onTap: _onTap,
           child: SizedBox(
             width: double.infinity,
             child: IntrinsicHeight(

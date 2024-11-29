@@ -12,7 +12,10 @@ import '../../injections.dart';
 import '../bloc/pokedex_list/pokedex_list_bloc.dart';
 
 class PokedexListPage extends StatefulWidget {
-  const PokedexListPage({super.key});
+  final Function(int)? onSelected;
+  final Function(bool)? isAnimating;
+
+  const PokedexListPage({super.key, this.onSelected, this.isAnimating});
 
   @override
   State<StatefulWidget> createState() => _PokedexListExpandState();
@@ -80,16 +83,19 @@ class _PokedexListExpandState extends State<PokedexListPage> {
             fit: BoxFit.cover,
           ),
         ),
-        ListView.builder(
-          itemCount: pokedexGroups.length,
-          itemBuilder: (context, index) {
-            final pokedexGroup = pokedexGroups.elementAt(index);
-            if (pokedexGroup.title == "National") {
-              return _buildSingleItem(theme, pokedexGroup.pokedexList.first);
-            } else {
-              return _buildRegionList(theme, pokedexGroup);
-            }
-          },
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: ListView.builder(
+            itemCount: pokedexGroups.length,
+            itemBuilder: (context, index) {
+              final pokedexGroup = pokedexGroups.elementAt(index);
+              if (pokedexGroup.title == "National") {
+                return _buildTappableGroupTitle(theme, pokedexGroup);
+              } else {
+                return _buildRegionList(theme, pokedexGroup);
+              }
+            },
+          ),
         ),
       ],
     );
@@ -100,8 +106,7 @@ class _PokedexListExpandState extends State<PokedexListPage> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTappableGroupTitle(pokedexGroup, theme),
-          buildDivider(),
+          _buildTappableGroupTitle(theme, pokedexGroup),
           buildAnimatedList(pokedexGroup, children: [
             ...pokedexGroup.pokedexList
                 .map((pokedex) => _buildPokedexGroupItem(theme, pokedex))
@@ -110,22 +115,31 @@ class _PokedexListExpandState extends State<PokedexListPage> {
       );
 
   Widget _buildTappableGroupTitle(
-          PokedexGroupPresentationModel pokedexGroup, ThemeData theme) =>
-      Material(
-        color: Colors.transparent,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: InkWell(
-            onTap: () => toggleExpanded(pokedexGroup),
-            child: SizedBox(
-              width: double.infinity,
-              child: Text(
-                pokedexGroup.title,
-                style: theme.textTheme.labelMedium,
+          ThemeData theme, PokedexGroupPresentationModel pokedexGroup) =>
+      Column(
+        children: [
+          Material(
+            color: Colors.transparent,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(8),
+                onTap: () => toggleExpanded(pokedexGroup),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(
+                      pokedexGroup.title,
+                      style: theme.textTheme.labelMedium,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+          buildDivider(),
+        ],
       );
 
   Widget _buildPokedexGroupItem(
@@ -136,6 +150,9 @@ class _PokedexListExpandState extends State<PokedexListPage> {
             startColor: theme.colorScheme.primary,
             initialWidth: 10,
             expandedWidth: MediaQuery.of(context).size.width,
+            onTapped: widget.onSelected,
+            isAnimating: widget.isAnimating,
+            id: pokedex.id,
             children: [
               SizedBox(width: 16),
               Column(
@@ -156,17 +173,6 @@ class _PokedexListExpandState extends State<PokedexListPage> {
         thickness: 2,
         indent: 16,
         endIndent: 16,
-      );
-
-  Widget _buildSingleItem(ThemeData theme, PokedexPresentationModel pokedex) =>
-      Column(
-        children: [
-          ListTile(
-            title: Text(pokedex.regionName, style: theme.textTheme.labelMedium),
-            onTap: () {},
-          ),
-          buildDivider(),
-        ],
       );
 
   void toggleExpanded(PokedexGroupPresentationModel pokedexGroup) {

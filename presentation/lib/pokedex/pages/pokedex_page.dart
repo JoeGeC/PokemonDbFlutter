@@ -28,15 +28,16 @@ class _PokedexPageState extends State<PokedexPage> {
       getIt<PokedexUseCase>(), getIt<PokedexPresentationConverter>());
   late PokedexPresentationModel pokedex;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _uiBlocked = false;
 
   @override
   void initState() {
-    getPokedex();
+    getPokedex(3);
     super.initState();
   }
 
-  void getPokedex({bool isLoading = true}) {
-    _bloc.add(GetPokedexEvent(isLoading: isLoading));
+  void getPokedex(int id, {bool isLoading = true}) {
+    _bloc.add(GetPokedexEvent(id, isLoading: isLoading));
   }
 
   @override
@@ -47,19 +48,22 @@ class _PokedexPageState extends State<PokedexPage> {
       key: _scaffoldKey,
       backgroundColor: theme.colorScheme.primary,
       drawer: buildDrawer(theme),
-      body: SafeArea(
-        child: BlocConsumer<PokedexBloc, PokedexState>(
-          bloc: _bloc,
-          listener: (context, state) {
-            if (state is PokedexSuccessState) {
-              pokedex = state.pokedex;
-            }
-          },
-          builder: (context, state) => switch (state) {
-            PokedexLoadingState() => LoadingPage(),
-            PokedexErrorState() => ErrorPage(),
-            PokedexState() => _buildSuccessPage(theme),
-          },
+      body: IgnorePointer(
+        ignoring: _uiBlocked,
+        child: SafeArea(
+          child: BlocConsumer<PokedexBloc, PokedexState>(
+            bloc: _bloc,
+            listener: (context, state) {
+              if (state is PokedexSuccessState) {
+                pokedex = state.pokedex;
+              }
+            },
+            builder: (context, state) => switch (state) {
+              PokedexLoadingState() => LoadingPage(),
+              PokedexErrorState() => ErrorPage(),
+              PokedexState() => _buildSuccessPage(theme),
+            },
+          ),
         ),
       ),
     );
@@ -86,7 +90,10 @@ class _PokedexPageState extends State<PokedexPage> {
                 buildHeader(
                   child: _buildDrawerHeader(theme),
                 ),
-                PokedexListPage(),
+                PokedexListPage(
+                  onSelected: onPokedexSelected,
+                  isAnimating: toggleUiInteraction,
+                ),
               ],
             ),
           ),
@@ -102,4 +109,15 @@ class _PokedexPageState extends State<PokedexPage> {
         ),
       );
 
+  onPokedexSelected(int id) {
+    // _scaffoldKey.currentState?.closeDrawer();
+    getPokedex(id);
+  }
+
+  toggleUiInteraction(bool toggle) {
+    setState(() {
+      _uiBlocked = toggle;
+      print("UI Blocked: $toggle");
+    });
+  }
 }
