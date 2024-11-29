@@ -30,10 +30,14 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
   }
 
   void _getSizeAndPosition() {
-    RenderBox renderBox =
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (headerKey.currentContext != null) {
+        RenderBox renderBox =
         headerKey.currentContext!.findRenderObject() as RenderBox;
-    setState(() {
-      headerHeight = renderBox.size.height;
+        setState(() {
+          headerHeight = renderBox.size.height;
+        });
+      }
     });
   }
 
@@ -67,7 +71,7 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
         elevation: 4.0,
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,
-        flexibleSpace: _buildHeaderToCorrectSize(),
+        flexibleSpace: widget.headerBuilder(headerKey),
       );
 
   FutureBuilder<double> _buildHeaderToCorrectSize() => FutureBuilder<double>(

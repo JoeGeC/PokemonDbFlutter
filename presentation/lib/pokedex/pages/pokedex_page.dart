@@ -26,7 +26,6 @@ class PokedexPage extends StatefulWidget {
 class _PokedexPageState extends State<PokedexPage> {
   final PokedexBloc _bloc = PokedexBloc(
       getIt<PokedexUseCase>(), getIt<PokedexPresentationConverter>());
-  late PokedexPresentationModel pokedex;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -50,31 +49,29 @@ class _PokedexPageState extends State<PokedexPage> {
       body: SafeArea(
         child: BlocConsumer<PokedexBloc, PokedexState>(
           bloc: _bloc,
-          listener: (context, state) {
-            if (state is PokedexSuccessState) {
-              pokedex = state.pokedex;
-            }
-          },
+          listener: (context, state) {},
           builder: (context, state) => switch (state) {
+            PokedexSuccessState() => _buildSuccessPage(theme, state.pokedex),
             PokedexLoadingState() => LoadingPage(),
-            PokedexErrorState() => ErrorPage(),
-            PokedexState() => _buildSuccessPage(theme),
+            PokedexState() => ErrorPage(),
           },
         ),
       ),
     );
   }
 
-  Widget _buildSuccessPage(ThemeData theme) => pokedex.pokemon.isEmpty
-      ? EmptyPage()
-      : ScrollUpHeaderListView(
-          headerBuilder: (headerKey) => buildPokedexHeader(
-              theme, headerKey, pokedex.regionName, _scaffoldKey),
-          itemCount: pokedex.pokemon.length,
-          itemBuilder: (context, index) =>
-              buildPokemonEntry(pokedex.pokemon[index], pokedex.id, theme),
-          backgroundAsset: AssetConstants.pokedexBackground,
-        );
+  Widget _buildSuccessPage(ThemeData theme, PokedexPresentationModel pokedex) =>
+      pokedex.pokemon.isEmpty
+          ? EmptyPage()
+          : ScrollUpHeaderListView(
+              key: ValueKey(pokedex.id),
+              headerBuilder: (headerKey) => buildPokedexHeader(
+                  theme, headerKey, pokedex.regionName, _scaffoldKey),
+              itemCount: pokedex.pokemon.length,
+              itemBuilder: (context, index) =>
+                  buildPokemonEntry(pokedex.pokemon[index], pokedex.id, theme),
+              backgroundAsset: AssetConstants.pokedexBackground,
+            );
 
   Widget buildDrawer(ThemeData theme) => Drawer(
         backgroundColor: theme.colorScheme.primary,
