@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/common/assetConstants.dart';
 
 class ScrollUpHeaderListView extends StatefulWidget {
   final Widget Function(GlobalKey headerKey) headerBuilder;
@@ -74,20 +73,4 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
         flexibleSpace: widget.headerBuilder(headerKey),
       );
 
-  FutureBuilder<double> _buildHeaderToCorrectSize() => FutureBuilder<double>(
-        future: _getHeaderHeight(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            headerHeight = snapshot.data!;
-          }
-          return widget.headerBuilder(headerKey);
-        },
-      );
-
-  Future<double> _getHeaderHeight() async {
-    await Future.delayed(Duration(milliseconds: 50));
-    final RenderBox renderBox =
-        headerKey.currentContext!.findRenderObject() as RenderBox;
-    return renderBox.size.height;
-  }
 }
