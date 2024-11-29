@@ -50,7 +50,7 @@ Widget pokemonEntryWidget(PokedexPokemonState state,
               children: [
                 TwoSpacedTextsRow(pokemon.pokedexEntryNumber, pokemon.name,
                     theme.textTheme.titleMedium!),
-                buildPokemonTypes(pokemon.types, theme)
+                buildPokemonTypes(types: pokemon.types, theme: theme)
               ],
             ),
           ),
