@@ -23,5 +23,12 @@ enum PokedexName {
   updatedMelemele,
   galar,
   isleOfArmor,
-  crownTundra, letsGoKanto, originalAkala,
+  crownTundra,
+  letsGoKanto,
+  originalAkala,
+  updatedAlola,
+  hisui,
+  paldea,
+  kitakami,
+  blueberry,
 }
