@@ -2,6 +2,7 @@ import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/common/assetConstants.dart';
+import 'package:presentation/common/text_theme.dart';
 import 'package:presentation/common/widgets/header.dart';
 import 'package:presentation/common/widgets/scroll_up_header_list_widget.dart';
 import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
@@ -88,11 +89,7 @@ class _PokedexPageState extends State<PokedexPage> {
         key: ValueKey(pokedex.id),
         headerBuilder: (headerKey) => buildPokedexHeader(
           scaffoldKey: _scaffoldKey,
-          title: Text(
-            pokedex.regionName,
-            key: headerKey,
-            style: theme.textTheme.headlineMedium!.copyWith(),
-          ),
+          title: buildSuccessPageTitle(headerKey, pokedex, theme),
         ),
         itemCount: pokedex.pokemon.length,
         itemBuilder: (context, index) =>
@@ -100,6 +97,27 @@ class _PokedexPageState extends State<PokedexPage> {
         backgroundAsset: AssetConstants.pokedexBackground,
         headerHeight: _headerHeight,
       );
+
+  Row buildSuccessPageTitle(GlobalKey<State<StatefulWidget>> headerKey,
+      PokedexPresentationModel pokedex, ThemeData theme) => Row(
+      key: headerKey,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          pokedex.regionName,
+          style: theme.textTheme.headlineMedium!.copyWith(),
+        ),
+        SizedBox(width: 10),
+        if (pokedex.versionAbbreviation.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(
+              "(${pokedex.versionAbbreviation})",
+              style: CustomTextTheme().labelMediumAlt.copyWith(),
+            ),
+          )
+      ],
+    );
 
   Widget buildDrawer(ThemeData theme) => Drawer(
         backgroundColor: theme.colorScheme.primary,

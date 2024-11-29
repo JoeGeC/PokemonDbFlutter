@@ -13,6 +13,10 @@ TextStyle headlineMedium = TextStyle(
   ],
 );
 
+TextStyle headlineSmall = headlineMedium.copyWith(
+  fontSize: 50
+);
+
 TextStyle titleMedium = TextStyle(
   fontSize: 40,
   fontFamily: 'PokemonBW',
