@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../widgets/shimmer.dart';
+
 class LoadingPage extends StatelessWidget {
   const LoadingPage({super.key});
 
@@ -11,25 +13,15 @@ class LoadingPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildShimmer(),
-          buildShimmer(),
-          buildShimmer(),
+          buildShimmer(height: 50, width: 200),
+          const SizedBox(height: 30),
+          buildShimmer(height: 50, width: 200),
+          const SizedBox(height: 30),
+          buildShimmer(height: 50, width: 200),
+          const SizedBox(height: 30),
+          buildShimmer(height: 50, width: 200),
         ],
       ),
     );
   }
-
-  Shimmer buildShimmer() => Shimmer.fromColors(
-        baseColor: Colors.white12,
-        highlightColor: Colors.grey,
-        child: Container(
-          width: 200,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          margin: EdgeInsets.only(bottom: 16),
-        ),
-      );
 }

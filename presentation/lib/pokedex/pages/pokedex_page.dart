@@ -8,9 +8,9 @@ import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
 import 'package:presentation/pokedex/pages/pokedex_list_page.dart';
 
-import '../../common/pages/empty_page.dart';
 import '../../common/pages/error_page.dart';
 import '../../common/pages/loading_page.dart';
+import '../../common/widgets/shimmer.dart';
 import '../../injections.dart';
 import '../models/pokedex_presentation_model.dart';
 import '../widgets/pokedex_header_widget.dart';
@@ -27,6 +27,7 @@ class _PokedexPageState extends State<PokedexPage> {
   final PokedexBloc _bloc = PokedexBloc(
       getIt<PokedexUseCase>(), getIt<PokedexPresentationConverter>());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final double _headerHeight = 80;
 
   @override
   void initState() {
@@ -52,26 +53,53 @@ class _PokedexPageState extends State<PokedexPage> {
           listener: (context, state) {},
           builder: (context, state) => switch (state) {
             PokedexSuccessState() => _buildSuccessPage(theme, state.pokedex),
-            PokedexLoadingState() => LoadingPage(),
-            PokedexState() => ErrorPage(),
+            PokedexLoadingState() =>
+              _buildPage(title: buildShimmer(), body: LoadingPage()),
+            PokedexState() => _buildPage(body: ErrorPage()),
           },
         ),
       ),
     );
   }
 
+  Widget _buildPage({Widget? title, Widget? body}) => Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              AssetConstants.pokedexBackground,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildPokedexHeader(
+                  scaffoldKey: _scaffoldKey,
+                  title: title,
+                  height: _headerHeight),
+              body ?? Container(),
+            ],
+          ),
+        ],
+      );
+
   Widget _buildSuccessPage(ThemeData theme, PokedexPresentationModel pokedex) =>
-      pokedex.pokemon.isEmpty
-          ? EmptyPage()
-          : ScrollUpHeaderListView(
-              key: ValueKey(pokedex.id),
-              headerBuilder: (headerKey) => buildPokedexHeader(
-                  theme, headerKey, pokedex.regionName, _scaffoldKey),
-              itemCount: pokedex.pokemon.length,
-              itemBuilder: (context, index) =>
-                  buildPokemonEntry(pokedex.pokemon[index], pokedex.id, theme),
-              backgroundAsset: AssetConstants.pokedexBackground,
-            );
+      ScrollUpHeaderListView(
+        key: ValueKey(pokedex.id),
+        headerBuilder: (headerKey) => buildPokedexHeader(
+          scaffoldKey: _scaffoldKey,
+          title: Text(
+            pokedex.regionName,
+            key: headerKey,
+            style: theme.textTheme.headlineMedium!.copyWith(),
+          ),
+        ),
+        itemCount: pokedex.pokemon.length,
+        itemBuilder: (context, index) =>
+            buildPokemonEntry(pokedex.pokemon[index], pokedex.id, theme),
+        backgroundAsset: AssetConstants.pokedexBackground,
+        headerHeight: _headerHeight,
+      );
 
   Widget buildDrawer(ThemeData theme) => Drawer(
         backgroundColor: theme.colorScheme.primary,

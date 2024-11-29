@@ -1,11 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class EmptyPage extends StatelessWidget{
+class EmptyPage extends StatelessWidget {
   const EmptyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Empty! :("));
+    var theme = Theme.of(context);
+    return Center(
+      child: Text(
+        "Empty! :(",
+        style: theme.textTheme.labelMedium,
+      ),
+    );
   }
-
 }

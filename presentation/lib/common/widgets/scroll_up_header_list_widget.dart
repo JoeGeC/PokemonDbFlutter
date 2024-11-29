@@ -5,6 +5,7 @@ class ScrollUpHeaderListView extends StatefulWidget {
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
   final String backgroundAsset;
+  final double? headerHeight;
 
   const ScrollUpHeaderListView({
     super.key,
@@ -12,6 +13,7 @@ class ScrollUpHeaderListView extends StatefulWidget {
     required this.itemCount,
     required this.itemBuilder,
     required this.backgroundAsset,
+    this.headerHeight,
   });
 
   @override
@@ -20,12 +22,15 @@ class ScrollUpHeaderListView extends StatefulWidget {
 
 class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
   final GlobalKey headerKey = GlobalKey();
-  double? headerHeight;
+  double? _autoHeaderHeight;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _getSizeAndPosition());
+    if (widget.headerHeight == null) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _getSizeAndPosition());
+    }
   }
 
   void _getSizeAndPosition() {
@@ -34,7 +39,7 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
         RenderBox renderBox =
             headerKey.currentContext!.findRenderObject() as RenderBox;
         setState(() {
-          headerHeight = renderBox.size.height;
+          _autoHeaderHeight = renderBox.size.height;
         });
       }
     });
@@ -67,7 +72,7 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
       pinned: true,
       stretch: true,
       toolbarHeight: 0.0,
-      expandedHeight: headerHeight ?? 100,
+      expandedHeight: _autoHeaderHeight ?? widget.headerHeight ?? 100,
       elevation: 4.0,
       backgroundColor: Colors.transparent,
       scrolledUnderElevation: 0,
