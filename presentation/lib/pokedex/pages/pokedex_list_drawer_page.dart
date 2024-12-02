@@ -183,12 +183,23 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         maxLines: 1,
       );
 
-  Widget buildDivider(ThemeData theme) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Container(
-          height: 2,
-          color: theme.colorScheme.onSurface,
-        ),
+  Widget buildDivider(ThemeData theme) => Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 18, top: 2, right: 14, bottom: 4),
+            child: Container(
+              height: 2,
+              color: theme.colorScheme.shadow,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              height: 2,
+              color: theme.colorScheme.onSurface,
+            ),
+          ),
+        ],
       );
 
   Future<void> toggleExpanded(
