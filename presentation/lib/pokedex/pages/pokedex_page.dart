@@ -8,6 +8,7 @@ import 'package:presentation/common/widgets/scroll_up_header_list_widget.dart';
 import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
 import 'package:presentation/pokedex/pages/pokedex_list_page.dart';
+import 'package:presentation/pokedex/pages/pokedex_loading_page.dart';
 
 import '../../common/pages/error_page.dart';
 import '../../common/pages/loading_page.dart';
@@ -29,6 +30,7 @@ class _PokedexPageState extends State<PokedexPage> {
       getIt<PokedexUseCase>(), getIt<PokedexPresentationConverter>());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final double _headerHeight = 80;
+  final double _pokemonImageSize = 100;
 
   @override
   void initState() {
@@ -47,15 +49,16 @@ class _PokedexPageState extends State<PokedexPage> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: theme.colorScheme.primary,
-      drawer: buildDrawer(theme),
+      drawer: _buildDrawer(theme),
       body: SafeArea(
         child: BlocConsumer<PokedexBloc, PokedexState>(
           bloc: _bloc,
           listener: (context, state) {},
           builder: (context, state) => switch (state) {
             PokedexSuccessState() => _buildSuccessPage(theme, state.pokedex),
-            PokedexLoadingState() =>
-              _buildPage(title: buildShimmer(), body: LoadingPage()),
+            PokedexLoadingState() => _buildPage(
+                title: buildShimmer(),
+                body: PokedexLoadingPage(_pokemonImageSize)),
             PokedexState() => _buildPage(body: ErrorPage()),
           },
         ),
@@ -89,37 +92,41 @@ class _PokedexPageState extends State<PokedexPage> {
         key: ValueKey(pokedex.id),
         headerBuilder: (headerKey) => buildPokedexHeader(
           scaffoldKey: _scaffoldKey,
-          title: buildSuccessPageTitle(headerKey, pokedex, theme),
+          title: _buildSuccessPageTitle(headerKey, pokedex, theme),
         ),
         itemCount: pokedex.pokemon.length,
-        itemBuilder: (context, index) =>
-            buildPokemonEntry(pokedex.pokemon[index], pokedex.id, theme),
+        itemBuilder: (context, index) => buildPokemonEntry(
+            pokedex.pokemon[index], pokedex.id, theme,
+            imageSize: _pokemonImageSize),
         backgroundAsset: AssetConstants.pokedexBackground,
         headerHeight: _headerHeight,
       );
 
-  Row buildSuccessPageTitle(GlobalKey<State<StatefulWidget>> headerKey,
-      PokedexPresentationModel pokedex, ThemeData theme) => Row(
-      key: headerKey,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(
-          pokedex.regionName,
-          style: theme.textTheme.headlineMedium!.copyWith(),
-        ),
-        SizedBox(width: 10),
-        if (pokedex.versionAbbreviation.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              "(${pokedex.versionAbbreviation})",
-              style: CustomTextTheme().labelMediumAlt.copyWith(),
-            ),
-          )
-      ],
-    );
+  Row _buildSuccessPageTitle(GlobalKey<State<StatefulWidget>> headerKey,
+          PokedexPresentationModel pokedex, ThemeData theme) =>
+      Row(
+        key: headerKey,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            pokedex.regionName,
+            style: theme.textTheme.headlineMedium!.copyWith(),
+          ),
+          SizedBox(width: 10),
+          if (pokedex.versionAbbreviation.isNotEmpty)
+            _buildTitleAbbreviation(pokedex)
+        ],
+      );
 
-  Widget buildDrawer(ThemeData theme) => Drawer(
+  Padding _buildTitleAbbreviation(PokedexPresentationModel pokedex) => Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Text(
+          "(${pokedex.versionAbbreviation})",
+          style: CustomTextTheme().labelMediumAlt.copyWith(),
+        ),
+      );
+
+  Widget _buildDrawer(ThemeData theme) => Drawer(
         backgroundColor: theme.colorScheme.primary,
         child: SafeArea(
           child: Container(

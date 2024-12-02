@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
-
 import '../widgets/shimmer.dart';
 
 class LoadingPage extends StatelessWidget {

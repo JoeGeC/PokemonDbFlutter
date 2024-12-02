@@ -9,7 +9,8 @@ import '../bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
 import '../models/pokedex_pokemon_presentation_model.dart';
 
 Widget buildPokemonEntry(
-    PokedexPokemonPresentationModel pokemon, int pokedexId, ThemeData theme) {
+    PokedexPokemonPresentationModel pokemon, int pokedexId, ThemeData theme,
+    {double imageSize = 100}) {
   return BlocProvider(
     create: (_) => PokedexPokemonBloc(getIt(), getIt()),
     child: BlocBuilder<PokedexPokemonBloc, PokedexPokemonState>(
@@ -17,9 +18,10 @@ Widget buildPokemonEntry(
         final pokemonBloc = context.read<PokedexPokemonBloc>();
         getPokemonOnStart(state, pokemonBloc, pokemon, pokedexId);
         if (state is PokedexPokemonSuccessState) {
-          return pokemonEntryWidget(state, state.pokemon, theme);
+          return pokemonEntryWidget(state, state.pokemon, theme,
+              imageSize: imageSize);
         }
-        return pokemonEntryWidget(state, pokemon, theme);
+        return pokemonEntryWidget(state, pokemon, theme, imageSize: imageSize);
       },
     ),
   );
@@ -35,14 +37,19 @@ void getPokemonOnStart(
   }
 }
 
-Widget pokemonEntryWidget(PokedexPokemonState state,
-        PokedexPokemonPresentationModel pokemon, ThemeData theme) =>
+Widget pokemonEntryWidget(
+  PokedexPokemonState state,
+  PokedexPokemonPresentationModel pokemon,
+  ThemeData theme, {
+  double imageSize = 100,
+}) =>
     Padding(
       padding: const EdgeInsets.all(8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildPokemonImageWithBackground(state, pokemon.imageUrl),
+          buildPokemonImageWithBackground(state, pokemon.imageUrl,
+              size: imageSize),
           const SizedBox(width: 30),
           Expanded(
             child: Column(
