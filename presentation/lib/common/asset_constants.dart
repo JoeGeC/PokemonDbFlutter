@@ -11,4 +11,8 @@ class AssetConstants {
   static String pokedexBackground(bool isDarkMode) => isDarkMode
       ? 'assets/pokedex_background_dark.png'
       : 'assets/pokedex_background.png';
+
+  static String drawerBackground(bool isDarkMode) => isDarkMode
+      ? 'assets/drawer_background_dark.png'
+      : 'assets/pokedex_background.png';
 }

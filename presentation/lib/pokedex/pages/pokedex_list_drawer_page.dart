@@ -60,7 +60,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
             children: [
               Positioned.fill(
                 child: Image.asset(
-                  AssetConstants.pokedexBackground(isDarkMode(theme)),
+                  AssetConstants.drawerBackground(isDarkMode(theme)),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -83,22 +83,19 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
 
   Widget _buildPokedexList(PokedexListSuccessState state, ThemeData theme) {
     var pokedexGroups = state.pokedexGroups;
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: ScrollablePositionedList.builder(
-        itemScrollController: positionScroller.scrollController,
-        itemPositionsListener: positionScroller.positionsListener,
-        itemCount: pokedexGroups.length,
-        itemBuilder: (context, index) {
-          final pokedexGroup = pokedexGroups.elementAt(index);
-          if (pokedexGroup.title == "National") {
-            return _buildTappableGroupTitle(theme, pokedexGroup.title,
-                () => selectPokedex(pokedexGroup.pokedexList.first.id));
-          } else {
-            return _buildRegionList(theme, pokedexGroup, index);
-          }
-        },
-      ),
+    return ScrollablePositionedList.builder(
+      itemScrollController: positionScroller.scrollController,
+      itemPositionsListener: positionScroller.positionsListener,
+      itemCount: pokedexGroups.length,
+      itemBuilder: (context, index) {
+        final pokedexGroup = pokedexGroups.elementAt(index);
+        if (pokedexGroup.title == "National") {
+          return _buildTappableGroupTitle(theme, pokedexGroup.title,
+              () => selectPokedex(pokedexGroup.pokedexList.first.id));
+        } else {
+          return _buildRegionList(theme, pokedexGroup, index);
+        }
+      },
     );
   }
 
