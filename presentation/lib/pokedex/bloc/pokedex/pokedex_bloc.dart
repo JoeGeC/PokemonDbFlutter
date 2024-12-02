@@ -10,6 +10,7 @@ part 'pokedex_state.dart';
 class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
   final PokedexUseCase _pokedexUseCase;
   final PokedexPresentationConverter _pokedexConverter;
+  PokedexEvent? _lastEvent;
 
   PokedexBloc(
       PokedexUseCase pokedexUseCase, PokedexPresentationConverter pokedexConverter)
@@ -31,5 +32,16 @@ class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
       var localPokedex = _pokedexConverter.convert(pokedexModel);
       emitter(PokedexSuccessState(localPokedex));
     });
+  }
+
+  @override
+  void add(PokedexEvent event) {
+    _lastEvent = event;
+    super.add(event);
+  }
+
+  void addLastEvent() {
+    if(_lastEvent == null) return;
+    add(_lastEvent!);
   }
 }

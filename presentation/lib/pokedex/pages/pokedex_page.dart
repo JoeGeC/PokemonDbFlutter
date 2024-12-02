@@ -53,37 +53,53 @@ class _PokedexPageState extends State<PokedexPage> {
         child: BlocConsumer<PokedexBloc, PokedexState>(
           bloc: _bloc,
           listener: (context, state) {},
-          builder: (context, state) => switch (state) {
-            PokedexSuccessState() => _buildSuccessPage(theme, state.pokedex),
-            PokedexLoadingState() => _buildPage(
-                title: buildShimmer(),
-                body: PokedexLoadingPage(_pokemonImageSize)),
-            PokedexState() => _buildPage(body: ErrorPage()),
-          },
+          builder: (context, state) => RefreshIndicator(
+              color: theme.colorScheme.primary,
+              backgroundColor: theme.colorScheme.onPrimary,
+              onRefresh: onRefresh,
+              child: getPageState(state, theme)),
         ),
       ),
     );
   }
 
-  Widget _buildPage({Widget? title, Widget? body}) => Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-              AssetConstants.pokedexBackground,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildPokedexHeader(
+  Widget getPageState(PokedexState state, ThemeData theme) => switch (state) {
+        PokedexSuccessState() => _buildSuccessPage(theme, state.pokedex),
+        PokedexLoadingState() => _buildPage(
+            title: buildShimmer(), body: PokedexLoadingPage(_pokemonImageSize)),
+        PokedexState() => _buildPage(body: ErrorPage()),
+      };
+
+  Widget _buildPage({Widget? title, Widget? body}) => SingleChildScrollView(
+        child: Stack(
+          children: [
+            _buildBackground(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildPokedexHeader(
                   scaffoldKey: _scaffoldKey,
                   title: title,
-                  height: _headerHeight),
-              body ?? Container(),
-            ],
-          ),
-        ],
+                  height: _headerHeight,
+                ),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight:
+                        MediaQuery.of(context).size.height - _headerHeight,
+                  ),
+                  child: body ?? Container(),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+
+  Positioned _buildBackground() => Positioned.fill(
+        child: Image.asset(
+          AssetConstants.pokedexBackground,
+          fit: BoxFit.cover,
+        ),
       );
 
   Widget _buildSuccessPage(ThemeData theme, PokedexPresentationModel pokedex) =>
@@ -154,5 +170,9 @@ class _PokedexPageState extends State<PokedexPage> {
   onPokedexSelected(int id) {
     getPokedex(id);
     _scaffoldKey.currentState?.closeDrawer();
+  }
+
+  Future<void> onRefresh() async {
+    _bloc.addLastEvent();
   }
 }
