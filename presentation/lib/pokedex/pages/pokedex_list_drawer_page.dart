@@ -123,20 +123,23 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
           ThemeData theme, String title, Function() onTap) =>
       Column(
         children: [
-          Material(
-            color: Colors.transparent,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(8),
-                onTap: onTap,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: Text(
-                      title,
-                      style: theme.textTheme.labelMedium,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: Material(
+              color: Colors.transparent,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  onTap: onTap,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text(
+                        title,
+                        style: theme.textTheme.labelMedium,
+                      ),
                     ),
                   ),
                 ),
@@ -180,11 +183,12 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         maxLines: 1,
       );
 
-  Divider buildDivider(ThemeData theme) => Divider(
-        color: theme.colorScheme.onSurface,
-        thickness: 2,
-        indent: 16,
-        endIndent: 16,
+  Widget buildDivider(ThemeData theme) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: Container(
+          height: 2,
+          color: theme.colorScheme.onSurface,
+        ),
       );
 
   Future<void> toggleExpanded(
