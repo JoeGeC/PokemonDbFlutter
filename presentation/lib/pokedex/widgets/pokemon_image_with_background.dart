@@ -1,22 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/common/utils/is_dark_mode.dart';
 
-import '../../common/assetConstants.dart';
+import '../../common/asset_constants.dart';
 import '../bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
 
 Widget buildPokemonImageWithBackground(
-    PokedexPokemonState state, String? imageUrl,
+    PokedexPokemonState state, String? imageUrl, ThemeData theme,
     {double size = 100}) {
   return Stack(
     children: [
-      buildPokemonImageBackground(size),
+      buildPokemonImageBackground(size, theme),
       buildPokemonSprite(state, imageUrl, size)
     ],
   );
 }
 
-Image buildPokemonImageBackground(double size) => Image(
-      image: AssetImage(AssetConstants.pokeballBackground),
+Image buildPokemonImageBackground(double size, ThemeData theme) => Image(
+      image: AssetImage(AssetConstants.pokeballBackground(isDarkMode(theme))),
       opacity: const AlwaysStoppedAnimation(.4),
       height: size,
       width: size,

@@ -39,7 +39,7 @@ Widget pokemonEntryWidget(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildPokemonImageWithBackground(state, pokemon.imageUrl,
+          buildPokemonImageWithBackground(state, pokemon.imageUrl, theme,
               size: imageSize),
           const SizedBox(width: 30),
           Expanded(

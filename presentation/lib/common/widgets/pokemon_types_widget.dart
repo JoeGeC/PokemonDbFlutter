@@ -74,4 +74,4 @@ Widget _buildTypeBoxBackground(
         borderWidth: 2);
 
 Widget _buildTypeText(String text, ThemeData theme) =>
-    Text(text, style: CustomTextTheme().labelMediumAlt);
+    Text(text, style: theme.textTheme.labelMediumWhite);

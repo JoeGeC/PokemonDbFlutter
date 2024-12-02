@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_db/injections.dart';
 import 'package:pokemon_db/theme/colors.dart';
-import 'package:pokemon_db/theme/text_styles.dart';
 import 'package:presentation/common/text_theme.dart';
 import 'package:presentation/pokedex/pages/pokedex_page.dart';
 
@@ -18,25 +17,29 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pokemon DB',
+      themeMode: ThemeMode.system,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: lightColorScheme,
-        textTheme: initialiseTextTheme(),
-        highlightColor: highlightColor,
+        textTheme: getTextTheme(lightColorScheme),
+        highlightColor: lightColorScheme.secondary,
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: darkColorScheme,
+        textTheme: getTextTheme(darkColorScheme),
+        highlightColor: darkColorScheme.secondary,
       ),
       home: PokedexPage(),
     );
   }
 
-  TextTheme initialiseTextTheme() {
-    var textTheme = TextTheme(
-          headlineMedium: headlineMedium,
-          headlineSmall: headlineSmall,
-          titleMedium: titleMedium,
-          labelMedium: labelMedium,
-          labelSmall: labelSmall,
-        );
-    CustomTextTheme().initialize(textTheme);
-    return textTheme;
-  }
+  getTextTheme(ColorScheme colorScheme) => TextTheme(
+      headlineMedium: headlineTextStyle(colorScheme).copyWith(fontSize: 60),
+      headlineSmall: headlineTextStyle(colorScheme).copyWith(fontSize: 50),
+      titleMedium: titleTextStyle(colorScheme).copyWith(fontSize: 40),
+      labelMedium: labelTextStyle(colorScheme).copyWith(fontSize: 30),
+      labelSmall: labelTextStyle(colorScheme)
+          .copyWith(fontSize: 20, shadows: smallTextShadow(colorScheme)),
+    );
 }

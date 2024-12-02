@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:presentation/common/assetConstants.dart';
+import 'package:presentation/common/asset_constants.dart';
+import 'package:presentation/common/utils/is_dark_mode.dart';
 import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:presentation/pokedex/pages/position_scroller.dart';
@@ -59,7 +60,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
             children: [
               Positioned.fill(
                 child: Image.asset(
-                  AssetConstants.pokedexBackground,
+                  AssetConstants.pokedexBackground(isDarkMode(theme)),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -145,7 +146,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
               ),
             ),
           ),
-          buildDivider(),
+          buildDivider(theme),
         ],
       );
 
@@ -182,8 +183,8 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         maxLines: 1,
       );
 
-  Divider buildDivider() => Divider(
-        color: Colors.black,
+  Divider buildDivider(ThemeData theme) => Divider(
+        color: theme.colorScheme.onSurface,
         thickness: 2,
         indent: 16,
         endIndent: 16,

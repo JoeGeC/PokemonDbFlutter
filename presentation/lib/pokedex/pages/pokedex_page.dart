@@ -1,7 +1,7 @@
 import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:presentation/common/assetConstants.dart';
+import 'package:presentation/common/asset_constants.dart';
 import 'package:presentation/common/text_theme.dart';
 import 'package:presentation/common/widgets/header.dart';
 import 'package:presentation/common/widgets/scroll_up_header_list_widget.dart';
@@ -11,6 +11,7 @@ import 'package:presentation/pokedex/pages/pokedex_list_drawer_page.dart';
 import 'package:presentation/pokedex/pages/pokedex_loading_page.dart';
 
 import '../../common/pages/error_page.dart';
+import '../../common/utils/is_dark_mode.dart';
 import '../../common/widgets/shimmer.dart';
 import '../../injections.dart';
 import '../models/pokedex_presentation_model.dart';
@@ -66,14 +67,17 @@ class _PokedexPageState extends State<PokedexPage> {
   Widget getPageState(PokedexState state, ThemeData theme) => switch (state) {
         PokedexSuccessState() => _buildSuccessPage(theme, state.pokedex),
         PokedexLoadingState() => _buildPage(
-            title: buildShimmer(), body: PokedexLoadingPage(_pokemonImageSize)),
-        PokedexState() => _buildPage(body: ErrorPage()),
+            title: buildShimmer(),
+            body: PokedexLoadingPage(_pokemonImageSize),
+            theme: theme),
+        PokedexState() => _buildPage(body: ErrorPage(), theme: theme),
       };
 
-  Widget _buildPage({Widget? title, Widget? body}) => SingleChildScrollView(
+  Widget _buildPage({Widget? title, Widget? body, required ThemeData theme}) =>
+      SingleChildScrollView(
         child: Stack(
           children: [
-            _buildBackground(),
+            _buildBackground(theme),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -95,9 +99,9 @@ class _PokedexPageState extends State<PokedexPage> {
         ),
       );
 
-  Positioned _buildBackground() => Positioned.fill(
+  Positioned _buildBackground(ThemeData theme) => Positioned.fill(
         child: Image.asset(
-          AssetConstants.pokedexBackground,
+          AssetConstants.pokedexBackground(isDarkMode(theme)),
           fit: BoxFit.cover,
         ),
       );
@@ -113,7 +117,7 @@ class _PokedexPageState extends State<PokedexPage> {
         itemBuilder: (context, index) => buildPokemonEntry(
             pokedex.pokemon[index], pokedex.id, theme,
             imageSize: _pokemonImageSize),
-        backgroundAsset: AssetConstants.pokedexBackground,
+        backgroundAsset: AssetConstants.pokedexBackground(isDarkMode(theme)),
         headerHeight: _headerHeight,
       );
 
@@ -129,15 +133,17 @@ class _PokedexPageState extends State<PokedexPage> {
           ),
           SizedBox(width: 10),
           if (pokedex.versionAbbreviation.isNotEmpty)
-            _buildTitleAbbreviation(pokedex)
+            _buildTitleAbbreviation(theme, pokedex)
         ],
       );
 
-  Padding _buildTitleAbbreviation(PokedexPresentationModel pokedex) => Padding(
+  Padding _buildTitleAbbreviation(
+          ThemeData theme, PokedexPresentationModel pokedex) =>
+      Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: Text(
           "(${pokedex.versionAbbreviation})",
-          style: CustomTextTheme().labelMediumAlt.copyWith(),
+          style: theme.textTheme.labelMediumWhite,
         ),
       );
 
