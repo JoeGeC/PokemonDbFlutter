@@ -20,4 +20,6 @@ class PokedexPokemonPresentationModel extends Equatable {
   @override
   List<Object?> get props =>
       [id, nationalDexNumber, pokedexEntryNumber, name, imageUrl, types];
+
+  bool get hasPokedexDetails => imageUrl != null && types.isNotEmpty;
 }

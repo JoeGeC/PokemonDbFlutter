@@ -16,10 +16,15 @@ Widget buildPokemonEntry(
     child: BlocBuilder<PokedexPokemonBloc, PokedexPokemonState>(
       builder: (context, state) {
         final pokemonBloc = context.read<PokedexPokemonBloc>();
-        getPokemonOnStart(state, pokemonBloc, pokemon, pokedexId);
-        if (state is PokedexPokemonSuccessState) {
-          return pokemonEntryWidget(state, state.pokemon, theme,
-              imageSize: imageSize);
+        if(pokemon.hasPokedexDetails) {
+          state = PokedexPokemonSuccessState(pokemon);
+        }
+        switch (state) {
+          case PokedexPokemonInitialState():
+            getPokemonOnStart(state, pokemonBloc, pokemon, pokedexId);
+          case PokedexPokemonSuccessState():
+            return pokemonEntryWidget(state, state.pokemon, theme,
+                imageSize: imageSize);
         }
         return pokemonEntryWidget(state, pokemon, theme, imageSize: imageSize);
       },

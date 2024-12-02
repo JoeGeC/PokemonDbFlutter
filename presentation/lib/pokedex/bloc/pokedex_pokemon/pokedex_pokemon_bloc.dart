@@ -29,9 +29,9 @@ class PokedexPokemonBloc
     result.fold((failure) {
       emit(PokedexPokemonErrorState(event.pokemonId, failure.errorMessage));
     }, (pokemonModel) {
-      var localPokemon =
+      var presentationPokemon =
           _pokemonConverter.convert(pokemonModel, event.pokedexId);
-      emit(PokedexPokemonSuccessState(localPokemon));
+      emit(PokedexPokemonSuccessState(presentationPokemon));
     });
   }
 }

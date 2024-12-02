@@ -11,7 +11,6 @@ import 'package:presentation/pokedex/pages/pokedex_list_page.dart';
 import 'package:presentation/pokedex/pages/pokedex_loading_page.dart';
 
 import '../../common/pages/error_page.dart';
-import '../../common/pages/loading_page.dart';
 import '../../common/widgets/shimmer.dart';
 import '../../injections.dart';
 import '../models/pokedex_presentation_model.dart';
