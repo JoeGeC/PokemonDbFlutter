@@ -7,7 +7,7 @@ import 'package:presentation/common/widgets/header.dart';
 import 'package:presentation/common/widgets/scroll_up_header_list_widget.dart';
 import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
-import 'package:presentation/pokedex/pages/pokedex_list_page.dart';
+import 'package:presentation/pokedex/pages/pokedex_list_drawer_page.dart';
 import 'package:presentation/pokedex/pages/pokedex_loading_page.dart';
 
 import '../../common/pages/error_page.dart';
@@ -135,7 +135,7 @@ class _PokedexPageState extends State<PokedexPage> {
                 buildHeader(
                   child: _buildDrawerHeader(theme),
                 ),
-                PokedexListPage(onSelected: onPokedexSelected),
+                PokedexListDrawerPage(onSelected: onPokedexSelected),
               ],
             ),
           ),

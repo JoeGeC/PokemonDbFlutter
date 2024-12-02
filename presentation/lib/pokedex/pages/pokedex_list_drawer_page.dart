@@ -11,17 +11,17 @@ import '../../common/widgets/animated_row_with_start_color.dart';
 import '../../injections.dart';
 import '../bloc/pokedex_list/pokedex_list_bloc.dart';
 
-class PokedexListPage extends StatefulWidget {
+class PokedexListDrawerPage extends StatefulWidget {
   final Function(int)? onSelected;
   final Function(bool)? isAnimating;
 
-  const PokedexListPage({super.key, this.onSelected, this.isAnimating});
+  const PokedexListDrawerPage({super.key, this.onSelected, this.isAnimating});
 
   @override
   State<StatefulWidget> createState() => _PokedexListExpandState();
 }
 
-class _PokedexListExpandState extends State<PokedexListPage> {
+class _PokedexListExpandState extends State<PokedexListDrawerPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -72,30 +72,20 @@ class _PokedexListExpandState extends State<PokedexListPage> {
 
   Widget _buildPokedexList(PokedexListSuccessState state, ThemeData theme) {
     var pokedexGroups = state.pokedexGroups;
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: Image.asset(
-            AssetConstants.pokedexBackground,
-            fit: BoxFit.cover,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: ListView.builder(
-            itemCount: pokedexGroups.length,
-            itemBuilder: (context, index) {
-              final pokedexGroup = pokedexGroups.elementAt(index);
-              if (pokedexGroup.title == "National") {
-                return _buildTappableGroupTitle(theme, pokedexGroup.title,
-                    () => selectPokedex(pokedexGroup.pokedexList.first.id));
-              } else {
-                return _buildRegionList(theme, pokedexGroup);
-              }
-            },
-          ),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: ListView.builder(
+        itemCount: pokedexGroups.length,
+        itemBuilder: (context, index) {
+          final pokedexGroup = pokedexGroups.elementAt(index);
+          if (pokedexGroup.title == "National") {
+            return _buildTappableGroupTitle(theme, pokedexGroup.title,
+                () => selectPokedex(pokedexGroup.pokedexList.first.id));
+          } else {
+            return _buildRegionList(theme, pokedexGroup);
+          }
+        },
+      ),
     );
   }
 
