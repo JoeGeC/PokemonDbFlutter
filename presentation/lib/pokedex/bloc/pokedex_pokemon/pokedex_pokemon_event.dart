@@ -5,8 +5,8 @@ abstract class PokedexPokemonEvent {
 }
 
 class GetPokedexPokemonEvent extends PokedexPokemonEvent {
-  final int pokemonId;
+  final PokedexPokemonPresentationModel pokemon;
   final int pokedexId;
 
-  GetPokedexPokemonEvent(this.pokemonId, this.pokedexId);
+  GetPokedexPokemonEvent(this.pokemon, this.pokedexId);
 }

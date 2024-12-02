@@ -23,11 +23,19 @@ class PokedexPokemonBloc
 
   _getPokedexPokemonEvent(
       GetPokedexPokemonEvent event, Emitter<PokedexPokemonState> emit) async {
-    emit(PokedexPokemonLoadingState(pokemonId: event.pokemonId));
+    var pokemonId = event.pokemon.id;
+    emit(PokedexPokemonLoadingState(pokemonId: pokemonId));
+    if(event.pokemon.hasPokedexDetails){
+      emit(PokedexPokemonSuccessState(event.pokemon));
+      return;
+    }
+    await _getPokemonFromRepo(pokemonId, emit, event);
+  }
 
-    final result = await _pokemonUseCase.getPokemon(event.pokemonId);
+  Future<void> _getPokemonFromRepo(int pokemonId, Emitter<PokedexPokemonState> emit, GetPokedexPokemonEvent event) async {
+    final result = await _pokemonUseCase.getPokemon(pokemonId);
     result.fold((failure) {
-      emit(PokedexPokemonErrorState(event.pokemonId, failure.errorMessage));
+      emit(PokedexPokemonErrorState(pokemonId, failure.errorMessage));
     }, (pokemonModel) {
       var presentationPokemon =
           _pokemonConverter.convert(pokemonModel, event.pokedexId);
