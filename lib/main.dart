@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: lightColorScheme,
         textTheme: initialiseTextTheme(),
+        highlightColor: highlightColor,
       ),
       home: PokedexPage(),
     );

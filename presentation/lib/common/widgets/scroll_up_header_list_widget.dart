@@ -22,6 +22,7 @@ class ScrollUpHeaderListView extends StatefulWidget {
 
 class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
   final GlobalKey headerKey = GlobalKey();
+  final _scrollController = ScrollController();
   double? _autoHeaderHeight;
 
   @override
@@ -53,16 +54,23 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
             image: AssetImage(widget.backgroundAsset),
             fit: BoxFit.cover,
           )),
-          CustomScrollView(
-            slivers: [
-              _buildHeader(),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  widget.itemBuilder,
-                  childCount: widget.itemCount,
+          Scrollbar(
+            controller: _scrollController,
+            interactive: true,
+            thickness: 10,
+            radius: Radius.circular(4),
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                _buildHeader(),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    widget.itemBuilder,
+                    childCount: widget.itemCount,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       );
@@ -73,7 +81,6 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
       stretch: true,
       toolbarHeight: 0.0,
       expandedHeight: _autoHeaderHeight ?? widget.headerHeight ?? 100,
-      elevation: 4.0,
       backgroundColor: Colors.transparent,
       scrolledUnderElevation: 0,
       flexibleSpace:

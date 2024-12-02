@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 ColorScheme currentColorScheme = lightColorScheme;
+Color highlightColor = currentColorScheme.secondary;
 
 const ColorScheme lightColorScheme = ColorScheme(
   brightness: Brightness.light,

@@ -281,11 +281,12 @@ packages:
   scrollable_positioned_list:
     dependency: transitive
     description:
-      name: scrollable_positioned_list
-      sha256: "1b54d5f1329a1e263269abc9e2543d90806131aa14fe7c6062a8054d57249287"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.8"
+      path: "packages/scrollable_positioned_list"
+      ref: master
+      resolved-ref: "6d6dac5f19b577338d912d3c9a45d26593e0a475"
+      url: "https://github.com/nabil6391/flutter.widgets.git"
+    source: git
+    version: "0.2.2"
   shimmer:
     dependency: transitive
     description:
