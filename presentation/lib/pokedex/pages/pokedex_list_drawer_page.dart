@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/common/assetConstants.dart';
 import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
+import 'package:presentation/pokedex/pages/position_scroller.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../common/pages/error_page.dart';
 import '../../common/pages/loading_page.dart';
@@ -22,6 +24,14 @@ class PokedexListDrawerPage extends StatefulWidget {
 }
 
 class _PokedexListExpandState extends State<PokedexListDrawerPage> {
+  late final ExpandedPositionScroller positionScroller;
+
+  @override
+  void initState() {
+    super.initState();
+    positionScroller = ExpandedPositionScroller(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -74,7 +84,9 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
     var pokedexGroups = state.pokedexGroups;
     return Padding(
       padding: const EdgeInsets.only(top: 8),
-      child: ListView.builder(
+      child: ScrollablePositionedList.builder(
+        itemScrollController: positionScroller.scrollController,
+        itemPositionsListener: positionScroller.positionsListener,
         itemCount: pokedexGroups.length,
         itemBuilder: (context, index) {
           final pokedexGroup = pokedexGroups.elementAt(index);
@@ -82,7 +94,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
             return _buildTappableGroupTitle(theme, pokedexGroup.title,
                 () => selectPokedex(pokedexGroup.pokedexList.first.id));
           } else {
-            return _buildRegionList(theme, pokedexGroup);
+            return _buildRegionList(theme, pokedexGroup, index);
           }
         },
       ),
@@ -95,13 +107,13 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
     }
   }
 
-  Column _buildRegionList(
-          ThemeData theme, PokedexGroupPresentationModel pokedexGroup) =>
+  Column _buildRegionList(ThemeData theme,
+          PokedexGroupPresentationModel pokedexGroup, int index) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTappableGroupTitle(
-              theme, pokedexGroup.title, () => toggleExpanded(pokedexGroup)),
+          _buildTappableGroupTitle(theme, pokedexGroup.title,
+              () => toggleExpanded(pokedexGroup, index)),
           buildAnimatedList(pokedexGroup, children: [
             ...pokedexGroup.pokedexList
                 .map((pokedex) => _buildPokedexGroupItem(theme, pokedex))
@@ -177,9 +189,13 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         endIndent: 16,
       );
 
-  void toggleExpanded(PokedexGroupPresentationModel pokedexGroup) {
+  Future<void> toggleExpanded(
+      PokedexGroupPresentationModel pokedexGroup, int index) async {
     setState(() {
       pokedexGroup.isExpanded = !pokedexGroup.isExpanded;
     });
+    await Future.delayed(const Duration(milliseconds: 50));
+    positionScroller.scrollToExpandedItem(
+        index, pokedexGroup.pokedexList.length * 60.0);
   }
 }
