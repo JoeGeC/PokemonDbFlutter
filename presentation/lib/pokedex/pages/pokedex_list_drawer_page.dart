@@ -76,7 +76,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
       case LoadingState():
         return LoadingPage();
       case PokedexListSuccessState():
-        return Expanded(child: _buildPokedexList(state, theme));
+        return _buildPokedexList(state, theme);
       default:
         return ErrorPage();
     }
