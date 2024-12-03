@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
+import 'package:presentation/common/bloc/base_state.dart';
 import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
 
@@ -29,10 +30,10 @@ void main() {
 
   group('get pokedex', () {
     test('be PokedexLoadingState on start', () {
-      expect(pokedexBloc.state, isA<PokedexLoadingState>());
+      expect(pokedexBloc.state, isA<LoadingState>());
     });
 
-    blocTest<PokedexBloc, PokedexState>(
+    blocTest<PokedexBloc, BaseState>(
       'emit [PokedexLoadingState, PokedexSuccessState] when GetPokedexEvent is successful',
       build: () {
         when(mockPokedexUseCase.getPokedex(any))
@@ -42,7 +43,7 @@ void main() {
       },
       act: (bloc) => bloc.add(GetPokedexEvent(1)),
       expect: () => [
-        isA<PokedexLoadingState>(),
+        isA<LoadingState>(),
         PokedexSuccessState(pokedexPresentationModel1),
       ],
       verify: (_) {
@@ -51,7 +52,7 @@ void main() {
       },
     );
 
-    blocTest<PokedexBloc, PokedexState>(
+    blocTest<PokedexBloc, BaseState>(
       'emit [PokedexLoadingState, PokedexErrorState] when GetPokedexEvent fails',
       build: () {
         when(mockPokedexUseCase.getPokedex(any))
@@ -60,12 +61,12 @@ void main() {
       },
       act: (bloc) => bloc.add(GetPokedexEvent(1)),
       expect: () => [
-        isA<PokedexLoadingState>(),
-        PokedexErrorState('Error'),
+        isA<LoadingState>(),
+        ErrorState('Error'),
       ],
     );
 
-    blocTest<PokedexBloc, PokedexState>(
+    blocTest<PokedexBloc, BaseState>(
       're-add the last event when addLastEvent is called',
       build: () {
         when(mockPokedexUseCase.getPokedex(any))
@@ -78,9 +79,9 @@ void main() {
         bloc.addLastEvent();
       },
       expect: () => [
-        isA<PokedexLoadingState>(),
+        isA<LoadingState>(),
         PokedexSuccessState(pokedexPresentationModel1),
-        isA<PokedexLoadingState>(),
+        isA<LoadingState>(),
         PokedexSuccessState(pokedexPresentationModel1),
       ],
     );

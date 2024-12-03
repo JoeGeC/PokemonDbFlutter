@@ -7,6 +7,7 @@ import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:presentation/pokedex/pages/position_scroller.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import '../../common/bloc/base_state.dart';
 import '../../common/pages/error_page.dart';
 import '../../common/pages/loading_page.dart';
 import '../../common/widgets/animated_list.dart';
@@ -43,14 +44,14 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         bloc.add(GetPokedexListEvent());
         return bloc;
       },
-      child: BlocBuilder<PokedexListBloc, PokedexListState>(
+      child: BlocBuilder<PokedexListBloc, BaseState>(
         builder: (context, state) =>
             _buildBackground(state, theme, children: _buildState(state, theme)),
       ),
     );
   }
 
-  Expanded _buildBackground(PokedexListState state, ThemeData theme,
+  Expanded _buildBackground(BaseState state, ThemeData theme,
           {children = const <Widget>[]}) =>
       Expanded(
         child: SizedBox(
@@ -70,9 +71,9 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         ),
       );
 
-  Widget _buildState(PokedexListState state, ThemeData theme) {
+  Widget _buildState(BaseState state, ThemeData theme) {
     switch (state) {
-      case PokedexListLoadingState():
+      case LoadingState():
         return LoadingPage();
       case PokedexListSuccessState():
         return Expanded(child: _buildPokedexList(state, theme));

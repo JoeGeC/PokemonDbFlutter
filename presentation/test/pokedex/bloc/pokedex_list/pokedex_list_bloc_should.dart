@@ -5,6 +5,7 @@ import 'package:domain/usecases/pokedex_list_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:presentation/common/bloc/base_state.dart';
 import 'package:presentation/pokedex/bloc/pokedex_list/pokedex_list_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
 
@@ -30,10 +31,10 @@ void main() {
 
   group('get pokedex list', () {
     test('Initial state is PokedexListLoadingState', () {
-      expect(bloc.state, isA<PokedexListLoadingState>());
+      expect(bloc.state, isA<LoadingState>());
     });
 
-    blocTest<PokedexListBloc, PokedexListState>(
+    blocTest<PokedexListBloc, BaseState>(
       'emit [PokedexListLoadingState, PokedexListSuccessState] when GetPokedexListEvent succeeds',
       build: () {
         when(mockPokedexListUseCase.getAllPokedexes()).thenAnswer(
@@ -46,7 +47,7 @@ void main() {
       },
       act: (bloc) => bloc.add(GetPokedexListEvent()),
       expect: () => [
-        isA<PokedexListLoadingState>(),
+        isA<LoadingState>(),
         PokedexListSuccessState(pokedexGroupList2),
       ],
       verify: (_) {
@@ -55,7 +56,7 @@ void main() {
       },
     );
 
-    blocTest<PokedexListBloc, PokedexListState>(
+    blocTest<PokedexListBloc, BaseState>(
       'emit [PokedexListLoadingState, PokedexListErrorState] when GetPokedexListEvent fails',
       build: () {
         when(mockPokedexListUseCase.getAllPokedexes()).thenAnswer(
@@ -66,8 +67,8 @@ void main() {
       act: (bloc) => bloc.add(GetPokedexListEvent()),
       expect: () {
         return [
-          isA<PokedexListLoadingState>(),
-          PokedexListErrorState(errorMessage),
+          isA<BaseState>(),
+          ErrorState(errorMessage),
         ];
       },
       verify: (_) {
@@ -75,7 +76,7 @@ void main() {
       },
     );
 
-    blocTest<PokedexListBloc, PokedexListState>(
+    blocTest<PokedexListBloc, BaseState>(
       'Handles multiple results from getAllPokedexes stream',
       build: () {
         when(mockPokedexListUseCase.getAllPokedexes()).thenAnswer(
@@ -92,7 +93,7 @@ void main() {
       },
       act: (bloc) => bloc.add(GetPokedexListEvent()),
       expect: () => [
-        isA<PokedexListLoadingState>(),
+        isA<LoadingState>(),
         PokedexListSuccessState(pokedexGroupList1),
         PokedexListSuccessState(pokedexGroupList2),
       ],

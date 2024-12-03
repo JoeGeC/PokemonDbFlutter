@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:domain/usecases/pokemon_usecase.dart';
 
+import '../../../common/bloc/base_state.dart';
 import '../../../pokemon/converters/pokemon_presentation_converter.dart';
 import '../../models/pokedex_pokemon_presentation_model.dart';
 
@@ -9,7 +10,7 @@ part 'pokedex_pokemon_event.dart';
 part 'pokedex_pokemon_state.dart';
 
 class PokedexPokemonBloc
-    extends Bloc<PokedexPokemonEvent, PokedexPokemonState> {
+    extends Bloc<PokedexPokemonEvent, BaseState> {
   final PokemonUseCase _pokemonUseCase;
   final PokedexPokemonPresentationConverter _pokemonConverter;
 
@@ -22,9 +23,9 @@ class PokedexPokemonBloc
   }
 
   _getPokedexPokemonEvent(
-      GetPokedexPokemonEvent event, Emitter<PokedexPokemonState> emit) async {
+      GetPokedexPokemonEvent event, Emitter<BaseState> emit) async {
     var pokemonId = event.pokemon.id;
-    emit(PokedexPokemonLoadingState());
+    emit(LoadingState());
     if(event.pokemon.hasPokedexDetails){
       emit(PokedexPokemonSuccessState(event.pokemon));
       return;
@@ -32,10 +33,10 @@ class PokedexPokemonBloc
     await _getPokemonFromRepo(pokemonId, emit, event);
   }
 
-  Future<void> _getPokemonFromRepo(int pokemonId, Emitter<PokedexPokemonState> emit, GetPokedexPokemonEvent event) async {
+  Future<void> _getPokemonFromRepo(int pokemonId, Emitter<BaseState> emit, GetPokedexPokemonEvent event) async {
     final result = await _pokemonUseCase.getPokemon(pokemonId);
     result.fold((failure) {
-      emit(PokedexPokemonErrorState(pokemonId, failure.errorMessage));
+      emit(ErrorState(failure.errorMessage));
     }, (pokemonModel) {
       var presentationPokemon =
           _pokemonConverter.convert(pokemonModel, event.pokedexId);

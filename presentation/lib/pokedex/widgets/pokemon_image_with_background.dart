@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:presentation/common/utils/is_dark_mode.dart';
 
 import '../../common/asset_constants.dart';
+import '../../common/bloc/base_state.dart';
 import '../bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
 
 Widget buildPokemonImageWithBackground(
-    PokedexPokemonState state, String? imageUrl, ThemeData theme,
+    BaseState state, String? imageUrl, ThemeData theme,
     {double size = 100}) {
   return Stack(
     children: [
@@ -29,11 +30,10 @@ Image buildPokemonFallback(String asset, double size) => Image(
       width: size,
     );
 
-Widget buildPokemonSprite(
-        PokedexPokemonState state, String? imageUrl, double size) =>
+Widget buildPokemonSprite(BaseState state, String? imageUrl, double size) =>
     switch (state) {
       PokedexPokemonInitialState() => _buildLoadingFallback(size),
-      PokedexPokemonLoadingState() => _buildLoadingFallback(size),
+      LoadingState() => _buildLoadingFallback(size),
       PokedexPokemonSuccessState() => buildPokemonSpriteFromUrl(imageUrl, size),
       _ => buildPokemonFallback(AssetConstants.missingno, size)
     };

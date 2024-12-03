@@ -10,6 +10,7 @@ import 'package:presentation/pokedex/converters/pokedex_presentation_converter.d
 import 'package:presentation/pokedex/pages/pokedex_list_drawer_page.dart';
 import 'package:presentation/pokedex/pages/pokedex_loading_page.dart';
 
+import '../../common/bloc/base_state.dart';
 import '../../common/pages/error_page.dart';
 import '../../common/utils/is_dark_mode.dart';
 import '../../common/widgets/shimmer.dart';
@@ -51,7 +52,7 @@ class _PokedexPageState extends State<PokedexPage> {
       backgroundColor: theme.colorScheme.primary,
       drawer: _buildDrawer(theme),
       body: SafeArea(
-        child: BlocConsumer<PokedexBloc, PokedexState>(
+        child: BlocConsumer<PokedexBloc, BaseState>(
           bloc: _bloc,
           listener: (context, state) {},
           builder: (context, state) => RefreshIndicator(
@@ -64,13 +65,13 @@ class _PokedexPageState extends State<PokedexPage> {
     );
   }
 
-  Widget getPageState(PokedexState state, ThemeData theme) => switch (state) {
+  Widget getPageState(BaseState state, ThemeData theme) => switch (state) {
         PokedexSuccessState() => _buildSuccessPage(theme, state.pokedex),
-        PokedexLoadingState() => _buildPage(
+        LoadingState() => _buildPage(
             title: buildShimmer(),
             body: PokedexLoadingPage(_pokemonImageSize),
             theme: theme),
-        PokedexState() => _buildPage(body: ErrorPage(), theme: theme),
+        BaseState() => _buildPage(body: ErrorPage(), theme: theme),
       };
 
   Widget _buildPage({Widget? title, Widget? body, required ThemeData theme}) =>

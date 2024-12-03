@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/pokedex/widgets/pokemon_image_with_background.dart';
 
+import '../../common/bloc/base_state.dart';
 import '../../common/widgets/pokemon_types_widget.dart';
 import '../../common/widgets/two_spaced_texts_row.dart';
 import '../../injections.dart';
@@ -14,7 +15,7 @@ Widget buildPokemonEntry(
     BlocProvider(
       create: (_) => PokedexPokemonBloc(getIt(), getIt())
         ..add(GetPokedexPokemonEvent(pokemon, pokedexId)),
-      child: BlocBuilder<PokedexPokemonBloc, PokedexPokemonState>(
+      child: BlocBuilder<PokedexPokemonBloc, BaseState>(
         builder: (context, state) {
           switch (state) {
             case PokedexPokemonSuccessState():
@@ -29,7 +30,7 @@ Widget buildPokemonEntry(
     );
 
 Widget pokemonEntryWidget(
-  PokedexPokemonState state,
+  BaseState state,
   PokedexPokemonPresentationModel pokemon,
   ThemeData theme, {
   double imageSize = 100,

@@ -5,6 +5,7 @@ import 'package:domain/usecases/pokemon_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:presentation/common/bloc/base_state.dart';
 import 'package:presentation/pokedex/bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
 import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
 
@@ -33,7 +34,7 @@ void main() {
       expect(bloc.state, isA<PokedexPokemonInitialState>());
     });
 
-    blocTest<PokedexPokemonBloc, PokedexPokemonState>(
+    blocTest<PokedexPokemonBloc, BaseState>(
       'emit [PokedexPokemonLoadingState, PokedexPokemonSuccessState] when Pokémon details are already present',
       build: () => bloc,
       act: (bloc) => bloc.add(GetPokedexPokemonEvent(
@@ -41,12 +42,12 @@ void main() {
         pokedexId1,
       )),
       expect: () => [
-        isA<PokedexPokemonLoadingState>(),
+        isA<LoadingState>(),
         PokedexPokemonSuccessState(pokedexPokemonPresentationModel),
       ],
     );
 
-    blocTest<PokedexPokemonBloc, PokedexPokemonState>(
+    blocTest<PokedexPokemonBloc, BaseState>(
       'emit [PokedexPokemonLoadingState, PokedexPokemonErrorState] when fetching Pokémon details fails',
       build: () {
         when(mockPokemonUseCase.getPokemon(pokemonId)).thenAnswer(
@@ -59,15 +60,15 @@ void main() {
         pokedexId1,
       )),
       expect: () => [
-        isA<PokedexPokemonLoadingState>(),
-        PokedexPokemonErrorState(pokemonId, errorMessage),
+        isA<LoadingState>(),
+        ErrorState(errorMessage),
       ],
       verify: (_) {
         verify(mockPokemonUseCase.getPokemon(pokemonId)).called(1);
       },
     );
 
-    blocTest<PokedexPokemonBloc, PokedexPokemonState>(
+    blocTest<PokedexPokemonBloc, BaseState>(
       'emit [PokedexPokemonLoadingState, PokedexPokemonSuccessState] when fetching Pokémon details succeeds',
       build: () {
         when(mockPokemonUseCase.getPokemon(pokemonId)).thenAnswer(
@@ -82,7 +83,7 @@ void main() {
         pokedexId1,
       )),
       expect: () => [
-        isA<PokedexPokemonLoadingState>(),
+        isA<LoadingState>(),
         PokedexPokemonSuccessState(pokedexPokemonPresentationModel),
       ],
       verify: (_) {

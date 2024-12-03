@@ -1,13 +1,14 @@
 import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../common/bloc/base_state.dart';
 import '../../converters/pokedex_presentation_converter.dart';
 import '../../models/pokedex_presentation_model.dart';
 
 part 'pokedex_event.dart';
 part 'pokedex_state.dart';
 
-class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
+class PokedexBloc extends Bloc<PokedexEvent, BaseState> {
   final PokedexUseCase _pokedexUseCase;
   final PokedexPresentationConverter _pokedexConverter;
   PokedexEvent? _lastEvent;
@@ -16,18 +17,18 @@ class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
       PokedexUseCase pokedexUseCase, PokedexPresentationConverter pokedexConverter)
       : _pokedexUseCase = pokedexUseCase,
         _pokedexConverter = pokedexConverter,
-        super(PokedexLoadingState()) {
+        super(LoadingState()) {
     on<GetPokedexEvent>(_getPokedexEvent);
   }
 
-  _getPokedexEvent(GetPokedexEvent event, Emitter<PokedexState> emitter) async {
+  _getPokedexEvent(GetPokedexEvent event, Emitter<BaseState> emitter) async {
     if (event.isLoading) {
-      emitter(PokedexLoadingState());
+      emitter(LoadingState());
     }
 
     final result = await _pokedexUseCase.getPokedex(event.id);
     result.fold((failure) {
-      emitter(PokedexErrorState(failure.errorMessage));
+      emitter(ErrorState(failure.errorMessage));
     }, (pokedexModel) {
       var localPokedex = _pokedexConverter.convert(pokedexModel);
       emitter(PokedexSuccessState(localPokedex));
