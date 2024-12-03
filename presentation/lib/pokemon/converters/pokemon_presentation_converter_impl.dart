@@ -1,5 +1,5 @@
 import 'package:domain/models/pokemon_model.dart';
-import 'package:presentation/common/utils/utils.dart';
+import 'package:presentation/common/utils/extensions.dart';
 import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
 import '../../pokedex/models/pokedex_pokemon_presentation_model.dart';
 

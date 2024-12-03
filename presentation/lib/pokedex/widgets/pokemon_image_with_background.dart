@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/common/utils/extensions.dart';
 import 'package:presentation/common/utils/is_dark_mode.dart';
 
 import '../../common/asset_constants.dart';
@@ -7,12 +8,12 @@ import '../../common/bloc/base_state.dart';
 import '../bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
 
 Widget buildPokemonImageWithBackground(
-    BaseState state, String? imageUrl, ThemeData theme,
+    BaseState state, String? imageUrl, ThemeData theme, BuildContext context,
     {double size = 100}) {
   return Stack(
     children: [
       buildPokemonImageBackground(size, theme),
-      buildPokemonSprite(state, imageUrl, size)
+      buildPokemonSprite(state, imageUrl, size, context)
     ],
   );
 }
@@ -30,28 +31,28 @@ Image buildPokemonFallback(String asset, double size) => Image(
       width: size,
     );
 
-Widget buildPokemonSprite(BaseState state, String? imageUrl, double size) =>
+Widget buildPokemonSprite(
+        BaseState state, String? imageUrl, double size, BuildContext context) =>
     switch (state) {
       PokedexPokemonInitialState() => _buildLoadingFallback(size),
       LoadingState() => _buildLoadingFallback(size),
-      PokedexPokemonSuccessState() => buildPokemonSpriteFromUrl(imageUrl, size),
+      PokedexPokemonSuccessState() =>
+        buildPokemonSpriteFromUrl(imageUrl, size, context),
       _ => buildPokemonFallback(AssetConstants.missingno, size)
     };
 
-Widget buildPokemonSpriteFromUrl(String? imageUrl, double size) {
+Widget buildPokemonSpriteFromUrl(
+    String? imageUrl, double size, BuildContext context) {
   if (imageUrl == null) {
     return buildPokemonFallback(AssetConstants.missingno, size);
   }
-  return Image.network(
-    imageUrl,
-    fit: BoxFit.cover,
-    frameBuilder: (context, child, frame, sync) {
-      if (frame == null) return _buildLoadingFallback(size);
-      return child;
-    },
-    errorBuilder: (context, error, stackTrace) {
-      return buildPokemonFallback(AssetConstants.missingno, size);
-    },
+  return CachedNetworkImage(
+    imageUrl: imageUrl,
+    memCacheHeight: size.cacheSize(context),
+    memCacheWidth: size.cacheSize(context),
+    placeholder: (context, url) => _buildLoadingFallback(size),
+    errorWidget: (context, url, error) =>
+        buildPokemonFallback(AssetConstants.missingno, size),
   );
 }
 

@@ -19,10 +19,10 @@ Widget buildPokemonEntry(
         builder: (context, state) {
           switch (state) {
             case PokedexPokemonSuccessState():
-              return pokemonEntryWidget(state, state.pokemon, theme,
+              return pokemonEntryWidget(state, state.pokemon, theme, context,
                   imageSize: imageSize);
             default:
-              return pokemonEntryWidget(state, pokemon, theme,
+              return pokemonEntryWidget(state, pokemon, theme, context,
                   imageSize: imageSize);
           }
         },
@@ -32,7 +32,8 @@ Widget buildPokemonEntry(
 Widget pokemonEntryWidget(
   BaseState state,
   PokedexPokemonPresentationModel pokemon,
-  ThemeData theme, {
+  ThemeData theme,
+  BuildContext context, {
   double imageSize = 100,
 }) =>
     Padding(
@@ -40,7 +41,8 @@ Widget pokemonEntryWidget(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildPokemonImageWithBackground(state, pokemon.imageUrl, theme,
+          buildPokemonImageWithBackground(
+              state, pokemon.imageUrl, theme, context,
               size: imageSize),
           const SizedBox(width: 30),
           Expanded(

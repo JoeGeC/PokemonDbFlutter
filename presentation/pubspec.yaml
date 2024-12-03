@@ -17,6 +17,7 @@ dependencies:
   shimmer: ^3.0.0
   scrollable_positioned_list: ^0.3.8
   dartz: ^0.10.1
+  cached_network_image: ^3.4.1
 
   domain:
     path: ../domain
