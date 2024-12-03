@@ -23,47 +23,6 @@ void main() {
   late MockPokedexPresentationConverter mockConverter;
   late PokedexBloc pokedexBloc;
 
-  int pokedexId = 10;
-  String pokedexRegion = "Kanto";
-  String pokedexVersionAbbreviation = "RBY";
-  int pokedexEntryNumber = 100;
-  PokedexName pokedexName = PokedexName.kanto;
-  int pokemonId = 1;
-  String pokedexEntryNumberPresentation = "100";
-  String pokemonNationalDexNumber = "0001";
-  String pokemonName = "Example Pokemon";
-  List<String> pokemonTypes = ["Grass"];
-  Map<int, int> pokedexEntryNumbers = {pokedexId: pokedexEntryNumber};
-
-  PokemonModel pokemonModel = PokemonModel(
-    id: pokemonId,
-    name: pokemonName,
-    pokedexEntryNumbers: pokedexEntryNumbers,
-  );
-  PokedexPokemonPresentationModel pokemonPresentationModel =
-      PokedexPokemonPresentationModel(
-    id: pokemonId,
-    nationalDexNumber: pokemonNationalDexNumber,
-    pokedexEntryNumber: pokedexEntryNumberPresentation,
-    name: pokemonName,
-    types: pokemonTypes,
-  );
-
-  PokedexModel pokedexModel = PokedexModel(
-    id: pokedexId,
-    name: pokedexName,
-    versions: [PokemonVersion.redBlueYellow],
-    region: PokemonRegion.kanto,
-    pokemon: [pokemonModel],
-  );
-  PokedexPresentationModel pokedexPresentationModel = PokedexPresentationModel(
-    id: pokedexId,
-    regionName: pokedexRegion,
-    versionAbbreviation: pokedexVersionAbbreviation,
-    displayNames: [pokedexRegion],
-    pokemon: [pokemonPresentationModel],
-  );
-
   setUp(() {
     mockPokedexUseCase = MockPokedexUseCase();
     mockConverter = MockPokedexPresentationConverter();
