@@ -6,7 +6,6 @@
 import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i5;
-import 'package:domain/models/Failure.dart';
 import 'package:domain/models/pokedex_model.dart' as _i6;
 import 'package:domain/usecases/pokedex_list_usecase.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
@@ -51,15 +50,15 @@ class MockPokedexListUseCase extends _i1.Mock
   }
 
   @override
-  _i4.Stream<_i5.Either<Failure, List<_i6.PokedexModel>>> getAllPokedexes() =>
+  _i4.Stream<_i5.Either<dynamic, List<_i6.PokedexModel>>> getAllPokedexes() =>
       (super.noSuchMethod(
         Invocation.method(
           #getAllPokedexes,
           [],
         ),
         returnValue:
-            _i4.Stream<_i5.Either<Failure, List<_i6.PokedexModel>>>.empty(),
-      ) as _i4.Stream<_i5.Either<Failure, List<_i6.PokedexModel>>>);
+            _i4.Stream<_i5.Either<dynamic, List<_i6.PokedexModel>>>.empty(),
+      ) as _i4.Stream<_i5.Either<dynamic, List<_i6.PokedexModel>>>);
 }
 
 /// A class which mocks [PokedexPresentationConverter].

@@ -26,20 +26,32 @@ String pokemonNationalDexNumber = "0001";
 String pokemonName = "Example Pokemon";
 List<String> pokemonTypes = ["Grass"];
 Map<int, int> pokedexEntryNumbers = {pokedexId1: pokedexEntryNumber};
+String pokemonImageUrl1 = "https://pokeapi.com/asd.png";
 
 PokemonModel pokemonModel = PokemonModel(
   id: pokemonId,
   name: pokemonName,
   pokedexEntryNumbers: pokedexEntryNumbers,
+  imageUrl: pokemonImageUrl1
 );
 
-PokedexPokemonPresentationModel pokemonPresentationModel =
+PokedexPokemonPresentationModel pokedexPokemonPresentationModel =
     PokedexPokemonPresentationModel(
   id: pokemonId,
   nationalDexNumber: pokemonNationalDexNumber,
   pokedexEntryNumber: pokedexEntryNumberPresentation,
   name: pokemonName,
   types: pokemonTypes,
+  imageUrl: pokemonImageUrl1
+);
+
+PokedexPokemonPresentationModel pokedexPokemonPresentationModelUndetailed =
+    PokedexPokemonPresentationModel(
+  id: pokemonId,
+  nationalDexNumber: pokemonNationalDexNumber,
+  pokedexEntryNumber: pokedexEntryNumberPresentation,
+  name: pokemonName,
+  types: [],
 );
 
 PokedexModel pokedexModel1 = PokedexModel(
@@ -71,7 +83,7 @@ PokedexPresentationModel pokedexPresentationModel1 = PokedexPresentationModel(
   regionName: pokedexRegion1,
   versionAbbreviation: pokedexVersionAbbreviation1,
   displayNames: [pokedexRegion1],
-  pokemon: [pokemonPresentationModel],
+  pokemon: [pokedexPokemonPresentationModel],
 );
 
 PokedexPresentationModel pokedexPresentationModel2 = PokedexPresentationModel(

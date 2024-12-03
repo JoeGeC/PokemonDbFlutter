@@ -24,7 +24,7 @@ class PokedexPokemonBloc
   _getPokedexPokemonEvent(
       GetPokedexPokemonEvent event, Emitter<PokedexPokemonState> emit) async {
     var pokemonId = event.pokemon.id;
-    emit(PokedexPokemonLoadingState(pokemonId: pokemonId));
+    emit(PokedexPokemonLoadingState());
     if(event.pokemon.hasPokedexDetails){
       emit(PokedexPokemonSuccessState(event.pokemon));
       return;
