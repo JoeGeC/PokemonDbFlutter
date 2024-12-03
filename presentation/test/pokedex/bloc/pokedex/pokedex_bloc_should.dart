@@ -1,10 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:domain/models/Failure.dart';
-import 'package:domain/models/pokedex_constants/pokedex_name.dart';
-import 'package:domain/models/pokedex_constants/pokemon_region.dart';
-import 'package:domain/models/pokedex_constants/pokemon_version.dart';
-import 'package:domain/models/pokedex_model.dart';
-import 'package:domain/models/pokemon_model.dart';
 import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -12,9 +7,8 @@ import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
 import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
-import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
-import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 
+import '../../../common/model_mocks.dart';
 import 'pokedex_bloc_should.mocks.dart';
 
 @GenerateMocks([PokedexUseCase, PokedexPresentationConverter])
@@ -42,14 +36,14 @@ void main() {
       'emit [PokedexLoadingState, PokedexSuccessState] when GetPokedexEvent is successful',
       build: () {
         when(mockPokedexUseCase.getPokedex(any))
-            .thenAnswer((_) async => Right(pokedexModel));
-        when(mockConverter.convert(any)).thenReturn(pokedexPresentationModel);
+            .thenAnswer((_) async => Right(pokedexModel1));
+        when(mockConverter.convert(any)).thenReturn(pokedexPresentationModel1);
         return pokedexBloc;
       },
       act: (bloc) => bloc.add(GetPokedexEvent(1)),
       expect: () => [
         isA<PokedexLoadingState>(),
-        PokedexSuccessState(pokedexPresentationModel),
+        PokedexSuccessState(pokedexPresentationModel1),
       ],
       verify: (_) {
         verify(mockPokedexUseCase.getPokedex(1)).called(1);
@@ -75,8 +69,8 @@ void main() {
       're-add the last event when addLastEvent is called',
       build: () {
         when(mockPokedexUseCase.getPokedex(any))
-            .thenAnswer((_) async => Right(pokedexModel));
-        when(mockConverter.convert(any)).thenReturn(pokedexPresentationModel);
+            .thenAnswer((_) async => Right(pokedexModel1));
+        when(mockConverter.convert(any)).thenReturn(pokedexPresentationModel1);
         return pokedexBloc;
       },
       act: (bloc) {
@@ -85,9 +79,9 @@ void main() {
       },
       expect: () => [
         isA<PokedexLoadingState>(),
-        PokedexSuccessState(pokedexPresentationModel),
+        PokedexSuccessState(pokedexPresentationModel1),
         isA<PokedexLoadingState>(),
-        PokedexSuccessState(pokedexPresentationModel),
+        PokedexSuccessState(pokedexPresentationModel1),
       ],
     );
   });
