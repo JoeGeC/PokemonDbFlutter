@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/common/asset_constants.dart';
 import 'package:presentation/common/text_theme.dart';
-import 'package:presentation/common/widgets/header.dart';
+import 'package:presentation/common/widgets/refresh_page_with_background.dart';
 import 'package:presentation/common/widgets/scroll_up_header_list_widget.dart';
 import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
@@ -14,6 +14,8 @@ import 'package:presentation/pokemon/pages/pokemon_page.dart';
 import '../../common/bloc/base_state.dart';
 import '../../common/pages/error_page.dart';
 import '../../common/utils/is_dark_mode.dart';
+import '../../common/widgets/header.dart';
+import '../../common/widgets/header_title.dart';
 import '../../common/widgets/shimmer.dart';
 import '../../injections.dart';
 import '../models/pokedex_presentation_model.dart';
@@ -68,44 +70,31 @@ class _PokedexPageState extends State<PokedexPage> {
 
   Widget getPageState(BaseState state, ThemeData theme) => switch (state) {
         PokedexSuccessState() => _buildSuccessPage(theme, state.pokedex),
-        LoadingState() => _buildPage(
-            title: buildShimmer(),
-            body: PokedexLoadingPage(_pokemonImageSize),
-            theme: theme),
-        BaseState() => _buildPage(body: ErrorPage(), theme: theme),
+        LoadingState() => _buildLoadingPage(theme),
+        BaseState() => _buildErrorPage(theme),
       };
 
-  Widget _buildPage({Widget? title, Widget? body, required ThemeData theme}) =>
-      SingleChildScrollView(
-        child: Stack(
-          children: [
-            _buildBackground(theme),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildPokedexHeader(
-                  scaffoldKey: _scaffoldKey,
-                  title: title,
-                  height: _headerHeight,
-                ),
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight:
-                        MediaQuery.of(context).size.height - _headerHeight,
-                  ),
-                  child: body ?? Container(),
-                ),
-              ],
-            ),
-          ],
-        ),
+  Widget _buildLoadingPage(ThemeData theme) =>
+      buildRefreshablePageWithBackground(
+        title: _buildHeader(title: buildShimmer()),
+        body: PokedexLoadingPage(_pokemonImageSize),
+        theme: theme,
+        context: context,
+        headerHeight: _headerHeight,
       );
 
-  Positioned _buildBackground(ThemeData theme) => Positioned.fill(
-        child: Image.asset(
-          AssetConstants.pokedexBackground(isDarkMode(theme)),
-          fit: BoxFit.cover,
-        ),
+  Widget _buildErrorPage(ThemeData theme) => buildRefreshablePageWithBackground(
+        title: _buildHeader(),
+        body: ErrorPage(),
+        theme: theme,
+        context: context,
+        headerHeight: _headerHeight,
+      );
+
+  Widget _buildHeader({Widget? title}) => buildPokedexHeader(
+        scaffoldKey: _scaffoldKey,
+        title: title ?? Container(),
+        height: _headerHeight,
       );
 
   Widget _buildSuccessPage(ThemeData theme, PokedexPresentationModel pokedex) =>
@@ -113,7 +102,11 @@ class _PokedexPageState extends State<PokedexPage> {
         key: ValueKey(pokedex.id),
         headerBuilder: (headerKey) => buildPokedexHeader(
           scaffoldKey: _scaffoldKey,
-          title: _buildSuccessPageTitle(headerKey, pokedex, theme),
+          title: buildPageTitle(
+              theme: theme,
+              headerKey: headerKey,
+              title: pokedex.regionName,
+              subtitle: pokedex.versionAbbreviation),
         ),
         itemCount: pokedex.pokemon.length,
         itemBuilder: (context, index) => buildPokemonEntry(
@@ -124,32 +117,6 @@ class _PokedexPageState extends State<PokedexPage> {
         onItemTap: openPokemonPage,
       );
 
-  Row _buildSuccessPageTitle(GlobalKey<State<StatefulWidget>> headerKey,
-          PokedexPresentationModel pokedex, ThemeData theme) =>
-      Row(
-        key: headerKey,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            pokedex.regionName,
-            style: theme.textTheme.headlineMedium!.copyWith(),
-          ),
-          SizedBox(width: 10),
-          if (pokedex.versionAbbreviation.isNotEmpty)
-            _buildTitleAbbreviation(theme, pokedex)
-        ],
-      );
-
-  Padding _buildTitleAbbreviation(
-          ThemeData theme, PokedexPresentationModel pokedex) =>
-      Padding(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: Text(
-          "(${pokedex.versionAbbreviation})",
-          style: theme.textTheme.labelMediumWhite,
-        ),
-      );
-
   Widget _buildDrawer(ThemeData theme) => Drawer(
         backgroundColor: theme.colorScheme.primary,
         child: SafeArea(
@@ -157,9 +124,7 @@ class _PokedexPageState extends State<PokedexPage> {
             color: theme.colorScheme.surface,
             child: Column(
               children: <Widget>[
-                buildHeader(
-                  child: _buildDrawerHeader(theme),
-                ),
+                buildHeader(child: _buildDrawerTitle(theme)),
                 PokedexListDrawerPage(onSelected: onPokedexSelected),
               ],
             ),
@@ -167,7 +132,7 @@ class _PokedexPageState extends State<PokedexPage> {
         ),
       );
 
-  SizedBox _buildDrawerHeader(ThemeData theme) => SizedBox(
+  SizedBox _buildDrawerTitle(ThemeData theme) => SizedBox(
         width: double.infinity,
         child: Text(
           "Pokedex",
@@ -187,7 +152,7 @@ class _PokedexPageState extends State<PokedexPage> {
 
   openPokemonPage(int index) {
     int? pokemonId = getPokemonIdOf(index);
-    if(pokemonId == null) return;
+    if (pokemonId == null) return;
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => PokemonPage(pokemonId: pokemonId),
@@ -196,7 +161,7 @@ class _PokedexPageState extends State<PokedexPage> {
   }
 
   int? getPokemonIdOf(int index) {
-    if(_bloc.state is PokedexSuccessState){
+    if (_bloc.state is PokedexSuccessState) {
       return (_bloc.state as PokedexSuccessState).pokedex.pokemon[index].id;
     }
     return null;

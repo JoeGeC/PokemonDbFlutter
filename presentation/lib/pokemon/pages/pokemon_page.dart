@@ -1,13 +1,90 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:presentation/pokedex/widgets/pokedex_header_widget.dart';
+import 'package:presentation/pokemon/models/pokemon_presentation_model.dart';
 
-class PokemonPage extends StatelessWidget{
+import '../../common/bloc/base_state.dart';
+import '../../common/pages/error_page.dart';
+import '../../common/pages/loading_page.dart';
+import '../../common/widgets/header_title.dart';
+import '../../common/widgets/refresh_page_with_background.dart';
+import '../../common/widgets/shimmer.dart';
+import '../../injections.dart';
+import '../bloc/pokemon_bloc.dart';
+
+class PokemonPage extends StatefulWidget {
   final int pokemonId;
 
   const PokemonPage({super.key, required this.pokemonId});
 
   @override
-  Widget build(BuildContext context) {
-    return Text(pokemonId.toString());
+  State<PokemonPage> createState() => _PokemonPageState();
+}
+
+class _PokemonPageState extends State<PokemonPage> {
+  final PokemonBloc _bloc = PokemonBloc(getIt(), getIt());
+
+  @override
+  void initState() {
+    getPokemon(widget.pokemonId);
+    super.initState();
   }
 
+  void getPokemon(int id) {
+    _bloc.add(GetPokemonEvent(id));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return SafeArea(
+      child: BlocConsumer<PokemonBloc, BaseState>(
+        bloc: _bloc,
+        listener: (context, state) {},
+        builder: (context, state) => RefreshIndicator(
+            color: theme.colorScheme.primary,
+            backgroundColor: theme.colorScheme.onPrimary,
+            onRefresh: onRefresh,
+            child: getPageState(state, theme)),
+      ),
+    );
+  }
+
+  Future<void> onRefresh() async {
+    getPokemon(widget.pokemonId);
+  }
+
+  Widget getPageState(BaseState state, ThemeData theme) => switch (state) {
+        PokemonSuccessState() => _buildSuccessPage(theme, state.pokemon),
+        LoadingState() => buildLoadingPage(theme),
+        BaseState() => buildErrorPage(theme),
+      };
+
+  Widget buildLoadingPage(ThemeData theme) =>
+      buildRefreshablePageWithBackground(
+        title: buildShimmer(),
+        body: LoadingPage(),
+        theme: theme,
+        context: context,
+      );
+
+  Widget buildErrorPage(ThemeData theme) => buildRefreshablePageWithBackground(
+        body: ErrorPage(),
+        theme: theme,
+        context: context,
+      );
+
+  Widget _buildSuccessPage(ThemeData theme, PokemonPresentationModel pokemon) =>
+      buildRefreshablePageWithBackground(
+        title: buildPokedexHeader(
+            title: buildPageTitle(
+                theme: theme, title: pokemon.name, leftPadding: 50)),
+        theme: theme,
+        context: context,
+        body: Column(
+          children: [
+            Text(pokemon.name),
+          ],
+        ),
+      );
 }

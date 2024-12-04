@@ -4,7 +4,7 @@ import '../../common/widgets/header.dart';
 import '../../common/widgets/menu_icon_button.dart';
 
 Widget buildPokedexHeader({
-  required GlobalKey<ScaffoldState> scaffoldKey,
+  GlobalKey<ScaffoldState>? scaffoldKey,
   Widget? title,
   double height = 80,
 }) =>
@@ -13,7 +13,7 @@ Widget buildPokedexHeader({
       child: buildHeader(
         child: Row(
           children: [
-            buildMenuIconButton(scaffoldKey),
+            if(scaffoldKey != null) buildMenuIconButton(scaffoldKey),
             title ?? Container(),
           ],
         ),
