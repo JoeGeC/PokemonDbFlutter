@@ -11,7 +11,7 @@ import 'package:repository/models/local/pokedex_local_model.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import '../mock_database.dart';
+import '../mocks/mock_database.dart';
 import 'pokedex_local_should.mocks.dart';
 
 @GenerateMocks([PokedexLocalConverter, PokemonLocalConverter])
