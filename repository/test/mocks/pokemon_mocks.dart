@@ -61,6 +61,18 @@ class PokemonRepoMocks {
     types: pokemonTypes,
     frontSpriteUrl: frontSpriteUrl,
     pokedexEntryNumbers: pokedexEntryNumbers,
+    hp: StatRepoMocks.baseStatHp,
+    attack: StatRepoMocks.baseStatAttack,
+    defense: StatRepoMocks.baseStatDefense,
+    specialAttack: StatRepoMocks.baseStatSpecialAttack,
+    specialDefense: StatRepoMocks.baseStatSpecialDefense,
+    speed: StatRepoMocks.baseStatSpeed,
+    hpEvYield: StatRepoMocks.statEffortHp,
+    attackEvYield: StatRepoMocks.statEffortAttack,
+    defenseEvYield: StatRepoMocks.statEffortDefense,
+    specialAttackEvYield: StatRepoMocks.statEffortSpecialAttack,
+    specialDefenseEvYield: StatRepoMocks.statEffortSpecialDefense,
+    speedEvYield: StatRepoMocks.statEffortSpeed,
   );
 
   static final PokemonLocalModel pokemonLocalModelUndetailed =
@@ -76,12 +88,32 @@ class PokemonRepoMocks {
     pokedexEntryNumbers: pokedexEntryNumbers,
     types: pokemonTypes,
     imageUrl: frontSpriteUrl,
+    hp: StatRepoMocks.baseStatHp,
+    attack: StatRepoMocks.baseStatAttack,
+    defense: StatRepoMocks.baseStatDefense,
+    specialAttack: StatRepoMocks.baseStatSpecialAttack,
+    specialDefense: StatRepoMocks.baseStatSpecialDefense,
+    speed: StatRepoMocks.baseStatSpeed,
+    hpEvYield: StatRepoMocks.statEffortHp,
+    attackEvYield: StatRepoMocks.statEffortAttack,
+    defenseEvYield: StatRepoMocks.statEffortDefense,
+    specialAttackEvYield: StatRepoMocks.statEffortSpecialAttack,
+    specialDefenseEvYield: StatRepoMocks.statEffortSpecialDefense,
+    speedEvYield: StatRepoMocks.statEffortSpeed,
   );
 
   static final PokemonModel pokemonDomainModelUndetailed = PokemonModel(
     id: pokemonId,
     name: pokemonName,
     pokedexEntryNumbers: pokedexEntryNumbers,
+  );
+
+  static final PokemonModel pokemonDomainModelPokedexDetail = PokemonModel(
+    id: pokemonId,
+    name: pokemonName,
+    pokedexEntryNumbers: pokedexEntryNumbers,
+    imageUrl: frontSpriteUrl,
+    types: pokemonTypes,
   );
 
   static final PokemonDataModel pokemonDataModel = PokemonDataModel(
@@ -126,7 +158,9 @@ class PokemonRepoMocks {
     stats: StatRepoMocks.pokemonStats,
   );
 
-  static final List<PokemonModel> pokemonDomainList = [pokemonDomainModel];
+  static final List<PokemonModel> pokemonPokedexDetailDomainList = [
+    pokemonDomainModelPokedexDetail
+  ];
 
   static final List<PokemonLocalModel> detailedPokedexPokemonLocalList = [
     detailedPokedexPokemonLocalModel

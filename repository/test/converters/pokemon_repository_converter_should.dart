@@ -15,7 +15,7 @@ void main() {
   group("convert to domain", () {
     test('convert local model to domain model', () {
       var result = pokemonConverter
-          .convertToDomain(PokemonRepoMocks.detailedPokedexPokemonLocalModel);
+          .convertToDomain(PokemonRepoMocks.pokemonLocalModelWithEntryNumbers);
 
       expect(result, PokemonRepoMocks.pokemonDomainModel);
     });
@@ -24,7 +24,7 @@ void main() {
       var result = pokemonConverter.convertListToDomain(
           PokemonRepoMocks.detailedPokedexPokemonLocalList);
 
-      expect(result, PokemonRepoMocks.pokemonDomainList);
+      expect(result, PokemonRepoMocks.pokemonPokedexDetailDomainList);
     });
   });
 

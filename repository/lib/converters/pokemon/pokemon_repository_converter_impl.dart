@@ -24,11 +24,24 @@ class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
 
   @override
   PokemonModel convertToDomain(PokemonLocalModel pokemon) => PokemonModel(
-      id: pokemon.id,
-      name: pokemon.name,
-      pokedexEntryNumbers: pokemon.pokedexEntryNumbers,
-      types: pokemon.types,
-      imageUrl: pokemon.frontSpriteUrl);
+        id: pokemon.id,
+        name: pokemon.name,
+        pokedexEntryNumbers: pokemon.pokedexEntryNumbers,
+        types: pokemon.types,
+        imageUrl: pokemon.frontSpriteUrl,
+        hp: pokemon.hp,
+        attack: pokemon.attack,
+        defense: pokemon.defense,
+        specialAttack: pokemon.specialAttack,
+        specialDefense: pokemon.specialDefense,
+        speed: pokemon.speed,
+        hpEvYield: pokemon.hpEvYield,
+        attackEvYield: pokemon.attackEvYield,
+        defenseEvYield: pokemon.defenseEvYield,
+        specialAttackEvYield: pokemon.specialAttackEvYield,
+        specialDefenseEvYield: pokemon.specialDefenseEvYield,
+        speedEvYield: pokemon.speedEvYield,
+      );
 
   @override
   PokemonLocalModel? convertToLocal(PokemonDataModel pokemon) {
