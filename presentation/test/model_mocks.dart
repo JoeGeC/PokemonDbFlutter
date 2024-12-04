@@ -27,7 +27,8 @@ int pokedexEntryNumber = 101;
 String pokedexEntryNumberPresentation = "101";
 String pokemonNationalDexNumber = "0001";
 String pokemonName = "Example Pokemon";
-List<String> pokemonTypes = ["Grass"];
+List<String> pokemonPresenterTypes = ["Grass", "Psychic"];
+List<String> pokemonDomainTypes = ["grass", "psychic"];
 Map<int, int> pokedexEntryNumbers = {pokedexId1: pokedexEntryNumber};
 String pokemonImageUrl1 = "https://pokeapi.com/asd.png";
 
@@ -35,7 +36,8 @@ PokemonModel pokemonModel = PokemonModel(
   id: pokemonId,
   name: pokemonName,
   pokedexEntryNumbers: pokedexEntryNumbers,
-  imageUrl: pokemonImageUrl1
+  imageUrl: pokemonImageUrl1,
+  types: pokemonDomainTypes
 );
 
 PokemonPresentationModel pokemonPresentationModel = PokemonPresentationModel(
@@ -43,7 +45,7 @@ PokemonPresentationModel pokemonPresentationModel = PokemonPresentationModel(
   name: pokemonName,
   imageUrl: pokemonImageUrl1,
   nationalDexNumber: pokemonNationalDexNumber,
-  types: pokemonTypes,
+  types: pokemonPresenterTypes,
 );
 
 PokedexPokemonPresentationModel pokedexPokemonPresentationModel =
@@ -52,7 +54,7 @@ PokedexPokemonPresentationModel pokedexPokemonPresentationModel =
   nationalDexNumber: pokemonNationalDexNumber,
   pokedexEntryNumber: pokedexEntryNumberPresentation,
   name: pokemonName,
-  types: pokemonTypes,
+  types: pokemonPresenterTypes,
   imageUrl: pokemonImageUrl1
 );
 

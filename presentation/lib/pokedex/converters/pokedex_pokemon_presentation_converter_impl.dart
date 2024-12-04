@@ -1,9 +1,9 @@
 import 'package:domain/models/pokemon_model.dart';
 import 'package:presentation/common/utils/extensions.dart';
-import 'package:presentation/pokemon/converters/pokedex_pokemon_presentation_converter.dart';
-import '../../pokedex/models/pokedex_pokemon_presentation_model.dart';
+import 'package:presentation/pokedex/converters/pokedex_pokemon_presentation_converter.dart';
+import '../models/pokedex_pokemon_presentation_model.dart';
 
-class PokedexPokemonPresentationConverterImpl extends PokedexPokemonPresentationConverter {
+class PokedexPokemonPresentationConverterImpl implements PokedexPokemonPresentationConverter {
   @override
   List<PokedexPokemonPresentationModel> convertList(
           List<PokemonModel> pokemonList, int pokedexId) =>

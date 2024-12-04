@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:domain/usecases/pokemon_usecase.dart';
 
 import '../../../common/bloc/base_state.dart';
-import '../../../pokemon/converters/pokedex_pokemon_presentation_converter.dart';
+import '../../converters/pokedex_pokemon_presentation_converter.dart';
 import '../../models/pokedex_pokemon_presentation_model.dart';
 
 part 'pokedex_pokemon_event.dart';

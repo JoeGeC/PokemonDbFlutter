@@ -10,10 +10,10 @@ import 'package:domain/models/Failure.dart';
 import 'package:domain/models/pokemon_model.dart' as _i6;
 import 'package:domain/usecases/pokemon_usecase.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:presentation/pokedex/converters/pokedex_pokemon_presentation_converter.dart'
+    as _i7;
 import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart'
     as _i3;
-import 'package:presentation/pokemon/converters/pokedex_pokemon_presentation_converter.dart'
-    as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

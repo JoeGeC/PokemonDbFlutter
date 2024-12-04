@@ -2,11 +2,11 @@ import 'package:domain/models/pokedex_constants/pokemon_region.dart';
 import 'package:domain/models/pokedex_constants/pokemon_version.dart';
 import 'package:domain/models/pokedex_constants/pokedex_name.dart';
 import 'package:domain/models/pokedex_model.dart';
+import 'package:presentation/pokedex/converters/pokedex_pokemon_presentation_converter.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:collection/collection.dart';
 
-import '../../pokemon/converters/pokedex_pokemon_presentation_converter.dart';
 import '../models/pokedex_group_presentation_model.dart';
 
 class PokedexPresentationConverterImpl implements PokedexPresentationConverter {
