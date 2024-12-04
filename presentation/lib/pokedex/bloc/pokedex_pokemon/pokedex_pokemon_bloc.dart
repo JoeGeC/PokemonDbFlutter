@@ -9,8 +9,7 @@ part 'pokedex_pokemon_event.dart';
 
 part 'pokedex_pokemon_state.dart';
 
-class PokedexPokemonBloc
-    extends Bloc<PokedexPokemonEvent, BaseState> {
+class PokedexPokemonBloc extends Bloc<PokedexPokemonEvent, BaseState> {
   final PokemonUseCase _pokemonUseCase;
   final PokedexPokemonPresentationConverter _pokemonConverter;
 
@@ -26,20 +25,21 @@ class PokedexPokemonBloc
       GetPokedexPokemonEvent event, Emitter<BaseState> emit) async {
     var pokemonId = event.pokemon.id;
     emit(LoadingState());
-    if(event.pokemon.hasPokedexDetails){
+    if (event.pokemon.hasPokedexDetails) {
       emit(PokedexPokemonSuccessState(event.pokemon));
       return;
     }
     await _getPokemonFromRepo(pokemonId, emit, event);
   }
 
-  Future<void> _getPokemonFromRepo(int pokemonId, Emitter<BaseState> emit, GetPokedexPokemonEvent event) async {
+  Future<void> _getPokemonFromRepo(int pokemonId, Emitter<BaseState> emit,
+      GetPokedexPokemonEvent event) async {
     final result = await _pokemonUseCase.getPokemon(pokemonId);
     result.fold((failure) {
       emit(ErrorState(failure.errorMessage));
     }, (pokemonModel) {
-      var presentationPokemon =
-          _pokemonConverter.convert(pokemonModel, event.pokedexId);
+      var presentationPokemon = _pokemonConverter.convertPokedexPokemon(
+          pokemonModel, event.pokedexId);
       emit(PokedexPokemonSuccessState(presentationPokemon));
     });
   }

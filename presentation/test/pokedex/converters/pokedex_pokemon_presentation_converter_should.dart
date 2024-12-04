@@ -30,7 +30,7 @@ void main() {
   });
 
   test('convert pokemon', () {
-    var result = converter.convert(pokemonModel, pokedexId);
+    var result = converter.convertPokedexPokemon(pokemonModel, pokedexId);
 
     expect(result, presentationPokemonModel);
   });

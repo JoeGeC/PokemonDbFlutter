@@ -3,5 +3,5 @@ import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.d
 
 abstract class PokedexPokemonPresentationConverter{
   List<PokedexPokemonPresentationModel> convertList(List<PokemonModel> pokemonList, int pokedexId);
-  PokedexPokemonPresentationModel convert(PokemonModel pokemon, int pokedexId);
+  PokedexPokemonPresentationModel convertPokedexPokemon(PokemonModel pokemon, int pokedexId);
 }
