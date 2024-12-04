@@ -100,7 +100,6 @@ class _PokemonPageState extends State<PokemonPage> {
       );
 
   Widget buildPokemonStats(PokemonPresentationModel pokemon) {
-    print(pokemon.hp);
     return animatedBar(
       value: pokemon.hp ?? 0,
     );
