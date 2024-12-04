@@ -7,9 +7,9 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:presentation/common/bloc/base_state.dart';
 import 'package:presentation/pokedex/bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
-import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
+import 'package:presentation/pokemon/converters/pokedex_pokemon_presentation_converter.dart';
 
-import '../../model_mocks.dart';
+import '../../../model_mocks.dart';
 import 'pokedex_pokemon_bloc_should.mocks.dart';
 
 @GenerateMocks([PokemonUseCase, PokedexPokemonPresentationConverter])

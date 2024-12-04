@@ -30,8 +30,8 @@ class PokedexBloc extends Bloc<PokedexEvent, BaseState> {
     result.fold((failure) {
       emitter(ErrorState(failure.errorMessage));
     }, (pokedexModel) {
-      var localPokedex = _pokedexConverter.convert(pokedexModel);
-      emitter(PokedexSuccessState(localPokedex));
+      var presentationPokedex = _pokedexConverter.convert(pokedexModel);
+      emitter(PokedexSuccessState(presentationPokedex));
     });
   }
 

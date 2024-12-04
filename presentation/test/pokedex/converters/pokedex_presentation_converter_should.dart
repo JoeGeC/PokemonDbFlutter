@@ -10,7 +10,7 @@ import 'package:presentation/pokedex/converters/pokedex_presentation_converter_i
 import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
-import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
+import 'package:presentation/pokemon/converters/pokedex_pokemon_presentation_converter.dart';
 
 import 'pokedex_presentation_converter_should.mocks.dart';
 

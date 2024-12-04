@@ -6,6 +6,7 @@ import 'package:domain/models/pokemon_model.dart';
 import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
+import 'package:presentation/pokemon/models/pokemon_presentation_model.dart';
 
 int pokedexId1 = 11;
 int pokedexId2 = 12;
@@ -33,6 +34,14 @@ PokemonModel pokemonModel = PokemonModel(
   name: pokemonName,
   pokedexEntryNumbers: pokedexEntryNumbers,
   imageUrl: pokemonImageUrl1
+);
+
+PokemonPresentationModel pokemonPresentationModel = PokemonPresentationModel(
+  id: pokemonId,
+  name: pokemonName,
+  imageUrl: pokemonImageUrl1,
+  nationalDexNumber: pokemonNationalDexNumber,
+  types: pokemonTypes,
 );
 
 PokedexPokemonPresentationModel pokedexPokemonPresentationModel =

@@ -6,7 +6,7 @@ import 'package:presentation/pokedex/converters/pokedex_presentation_converter.d
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:collection/collection.dart';
 
-import '../../pokemon/converters/pokemon_presentation_converter.dart';
+import '../../pokemon/converters/pokedex_pokemon_presentation_converter.dart';
 import '../models/pokedex_group_presentation_model.dart';
 
 class PokedexPresentationConverterImpl implements PokedexPresentationConverter {
