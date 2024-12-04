@@ -43,7 +43,19 @@ class DatabaseInitializer {
         ${DatabaseColumnNames.id} ${SqlCommands.intPrimaryKey}, 
         ${DatabaseColumnNames.name} ${SqlCommands.textType},
         ${DatabaseColumnNames.types} ${SqlCommands.textType},
-        ${DatabaseColumnNames.frontSpriteUrl} ${SqlCommands.textType}
+        ${DatabaseColumnNames.frontSpriteUrl} ${SqlCommands.textType},
+        ${DatabaseColumnNames.hp} ${SqlCommands.intType},
+        ${DatabaseColumnNames.attack} ${SqlCommands.intType},
+        ${DatabaseColumnNames.defense} ${SqlCommands.intType},
+        ${DatabaseColumnNames.specialAttack} ${SqlCommands.intType},
+        ${DatabaseColumnNames.specialDefense} ${SqlCommands.intType},
+        ${DatabaseColumnNames.speed} ${SqlCommands.intType},
+        ${DatabaseColumnNames.hpEvYield} ${SqlCommands.intType},
+        ${DatabaseColumnNames.attackEvYield} ${SqlCommands.intType},
+        ${DatabaseColumnNames.defenseEvYield} ${SqlCommands.intType},
+        ${DatabaseColumnNames.specialAttackEvYield} ${SqlCommands.intType},
+        ${DatabaseColumnNames.specialDefenseEvYield} ${SqlCommands.intType},
+        ${DatabaseColumnNames.speedEvYield} ${SqlCommands.intType}
       )
     ''');
   }

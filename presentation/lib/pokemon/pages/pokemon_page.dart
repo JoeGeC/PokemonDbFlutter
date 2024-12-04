@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:presentation/common/widgets/animated_bar.dart';
 import 'package:presentation/common/widgets/pokemon_image_with_background.dart';
 import 'package:presentation/pokedex/widgets/pokedex_header_widget.dart';
 import 'package:presentation/pokemon/models/pokemon_presentation_model.dart';
@@ -92,8 +93,16 @@ class _PokemonPageState extends State<PokemonPage> {
                 pokemon.name,
                 style: theme.textTheme.titleMedium,
               ),
+              buildPokemonStats(pokemon),
             ],
           ),
         ),
       );
+
+  Widget buildPokemonStats(PokemonPresentationModel pokemon) {
+    print(pokemon.hp);
+    return animatedBar(
+      value: pokemon.hp ?? 0,
+    );
+  }
 }

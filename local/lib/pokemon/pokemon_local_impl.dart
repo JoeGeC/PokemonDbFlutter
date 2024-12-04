@@ -19,7 +19,8 @@ class PokemonLocalImpl implements PokemonLocal {
     var pokemonFromDatabase = await _getPokemonFromDatabase(id);
     if (pokemonFromDatabase.isEmpty) return Left(DataFailure("No data"));
     var entryNumbers = _extractEntryNumbers(pokemonFromDatabase);
-    var result = _buildPokemonModel(pokemonFromDatabase.first, entryNumbers);
+    var result = pokemonConverter.convertFromDatabase(
+        pokemonFromDatabase.first, entryNumbers);
     return Right(result);
   }
 
@@ -42,20 +43,9 @@ class PokemonLocalImpl implements PokemonLocal {
     return pokedexEntryNumbers;
   }
 
-  PokemonLocalModel _buildPokemonModel(
-          Map<String, Object?> pokemon, Map<int, int> entryNumbers) =>
-      PokemonLocalModel(
-        id: pokemon[DatabaseColumnNames.pokemonId] as int,
-        name: pokemon[DatabaseColumnNames.pokemonName] as String,
-        types:
-            (pokemon[DatabaseColumnNames.pokemonTypes] as String?)?.split(','),
-        frontSpriteUrl: pokemon[DatabaseColumnNames.frontSpriteUrl] as String?,
-        pokedexEntryNumbers: entryNumbers,
-      );
-
   @override
   Future store(PokemonLocalModel pokemonModel) async {
-    var pokemonMap = pokemonConverter.convert(pokemonModel);
+    var pokemonMap = pokemonConverter.convertToDatabase(pokemonModel);
     upsertPokemon(pokemonMap);
   }
 
@@ -65,18 +55,54 @@ class PokemonLocalImpl implements PokemonLocal {
       ${DatabaseColumnNames.id}, 
       ${DatabaseColumnNames.name}, 
       ${DatabaseColumnNames.types}, 
-      ${DatabaseColumnNames.frontSpriteUrl}
+      ${DatabaseColumnNames.frontSpriteUrl},
+      ${DatabaseColumnNames.hp},
+      ${DatabaseColumnNames.attack},
+      ${DatabaseColumnNames.defense},
+      ${DatabaseColumnNames.specialAttack},
+      ${DatabaseColumnNames.specialDefense},
+      ${DatabaseColumnNames.speed},
+      ${DatabaseColumnNames.hpEvYield},
+      ${DatabaseColumnNames.attackEvYield},
+      ${DatabaseColumnNames.defenseEvYield},
+      ${DatabaseColumnNames.specialAttackEvYield},
+      ${DatabaseColumnNames.specialDefenseEvYield},
+      ${DatabaseColumnNames.speedEvYield}
     )
-    VALUES (?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(${DatabaseColumnNames.id}) DO UPDATE SET
       ${DatabaseColumnNames.name} = excluded.${DatabaseColumnNames.name},
       ${DatabaseColumnNames.types} = excluded.${DatabaseColumnNames.types},
-      ${DatabaseColumnNames.frontSpriteUrl} = excluded.${DatabaseColumnNames.frontSpriteUrl};
+      ${DatabaseColumnNames.frontSpriteUrl} = excluded.${DatabaseColumnNames.frontSpriteUrl},
+      ${DatabaseColumnNames.hp} = excluded.${DatabaseColumnNames.hp},
+      ${DatabaseColumnNames.attack} = excluded.${DatabaseColumnNames.attack},
+      ${DatabaseColumnNames.defense} = excluded.${DatabaseColumnNames.defense},
+      ${DatabaseColumnNames.specialAttack} = excluded.${DatabaseColumnNames.specialAttack},
+      ${DatabaseColumnNames.specialDefense} = excluded.${DatabaseColumnNames.specialDefense},
+      ${DatabaseColumnNames.speed} = excluded.${DatabaseColumnNames.speed},
+      ${DatabaseColumnNames.hpEvYield} = excluded.${DatabaseColumnNames.hpEvYield},
+      ${DatabaseColumnNames.attackEvYield} = excluded.${DatabaseColumnNames.attackEvYield},
+      ${DatabaseColumnNames.defenseEvYield} = excluded.${DatabaseColumnNames.defenseEvYield},
+      ${DatabaseColumnNames.specialAttackEvYield} = excluded.${DatabaseColumnNames.specialAttackEvYield},
+      ${DatabaseColumnNames.specialDefenseEvYield} = excluded.${DatabaseColumnNames.specialDefenseEvYield},
+      ${DatabaseColumnNames.speedEvYield} = excluded.${DatabaseColumnNames.speedEvYield};
   ''', [
       pokemonData[DatabaseColumnNames.id],
       pokemonData[DatabaseColumnNames.name],
       pokemonData[DatabaseColumnNames.types],
       pokemonData[DatabaseColumnNames.frontSpriteUrl],
+      pokemonData[DatabaseColumnNames.hp],
+      pokemonData[DatabaseColumnNames.attack],
+      pokemonData[DatabaseColumnNames.defense],
+      pokemonData[DatabaseColumnNames.specialAttack],
+      pokemonData[DatabaseColumnNames.specialDefense],
+      pokemonData[DatabaseColumnNames.speed],
+      pokemonData[DatabaseColumnNames.hpEvYield],
+      pokemonData[DatabaseColumnNames.attackEvYield],
+      pokemonData[DatabaseColumnNames.defenseEvYield],
+      pokemonData[DatabaseColumnNames.specialAttackEvYield],
+      pokemonData[DatabaseColumnNames.specialDefenseEvYield],
+      pokemonData[DatabaseColumnNames.speedEvYield],
     ]);
   }
 }

@@ -13,7 +13,7 @@ void main() {
   });
 
   test('converts valid PokemonLocalModel', () {
-    final result = converter.convert(MockLocalPokemon.pokemon);
+    final result = converter.convertToDatabase(MockLocalPokemon.pokemon);
 
     expect(result, {
       DatabaseColumnNames.id: MockLocalPokemon.pokemonId,
@@ -36,7 +36,7 @@ void main() {
   });
 
   test('converts a PokemonLocalModel with null values', () {
-    final result = converter.convert(MockLocalPokemon.pokemonNullValues);
+    final result = converter.convertToDatabase(MockLocalPokemon.pokemonNullValues);
 
     expect(result, {
       DatabaseColumnNames.id: MockLocalPokemon.pokemonId,
@@ -59,7 +59,7 @@ void main() {
   });
 
   test('converts a PokemonLocalModel with empty types', () {
-    final result = converter.convert(MockLocalPokemon.pokemonEmptyTypes);
+    final result = converter.convertToDatabase(MockLocalPokemon.pokemonEmptyTypes);
 
     expect(result, {
       DatabaseColumnNames.id: MockLocalPokemon.pokemonId,

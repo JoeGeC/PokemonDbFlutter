@@ -3,9 +3,9 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:local/converters/pokemon_local_converter.dart' as _i2;
+import 'package:local/converters/pokemon_local_converter.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:repository/models/local/pokemon_local_model.dart' as _i3;
+import 'package:repository/models/local/pokemon_local_model.dart' as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -20,22 +20,58 @@ import 'package:repository/models/local/pokemon_local_model.dart' as _i3;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakePokemonLocalModel_0 extends _i1.SmartFake
+    implements _i2.PokemonLocalModel {
+  _FakePokemonLocalModel_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [PokemonLocalConverter].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPokemonLocalConverter extends _i1.Mock
-    implements _i2.PokemonLocalConverter {
+    implements _i3.PokemonLocalConverter {
   MockPokemonLocalConverter() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  Map<String, dynamic> convert(_i3.PokemonLocalModel? pokemon) =>
+  Map<String, dynamic> convertToDatabase(_i2.PokemonLocalModel? pokemon) =>
       (super.noSuchMethod(
         Invocation.method(
-          #convert,
+          #convertToDatabase,
           [pokemon],
         ),
         returnValue: <String, dynamic>{},
       ) as Map<String, dynamic>);
+
+  @override
+  _i2.PokemonLocalModel convertFromDatabase(
+    Map<String, Object?>? pokemon,
+    Map<int, int>? entryNumbers,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #convertFromDatabase,
+          [
+            pokemon,
+            entryNumbers,
+          ],
+        ),
+        returnValue: _FakePokemonLocalModel_0(
+          this,
+          Invocation.method(
+            #convertFromDatabase,
+            [
+              pokemon,
+              entryNumbers,
+            ],
+          ),
+        ),
+      ) as _i2.PokemonLocalModel);
 }

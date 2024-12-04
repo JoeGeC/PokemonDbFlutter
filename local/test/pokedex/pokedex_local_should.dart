@@ -167,7 +167,7 @@ void main() {
       test('store pokedex with pokemon', () async {
         when(mockPokedexConverter.convert(pokedexModel1))
             .thenReturn(pokedexMap1);
-        when(mockPokemonConverter.convert(pokemonModel)).thenReturn(pokemonMap);
+        when(mockPokemonConverter.convertToDatabase(pokemonModel)).thenReturn(pokemonMap);
 
         await pokedexLocal.store(pokedexModel1);
 
@@ -211,7 +211,7 @@ void main() {
       test('ignores duplicate pokemon data', () async {
         when(mockPokedexConverter.convert(pokedexModel1))
             .thenReturn(pokedexMap1);
-        when(mockPokemonConverter.convert(pokemonModel)).thenReturn(pokemonMap);
+        when(mockPokemonConverter.convertToDatabase(pokemonModel)).thenReturn(pokemonMap);
         await pokedexLocal.store(pokedexModel1);
         await pokedexLocal.store(pokedexModel1);
 
@@ -223,8 +223,8 @@ void main() {
       test('stores multiple pokemon in a single batch', () async {
         when(mockPokedexConverter.convert(multPokemonPokedexModel))
             .thenReturn(pokedexMap1);
-        when(mockPokemonConverter.convert(pokemonModel)).thenReturn(pokemonMap);
-        when(mockPokemonConverter.convert(pokemonModel2))
+        when(mockPokemonConverter.convertToDatabase(pokemonModel)).thenReturn(pokemonMap);
+        when(mockPokemonConverter.convertToDatabase(pokemonModel2))
             .thenReturn(pokemon2Map);
 
         await pokedexLocal.store(multPokemonPokedexModel);

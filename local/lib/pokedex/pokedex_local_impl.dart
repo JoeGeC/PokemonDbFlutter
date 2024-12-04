@@ -141,7 +141,7 @@ class PokedexLocalImpl implements PokedexLocal {
   void _insertPokemonData(Batch batch, PokemonLocalModel pokemon) async {
     batch.insert(
       DatabaseTableNames.pokemon,
-      pokemonConverter.convert(pokemon),
+      pokemonConverter.convertToDatabase(pokemon),
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );
   }
