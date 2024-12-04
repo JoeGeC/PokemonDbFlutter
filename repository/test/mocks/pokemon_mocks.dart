@@ -1,8 +1,9 @@
 import 'package:domain/models/pokemon_model.dart';
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 import 'package:repository/models/data/pokemon/pokemon_data_model.dart';
-import 'package:repository/models/data/stat/pokemon_stat_data_model.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
+
+import 'stat_mocks.dart';
 
 class PokemonRepoMocks {
   static final int pokedexId = 5;
@@ -16,20 +17,6 @@ class PokemonRepoMocks {
   static final String pokemonUrl =
       "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
   static final Map<int, int> pokedexEntryNumbers = {pokedexId: pokemonEntryId};
-
-  static final int baseStat1 = 45;
-  static final int statEffort1 = 1;
-  static final String statName1 = "hp";
-  static final String statUrl1 = "https://pokeapi.co/api/v2/stat/1/";
-  static final int baseStat2 = 49;
-  static final int statEffort2 = 0;
-  static final String statName2 = "attack";
-  static final String statUrl2 = "https://pokeapi.co/api/v2/stat/2/";
-  static final PokemonStatDataModel stat1 =
-      PokemonStatDataModel(baseStat1, statEffort1, statName1, statUrl1);
-  static final PokemonStatDataModel stat2 =
-      PokemonStatDataModel(baseStat2, statEffort2, statName2, statUrl2);
-  static final List<PokemonStatDataModel> pokemonStats = [stat1, stat2];
 
   static final PokemonLocalModel undetailedPokedexPokemonLocalModel =
       PokemonLocalModel(
@@ -53,6 +40,18 @@ class PokemonRepoMocks {
     name: pokemonName,
     types: pokemonTypes,
     frontSpriteUrl: frontSpriteUrl,
+    hp: StatRepoMocks.baseStatHp,
+    attack: StatRepoMocks.baseStatAttack,
+    defense: StatRepoMocks.baseStatDefense,
+    specialAttack: StatRepoMocks.baseStatSpecialAttack,
+    specialDefense: StatRepoMocks.baseStatSpecialDefense,
+    speed: StatRepoMocks.baseStatSpeed,
+    hpEvYield: StatRepoMocks.statEffortHp,
+    attackEvYield: StatRepoMocks.statEffortAttack,
+    defenseEvYield: StatRepoMocks.statEffortDefense,
+    specialAttackEvYield: StatRepoMocks.statEffortSpecialAttack,
+    specialDefenseEvYield: StatRepoMocks.statEffortSpecialDefense,
+    speedEvYield: StatRepoMocks.statEffortSpeed,
   );
 
   static final PokemonLocalModel pokemonLocalModelWithEntryNumbers =
@@ -90,7 +89,7 @@ class PokemonRepoMocks {
     name: pokemonName,
     types: pokemonTypes,
     frontSpriteUrl: frontSpriteUrl,
-    stats: pokemonStats,
+    stats: StatRepoMocks.pokemonStats,
   );
 
   static final PokedexPokemonDataModel pokedexPokemonDataModel =
@@ -116,7 +115,7 @@ class PokemonRepoMocks {
     name: pokemonName,
     types: [pokemonType1],
     frontSpriteUrl: frontSpriteUrl,
-    stats: pokemonStats,
+    stats: StatRepoMocks.pokemonStats,
   );
 
   static final PokemonDataModel nullNamePokemonDataModel = PokemonDataModel(
@@ -124,7 +123,7 @@ class PokemonRepoMocks {
     name: null,
     types: [pokemonType1],
     frontSpriteUrl: frontSpriteUrl,
-    stats: pokemonStats,
+    stats: StatRepoMocks.pokemonStats,
   );
 
   static final List<PokemonModel> pokemonDomainList = [pokemonDomainModel];

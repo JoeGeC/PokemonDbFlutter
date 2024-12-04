@@ -44,4 +44,7 @@ class PokemonDataModel extends Equatable {
 
   @override
   List<Object?> get props => [id, name, types, frontSpriteUrl, stats];
+
+  PokemonStatDataModel getStat(String statName) =>
+      stats.where((stat) => stat.name == statName).first;
 }

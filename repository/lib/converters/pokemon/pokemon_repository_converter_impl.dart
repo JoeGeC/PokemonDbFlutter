@@ -2,6 +2,7 @@ import 'package:domain/models/pokemon_model.dart';
 import 'package:repository/converters/BaseRepositoryConverter.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter.dart';
 import 'package:repository/models/data/pokemon/pokemon_data_model.dart';
+import 'package:repository/models/data/stat/pokemon_stat_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
 
@@ -30,6 +31,18 @@ class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
         name: getPokemonName(pokemon.name),
         types: pokemon.types,
         frontSpriteUrl: pokemon.frontSpriteUrl,
+        hp: pokemon.getStat("hp").baseStat,
+        attack: pokemon.getStat("attack").baseStat,
+        defense: pokemon.getStat("defense").baseStat,
+        specialAttack: pokemon.getStat("special-attack").baseStat,
+        specialDefense: pokemon.getStat("special-defense").baseStat,
+        speed: pokemon.getStat("speed").baseStat,
+        hpEvYield: pokemon.getStat("hp").effort,
+        attackEvYield: pokemon.getStat("attack").effort,
+        defenseEvYield: pokemon.getStat("defense").effort,
+        specialAttackEvYield: pokemon.getStat("special-attack").effort,
+        specialDefenseEvYield: pokemon.getStat("special-defense").effort,
+        speedEvYield: pokemon.getStat("speed").effort,
       );
     } catch (e) {
       return null;
