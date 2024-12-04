@@ -9,6 +9,7 @@ import 'package:repository/models/data_failure.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import '../mocks/mock_database.dart';
+import '../mocks/mock_pokedex.dart';
 import '../mocks/mock_pokemon.dart';
 import '../pokedex/pokedex_local_should.mocks.dart';
 
@@ -37,7 +38,7 @@ void main() {
     test('return PokemonLocalModel when data is found', () async {
       await mockDatabase.insertDetailedPokemon();
       await mockDatabase.insertPokedexEntry(
-        MockLocalPokemon.pokedexId1,
+        MockLocalPokedex.pokedexId1,
         MockLocalPokemon.pokemonId,
         MockLocalPokemon.pokedexEntryNumber1,
       );
@@ -54,12 +55,12 @@ void main() {
         () async {
       await mockDatabase.insertDetailedPokemon();
       await mockDatabase.insertPokedexEntry(
-        MockLocalPokemon.pokedexId1,
+        MockLocalPokedex.pokedexId1,
         MockLocalPokemon.pokemonId,
         MockLocalPokemon.pokedexEntryNumber1,
       );
       await mockDatabase.insertPokedexEntry(
-        MockLocalPokemon.pokedexId2,
+        MockLocalPokedex.pokedexId2,
         MockLocalPokemon.pokemonId,
         MockLocalPokemon.pokedexEntryNumber2,
       );

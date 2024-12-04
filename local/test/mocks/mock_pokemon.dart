@@ -1,24 +1,26 @@
 import 'package:local/database_constants.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
+import 'mock_pokedex.dart';
 
 class MockLocalPokemon {
   static const int pokemonId = 101;
-  static const int pokedexId1 = 1;
-  static const int pokedexId2 = 2;
+  static const int pokemonId2 = 102;
   static const String pokemonName = "Sample Pokemon";
+  static const String pokemonName2 = "Sample Pokemon 2";
   static const String pokemonType1 = "grass";
   static const String pokemonType2 = "poison";
+  static const String pokemonType3 = "flying";
   static const List<String> pokemonTypes = [pokemonType1, pokemonType2];
   static const String pokemonTypesAsString = "grass,poison";
   static const String pokemonFrontSpriteUrl = "https://example.com/example.png";
   static const int pokedexEntryNumber1 = 5;
   static const pokedexEntryNumber2 = 6;
   static const Map<int, int> pokedexEntryNumbers = {
-    pokedexId1: pokedexEntryNumber1
+    MockLocalPokedex.pokedexId1: pokedexEntryNumber1
   };
   static const Map<int, int> pokedexEntryNumbersMultiple = {
-    pokedexId1: pokedexEntryNumber1,
-    pokedexId2: pokedexEntryNumber2
+    MockLocalPokedex.pokedexId1: pokedexEntryNumber1,
+    MockLocalPokedex.pokedexId2: pokedexEntryNumber2
   };
   static const int baseStatHp = 11;
   static const int statEffortHp = 1;
@@ -51,6 +53,14 @@ class MockLocalPokemon {
     specialAttackEvYield: statEffortSpecialAttack,
     specialDefenseEvYield: statEffortSpecialDefense,
     speedEvYield: statEffortSpeed,
+  );
+
+  static const PokemonLocalModel pokemon2 = PokemonLocalModel(
+    id: pokemonId2,
+    name: pokemonName2,
+    types: [pokemonType3],
+    frontSpriteUrl: null,
+    pokedexEntryNumbers: {MockLocalPokedex.pokedexId1: pokedexEntryNumber2},
   );
 
   static const pokemonNullValues = PokemonLocalModel(
@@ -112,4 +122,36 @@ class MockLocalPokemon {
     DatabaseColumnNames.specialDefenseEvYield: MockLocalPokemon.statEffortSpecialDefense,
     DatabaseColumnNames.speedEvYield: MockLocalPokemon.statEffortSpeed,
   };
+
+  static const undetailedPokemonMap = {
+    DatabaseColumnNames.id: pokemonId,
+    DatabaseColumnNames.name: pokemonName,
+    DatabaseColumnNames.types: "$pokemonType1,$pokemonType2",
+    DatabaseColumnNames.frontSpriteUrl: pokemonFrontSpriteUrl,
+    DatabaseColumnNames.hp: null,
+    DatabaseColumnNames.attack: null,
+    DatabaseColumnNames.defense: null,
+    DatabaseColumnNames.specialAttack: null,
+    DatabaseColumnNames.specialDefense: null,
+    DatabaseColumnNames.speed: null,
+    DatabaseColumnNames.hpEvYield: null,
+    DatabaseColumnNames.attackEvYield: null,
+    DatabaseColumnNames.defenseEvYield: null,
+    DatabaseColumnNames.specialAttackEvYield: null,
+    DatabaseColumnNames.specialDefenseEvYield: null,
+    DatabaseColumnNames.speedEvYield: null,
+  };
+
+  static const undetailedPokemonMap2 = {
+    DatabaseColumnNames.id: pokemonId2,
+    DatabaseColumnNames.name: pokemonName2,
+    DatabaseColumnNames.types: pokemonType3,
+  };
+
+  static const pokedexEntryMap = {
+    DatabaseColumnNames.pokemonId: pokemonId,
+    DatabaseColumnNames.pokedexId: MockLocalPokedex.pokedexId1,
+    DatabaseColumnNames.entryNumber: pokedexEntryNumber1,
+  };
+
 }
