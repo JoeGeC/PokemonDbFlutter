@@ -12,6 +12,18 @@ class PokemonPresentationConverterImpl implements PokemonPresentationConverter {
       name: convertName(pokemon.name),
       imageUrl: pokemon.imageUrl,
       types: convertTypes(pokemon.types),
+      hp: pokemon.hp,
+      attack: pokemon.attack,
+      defense: pokemon.defense,
+      specialAttack: pokemon.specialAttack,
+      specialDefense: pokemon.specialDefense,
+      speed: pokemon.speed,
+      hpEvYield: pokemon.hpEvYield,
+      attackEvYield: pokemon.attackEvYield,
+      defenseEvYield: pokemon.defenseEvYield,
+      specialAttackEvYield: pokemon.specialAttackEvYield,
+      specialDefenseEvYield: pokemon.specialDefenseEvYield,
+      speedEvYield: pokemon.speedEvYield,
     );
   }
 

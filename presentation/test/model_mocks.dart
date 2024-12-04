@@ -32,12 +32,37 @@ List<String> pokemonDomainTypes = ["grass", "psychic"];
 Map<int, int> pokedexEntryNumbers = {pokedexId1: pokedexEntryNumber};
 String pokemonImageUrl1 = "https://pokeapi.com/asd.png";
 
+int baseStatHp = 11;
+int statEffortHp = 1;
+int baseStatAttack = 12;
+int statEffortAttack = 0;
+int baseStatDefense = 13;
+int statEffortDefense = 0;
+int baseStatSpecialAttack = 14;
+int statEffortSpecialAttack = 0;
+int baseStatSpecialDefense = 15;
+int statEffortSpecialDefense = 0;
+int baseStatSpeed = 16;
+int statEffortSpeed = 0;
+
 PokemonModel pokemonModel = PokemonModel(
   id: pokemonId,
   name: pokemonName,
   pokedexEntryNumbers: pokedexEntryNumbers,
   imageUrl: pokemonImageUrl1,
-  types: pokemonDomainTypes
+  types: pokemonDomainTypes,
+  hp: baseStatHp,
+  attack: baseStatAttack,
+  defense: baseStatDefense,
+  specialAttack: baseStatSpecialAttack,
+  specialDefense: baseStatSpecialDefense,
+  speed: baseStatSpeed,
+  hpEvYield: statEffortHp,
+  attackEvYield: statEffortAttack,
+  defenseEvYield: statEffortDefense,
+  specialAttackEvYield: statEffortSpecialAttack,
+  specialDefenseEvYield: statEffortSpecialDefense,
+  speedEvYield: statEffortSpeed,
 );
 
 PokemonPresentationModel pokemonPresentationModel = PokemonPresentationModel(
@@ -46,6 +71,18 @@ PokemonPresentationModel pokemonPresentationModel = PokemonPresentationModel(
   imageUrl: pokemonImageUrl1,
   nationalDexNumber: pokemonNationalDexNumber,
   types: pokemonPresenterTypes,
+  hp: baseStatHp,
+  attack: baseStatAttack,
+  defense: baseStatDefense,
+  specialAttack: baseStatSpecialAttack,
+  specialDefense: baseStatSpecialDefense,
+  speed: baseStatSpeed,
+  hpEvYield: statEffortHp,
+  attackEvYield: statEffortAttack,
+  defenseEvYield: statEffortDefense,
+  specialAttackEvYield: statEffortSpecialAttack,
+  specialDefenseEvYield: statEffortSpecialDefense,
+  speedEvYield: statEffortSpeed,
 );
 
 PokedexPokemonPresentationModel pokedexPokemonPresentationModel =
