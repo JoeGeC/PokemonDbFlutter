@@ -47,4 +47,8 @@ class PokemonDataModel extends Equatable {
 
   PokemonStatDataModel getStat(String statName) =>
       stats.where((stat) => stat.name == statName).first;
+
+  int? getBaseStat(String statName) => getStat(statName).baseStat;
+
+  int? getEffortValue(String statName) => getStat(statName).effort;
 }

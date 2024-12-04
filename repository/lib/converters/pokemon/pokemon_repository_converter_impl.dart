@@ -10,6 +10,13 @@ import '../../models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 
 class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
     implements PokemonRepositoryConverter {
+  final String statName = "hp";
+  final String attackName = "attack";
+  final String defenseName = "defense";
+  final String specialAttackName = "special-attack";
+  final String specialDefenseName = "special-defense";
+  final String speed = "speed";
+
   @override
   List<PokemonModel> convertListToDomain(
           List<PokemonLocalModel>? localPokemonList) =>
@@ -31,18 +38,18 @@ class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
         name: getPokemonName(pokemon.name),
         types: pokemon.types,
         frontSpriteUrl: pokemon.frontSpriteUrl,
-        hp: pokemon.getStat("hp").baseStat,
-        attack: pokemon.getStat("attack").baseStat,
-        defense: pokemon.getStat("defense").baseStat,
-        specialAttack: pokemon.getStat("special-attack").baseStat,
-        specialDefense: pokemon.getStat("special-defense").baseStat,
-        speed: pokemon.getStat("speed").baseStat,
-        hpEvYield: pokemon.getStat("hp").effort,
-        attackEvYield: pokemon.getStat("attack").effort,
-        defenseEvYield: pokemon.getStat("defense").effort,
-        specialAttackEvYield: pokemon.getStat("special-attack").effort,
-        specialDefenseEvYield: pokemon.getStat("special-defense").effort,
-        speedEvYield: pokemon.getStat("speed").effort,
+        hp: pokemon.getBaseStat(statName),
+        attack: pokemon.getBaseStat(attackName),
+        defense: pokemon.getBaseStat(defenseName),
+        specialAttack: pokemon.getBaseStat(specialAttackName),
+        specialDefense: pokemon.getBaseStat(specialDefenseName),
+        speed: pokemon.getBaseStat(speed),
+        hpEvYield: pokemon.getEffortValue(statName),
+        attackEvYield: pokemon.getEffortValue(attackName),
+        defenseEvYield: pokemon.getEffortValue(defenseName),
+        specialAttackEvYield: pokemon.getEffortValue(specialAttackName),
+        specialDefenseEvYield: pokemon.getEffortValue(specialDefenseName),
+        speedEvYield: pokemon.getEffortValue(speed),
       );
     } catch (e) {
       return null;
