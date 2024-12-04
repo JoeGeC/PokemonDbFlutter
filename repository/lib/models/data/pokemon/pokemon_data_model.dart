@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../stat/pokemon_stat_data_model.dart';
+
 part 'pokemon_data_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
@@ -9,17 +11,28 @@ class PokemonDataModel extends Equatable {
   final String? name;
   final List<String>? types;
   final String? frontSpriteUrl;
+  final List<PokemonStatDataModel> stats;
 
-  const PokemonDataModel(this.id, this.name, this.types, this.frontSpriteUrl);
+  const PokemonDataModel({
+    required this.id,
+    required this.name,
+    required this.types,
+    required this.frontSpriteUrl,
+    required this.stats,
+  });
 
   factory PokemonDataModel.fromJson(Map<String, dynamic> json) {
     return PokemonDataModel(
-      json['id'],
-      json['species']['name'],
-      (json['types'] as List<dynamic>)
+      id: json['id'],
+      name: json['species']['name'],
+      types: (json['types'] as List<dynamic>)
           .map((type) => type['type']['name'] as String)
           .toList(),
-      json['sprites']['front_default']
+      frontSpriteUrl: json['sprites']['front_default'],
+      stats: (json['stats'] as List<dynamic>)
+          .map((stat) =>
+              PokemonStatDataModel.fromJson(stat as Map<String, dynamic>))
+          .toList(),
     );
   }
 
@@ -30,5 +43,5 @@ class PokemonDataModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, name, types, frontSpriteUrl];
+  List<Object?> get props => [id, name, types, frontSpriteUrl, stats];
 }

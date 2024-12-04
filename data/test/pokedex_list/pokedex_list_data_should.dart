@@ -7,7 +7,7 @@ import 'package:mockito/mockito.dart';
 import 'package:repository/models/data/pokedex_list/pokedex_list_data_model.dart';
 import 'package:repository/models/data/pokedex_list/pokedex_list_item_data_model.dart';
 
-import '../json_mocks/pokedex_json_mocks.dart';
+import '../mocks/pokedex_json_mocks.dart';
 import '../pokedex/pokedex_data_should.mocks.dart';
 
 @GenerateMocks([Dio])

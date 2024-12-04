@@ -8,10 +8,14 @@ part of 'pokemon_data_model.dart';
 
 PokemonDataModel _$PokemonDataModelFromJson(Map<String, dynamic> json) =>
     PokemonDataModel(
-      (json['id'] as num?)?.toInt(),
-      json['name'] as String?,
-      (json['types'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      json['front_sprite_url'] as String?,
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      types:
+          (json['types'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      frontSpriteUrl: json['front_sprite_url'] as String?,
+      stats: (json['stats'] as List<dynamic>)
+          .map((e) => PokemonStatDataModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$PokemonDataModelToJson(PokemonDataModel instance) =>
@@ -20,4 +24,5 @@ Map<String, dynamic> _$PokemonDataModelToJson(PokemonDataModel instance) =>
       'name': instance.name,
       'types': instance.types,
       'front_sprite_url': instance.frontSpriteUrl,
+      'stats': instance.stats,
     };
