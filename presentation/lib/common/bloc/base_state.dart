@@ -1,5 +1,7 @@
 abstract class BaseState {}
 
+class InitialState extends BaseState {}
+
 class LoadingState extends BaseState {}
 
 class ErrorState extends BaseState {
@@ -15,3 +17,5 @@ class ErrorState extends BaseState {
   @override
   int get hashCode => errorMessage.hashCode;
 }
+
+class SuccessState extends BaseState {}

@@ -1,8 +1,8 @@
 part of 'pokedex_pokemon_bloc.dart';
 
-class PokedexPokemonInitialState extends BaseState {}
+class PokedexPokemonInitialState extends InitialState {}
 
-class PokedexPokemonSuccessState extends BaseState {
+class PokedexPokemonSuccessState extends SuccessState {
   final PokedexPokemonPresentationModel pokemon;
 
   PokedexPokemonSuccessState(this.pokemon);

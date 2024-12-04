@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:presentation/pokedex/widgets/pokemon_image_with_background.dart';
+import 'package:presentation/common/widgets/pokemon_image_with_background.dart';
 
 import '../../common/bloc/base_state.dart';
 import '../../common/widgets/pokemon_types_widget.dart';

@@ -1,6 +1,6 @@
 part of 'pokemon_bloc.dart';
 
-class PokemonSuccessState extends BaseState {
+class PokemonSuccessState extends SuccessState {
   final PokemonPresentationModel pokemon;
 
   PokemonSuccessState(this.pokemon);

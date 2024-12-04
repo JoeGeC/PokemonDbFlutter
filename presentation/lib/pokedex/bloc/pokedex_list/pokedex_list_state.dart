@@ -1,6 +1,6 @@
 part of 'pokedex_list_bloc.dart';
 
-class PokedexListSuccessState extends BaseState {
+class PokedexListSuccessState extends SuccessState {
   final List<PokedexGroupPresentationModel> pokedexGroups;
 
   PokedexListSuccessState(this.pokedexGroups);

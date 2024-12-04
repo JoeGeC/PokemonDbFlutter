@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:presentation/common/widgets/pokemon_image_with_background.dart';
 import 'package:presentation/pokedex/widgets/pokedex_header_widget.dart';
 import 'package:presentation/pokemon/models/pokemon_presentation_model.dart';
 
@@ -81,10 +82,18 @@ class _PokemonPageState extends State<PokemonPage> {
                 theme: theme, title: pokemon.name, leftPadding: 50)),
         theme: theme,
         context: context,
-        body: Column(
-          children: [
-            Text(pokemon.name),
-          ],
+        body: Center(
+          child: Column(
+            children: [
+              buildPokemonImageWithBackground(
+                  _bloc.state, pokemon.imageUrl, theme, context,
+                  size: 250),
+              Text(
+                pokemon.name,
+                style: theme.textTheme.titleMedium,
+              ),
+            ],
+          ),
         ),
       );
 }

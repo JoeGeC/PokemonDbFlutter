@@ -3,20 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:presentation/common/utils/extensions.dart';
 import 'package:presentation/common/utils/is_dark_mode.dart';
 
-import '../../common/asset_constants.dart';
-import '../../common/bloc/base_state.dart';
-import '../bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
+import '../asset_constants.dart';
+import '../bloc/base_state.dart';
 
 Widget buildPokemonImageWithBackground(
-    BaseState state, String? imageUrl, ThemeData theme, BuildContext context,
-    {double size = 100}) {
-  return Stack(
-    children: [
-      buildPokemonImageBackground(size, theme),
-      buildPokemonSprite(state, imageUrl, size, context)
-    ],
-  );
-}
+  BaseState state,
+  String? imageUrl,
+  ThemeData theme,
+  BuildContext context, {
+  double size = 100,
+}) =>
+    Stack(
+      children: [
+        buildPokemonImageBackground(size, theme),
+        buildPokemonSprite(state, imageUrl, size, context)
+      ],
+    );
 
 Image buildPokemonImageBackground(double size, ThemeData theme) => Image(
       image: AssetImage(AssetConstants.pokeballBackground(isDarkMode(theme))),
@@ -34,10 +36,9 @@ Image buildPokemonFallback(String asset, double size) => Image(
 Widget buildPokemonSprite(
         BaseState state, String? imageUrl, double size, BuildContext context) =>
     switch (state) {
-      PokedexPokemonInitialState() => _buildLoadingFallback(size),
+      InitialState() => _buildLoadingFallback(size),
       LoadingState() => _buildLoadingFallback(size),
-      PokedexPokemonSuccessState() =>
-        buildPokemonSpriteFromUrl(imageUrl, size, context),
+      SuccessState() => buildPokemonSpriteFromUrl(imageUrl, size, context),
       _ => buildPokemonFallback(AssetConstants.missingno, size)
     };
 
@@ -47,6 +48,8 @@ Widget buildPokemonSpriteFromUrl(
     return buildPokemonFallback(AssetConstants.missingno, size);
   }
   return CachedNetworkImage(
+    width: size,
+    height: size,
     imageUrl: imageUrl,
     memCacheHeight: size.cacheSize(context),
     memCacheWidth: size.cacheSize(context),
