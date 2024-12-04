@@ -8,6 +8,8 @@ import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.d
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:presentation/pokemon/models/pokemon_presentation_model.dart';
 
+String errorMessage = "Error message";
+
 int pokedexId1 = 11;
 int pokedexId2 = 12;
 int pokedexId3 = 13;
