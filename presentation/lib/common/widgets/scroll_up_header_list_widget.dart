@@ -6,6 +6,7 @@ class ScrollUpHeaderListView extends StatefulWidget {
   final int itemCount;
   final String backgroundAsset;
   final double? headerHeight;
+  final Function(int)? onItemTap;
 
   const ScrollUpHeaderListView({
     super.key,
@@ -14,6 +15,7 @@ class ScrollUpHeaderListView extends StatefulWidget {
     required this.itemBuilder,
     required this.backgroundAsset,
     this.headerHeight,
+    this.onItemTap,
   });
 
   @override
@@ -49,31 +51,51 @@ class ScrollUpHeaderListViewState extends State<ScrollUpHeaderListView> {
   @override
   Widget build(BuildContext context) => Stack(
         children: [
-          Positioned.fill(
-              child: Image(
-            image: AssetImage(widget.backgroundAsset),
-            fit: BoxFit.cover,
-          )),
-          Scrollbar(
-            controller: _scrollController,
-            interactive: true,
-            thickness: 10,
-            radius: Radius.circular(4),
-            child: CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                _buildHeader(),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    widget.itemBuilder,
-                    childCount: widget.itemCount,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          buildBackground(),
+          buildScrollbar(buildScrollView()),
         ],
       );
+
+  Positioned buildBackground() {
+    return Positioned.fill(
+            child: Image(
+          image: AssetImage(widget.backgroundAsset),
+          fit: BoxFit.cover,
+        ));
+  }
+
+  Scrollbar buildScrollbar(Widget scrollView) => Scrollbar(
+          controller: _scrollController,
+          interactive: true,
+          thickness: 10,
+          radius: Radius.circular(4),
+          child: scrollView,
+        );
+
+  CustomScrollView buildScrollView() => CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              _buildHeader(),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) =>
+                      buildTappableItem(context, index),
+                  childCount: widget.itemCount,
+                ),
+              ),
+            ],
+          );
+
+  Widget buildTappableItem(BuildContext context, int index) => InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: () => onItemTap(index),
+        child: widget.itemBuilder(context, index),
+      );
+
+  onItemTap(int index) {
+    if(widget.onItemTap == null) return;
+    return widget.onItemTap!(index);
+  }
 
   SliverAppBar _buildHeader() => SliverAppBar(
       floating: true,

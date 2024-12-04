@@ -9,6 +9,7 @@ import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
 import 'package:presentation/pokedex/pages/pokedex_list_drawer_page.dart';
 import 'package:presentation/pokedex/pages/pokedex_loading_page.dart';
+import 'package:presentation/pokemon/pages/pokemon_page.dart';
 
 import '../../common/bloc/base_state.dart';
 import '../../common/pages/error_page.dart';
@@ -120,6 +121,7 @@ class _PokedexPageState extends State<PokedexPage> {
             imageSize: _pokemonImageSize),
         backgroundAsset: AssetConstants.pokedexBackground(isDarkMode(theme)),
         headerHeight: _headerHeight,
+        onItemTap: openPokemonPage,
       );
 
   Row _buildSuccessPageTitle(GlobalKey<State<StatefulWidget>> headerKey,
@@ -181,5 +183,22 @@ class _PokedexPageState extends State<PokedexPage> {
 
   Future<void> onRefresh() async {
     _bloc.addLastEvent();
+  }
+
+  openPokemonPage(int index) {
+    int? pokemonId = getPokemonIdOf(index);
+    if(pokemonId == null) return;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => PokemonPage(pokemonId: pokemonId),
+      ),
+    );
+  }
+
+  int? getPokemonIdOf(int index) {
+    if(_bloc.state is PokedexSuccessState){
+      return (_bloc.state as PokedexSuccessState).pokedex.pokemon[index].id;
+    }
+    return null;
   }
 }
