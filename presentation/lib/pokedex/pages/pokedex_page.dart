@@ -2,7 +2,6 @@ import 'package:domain/usecases/pokedex_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/common/asset_constants.dart';
-import 'package:presentation/common/text_theme.dart';
 import 'package:presentation/common/widgets/refresh_page_with_background.dart';
 import 'package:presentation/common/widgets/scroll_up_header_list_widget.dart';
 import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';

@@ -22,7 +22,6 @@ void main() {
   var pokedexName1 = PokedexName.kanto;
   var pokedexName2 = PokedexName.originalJohto;
   var pokedexName3 = PokedexName.updatedJohto;
-  var displayNameRBY = "Red, Blue, Yellow";
   var displayNameFRLG = "FireRed, LeafGreen";
   var displayNameGSC = "Gold, Silver, Crystal";
   var displayNameHGSS = "HeartGold, SoulSilver";

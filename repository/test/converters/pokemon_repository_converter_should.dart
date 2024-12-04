@@ -1,10 +1,7 @@
-import 'package:domain/models/pokemon_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter_impl.dart';
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
-import 'package:repository/models/data/pokemon/pokemon_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';
-import 'package:repository/models/local/pokemon_local_model.dart';
 
 import '../mocks/pokemon_mocks.dart';
 
