@@ -10,11 +10,11 @@ Widget buildRefreshablePageWithBackground({
   Widget? title,
   Widget? body,
 }) =>
-    SingleChildScrollView(
-      child: Stack(
-        children: [
-          _buildBackground(theme),
-          Column(
+    Stack(
+      children: [
+        _buildBackground(theme),
+        SingleChildScrollView(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               title ?? Container(),
@@ -26,8 +26,8 @@ Widget buildRefreshablePageWithBackground({
               ),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
 
 Positioned _buildBackground(ThemeData theme) => Positioned.fill(
