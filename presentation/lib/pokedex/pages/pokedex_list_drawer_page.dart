@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/common/asset_constants.dart';
 import 'package:presentation/common/utils/is_dark_mode.dart';
+import 'package:presentation/common/widgets/loading_bar.dart';
 import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 import 'package:presentation/pokedex/pages/position_scroller.dart';
@@ -45,8 +46,8 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         return bloc;
       },
       child: BlocBuilder<PokedexListBloc, BaseState>(
-        builder: (context, state) =>
-            _buildBackground(state, theme, children: _buildState(state, theme)),
+        builder: (context, state) => _buildBackground(state, theme,
+            children: _buildLoadingBar(state, theme)),
       ),
     );
   }
@@ -70,6 +71,14 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
           ),
         ),
       );
+
+  Widget _buildLoadingBar(BaseState state, ThemeData theme) {
+    if (state is CompletedState) {
+      return _buildState(state.lastState, theme);
+    } else {
+      return LoadingBar(child: _buildState(state, theme));
+    }
+  }
 
   Widget _buildState(BaseState state, ThemeData theme) {
     switch (state) {

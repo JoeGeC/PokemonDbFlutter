@@ -24,3 +24,17 @@ class ErrorState extends BaseState {
 }
 
 class SuccessState extends BaseState {}
+
+class CompletedState extends BaseState {
+  final BaseState lastState;
+
+  CompletedState(this.lastState);
+
+  @override
+  bool operator ==(Object other) {
+    return other is CompletedState && lastState == other.lastState;
+  }
+
+  @override
+  int get hashCode => lastState.hashCode;
+}

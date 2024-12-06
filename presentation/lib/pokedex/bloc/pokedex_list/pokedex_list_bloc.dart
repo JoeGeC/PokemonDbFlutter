@@ -6,6 +6,7 @@ import '../../converters/pokedex_presentation_converter.dart';
 import '../../models/pokedex_group_presentation_model.dart';
 
 part 'pokedex_list_event.dart';
+
 part 'pokedex_list_state.dart';
 
 class PokedexListBloc extends Bloc<PokedexListEvent, BaseState> {
@@ -22,14 +23,21 @@ class PokedexListBloc extends Bloc<PokedexListEvent, BaseState> {
 
   void _getPokedexListEvent(
       GetPokedexListEvent event, Emitter<BaseState> emit) async {
-    emit(LoadingState());
-
+    BaseState lastState = LoadingState();
+    emit(lastState);
     await for (final result in _pokedexListUseCase.getAllPokedexes()) {
       result.fold(
-        (failure) => emit(ErrorState(failure.errorMessage)),
-        (pokedexList) => emit(PokedexListSuccessState(
-            _pokedexConverter.convertAndOrder(pokedexList))),
+        (failure) {
+          lastState = ErrorState(failure.errorMessage);
+          return emit(lastState);
+        },
+        (pokedexList) {
+          var orderedResult = _pokedexConverter.convertAndOrder(pokedexList);
+          lastState = PokedexListSuccessState(orderedResult);
+          return emit(lastState);
+        },
       );
     }
+    emit(CompletedState(lastState));
   }
 }
