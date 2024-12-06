@@ -35,11 +35,11 @@ class MyApp extends StatelessWidget {
   }
 
   getTextTheme(ColorScheme colorScheme) => TextTheme(
-      headlineMedium: headlineTextStyle(colorScheme).copyWith(fontSize: 60),
-      headlineSmall: headlineTextStyle(colorScheme).copyWith(fontSize: 50),
-      titleMedium: titleTextStyle(colorScheme).copyWith(fontSize: 40),
-      labelMedium: labelTextStyle(colorScheme).copyWith(fontSize: 30),
-      labelSmall: labelTextStyle(colorScheme)
-          .copyWith(fontSize: 20, shadows: smallTextShadow(colorScheme)),
-    );
+        headlineMedium: headlineTextStyle(colorScheme).copyWith(fontSize: 60),
+        headlineSmall: headlineTextStyle(colorScheme).copyWith(fontSize: 50),
+        titleMedium: baseTextStyle(colorScheme).copyWith(fontSize: 40),
+        labelMedium: baseTextStyle(colorScheme).copyWith(fontSize: 30),
+        labelSmall: baseTextStyle(colorScheme).copyWith(
+            fontSize: 20, shadows: smallTextShadow(colorScheme), height: .95),
+      );
 }

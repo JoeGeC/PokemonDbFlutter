@@ -9,6 +9,16 @@ extension CustomStyles on TextTheme {
       labelMedium?.copyWith(
           color: Colors.white, shadows: mediumTextShadowBlackTransparent) ??
       TextStyle();
+
+  TextStyle get titleMediumWhite =>
+      titleMedium?.copyWith(
+          color: Colors.white, shadows: mediumTextShadowBlackTransparent) ??
+      TextStyle();
+
+  TextStyle get labelSmallWhite =>
+      labelSmall?.copyWith(
+          color: Colors.white, shadows: smallTextShadowBlackTransparent) ??
+      TextStyle();
 }
 
 TextStyle headlineTextStyle(ColorScheme colorScheme) => TextStyle(
@@ -17,13 +27,7 @@ TextStyle headlineTextStyle(ColorScheme colorScheme) => TextStyle(
       shadows: mediumTextShadowBlack,
     );
 
-TextStyle titleTextStyle(ColorScheme colorScheme) => TextStyle(
-      fontFamily: 'PokemonBW',
-      color: colorScheme.onSurface,
-      shadows: mediumTextShadow(colorScheme),
-    );
-
-TextStyle labelTextStyle(ColorScheme colorScheme) => TextStyle(
+TextStyle baseTextStyle(ColorScheme colorScheme) => TextStyle(
       fontFamily: 'PokemonBW',
       color: colorScheme.onSurface,
       shadows: mediumTextShadow(colorScheme),
@@ -37,18 +41,18 @@ List<Shadow> mediumTextShadow(ColorScheme colorScheme) => [
     ];
 
 const List<Shadow> mediumTextShadowBlack = [
-      Shadow(
-        offset: Offset(2.0, 2.0),
-        color: Colors.black,
-      )
-    ];
+  Shadow(
+    offset: Offset(2.0, 2.0),
+    color: Colors.black,
+  )
+];
 
 const List<Shadow> mediumTextShadowBlackTransparent = [
-      Shadow(
-        offset: Offset(2.0, 2.0),
-        color: Color(0x80000000),
-      )
-    ];
+  Shadow(
+    offset: Offset(2.0, 2.0),
+    color: Color(0x80000000),
+  )
+];
 
 List<Shadow> smallTextShadow(ColorScheme colorScheme) => [
       Shadow(
@@ -56,3 +60,10 @@ List<Shadow> smallTextShadow(ColorScheme colorScheme) => [
         color: colorScheme.shadow,
       )
     ];
+
+const List<Shadow> smallTextShadowBlackTransparent = [
+  Shadow(
+    offset: Offset(1.0, 1.0),
+    color: Color(0x80000000),
+  )
+];

@@ -177,11 +177,15 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         ],
       );
 
-  Text _buildPokedexVersionLabel(String displayName, ThemeData theme) => Text(
-        displayName,
-        style: theme.textTheme.labelSmall,
-        overflow: TextOverflow.ellipsis,
-        maxLines: 1,
+  Widget _buildPokedexVersionLabel(String displayName, ThemeData theme) =>
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 8),
+        child: Text(
+          displayName,
+          style: theme.textTheme.labelSmall,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        ),
       );
 
   Widget buildDivider(ThemeData theme) => Stack(

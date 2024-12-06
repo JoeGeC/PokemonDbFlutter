@@ -7,6 +7,7 @@ Widget RoundedBox({
   double borderRadius = 16,
   Color borderColor = Colors.transparent,
   double borderWidth = 0,
+  Widget? child,
 }) =>
     Container(
       width: width,
@@ -19,4 +20,5 @@ Widget RoundedBox({
           width: borderWidth
         )
       ),
+      child: child ?? Container(),
     );

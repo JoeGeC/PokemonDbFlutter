@@ -90,24 +90,17 @@ Widget _buildTypeBox(
     Stack(
       alignment: Alignment.center,
       children: [
-        _buildTypeBoxBackground(type: type, borderRadius: borderRadius),
-        _buildTypeText(type, theme),
+        RoundedBox(
+          width: 100,
+          height: 40,
+          color: getTypeColor(type),
+          borderRadius: borderRadius,
+          borderColor: getTypeBorderColor(type),
+          borderWidth: 2,
+          child: _buildTypeText(type, theme),
+        ),
       ],
     );
 
-Widget _buildTypeBoxBackground({
-  String? type,
-  double width = 100,
-  double height = 40,
-  borderRadius = 4,
-}) =>
-    RoundedBox(
-        width: width,
-        height: height,
-        color: getTypeColor(type),
-        borderRadius: borderRadius,
-        borderColor: getTypeBorderColor(type),
-        borderWidth: 2);
-
 Widget _buildTypeText(String text, ThemeData theme) =>
-    Text(text, style: theme.textTheme.labelMediumWhite);
+    Center(child: Text(text, style: theme.textTheme.labelMediumWhite));

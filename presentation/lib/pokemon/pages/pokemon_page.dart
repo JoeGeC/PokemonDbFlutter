@@ -6,6 +6,7 @@ import 'package:presentation/common/widgets/pokemon_image_with_background.dart';
 import 'package:presentation/common/widgets/pokemon_types_widget.dart';
 import 'package:presentation/pokedex/widgets/pokedex_header_widget.dart';
 import 'package:presentation/pokemon/models/pokemon_presentation_model.dart';
+import 'package:presentation/pokemon/widgets/label_value_column.dart';
 
 import '../../common/bloc/base_state.dart';
 import '../../common/pages/error_page.dart';
@@ -15,6 +16,8 @@ import '../../common/widgets/refresh_page_with_background.dart';
 import '../../common/widgets/shimmer.dart';
 import '../../injections.dart';
 import '../bloc/pokemon_bloc.dart';
+import '../widgets/pokemon_stats.dart';
+import '../widgets/rounded_background.dart';
 
 class PokemonPage extends StatefulWidget {
   final int pokemonId;
@@ -27,6 +30,17 @@ class PokemonPage extends StatefulWidget {
 
 class _PokemonPageState extends State<PokemonPage> {
   final PokemonBloc _bloc = PokemonBloc(getIt(), getIt());
+  final String hpLabel = "HP";
+  final String attackLabel = "Attack";
+  final String attackShortLabel = "Atk";
+  final String defenseLabel = "Defense";
+  final String defenseShortLabel = "Def";
+  final String specialAttackLabel = "Sp.Atk";
+  final String specialAttackTwoLineLabel = "Sp.\nAtk";
+  final String specialDefenseLabel = "Sp.Def";
+  final String specialDefenseTwoLineLabel = "Sp.\nDef";
+  final String speedLabel = "Speed";
+  final String speedShortLabel = "Spd";
 
   @override
   void initState() {
@@ -86,22 +100,27 @@ class _PokemonPageState extends State<PokemonPage> {
         theme: theme,
         context: context,
         body: Center(
-          child: Column(
-            children: [
-              buildPokemonImageWithBackground(
-                _bloc.state,
-                pokemon.imageUrl,
-                theme,
-                context,
-                size: 250,
-              ),
-              _buildPokemonName(pokemon, theme),
-              buildPokemonTypes(
-                  types: pokemon.types,
-                  theme: theme,
-                  alignment: MainAxisAlignment.center),
-              _buildSection(theme, _buildPokemonStats(theme, pokemon)),
-            ],
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              children: [
+                buildPokemonImageWithBackground(
+                  _bloc.state,
+                  pokemon.imageUrl,
+                  theme,
+                  context,
+                  size: 250,
+                ),
+                _buildPokemonName(pokemon, theme),
+                buildPokemonTypes(
+                    types: pokemon.types,
+                    theme: theme,
+                    alignment: MainAxisAlignment.center),
+                _buildSection(theme, "Base Stats", _buildStats(theme, pokemon)),
+                _buildSection(
+                    theme, "EV Yield", _buildEvYieldSection(theme, pokemon)),
+              ],
+            ),
           ),
         ),
       );
@@ -112,57 +131,69 @@ class _PokemonPageState extends State<PokemonPage> {
         style: theme.textTheme.titleMedium,
       );
 
-  Padding _buildSection(ThemeData theme, Widget child) => Padding(
-        padding: EdgeInsets.all(16),
+  Widget _buildSection(ThemeData theme, String title, Widget child) => Padding(
+        padding: EdgeInsets.only(top: 16),
         child: Container(
-          padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+          padding: EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.all(
-              Radius.circular(8),
-            ),
+              color: theme.colorScheme.primary,
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+              border: Border.all(color: Colors.black, width: 4)),
+          child: Column(
+            children: [
+              roundedBackground(
+                color: theme.colorScheme.secondary,
+                child: Center(
+                    child:
+                        Text(title, style: theme.textTheme.titleMediumWhite)),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              child,
+            ],
           ),
-          child: child,
         ),
       );
 
-  Widget _buildPokemonStats(
-          ThemeData theme, PokemonPresentationModel pokemon) =>
+  Widget _buildStats(ThemeData theme, PokemonPresentationModel pokemon) =>
       Column(
         children: [
-          Text("Base Stats", style: theme.textTheme.titleMedium),
-          buildPokemonStatRow(theme, "HP", pokemon.hp),
-          buildPokemonStatRow(theme, "Attack", pokemon.attack),
-          buildPokemonStatRow(theme, "Defense", pokemon.defense),
-          buildPokemonStatRow(theme, "Sp. Attack", pokemon.specialAttack),
-          buildPokemonStatRow(theme, "Sp. Defense", pokemon.specialDefense),
-          buildPokemonStatRow(theme, "Speed", pokemon.speed),
+          buildPokemonStatRow(theme, hpLabel, pokemon.hp),
+          buildPokemonStatRow(theme, attackLabel, pokemon.attack),
+          buildPokemonStatRow(theme, defenseLabel, pokemon.defense),
+          buildPokemonStatRow(theme, specialAttackLabel, pokemon.specialAttack),
+          buildPokemonStatRow(
+              theme, specialDefenseLabel, pokemon.specialDefense),
+          buildPokemonStatRow(theme, speedLabel, pokemon.speed),
         ],
       );
 
-  Row buildPokemonStatRow(ThemeData theme, String label, int? value) => Row(
+  Widget _buildEvYieldSection(
+          ThemeData theme, PokemonPresentationModel pokemon) =>
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SizedBox(
-            width: 130,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(label, style: theme.textTheme.labelMedium),
-            ),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                AnimatedBar(targetValue: value ?? 0, height: 30),
-                Padding(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Text(value.toString(),
-                      style: theme.textTheme.labelMediumWhite),
-                ),
-              ],
-            ),
-          )
+          _buildEvYield(theme, hpLabel, pokemon.hpEvYield),
+          _buildEvYield(theme, attackShortLabel, pokemon.attackEvYield),
+          _buildEvYield(theme, defenseShortLabel, pokemon.defenseEvYield),
+          _buildEvYield(
+              theme, specialAttackLabel, pokemon.specialAttackEvYield),
+          _buildEvYield(
+              theme, specialDefenseLabel, pokemon.specialDefenseEvYield),
+          _buildEvYield(theme, speedShortLabel, pokemon.speedEvYield),
         ],
+      );
+
+  Widget _buildEvYield(ThemeData theme, String label, int? value) =>
+      LabelValueColumn(
+        valueBackgroundColor: theme.colorScheme.secondary,
+        valueTextStyle: theme.textTheme.labelMediumWhite,
+        labelBackgroundColor: Colors.transparent,
+        labelTextStyle: theme.textTheme.labelSmallWhite,
+        label: label,
+        value: value?.toString() ?? "0",
       );
 }
