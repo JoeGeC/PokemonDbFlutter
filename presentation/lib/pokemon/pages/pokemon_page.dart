@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:presentation/common/asset_constants.dart';
 import 'package:presentation/common/text_theme.dart';
+import 'package:presentation/common/widgets/back_button.dart';
 import 'package:presentation/common/widgets/pokemon_image_with_background.dart';
 import 'package:presentation/common/widgets/pokemon_types_widget.dart';
 import 'package:presentation/pokedex/widgets/pokedex_header_widget.dart';
@@ -70,21 +72,22 @@ class _PokemonPageState extends State<PokemonPage> {
 
   Widget getPageState(BaseState state, ThemeData theme) => switch (state) {
         PokemonSuccessState() => _buildSuccessPage(theme, state.pokemon),
-        ExistingPokemonLoadingState() => _buildSuccessPage(theme, state.pokemon),
+        ExistingPokemonLoadingState() =>
+          _buildSuccessPage(theme, state.pokemon),
         LoadingState() => buildLoadingPage(theme),
         BaseState() => buildErrorPage(theme),
       };
 
   Widget buildLoadingPage(ThemeData theme) =>
       buildRefreshablePageWithBackground(
-        title: buildPokedexHeader(title: buildShimmer()),
+        title: buildPokedexHeader(icon: PixelBackButton(onTap: goBack), title: buildShimmer()),
         body: LoadingPage(),
         theme: theme,
         context: context,
       );
 
   Widget buildErrorPage(ThemeData theme) => buildRefreshablePageWithBackground(
-        title: buildPokedexHeader(),
+        title: buildPokedexHeader(icon: PixelBackButton(onTap: goBack)),
         body: ErrorPage(),
         theme: theme,
         context: context,
@@ -93,8 +96,8 @@ class _PokemonPageState extends State<PokemonPage> {
   Widget _buildSuccessPage(ThemeData theme, PokemonPresentationModel pokemon) =>
       buildRefreshablePageWithBackground(
         title: buildPokedexHeader(
-            title: buildPageTitle(
-                theme: theme, title: pokemon.name, leftPadding: 50)),
+            icon: PixelBackButton(onTap: goBack),
+            title: buildPageTitle(theme: theme, title: pokemon.name)),
         theme: theme,
         context: context,
         body: Center(
@@ -197,4 +200,8 @@ class _PokemonPageState extends State<PokemonPage> {
         label: label,
         value: value?.toString() ?? "0",
       );
+
+  goBack() {
+    Navigator.pop(context);
+  }
 }

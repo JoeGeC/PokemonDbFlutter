@@ -3,6 +3,7 @@ class AssetConstants {
   static String pokedexHeaderBackground =
       'assets/pokedex_header_background.png';
   static String missingno = 'assets/missingno.png';
+  static String arrow = 'assets/arrow.png';
 
   static String pokeballBackground(bool isDarkMode) => isDarkMode
       ? 'assets/pokeball_background_dark.png'

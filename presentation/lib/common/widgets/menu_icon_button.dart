@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget buildMenuIconButton(GlobalKey<ScaffoldState> scaffoldKey) => Padding(
-  padding: const EdgeInsets.only(right: 16, top: 8),
+  padding: const EdgeInsets.only(top: 8),
   child: Stack(
     alignment: Alignment.center,
     children: [

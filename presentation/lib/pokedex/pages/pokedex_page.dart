@@ -15,6 +15,7 @@ import '../../common/pages/error_page.dart';
 import '../../common/utils/is_dark_mode.dart';
 import '../../common/widgets/header.dart';
 import '../../common/widgets/header_title.dart';
+import '../../common/widgets/menu_icon_button.dart';
 import '../../common/widgets/shimmer.dart';
 import '../../injections.dart';
 import '../models/pokedex_presentation_model.dart';
@@ -91,7 +92,7 @@ class _PokedexPageState extends State<PokedexPage> {
       );
 
   Widget _buildHeader({Widget? title}) => buildPokedexHeader(
-        scaffoldKey: _scaffoldKey,
+        icon: buildMenuIconButton(_scaffoldKey),
         title: title ?? Container(),
         height: _headerHeight,
       );
@@ -100,7 +101,7 @@ class _PokedexPageState extends State<PokedexPage> {
       ScrollUpHeaderListView(
         key: ValueKey(pokedex.id),
         headerBuilder: (headerKey) => buildPokedexHeader(
-          scaffoldKey: _scaffoldKey,
+          icon: buildMenuIconButton(_scaffoldKey),
           title: buildPageTitle(
               theme: theme,
               headerKey: headerKey,
