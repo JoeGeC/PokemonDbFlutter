@@ -28,10 +28,12 @@ class AnimatedBar extends StatefulWidget {
 
 class _AnimatedBarState extends State<AnimatedBar> {
   late int _currentValue;
+  late int _targetValue;
 
   @override
   void initState() {
     super.initState();
+    _targetValue = validateValue(widget.targetValue);
     _currentValue = widget.initialValue;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _startAnimation();
@@ -40,40 +42,40 @@ class _AnimatedBarState extends State<AnimatedBar> {
 
   void _startAnimation() {
     setState(() {
-      _currentValue = widget.targetValue;
+      _currentValue = _targetValue;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    double normalizedWidth = (_currentValue / 255).clamp(0.0, 1.0);
     return Container(
       height: widget.height,
-      width: widget.width,
       decoration: BoxDecoration(
         color: widget.backgroundColor,
         borderRadius: BorderRadius.all(
           Radius.circular(widget.barRadius),
         ),
       ),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: widget.milliseconds),
-          curve: Curves.easeInOut,
-          width: widget.width * normalizedWidth,
-          decoration: BoxDecoration(
-            color: widget.barColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(widget.barRadius),
+      child: Stack(
+        children: [
+          AnimatedContainer(
+            duration: Duration(milliseconds: widget.milliseconds),
+            curve: Curves.easeInOut,
+            width: MediaQuery.of(context).size.width *
+                (_currentValue / 255).clamp(0.0, 1.0),
+            decoration: BoxDecoration(
+              color: widget.barColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(widget.barRadius),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
 
-  int validateValue() => widget.targetValue > 255
+  int validateValue(int value) => value > 255
       ? 255
       : widget.targetValue < 0
           ? 0

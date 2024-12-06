@@ -10,20 +10,44 @@ Widget buildPokemonTypes(
     required ThemeData theme,
     double typeBoxWidth = 100,
     double typeBoxHeight = 40,
-    double borderRadius = 4}) {
+    double borderRadius = 4,
+    MainAxisAlignment alignment = MainAxisAlignment.start}) {
   if (types == null) {
-    return _buildFallBacks(theme, typeBoxWidth, typeBoxHeight, borderRadius);
+    return _buildFallBacks(
+      theme,
+      typeBoxWidth,
+      typeBoxHeight,
+      borderRadius,
+      alignment,
+    );
   }
   return types.isEmpty
-      ? _buildFallBacks(theme, typeBoxWidth, typeBoxHeight, borderRadius)
+      ? _buildFallBacks(
+          theme,
+          typeBoxWidth,
+          typeBoxHeight,
+          borderRadius,
+          alignment,
+        )
       : _buildTypeBoxes(
-          types, theme, typeBoxWidth, typeBoxHeight, borderRadius);
+          types,
+          theme,
+          typeBoxWidth,
+          typeBoxHeight,
+          borderRadius,
+          alignment,
+        );
 }
 
-Widget _buildFallBacks(ThemeData theme, double typeBoxWidth,
-        double typeBoxHeight, double borderRadius) =>
+Widget _buildFallBacks(
+  ThemeData theme,
+  double typeBoxWidth,
+  double typeBoxHeight,
+  double borderRadius,
+  MainAxisAlignment alignment,
+) =>
     Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: alignment,
       children: [
         buildShimmer(
             width: typeBoxWidth,
@@ -37,10 +61,16 @@ Widget _buildFallBacks(ThemeData theme, double typeBoxWidth,
       ],
     );
 
-Widget _buildTypeBoxes(List<String> types, ThemeData theme, double typeBoxWidth,
-        double typeBoxHeight, double borderRadius) =>
+Widget _buildTypeBoxes(
+  List<String> types,
+  ThemeData theme,
+  double typeBoxWidth,
+  double typeBoxHeight,
+  double borderRadius,
+  MainAxisAlignment alignment,
+) =>
     Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: alignment,
       children: types
           .map((type) => Padding(
                 padding: const EdgeInsets.only(right: 10.0),
@@ -50,8 +80,13 @@ Widget _buildTypeBoxes(List<String> types, ThemeData theme, double typeBoxWidth,
           .toList(),
     );
 
-Widget _buildTypeBox(String type, ThemeData theme, double typeBoxWidth,
-        double typeBoxHeight, double borderRadius) =>
+Widget _buildTypeBox(
+  String type,
+  ThemeData theme,
+  double typeBoxWidth,
+  double typeBoxHeight,
+  double borderRadius,
+) =>
     Stack(
       alignment: Alignment.center,
       children: [
@@ -60,11 +95,12 @@ Widget _buildTypeBox(String type, ThemeData theme, double typeBoxWidth,
       ],
     );
 
-Widget _buildTypeBoxBackground(
-        {String? type,
-        double width = 100,
-        double height = 40,
-        borderRadius = 4}) =>
+Widget _buildTypeBoxBackground({
+  String? type,
+  double width = 100,
+  double height = 40,
+  borderRadius = 4,
+}) =>
     RoundedBox(
         width: width,
         height: height,
