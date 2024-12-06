@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:presentation/common/asset_constants.dart';
 import 'package:presentation/common/text_theme.dart';
 import 'package:presentation/common/widgets/back_button.dart';
 import 'package:presentation/common/widgets/pokemon_image_with_background.dart';

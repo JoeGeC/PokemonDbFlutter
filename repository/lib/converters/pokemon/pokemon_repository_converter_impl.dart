@@ -2,7 +2,6 @@ import 'package:domain/models/pokemon_model.dart';
 import 'package:repository/converters/BaseRepositoryConverter.dart';
 import 'package:repository/converters/pokemon/pokemon_repository_converter.dart';
 import 'package:repository/models/data/pokemon/pokemon_data_model.dart';
-import 'package:repository/models/data/stat/pokemon_stat_data_model.dart';
 import 'package:repository/models/exceptions/NullException.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
 

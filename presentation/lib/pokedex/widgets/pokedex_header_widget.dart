@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../common/widgets/header.dart';
-import '../../common/widgets/menu_icon_button.dart';
 
 Widget buildPokedexHeader({
   Widget? icon,
