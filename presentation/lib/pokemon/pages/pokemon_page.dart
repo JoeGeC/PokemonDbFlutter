@@ -136,10 +136,19 @@ class _PokemonPageState extends State<PokemonPage> {
         child: child,
       );
 
-  Text _buildPokemonName(PokemonPresentationModel pokemon, ThemeData theme) =>
-      Text(
-        pokemon.name,
-        style: theme.textTheme.titleMedium,
+  Widget _buildPokemonName(PokemonPresentationModel pokemon, ThemeData theme) =>
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "${pokemon.nationalDexNumber}: ",
+            style: theme.textTheme.titleMedium,
+          ),
+          Text(
+            pokemon.name,
+            style: theme.textTheme.titleMedium,
+          ),
+        ],
       );
 
   Widget _buildStats(ThemeData theme, PokemonPresentationModel pokemon) =>
