@@ -16,6 +16,7 @@ import '../../common/widgets/refresh_page_with_background.dart';
 import '../../common/widgets/shimmer.dart';
 import '../../injections.dart';
 import '../bloc/pokemon_bloc.dart';
+import '../widgets/pokemon_section.dart';
 import '../widgets/pokemon_stats.dart';
 import '../widgets/rounded_background.dart';
 
@@ -59,11 +60,12 @@ class _PokemonPageState extends State<PokemonPage> {
       child: BlocConsumer<PokemonBloc, BaseState>(
         bloc: _bloc,
         listener: (context, state) {},
-        builder: (context, state) => RefreshIndicator(
-            color: theme.colorScheme.primary,
-            backgroundColor: theme.colorScheme.onPrimary,
-            onRefresh: onRefresh,
-            child: getPageState(state, theme)),
+        builder: (context, state) =>
+            RefreshIndicator(
+                color: theme.colorScheme.primary,
+                backgroundColor: theme.colorScheme.onPrimary,
+                onRefresh: onRefresh,
+                child: getPageState(state, theme)),
       ),
     );
   }
@@ -72,7 +74,8 @@ class _PokemonPageState extends State<PokemonPage> {
     getPokemon(widget.pokemonId);
   }
 
-  Widget getPageState(BaseState state, ThemeData theme) => switch (state) {
+  Widget getPageState(BaseState state, ThemeData theme) =>
+      switch (state) {
         PokemonSuccessState() => _buildSuccessPage(theme, state.pokemon),
         LoadingState() => buildLoadingPage(theme),
         BaseState() => buildErrorPage(theme),
@@ -86,7 +89,8 @@ class _PokemonPageState extends State<PokemonPage> {
         context: context,
       );
 
-  Widget buildErrorPage(ThemeData theme) => buildRefreshablePageWithBackground(
+  Widget buildErrorPage(ThemeData theme) =>
+      buildRefreshablePageWithBackground(
         body: ErrorPage(),
         theme: theme,
         context: context,
@@ -125,37 +129,19 @@ class _PokemonPageState extends State<PokemonPage> {
         ),
       );
 
+  Widget _buildSection(ThemeData theme, String title, Widget child) =>
+      PokemonSection(
+        backgroundColor: theme.colorScheme.primary,
+        titleBackgroundColor: theme.colorScheme.secondary,
+        titleTextStyle: theme.textTheme.titleMediumWhite,
+        title: title,
+        child: child,
+      );
+
   Text _buildPokemonName(PokemonPresentationModel pokemon, ThemeData theme) =>
       Text(
         pokemon.name,
         style: theme.textTheme.titleMedium,
-      );
-
-  Widget _buildSection(ThemeData theme, String title, Widget child) => Padding(
-        padding: EdgeInsets.only(top: 16),
-        child: Container(
-          padding: EdgeInsets.only(bottom: 16),
-          decoration: BoxDecoration(
-              color: theme.colorScheme.primary,
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
-              ),
-              border: Border.all(color: Colors.black, width: 4)),
-          child: Column(
-            children: [
-              roundedBackground(
-                color: theme.colorScheme.secondary,
-                child: Center(
-                    child:
-                        Text(title, style: theme.textTheme.titleMediumWhite)),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              child,
-            ],
-          ),
-        ),
       );
 
   Widget _buildStats(ThemeData theme, PokemonPresentationModel pokemon) =>
@@ -171,8 +157,8 @@ class _PokemonPageState extends State<PokemonPage> {
         ],
       );
 
-  Widget _buildEvYieldSection(
-          ThemeData theme, PokemonPresentationModel pokemon) =>
+  Widget _buildEvYieldSection(ThemeData theme,
+      PokemonPresentationModel pokemon) =>
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
