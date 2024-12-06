@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/common/text_theme.dart';
 import 'package:presentation/pokemon/widgets/rounded_background.dart';
 
 Widget PokemonSection({

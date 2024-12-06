@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/common/text_theme.dart';
-import 'package:presentation/common/widgets/animated_bar.dart';
 import 'package:presentation/common/widgets/pokemon_image_with_background.dart';
 import 'package:presentation/common/widgets/pokemon_types_widget.dart';
 import 'package:presentation/pokedex/widgets/pokedex_header_widget.dart';
@@ -18,7 +17,6 @@ import '../../injections.dart';
 import '../bloc/pokemon_bloc.dart';
 import '../widgets/pokemon_section.dart';
 import '../widgets/pokemon_stats.dart';
-import '../widgets/rounded_background.dart';
 
 class PokemonPage extends StatefulWidget {
   final int pokemonId;
