@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ErrorPage extends StatelessWidget {
-  const ErrorPage({super.key});
+  final TextStyle? textStyle;
+
+  const ErrorPage({super.key, this.textStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +11,7 @@ class ErrorPage extends StatelessWidget {
     return Center(
       child: Text(
           "Something went wrong :(",
-          style: theme.textTheme.labelMedium,
+          style: textStyle ?? theme.textTheme.labelMedium,
         ),
     );
   }

@@ -9,3 +9,9 @@ class GetPokemonEvent extends PokemonEvent {
 
   GetPokemonEvent(this.pokemonId);
 }
+
+class GetExistingPokemonEvent extends PokemonEvent {
+  final PokemonPresentationModel pokemon;
+
+  GetExistingPokemonEvent(this.pokemon);
+}

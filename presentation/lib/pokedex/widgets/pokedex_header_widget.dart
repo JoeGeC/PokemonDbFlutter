@@ -7,15 +7,19 @@ Widget buildPokedexHeader({
   GlobalKey<ScaffoldState>? scaffoldKey,
   Widget? title,
   double height = 80,
+  double horizontalPadding = 16,
 }) =>
     SizedBox(
       height: height,
       child: buildHeader(
-        child: Row(
-          children: [
-            if(scaffoldKey != null) buildMenuIconButton(scaffoldKey),
-            title ?? Container(),
-          ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+          child: Row(
+            children: [
+              if (scaffoldKey != null) buildMenuIconButton(scaffoldKey),
+              title ?? Container(),
+            ],
+          ),
         ),
       ),
     );

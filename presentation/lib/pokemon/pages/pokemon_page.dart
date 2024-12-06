@@ -43,12 +43,8 @@ class _PokemonPageState extends State<PokemonPage> {
 
   @override
   void initState() {
-    getPokemon(widget.pokemonId);
+    _bloc.add(GetPokemonEvent(widget.pokemonId));
     super.initState();
-  }
-
-  void getPokemon(int id) {
-    _bloc.add(GetPokemonEvent(id));
   }
 
   @override
@@ -59,33 +55,36 @@ class _PokemonPageState extends State<PokemonPage> {
         bloc: _bloc,
         listener: (context, state) {},
         builder: (context, state) => RefreshIndicator(
-            color: theme.colorScheme.primary,
-            backgroundColor: theme.colorScheme.onPrimary,
-            onRefresh: onRefresh,
-            child: getPageState(state, theme)),
+          color: theme.colorScheme.primary,
+          backgroundColor: theme.colorScheme.onPrimary,
+          onRefresh: onRefresh,
+          child: getPageState(state, theme),
+        ),
       ),
     );
   }
 
   Future<void> onRefresh() async {
-    getPokemon(widget.pokemonId);
+    _bloc.onRefresh(widget.pokemonId);
   }
 
   Widget getPageState(BaseState state, ThemeData theme) => switch (state) {
         PokemonSuccessState() => _buildSuccessPage(theme, state.pokemon),
+        ExistingPokemonLoadingState() => _buildSuccessPage(theme, state.pokemon),
         LoadingState() => buildLoadingPage(theme),
         BaseState() => buildErrorPage(theme),
       };
 
   Widget buildLoadingPage(ThemeData theme) =>
       buildRefreshablePageWithBackground(
-        title: buildShimmer(),
+        title: buildPokedexHeader(title: buildShimmer()),
         body: LoadingPage(),
         theme: theme,
         context: context,
       );
 
   Widget buildErrorPage(ThemeData theme) => buildRefreshablePageWithBackground(
+        title: buildPokedexHeader(),
         body: ErrorPage(),
         theme: theme,
         context: context,
@@ -152,33 +151,42 @@ class _PokemonPageState extends State<PokemonPage> {
       );
 
   Widget _buildStats(ThemeData theme, PokemonPresentationModel pokemon) =>
-      Column(
-        children: [
-          buildPokemonStatRow(theme, hpLabel, pokemon.hp),
-          buildPokemonStatRow(theme, attackLabel, pokemon.attack),
-          buildPokemonStatRow(theme, defenseLabel, pokemon.defense),
-          buildPokemonStatRow(theme, specialAttackLabel, pokemon.specialAttack),
-          buildPokemonStatRow(
-              theme, specialDefenseLabel, pokemon.specialDefense),
-          buildPokemonStatRow(theme, speedLabel, pokemon.speed),
-        ],
-      );
+      pokemon.statsNotNull
+          ? Column(
+              children: [
+                buildPokemonStatRow(theme, hpLabel, pokemon.hp),
+                buildPokemonStatRow(theme, attackLabel, pokemon.attack),
+                buildPokemonStatRow(theme, defenseLabel, pokemon.defense),
+                buildPokemonStatRow(
+                    theme, specialAttackLabel, pokemon.specialAttack),
+                buildPokemonStatRow(
+                    theme, specialDefenseLabel, pokemon.specialDefense),
+                buildPokemonStatRow(theme, speedLabel, pokemon.speed),
+              ],
+            )
+          : _bloc.state is ExistingPokemonLoadingState
+              ? buildShimmer()
+              : ErrorPage(textStyle: theme.textTheme.labelMediumWhite);
 
   Widget _buildEvYieldSection(
           ThemeData theme, PokemonPresentationModel pokemon) =>
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _buildEvYield(theme, hpLabel, pokemon.hpEvYield),
-          _buildEvYield(theme, attackShortLabel, pokemon.attackEvYield),
-          _buildEvYield(theme, defenseShortLabel, pokemon.defenseEvYield),
-          _buildEvYield(
-              theme, specialAttackLabel, pokemon.specialAttackEvYield),
-          _buildEvYield(
-              theme, specialDefenseLabel, pokemon.specialDefenseEvYield),
-          _buildEvYield(theme, speedShortLabel, pokemon.speedEvYield),
-        ],
-      );
+      pokemon.statsNotNull
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildEvYield(theme, hpLabel, pokemon.hpEvYield),
+                _buildEvYield(theme, attackShortLabel, pokemon.attackEvYield),
+                _buildEvYield(theme, defenseShortLabel, pokemon.defenseEvYield),
+                _buildEvYield(
+                    theme, specialAttackLabel, pokemon.specialAttackEvYield),
+                _buildEvYield(
+                    theme, specialDefenseLabel, pokemon.specialDefenseEvYield),
+                _buildEvYield(theme, speedShortLabel, pokemon.speedEvYield),
+              ],
+            )
+          : _bloc.state is ExistingPokemonLoadingState
+              ? buildShimmer()
+              : ErrorPage(textStyle: theme.textTheme.labelMediumWhite);
 
   Widget _buildEvYield(ThemeData theme, String label, int? value) =>
       LabelValueColumn(

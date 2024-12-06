@@ -61,4 +61,12 @@ class PokemonPresentationModel extends Equatable {
       ];
 
   bool get hasPokedexDetails => imageUrl != null && types.isNotEmpty;
+
+  bool get statsNotNull =>
+      hp != null ||
+      attack != null ||
+      defense != null ||
+      specialAttack != null ||
+      specialDefense != null ||
+      speed != null;
 }
