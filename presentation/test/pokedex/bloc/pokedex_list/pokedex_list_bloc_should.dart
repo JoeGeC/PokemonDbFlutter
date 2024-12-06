@@ -46,10 +46,14 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(GetPokedexListEvent()),
-      expect: () => [
-        isA<LoadingState>(),
-        PokedexListSuccessState(pokedexGroupList2),
-      ],
+      expect: () {
+        var successState = PokedexListSuccessState(pokedexGroupList2);
+        return [
+          isA<LoadingState>(),
+          successState,
+          CompletedState(successState),
+        ];
+      },
       verify: (_) {
         verify(mockPokedexListUseCase.getAllPokedexes()).called(1);
         verify(mockConverter.convertAndOrder(any)).called(1);
@@ -66,10 +70,8 @@ void main() {
       },
       act: (bloc) => bloc.add(GetPokedexListEvent()),
       expect: () {
-        return [
-          isA<BaseState>(),
-          ErrorState(errorMessage),
-        ];
+        var errorState = ErrorState(errorMessage);
+        return [isA<BaseState>(), errorState, CompletedState(errorState)];
       },
       verify: (_) {
         verify(mockPokedexListUseCase.getAllPokedexes()).called(1);
@@ -92,11 +94,15 @@ void main() {
         return bloc;
       },
       act: (bloc) => bloc.add(GetPokedexListEvent()),
-      expect: () => [
-        isA<LoadingState>(),
-        PokedexListSuccessState(pokedexGroupList1),
-        PokedexListSuccessState(pokedexGroupList2),
-      ],
+      expect: () {
+        var lastState = PokedexListSuccessState(pokedexGroupList2);
+        return [
+          isA<LoadingState>(),
+          PokedexListSuccessState(pokedexGroupList1),
+          lastState,
+          CompletedState(lastState),
+        ];
+      },
     );
   });
 }
