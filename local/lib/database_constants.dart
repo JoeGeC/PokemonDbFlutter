@@ -14,6 +14,7 @@ class DatabaseColumnNames {
   static const String name = 'name';
   static const String types = 'types';
   static const String frontSpriteUrl = 'frontSpriteUrl';
+  static const String artworkUrl = 'artworkUrl';
   static const String pokedexId = 'pokedexId';
   static const String pokedexName = 'pokedexName';
   static const String entryNumber = 'entryNumber';

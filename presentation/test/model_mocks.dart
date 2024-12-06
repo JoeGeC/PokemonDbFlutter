@@ -30,7 +30,8 @@ String pokemonName = "Example Pokemon";
 List<String> pokemonPresenterTypes = ["Grass", "Psychic"];
 List<String> pokemonDomainTypes = ["grass", "psychic"];
 Map<int, int> pokedexEntryNumbers = {pokedexId1: pokedexEntryNumber};
-String pokemonImageUrl1 = "https://pokeapi.com/asd.png";
+String pokemonSpriteUrl = "https://pokeapi.com/image-sprite.png";
+String pokemonArtworkUrl = "https://pokeapi.com/image-artwork.png";
 
 int baseStatHp = 11;
 int statEffortHp = 1;
@@ -49,7 +50,8 @@ PokemonModel pokemonModel = PokemonModel(
   id: pokemonId,
   name: pokemonName,
   pokedexEntryNumbers: pokedexEntryNumbers,
-  imageUrl: pokemonImageUrl1,
+  spriteUrl: pokemonSpriteUrl,
+  artworkUrl: pokemonArtworkUrl,
   types: pokemonDomainTypes,
   hp: baseStatHp,
   attack: baseStatAttack,
@@ -68,7 +70,8 @@ PokemonModel pokemonModel = PokemonModel(
 PokemonPresentationModel pokemonPresentationModel = PokemonPresentationModel(
   id: pokemonId,
   name: pokemonName,
-  imageUrl: pokemonImageUrl1,
+  spriteUrl: pokemonSpriteUrl,
+  artworkUrl: pokemonArtworkUrl,
   nationalDexNumber: pokemonNationalDexNumber,
   types: pokemonPresenterTypes,
   hp: baseStatHp,
@@ -92,7 +95,7 @@ PokedexPokemonPresentationModel pokedexPokemonPresentationModel =
   pokedexEntryNumber: pokedexEntryNumberPresentation,
   name: pokemonName,
   types: pokemonPresenterTypes,
-  imageUrl: pokemonImageUrl1
+  imageUrl: pokemonSpriteUrl
 );
 
 PokedexPokemonPresentationModel pokedexPokemonPresentationModelUndetailed =

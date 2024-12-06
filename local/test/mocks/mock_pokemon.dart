@@ -13,6 +13,7 @@ class MockLocalPokemon {
   static const List<String> pokemonTypes = [pokemonType1, pokemonType2];
   static const String pokemonTypesAsString = "grass,poison";
   static const String pokemonFrontSpriteUrl = "https://example.com/example.png";
+  static const String artworkUrl = "https://example.com/example-artwork.png";
   static const int pokedexEntryNumber1 = 5;
   static const pokedexEntryNumber2 = 6;
   static const Map<int, int> pokedexEntryNumbers = {
@@ -40,6 +41,7 @@ class MockLocalPokemon {
     name: pokemonName,
     types: pokemonTypes,
     frontSpriteUrl: pokemonFrontSpriteUrl,
+    artworkUrl: artworkUrl,
     pokedexEntryNumbers: pokedexEntryNumbers,
     hp: baseStatHp,
     attack: baseStatAttack,
@@ -89,6 +91,7 @@ class MockLocalPokemon {
     name: pokemonName,
     types: pokemonTypes,
     frontSpriteUrl: pokemonFrontSpriteUrl,
+    artworkUrl: artworkUrl,
     pokedexEntryNumbers: pokedexEntryNumbersMultiple,
     hp: baseStatHp,
     attack: baseStatAttack,
@@ -109,6 +112,7 @@ class MockLocalPokemon {
     DatabaseColumnNames.name: MockLocalPokemon.pokemonName,
     DatabaseColumnNames.types: MockLocalPokemon.pokemonTypesAsString,
     DatabaseColumnNames.frontSpriteUrl: MockLocalPokemon.pokemonFrontSpriteUrl,
+    DatabaseColumnNames.artworkUrl: MockLocalPokemon.artworkUrl,
     DatabaseColumnNames.hp: MockLocalPokemon.baseStatHp,
     DatabaseColumnNames.attack: MockLocalPokemon.baseStatAttack,
     DatabaseColumnNames.defense: MockLocalPokemon.baseStatDefense,
@@ -128,6 +132,7 @@ class MockLocalPokemon {
     DatabaseColumnNames.name: pokemonName,
     DatabaseColumnNames.types: "$pokemonType1,$pokemonType2",
     DatabaseColumnNames.frontSpriteUrl: pokemonFrontSpriteUrl,
+    DatabaseColumnNames.artworkUrl: null,
     DatabaseColumnNames.hp: null,
     DatabaseColumnNames.attack: null,
     DatabaseColumnNames.defense: null,

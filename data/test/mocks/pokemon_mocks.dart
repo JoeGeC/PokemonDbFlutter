@@ -7,7 +7,8 @@ class PokemonDataMocks {
   static final String pokemonType1 = "Grass";
   static final String pokemonType2 = "Poison";
   static final List<String> pokemonTypes = [pokemonType1, pokemonType2];
-  static final String frontSpriteUrl = "https://sample/pokemon.png";
+  static final String frontSpriteUrl = "https://sample/pokemon-sprite.png";
+  static final String artworkUrl = "https://sample/pokemon-artwork.png";
   static final int baseStat1 = 45;
   static final int statEffort1 = 1;
   static final String statName1 = "hp";
@@ -29,6 +30,7 @@ class PokemonDataMocks {
     types: pokemonTypes,
     frontSpriteUrl: frontSpriteUrl,
     stats: pokemonStats,
+    artworkUrl: artworkUrl,
   );
 
   static Map<String, dynamic> pokemonJson = {
@@ -38,6 +40,12 @@ class PokemonDataMocks {
     },
     "sprites": {
       "front_default": frontSpriteUrl,
+      "other": {
+        "official-artwork": {
+          "front_default": artworkUrl,
+          "front_shiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/132.png"
+        },
+      },
     },
     "stats": [
       {

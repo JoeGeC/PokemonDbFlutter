@@ -13,7 +13,8 @@ class PokemonRepoMocks {
   static final String pokemonType1 = "Grass";
   static final String pokemonType2 = "Poison";
   static final List<String> pokemonTypes = [pokemonType1, pokemonType2];
-  static final String frontSpriteUrl = "https://sample/pokemon.png";
+  static final String frontSpriteUrl = "https://sample/pokemon-sprite.png";
+  static final String artworkUrl = "https://sample/pokemon-artwork.png";
   static final String pokemonUrl =
       "https://pokeapi.co/api/v2/pokemon-species/$pokemonId/";
   static final Map<int, int> pokedexEntryNumbers = {pokedexId: pokemonEntryId};
@@ -32,6 +33,7 @@ class PokemonRepoMocks {
     name: pokemonName,
     types: pokemonTypes,
     frontSpriteUrl: frontSpriteUrl,
+    artworkUrl: artworkUrl,
   );
 
   static final PokemonLocalModel pokemonLocalModelNoEntryNumbers =
@@ -40,6 +42,7 @@ class PokemonRepoMocks {
     name: pokemonName,
     types: pokemonTypes,
     frontSpriteUrl: frontSpriteUrl,
+    artworkUrl: artworkUrl,
     hp: StatRepoMocks.baseStatHp,
     attack: StatRepoMocks.baseStatAttack,
     defense: StatRepoMocks.baseStatDefense,
@@ -60,6 +63,7 @@ class PokemonRepoMocks {
     name: pokemonName,
     types: pokemonTypes,
     frontSpriteUrl: frontSpriteUrl,
+    artworkUrl: artworkUrl,
     pokedexEntryNumbers: pokedexEntryNumbers,
     hp: StatRepoMocks.baseStatHp,
     attack: StatRepoMocks.baseStatAttack,
@@ -87,7 +91,7 @@ class PokemonRepoMocks {
     name: pokemonName,
     pokedexEntryNumbers: pokedexEntryNumbers,
     types: pokemonTypes,
-    imageUrl: frontSpriteUrl,
+    spriteUrl: frontSpriteUrl,
     hp: StatRepoMocks.baseStatHp,
     attack: StatRepoMocks.baseStatAttack,
     defense: StatRepoMocks.baseStatDefense,
@@ -112,7 +116,7 @@ class PokemonRepoMocks {
     id: pokemonId,
     name: pokemonName,
     pokedexEntryNumbers: pokedexEntryNumbers,
-    imageUrl: frontSpriteUrl,
+    spriteUrl: frontSpriteUrl,
     types: pokemonTypes,
   );
 
@@ -121,6 +125,7 @@ class PokemonRepoMocks {
     name: pokemonName,
     types: pokemonTypes,
     frontSpriteUrl: frontSpriteUrl,
+    artworkUrl: artworkUrl,
     stats: StatRepoMocks.pokemonStats,
   );
 
@@ -147,6 +152,7 @@ class PokemonRepoMocks {
     name: pokemonName,
     types: [pokemonType1],
     frontSpriteUrl: frontSpriteUrl,
+    artworkUrl: artworkUrl,
     stats: StatRepoMocks.pokemonStats,
   );
 
@@ -155,6 +161,7 @@ class PokemonRepoMocks {
     name: null,
     types: [pokemonType1],
     frontSpriteUrl: frontSpriteUrl,
+    artworkUrl: artworkUrl,
     stats: StatRepoMocks.pokemonStats,
   );
 

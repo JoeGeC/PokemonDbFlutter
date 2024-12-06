@@ -2,7 +2,12 @@ abstract class BaseState {}
 
 class InitialState extends BaseState {}
 
-class LoadingState extends BaseState {}
+class LoadingState extends BaseState {
+  @override
+  bool operator ==(Object other) {
+    return other is LoadingState;
+  }
+}
 
 class ErrorState extends BaseState {
   final String? errorMessage;

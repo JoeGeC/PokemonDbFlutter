@@ -11,6 +11,7 @@ class PokemonDataModel extends Equatable {
   final String? name;
   final List<String>? types;
   final String? frontSpriteUrl;
+  final String? artworkUrl;
   final List<PokemonStatDataModel> stats;
 
   const PokemonDataModel({
@@ -18,6 +19,7 @@ class PokemonDataModel extends Equatable {
     required this.name,
     required this.types,
     required this.frontSpriteUrl,
+    required this.artworkUrl,
     required this.stats,
   });
 
@@ -29,6 +31,7 @@ class PokemonDataModel extends Equatable {
           .map((type) => type['type']['name'] as String)
           .toList(),
       frontSpriteUrl: json['sprites']['front_default'],
+      artworkUrl: json['sprites']['other']['official-artwork']['front_default'],
       stats: (json['stats'] as List<dynamic>)
           .map((stat) =>
               PokemonStatDataModel.fromJson(stat as Map<String, dynamic>))
@@ -43,7 +46,14 @@ class PokemonDataModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, name, types, frontSpriteUrl, stats];
+  List<Object?> get props => [
+        id,
+        name,
+        types,
+        frontSpriteUrl,
+        artworkUrl,
+        stats,
+      ];
 
   PokemonStatDataModel getStat(String statName) =>
       stats.where((stat) => stat.name == statName).first;

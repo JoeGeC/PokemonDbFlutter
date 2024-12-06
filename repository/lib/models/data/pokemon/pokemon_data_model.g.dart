@@ -13,6 +13,7 @@ PokemonDataModel _$PokemonDataModelFromJson(Map<String, dynamic> json) =>
       types:
           (json['types'] as List<dynamic>?)?.map((e) => e as String).toList(),
       frontSpriteUrl: json['front_sprite_url'] as String?,
+      artworkUrl: json['artwork_url'] as String?,
       stats: (json['stats'] as List<dynamic>)
           .map((e) => PokemonStatDataModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -24,5 +25,6 @@ Map<String, dynamic> _$PokemonDataModelToJson(PokemonDataModel instance) =>
       'name': instance.name,
       'types': instance.types,
       'front_sprite_url': instance.frontSpriteUrl,
+      'artwork_url': instance.artworkUrl,
       'stats': instance.stats,
     };

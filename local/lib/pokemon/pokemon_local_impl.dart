@@ -56,6 +56,7 @@ class PokemonLocalImpl implements PokemonLocal {
       ${DatabaseColumnNames.name}, 
       ${DatabaseColumnNames.types}, 
       ${DatabaseColumnNames.frontSpriteUrl},
+      ${DatabaseColumnNames.artworkUrl},
       ${DatabaseColumnNames.hp},
       ${DatabaseColumnNames.attack},
       ${DatabaseColumnNames.defense},
@@ -69,11 +70,12 @@ class PokemonLocalImpl implements PokemonLocal {
       ${DatabaseColumnNames.specialDefenseEvYield},
       ${DatabaseColumnNames.speedEvYield}
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(${DatabaseColumnNames.id}) DO UPDATE SET
       ${DatabaseColumnNames.name} = excluded.${DatabaseColumnNames.name},
       ${DatabaseColumnNames.types} = excluded.${DatabaseColumnNames.types},
       ${DatabaseColumnNames.frontSpriteUrl} = excluded.${DatabaseColumnNames.frontSpriteUrl},
+      ${DatabaseColumnNames.artworkUrl} = excluded.${DatabaseColumnNames.artworkUrl},
       ${DatabaseColumnNames.hp} = excluded.${DatabaseColumnNames.hp},
       ${DatabaseColumnNames.attack} = excluded.${DatabaseColumnNames.attack},
       ${DatabaseColumnNames.defense} = excluded.${DatabaseColumnNames.defense},
@@ -91,6 +93,7 @@ class PokemonLocalImpl implements PokemonLocal {
       pokemonData[DatabaseColumnNames.name],
       pokemonData[DatabaseColumnNames.types],
       pokemonData[DatabaseColumnNames.frontSpriteUrl],
+      pokemonData[DatabaseColumnNames.artworkUrl],
       pokemonData[DatabaseColumnNames.hp],
       pokemonData[DatabaseColumnNames.attack],
       pokemonData[DatabaseColumnNames.defense],

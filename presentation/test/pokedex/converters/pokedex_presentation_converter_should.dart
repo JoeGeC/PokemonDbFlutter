@@ -29,7 +29,7 @@ void main() {
     id: 1,
     name: "pokemon",
     pokedexEntryNumbers: {pokedexId1: 2, pokedexId2: 1},
-    imageUrl: "url/asd/asd/asd/",
+    spriteUrl: "url/asd/asd/asd/",
     types: ["grass", "flying"],
   );
   PokedexPokemonPresentationModel pokedexPokemonPresentation =

@@ -21,6 +21,7 @@ class SqlCommands {
            ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.name} AS ${DatabaseColumnNames.pokemonName},
            ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.types} AS ${DatabaseColumnNames.pokemonTypes},
            ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.frontSpriteUrl} AS ${DatabaseColumnNames.frontSpriteUrl},
+           ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.artworkUrl} AS ${DatabaseColumnNames.artworkUrl},
            ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.hp} AS ${DatabaseColumnNames.hp},
            ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.attack} AS ${DatabaseColumnNames.attack},
            ${DatabaseTableNames.pokemon}.${DatabaseColumnNames.defense} AS ${DatabaseColumnNames.defense},

@@ -10,7 +10,7 @@ import '../../models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 
 class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
     implements PokemonRepositoryConverter {
-  final String statName = "hp";
+  final String hpName = "hp";
   final String attackName = "attack";
   final String defenseName = "defense";
   final String specialAttackName = "special-attack";
@@ -28,7 +28,8 @@ class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
         name: pokemon.name,
         pokedexEntryNumbers: pokemon.pokedexEntryNumbers,
         types: pokemon.types,
-        imageUrl: pokemon.frontSpriteUrl,
+        spriteUrl: pokemon.frontSpriteUrl,
+        artworkUrl: pokemon.artworkUrl,
         hp: pokemon.hp,
         attack: pokemon.attack,
         defense: pokemon.defense,
@@ -51,13 +52,14 @@ class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
         name: getPokemonName(pokemon.name),
         types: pokemon.types,
         frontSpriteUrl: pokemon.frontSpriteUrl,
-        hp: pokemon.getBaseStat(statName),
+        artworkUrl: pokemon.artworkUrl,
+        hp: pokemon.getBaseStat(hpName),
         attack: pokemon.getBaseStat(attackName),
         defense: pokemon.getBaseStat(defenseName),
         specialAttack: pokemon.getBaseStat(specialAttackName),
         specialDefense: pokemon.getBaseStat(specialDefenseName),
         speed: pokemon.getBaseStat(speed),
-        hpEvYield: pokemon.getEffortValue(statName),
+        hpEvYield: pokemon.getEffortValue(hpName),
         attackEvYield: pokemon.getEffortValue(attackName),
         defenseEvYield: pokemon.getEffortValue(defenseName),
         specialAttackEvYield: pokemon.getEffortValue(specialAttackName),

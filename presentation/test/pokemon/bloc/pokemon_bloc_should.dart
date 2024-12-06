@@ -43,6 +43,7 @@ void main() {
       },
       act: (bloc) => bloc.add(GetPokemonEvent(1)),
       expect: () => [
+        LoadingState(),
         PokemonSuccessState(pokemonPresentationModel),
       ],
       verify: (_) {
@@ -60,6 +61,7 @@ void main() {
       },
       act: (bloc) => bloc.add(GetPokemonEvent(1)),
       expect: () => [
+        LoadingState(),
         ErrorState(errorMessage),
       ],
       verify: (_) {

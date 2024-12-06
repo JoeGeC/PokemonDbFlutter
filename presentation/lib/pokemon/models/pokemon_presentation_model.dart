@@ -4,7 +4,8 @@ class PokemonPresentationModel extends Equatable {
   final int id;
   final String nationalDexNumber;
   final String name;
-  final String? imageUrl;
+  final String? spriteUrl;
+  final String? artworkUrl;
   final List<String> types;
   final int? hp;
   final int? attack;
@@ -23,7 +24,8 @@ class PokemonPresentationModel extends Equatable {
     required this.id,
     required this.nationalDexNumber,
     required this.name,
-    this.imageUrl,
+    this.spriteUrl,
+    this.artworkUrl,
     required this.types,
     this.hp,
     this.attack,
@@ -44,7 +46,8 @@ class PokemonPresentationModel extends Equatable {
         id,
         nationalDexNumber,
         name,
-        imageUrl,
+        spriteUrl,
+        artworkUrl,
         types,
         hp,
         attack,
@@ -60,7 +63,7 @@ class PokemonPresentationModel extends Equatable {
         speedEvYield,
       ];
 
-  bool get hasPokedexDetails => imageUrl != null && types.isNotEmpty;
+  bool get hasPokedexDetails => spriteUrl != null && types.isNotEmpty;
 
   bool get statsNotNull =>
       hp != null ||

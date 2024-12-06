@@ -7,6 +7,7 @@ class PokemonLocalModel extends Equatable {
   final String name;
   final List<String>? types;
   final String? frontSpriteUrl;
+  final String? artworkUrl;
   final int? hp;
   final int? attack;
   final int? defense;
@@ -26,6 +27,7 @@ class PokemonLocalModel extends Equatable {
     required this.name,
     this.types,
     this.frontSpriteUrl,
+    this.artworkUrl,
     this.hp,
     this.attack,
     this.defense,
@@ -50,6 +52,7 @@ class PokemonLocalModel extends Equatable {
         name,
         types == null ? null : const ListEquality().equals(types, types),
         frontSpriteUrl,
+        artworkUrl,
         hp,
         attack,
         defense,

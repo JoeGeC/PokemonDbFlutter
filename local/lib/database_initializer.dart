@@ -44,6 +44,7 @@ class DatabaseInitializer {
         ${DatabaseColumnNames.name} ${SqlCommands.textType},
         ${DatabaseColumnNames.types} ${SqlCommands.textType},
         ${DatabaseColumnNames.frontSpriteUrl} ${SqlCommands.textType},
+        ${DatabaseColumnNames.artworkUrl} ${SqlCommands.textType},
         ${DatabaseColumnNames.hp} ${SqlCommands.intType},
         ${DatabaseColumnNames.attack} ${SqlCommands.intType},
         ${DatabaseColumnNames.defense} ${SqlCommands.intType},

@@ -113,7 +113,7 @@ class _PokemonPageState extends State<PokemonPage> {
         children: [
           buildPokemonImageWithBackground(
             _bloc.state,
-            pokemon.imageUrl,
+            pokemon.artworkUrl,
             theme,
             context,
             size: 250,

@@ -4,7 +4,8 @@ class PokemonModel extends Equatable {
   final int id;
   final Map<int, int>? pokedexEntryNumbers;
   final String name;
-  final String? imageUrl;
+  final String? spriteUrl;
+  final String? artworkUrl;
   final List<String>? types;
   final int? hp;
   final int? attack;
@@ -23,7 +24,8 @@ class PokemonModel extends Equatable {
     required this.id,
     required this.name,
     this.pokedexEntryNumbers,
-    this.imageUrl,
+    this.spriteUrl,
+    this.artworkUrl,
     this.types,
     this.hp,
     this.attack,
@@ -44,7 +46,8 @@ class PokemonModel extends Equatable {
         id,
         pokedexEntryNumbers,
         name,
-        imageUrl,
+        spriteUrl,
+        artworkUrl,
         types,
         hp,
         attack,

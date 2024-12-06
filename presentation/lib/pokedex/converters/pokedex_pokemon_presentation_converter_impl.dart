@@ -19,7 +19,7 @@ class PokedexPokemonPresentationConverterImpl
       pokedexEntryNumber:
           convertEntryNumber(pokemon.pokedexEntryNumbers, pokedexId),
       name: convertName(pokemon.name),
-      imageUrl: pokemon.imageUrl,
+      imageUrl: pokemon.spriteUrl,
       types: convertTypes(pokemon.types),
     );
   }
