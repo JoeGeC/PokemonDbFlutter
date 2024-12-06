@@ -9,15 +9,13 @@ Widget PokemonSection({
   String title = "",
   Widget? child,
   double topPadding = 16,
-  double bodyPaddingBottom = 16,
   double radius = 8,
   double borderWidth = 4,
-  double titleBodyPadding = 16,
+  double bodyPadding = 16,
 }) =>
     Padding(
       padding: EdgeInsets.only(top: topPadding),
       child: Container(
-        padding: EdgeInsets.only(bottom: bodyPaddingBottom),
         decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.all(
@@ -28,11 +26,12 @@ Widget PokemonSection({
           children: [
             roundedBackground(
               color: titleBackgroundColor,
-              child: Center(
-                  child: Text(title, style: titleTextStyle)),
+              child: Center(child: Text(title, style: titleTextStyle)),
             ),
-            SizedBox(height: titleBodyPadding),
-            child ?? Container(),
+            Padding(
+              padding: EdgeInsets.all(bodyPadding),
+              child: child ?? Container(),
+            ),
           ],
         ),
       ),
