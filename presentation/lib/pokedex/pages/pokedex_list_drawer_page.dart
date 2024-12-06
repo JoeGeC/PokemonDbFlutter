@@ -11,7 +11,7 @@ import '../../common/bloc/base_state.dart';
 import '../../common/pages/error_page.dart';
 import '../../common/pages/loading_page.dart';
 import '../../common/widgets/animated_list.dart';
-import '../../common/widgets/animated_row_with_start_color.dart';
+import '../../common/widgets/row_with_start_color.dart';
 import '../../injections.dart';
 import '../bloc/pokedex_list/pokedex_list_bloc.dart';
 
