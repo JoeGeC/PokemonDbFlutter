@@ -58,12 +58,11 @@ class _PokemonPageState extends State<PokemonPage> {
       child: BlocConsumer<PokemonBloc, BaseState>(
         bloc: _bloc,
         listener: (context, state) {},
-        builder: (context, state) =>
-            RefreshIndicator(
-                color: theme.colorScheme.primary,
-                backgroundColor: theme.colorScheme.onPrimary,
-                onRefresh: onRefresh,
-                child: getPageState(state, theme)),
+        builder: (context, state) => RefreshIndicator(
+            color: theme.colorScheme.primary,
+            backgroundColor: theme.colorScheme.onPrimary,
+            onRefresh: onRefresh,
+            child: getPageState(state, theme)),
       ),
     );
   }
@@ -72,8 +71,7 @@ class _PokemonPageState extends State<PokemonPage> {
     getPokemon(widget.pokemonId);
   }
 
-  Widget getPageState(BaseState state, ThemeData theme) =>
-      switch (state) {
+  Widget getPageState(BaseState state, ThemeData theme) => switch (state) {
         PokemonSuccessState() => _buildSuccessPage(theme, state.pokemon),
         LoadingState() => buildLoadingPage(theme),
         BaseState() => buildErrorPage(theme),
@@ -87,8 +85,7 @@ class _PokemonPageState extends State<PokemonPage> {
         context: context,
       );
 
-  Widget buildErrorPage(ThemeData theme) =>
-      buildRefreshablePageWithBackground(
+  Widget buildErrorPage(ThemeData theme) => buildRefreshablePageWithBackground(
         body: ErrorPage(),
         theme: theme,
         context: context,
@@ -104,27 +101,30 @@ class _PokemonPageState extends State<PokemonPage> {
         body: Center(
           child: Padding(
             padding: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                buildPokemonImageWithBackground(
-                  _bloc.state,
-                  pokemon.imageUrl,
-                  theme,
-                  context,
-                  size: 250,
-                ),
-                _buildPokemonName(pokemon, theme),
-                buildPokemonTypes(
-                    types: pokemon.types,
-                    theme: theme,
-                    alignment: MainAxisAlignment.center),
-                _buildSection(theme, "Base Stats", _buildStats(theme, pokemon)),
-                _buildSection(
-                    theme, "EV Yield", _buildEvYieldSection(theme, pokemon)),
-              ],
-            ),
+            child: _buildSections(pokemon, theme),
           ),
         ),
+      );
+
+  Column _buildSections(PokemonPresentationModel pokemon, ThemeData theme) =>
+      Column(
+        children: [
+          buildPokemonImageWithBackground(
+            _bloc.state,
+            pokemon.imageUrl,
+            theme,
+            context,
+            size: 250,
+          ),
+          _buildPokemonName(pokemon, theme),
+          buildPokemonTypes(
+              types: pokemon.types,
+              theme: theme,
+              alignment: MainAxisAlignment.center),
+          _buildSection(theme, "Base Stats", _buildStats(theme, pokemon)),
+          _buildSection(
+              theme, "EV Yield", _buildEvYieldSection(theme, pokemon)),
+        ],
       );
 
   Widget _buildSection(ThemeData theme, String title, Widget child) =>
@@ -155,8 +155,8 @@ class _PokemonPageState extends State<PokemonPage> {
         ],
       );
 
-  Widget _buildEvYieldSection(ThemeData theme,
-      PokemonPresentationModel pokemon) =>
+  Widget _buildEvYieldSection(
+          ThemeData theme, PokemonPresentationModel pokemon) =>
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
