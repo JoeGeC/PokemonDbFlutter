@@ -115,6 +115,7 @@ class _PokemonPageState extends State<PokemonPage> {
             pokemon.artworkUrl,
             theme,
             context,
+            pokemon.name,
             size: 250,
           ),
           _buildPokemonName(pokemon, theme),

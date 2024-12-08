@@ -10,15 +10,19 @@ Widget buildPokemonImageWithBackground(
   BaseState state,
   String? imageUrl,
   ThemeData theme,
-  BuildContext context, {
+  BuildContext context,
+  String pokemonName, {
   double size = 100,
 }) =>
-    Stack(
+  Semantics(
+    label: "$pokemonName image",
+    child: Stack(
       children: [
         buildPokemonImageBackground(size, theme),
         buildPokemonSprite(state, imageUrl, size, context)
       ],
-    );
+    )
+    ,);
 
 Image buildPokemonImageBackground(double size, ThemeData theme) => Image(
       image: AssetImage(AssetConstants.pokeballBackground(isDarkMode(theme))),
