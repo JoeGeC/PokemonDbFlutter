@@ -43,6 +43,9 @@ void main() {
     // The recommended text contrast is 3:1 for larger text
     // (18 point and above regular).
     await expectLater(tester, meetsGuideline(textContrastGuideline));
+
+    await tester.pumpAndSettle();
     handle.dispose();
+
   });
 }
