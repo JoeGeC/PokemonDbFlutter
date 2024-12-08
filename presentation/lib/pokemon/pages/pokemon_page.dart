@@ -79,7 +79,8 @@ class _PokemonPageState extends State<PokemonPage> {
 
   Widget buildLoadingPage(ThemeData theme) =>
       buildRefreshablePageWithBackground(
-        title: buildPokedexHeader(icon: PixelBackButton(onTap: goBack), title: buildShimmer()),
+        title: buildPokedexHeader(
+            icon: PixelBackButton(onTap: goBack), title: buildShimmer()),
         body: LoadingPage(),
         theme: theme,
         context: context,
@@ -155,17 +156,21 @@ class _PokemonPageState extends State<PokemonPage> {
 
   Widget _buildStats(ThemeData theme, PokemonPresentationModel pokemon) =>
       pokemon.statsNotNull
-          ? Column(
-              children: [
-                buildPokemonStatRow(theme, hpLabel, pokemon.hp),
-                buildPokemonStatRow(theme, attackLabel, pokemon.attack),
-                buildPokemonStatRow(theme, defenseLabel, pokemon.defense),
-                buildPokemonStatRow(
-                    theme, specialAttackLabel, pokemon.specialAttack),
-                buildPokemonStatRow(
-                    theme, specialDefenseLabel, pokemon.specialDefense),
-                buildPokemonStatRow(theme, speedLabel, pokemon.speed),
-              ],
+          ? Semantics(
+              label:
+                  "Base stats: HP: ${pokemon.hp}, attack: ${pokemon.attack}, defense: ${pokemon.defense}, special attack: ${pokemon.specialAttack}, special defense: ${pokemon.specialDefense}, speed: ${pokemon.speed}",
+              child: Column(
+                children: [
+                  buildPokemonStatRow(theme, hpLabel, pokemon.hp),
+                  buildPokemonStatRow(theme, attackLabel, pokemon.attack),
+                  buildPokemonStatRow(theme, defenseLabel, pokemon.defense),
+                  buildPokemonStatRow(
+                      theme, specialAttackLabel, pokemon.specialAttack),
+                  buildPokemonStatRow(
+                      theme, specialDefenseLabel, pokemon.specialDefense),
+                  buildPokemonStatRow(theme, speedLabel, pokemon.speed),
+                ],
+              ),
             )
           : _bloc.state is ExistingPokemonLoadingState
               ? buildShimmer()
@@ -174,18 +179,23 @@ class _PokemonPageState extends State<PokemonPage> {
   Widget _buildEvYieldSection(
           ThemeData theme, PokemonPresentationModel pokemon) =>
       pokemon.statsNotNull
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildEvYield(theme, hpLabel, pokemon.hpEvYield),
-                _buildEvYield(theme, attackShortLabel, pokemon.attackEvYield),
-                _buildEvYield(theme, defenseShortLabel, pokemon.defenseEvYield),
-                _buildEvYield(
-                    theme, specialAttackLabel, pokemon.specialAttackEvYield),
-                _buildEvYield(
-                    theme, specialDefenseLabel, pokemon.specialDefenseEvYield),
-                _buildEvYield(theme, speedShortLabel, pokemon.speedEvYield),
-              ],
+          ? Semantics(
+              label:
+                  "EV Yield: HP: ${pokemon.hpEvYield}, attack: ${pokemon.attackEvYield}, defense: ${pokemon.defenseEvYield}, special attack: ${pokemon.specialAttackEvYield}, special defense: ${pokemon.specialDefenseEvYield}, speed: ${pokemon.speedEvYield}",
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildEvYield(theme, hpLabel, pokemon.hpEvYield),
+                  _buildEvYield(theme, attackShortLabel, pokemon.attackEvYield),
+                  _buildEvYield(
+                      theme, defenseShortLabel, pokemon.defenseEvYield),
+                  _buildEvYield(
+                      theme, specialAttackLabel, pokemon.specialAttackEvYield),
+                  _buildEvYield(theme, specialDefenseLabel,
+                      pokemon.specialDefenseEvYield),
+                  _buildEvYield(theme, speedShortLabel, pokemon.speedEvYield),
+                ],
+              ),
             )
           : _bloc.state is ExistingPokemonLoadingState
               ? buildShimmer()
