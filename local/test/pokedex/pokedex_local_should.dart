@@ -8,12 +8,11 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
-import 'package:repository/models/local/pokemon_local_model.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import '../mocks/mock_database.dart';
-import '../mocks/mock_pokedex.dart';
-import '../mocks/mock_pokemon.dart';
+import '../../../test/mocks/mock_database.dart';
+import '../../../test/mocks/mock_pokedex.dart';
+import '../../../test/mocks/mock_pokemon.dart';
 import 'pokedex_local_should.mocks.dart';
 
 @GenerateMocks([PokedexLocalConverter, PokemonLocalConverter])

@@ -10,11 +10,14 @@ import 'package:sqflite/sqflite.dart';
 
 final getIt = GetIt.instance;
 
-setupLocalDependencies() async {
+setupLocalDependencies(Database? database) async {
   getIt.registerSingleton<PokedexLocalConverter>(PokedexLocalConverter());
   getIt.registerSingleton<PokemonLocalConverter>(PokemonLocalConverter());
-  getIt.registerSingleton<Database>(await DatabaseInitializer.instance.database);
 
-  getIt.registerSingleton<PokedexLocal>(PokedexLocalImpl(getIt(), getIt(), getIt()));
-  getIt.registerSingleton<PokemonLocal>(PokemonLocalImpl(getIt(), getIt()));
+  database = database ??
+      getIt.registerSingleton<Database>(
+          await DatabaseInitializer.instance.database);
+
+  getIt.registerSingleton<PokedexLocal>(PokedexLocalImpl(database, getIt(), getIt()));
+  getIt.registerSingleton<PokemonLocal>(PokemonLocalImpl(database, getIt()));
 }

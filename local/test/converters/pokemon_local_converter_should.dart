@@ -1,9 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:local/converters/pokemon_local_converter.dart';
-import 'package:repository/models/local/pokemon_local_model.dart';
 import 'package:local/database_constants.dart';
 
-import '../mocks/mock_pokemon.dart';
+import '../../../test/mocks/mock_pokemon.dart';
 
 void main() {
   late PokemonLocalConverter converter;
