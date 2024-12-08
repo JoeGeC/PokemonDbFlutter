@@ -49,12 +49,21 @@ Widget pokemonEntryWidget(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TwoSpacedTextsRow(pokemon.pokedexEntryNumber, pokemon.name,
-                    theme.textTheme.titleMedium!),
+                buildPokedexNumberAndName(pokemon, theme),
                 buildPokemonTypes(types: pokemon.types, theme: theme)
               ],
             ),
           ),
         ],
       ),
+    );
+
+Widget buildPokedexNumberAndName(
+        PokedexPokemonPresentationModel pokemon, ThemeData theme) =>
+    TwoSpacedTextsRow(
+      label1: pokemon.pokedexEntryNumber,
+      label2: pokemon.name,
+      textStyle: theme.textTheme.titleMedium!,
+      semanticsLabel:
+          "Pokedex entry number ${pokemon.pokedexEntryNumber}, Pokemon name: ${pokemon.name}",
     );

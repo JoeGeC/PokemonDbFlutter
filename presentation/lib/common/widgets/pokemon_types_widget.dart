@@ -69,15 +69,18 @@ Widget _buildTypeBoxes(
   double borderRadius,
   MainAxisAlignment alignment,
 ) =>
-    Row(
-      mainAxisAlignment: alignment,
-      children: types
-          .map((type) => Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: _buildTypeBox(
-                    type, theme, typeBoxWidth, typeBoxHeight, borderRadius),
-              ))
-          .toList(),
+    Semantics(
+      label: "Pokemon types: ${types.join(", ")}",
+      child: Row(
+        mainAxisAlignment: alignment,
+        children: types
+            .map((type) => Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: _buildTypeBox(
+                      type, theme, typeBoxWidth, typeBoxHeight, borderRadius),
+                ))
+            .toList(),
+      ),
     );
 
 Widget _buildTypeBox(

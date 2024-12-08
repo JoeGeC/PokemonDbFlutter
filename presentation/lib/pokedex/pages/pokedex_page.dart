@@ -92,7 +92,7 @@ class _PokedexPageState extends State<PokedexPage> {
       );
 
   Widget _buildHeader({Widget? title}) => buildPokedexHeader(
-        icon: buildMenuIconButton(_scaffoldKey),
+        icon: buildMenuIconButton(scaffoldKey: _scaffoldKey),
         title: title ?? Container(),
         height: _headerHeight,
       );
@@ -101,7 +101,7 @@ class _PokedexPageState extends State<PokedexPage> {
       ScrollUpHeaderListView(
         key: ValueKey(pokedex.id),
         headerBuilder: (headerKey) => buildPokedexHeader(
-          icon: buildMenuIconButton(_scaffoldKey),
+          icon: buildMenuIconButton(scaffoldKey: _scaffoldKey),
           title: buildPageTitle(
               theme: theme,
               headerKey: headerKey,
