@@ -10,7 +10,7 @@ import 'package:presentation/pokedex/bloc/pokedex_pokemon/pokedex_pokemon_bloc.d
 import 'package:presentation/pokedex/converters/pokedex_pokemon_presentation_converter.dart';
 
 import '../../../model_mocks.dart';
-import 'pokedex_pokemon_bloc_should.mocks.dart';
+import 'pokedex_pokemon_bloc_test.mocks.dart';
 
 @GenerateMocks([PokemonUseCase, PokedexPokemonPresentationConverter])
 void main() {
@@ -74,7 +74,7 @@ void main() {
         when(mockPokemonUseCase.getPokemon(pokemonId)).thenAnswer(
               (_) async => Right(pokemonModel),
         );
-        when(mockConverter.convert(pokemonModel, pokedexId1))
+        when(mockConverter.convertPokedexPokemon(pokemonModel, pokedexId1))
             .thenReturn(pokedexPokemonPresentationModel);
         return bloc;
       },
@@ -88,7 +88,7 @@ void main() {
       ],
       verify: (_) {
         verify(mockPokemonUseCase.getPokemon(pokemonId)).called(1);
-        verify(mockConverter.convert(pokemonModel, pokedexId1)).called(1);
+        verify(mockConverter.convertPokedexPokemon(pokemonModel, pokedexId1)).called(1);
       },
     );
   });

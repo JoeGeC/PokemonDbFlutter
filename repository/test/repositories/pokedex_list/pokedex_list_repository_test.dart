@@ -17,7 +17,7 @@ import 'package:repository/models/data_failure.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
 import 'package:repository/repositories/pokedex_list_repository_impl.dart';
 
-import 'pokedex_list_repository_should.mocks.dart';
+import 'pokedex_list_repository_test.mocks.dart';
 
 @GenerateMocks([PokedexListData, PokedexLocal, PokedexRepositoryConverter])
 void main() {

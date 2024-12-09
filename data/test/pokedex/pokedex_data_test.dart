@@ -9,7 +9,7 @@ import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
 import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 
 import '../mocks/pokedex_json_mocks.dart';
-import 'pokedex_data_should.mocks.dart';
+import 'pokedex_data_test.mocks.dart';
 
 @GenerateMocks([Dio])
 void main() {

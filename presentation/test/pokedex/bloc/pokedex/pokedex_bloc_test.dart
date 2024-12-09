@@ -10,7 +10,7 @@ import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
 import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
 
 import '../../../model_mocks.dart';
-import 'pokedex_bloc_should.mocks.dart';
+import 'pokedex_bloc_test.mocks.dart';
 
 @GenerateMocks([PokedexUseCase, PokedexPresentationConverter])
 void main() {

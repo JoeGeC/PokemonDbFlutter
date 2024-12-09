@@ -33,7 +33,6 @@ class PokemonRepoMocks {
     name: pokemonName,
     types: pokemonTypes,
     frontSpriteUrl: frontSpriteUrl,
-    artworkUrl: artworkUrl,
   );
 
   static final PokemonLocalModel pokemonLocalModelNoEntryNumbers =
@@ -92,6 +91,7 @@ class PokemonRepoMocks {
     pokedexEntryNumbers: pokedexEntryNumbers,
     types: pokemonTypes,
     spriteUrl: frontSpriteUrl,
+    artworkUrl: artworkUrl,
     hp: StatRepoMocks.baseStatHp,
     attack: StatRepoMocks.baseStatAttack,
     defense: StatRepoMocks.baseStatDefense,

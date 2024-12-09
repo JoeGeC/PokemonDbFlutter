@@ -12,7 +12,7 @@ import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dar
 import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
 import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
 
-import 'pokedex_presentation_converter_should.mocks.dart';
+import 'pokedex_presentation_converter_test.mocks.dart';
 
 @GenerateMocks([PokedexPokemonPresentationConverter])
 void main() {

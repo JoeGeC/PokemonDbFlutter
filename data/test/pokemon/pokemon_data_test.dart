@@ -7,7 +7,7 @@ import 'package:mockito/mockito.dart';
 import 'package:repository/models/data_failure.dart';
 
 import '../mocks/pokemon_mocks.dart';
-import '../pokedex/pokedex_data_should.mocks.dart';
+import '../pokedex/pokedex_data_test.mocks.dart';
 
 @GenerateMocks([Dio])
 void main() {

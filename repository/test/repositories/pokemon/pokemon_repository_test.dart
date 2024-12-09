@@ -13,7 +13,7 @@ import 'package:repository/models/local/pokemon_local_model.dart';
 import 'package:repository/repositories/pokemon_repository_impl.dart';
 
 import '../../mocks/pokemon_mocks.dart';
-import 'pokemon_repository_should.mocks.dart';
+import 'pokemon_repository_test.mocks.dart';
 
 @GenerateMocks([PokemonData, PokemonLocal, PokemonRepositoryConverter])
 void main() {

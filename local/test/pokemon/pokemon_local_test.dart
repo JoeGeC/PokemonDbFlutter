@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 import 'package:repository/models/data_failure.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import '../pokedex/pokedex_local_should.mocks.dart';
+import '../pokedex/pokedex_local_test.mocks.dart';
 import '../../../test/mocks/mock_database.dart';
 import '../../../test/mocks/mock_pokedex.dart';
 import '../../../test/mocks/mock_pokemon.dart';

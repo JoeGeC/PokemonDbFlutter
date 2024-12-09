@@ -19,7 +19,7 @@ import 'package:repository/models/local/pokedex_local_model.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
 import 'package:repository/repositories/pokedex_repository_impl.dart';
 
-import 'pokedex_repository_should.mocks.dart';
+import 'pokedex_repository_test.mocks.dart';
 
 @GenerateMocks([PokedexData, PokedexLocal, PokedexRepositoryConverter])
 void main() {

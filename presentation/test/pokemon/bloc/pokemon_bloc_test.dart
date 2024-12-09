@@ -10,7 +10,7 @@ import 'package:presentation/pokemon/bloc/pokemon_bloc.dart';
 import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
 
 import '../../model_mocks.dart';
-import 'pokemon_bloc_should.mocks.dart';
+import 'pokemon_bloc_test.mocks.dart';
 
 @GenerateMocks([PokemonUseCase, PokemonPresentationConverter])
 void main() {

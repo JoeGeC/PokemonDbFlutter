@@ -13,7 +13,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import '../../../test/mocks/mock_database.dart';
 import '../../../test/mocks/mock_pokedex.dart';
 import '../../../test/mocks/mock_pokemon.dart';
-import 'pokedex_local_should.mocks.dart';
+import 'pokedex_local_test.mocks.dart';
 
 @GenerateMocks([PokedexLocalConverter, PokemonLocalConverter])
 void main() {

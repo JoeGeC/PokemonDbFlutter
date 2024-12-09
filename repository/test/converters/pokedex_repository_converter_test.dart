@@ -16,7 +16,7 @@ import 'package:repository/models/exceptions/NullException.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
 
-import 'pokedex_repository_converter_should.mocks.dart';
+import 'pokedex_repository_converter_test.mocks.dart';
 
 @GenerateMocks([PokemonRepositoryConverter])
 void main() {
