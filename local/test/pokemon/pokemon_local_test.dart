@@ -126,4 +126,43 @@ void main() {
       expect(pokemonFromDatabase.first, MockLocalPokemon.pokemonMap);
     });
   });
+
+  group('Integration', () {
+    late PokemonLocalConverter converter;
+    late PokemonLocalImpl pokemonLocal;
+
+    setUp(() {
+      converter = PokemonLocalConverter();
+      pokemonLocal = PokemonLocalImpl(database, converter);
+    });
+
+    test('Get Pokemon with entry numbers', () async {
+      await mockDatabase.insertDetailedPokemon();
+      await mockDatabase.insertPokedexEntry(
+        MockLocalPokedex.pokedexId1,
+        MockLocalPokemon.pokemonId,
+        MockLocalPokemon.pokedexEntryNumber1,
+      );
+
+      final result = await pokemonLocal.get(MockLocalPokemon.pokemonId);
+
+      expect(result, Right(MockLocalPokemon.pokemon));
+    });
+
+    test('Store Pokemon with entry numbers', () async {
+      await mockDatabase.insertDetailedPokemon();
+      await mockDatabase.insertPokedexEntry(
+        MockLocalPokedex.pokedexId1,
+        MockLocalPokemon.pokemonId,
+        MockLocalPokemon.pokedexEntryNumber1,
+      );
+
+      await pokemonLocal.store(MockLocalPokemon.pokemon);
+
+      final pokemonFromDatabase =
+          await database.query(DatabaseTableNames.pokemon);
+      expect(pokemonFromDatabase, hasLength(1));
+      expect(pokemonFromDatabase.first, MockLocalPokemon.pokemonMap);
+    });
+  });
 }
