@@ -39,6 +39,7 @@ dependencies:
     path: local
   presentation:
     path: presentation
+  flutter_launcher_icons: ^0.14.2
 
 dependency_overrides:
   flutter_lints: ^5.0.0
