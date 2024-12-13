@@ -1,4 +1,4 @@
-import 'package:repository/models/local/pokemon_local_model.dart';
+import 'package:repository/repository.dart';
 
 import '../database_constants.dart';
 

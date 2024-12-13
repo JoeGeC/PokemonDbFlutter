@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:repository/models/data_failure.dart';
+import 'package:repository/repository.dart';
 
 import '../api/api_response.dart';
 

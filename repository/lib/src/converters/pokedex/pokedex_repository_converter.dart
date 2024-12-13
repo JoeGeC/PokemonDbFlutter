@@ -1,5 +1,5 @@
 import 'package:domain/domain.dart';
-import 'package:repository/models/local/pokedex_local_model.dart';
+import 'package:repository/src/models/local/pokedex_local_model.dart';
 
 import '../../models/data/pokedex/pokedex_data_model.dart';
 import '../../models/data/pokedex_list/pokedex_list_data_model.dart';

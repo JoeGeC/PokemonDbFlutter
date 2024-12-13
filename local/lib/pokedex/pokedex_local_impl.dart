@@ -4,10 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:local/converters/pokemon_local_converter.dart';
 import 'package:local/database_constants.dart';
 import 'package:local/sql_commands.dart';
-import 'package:repository/boundary/local/pokedex_local.dart';
-import 'package:repository/models/data_failure.dart';
-import 'package:repository/models/local/pokedex_local_model.dart';
-import 'package:repository/models/local/pokemon_local_model.dart';
+import 'package:repository/repository.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../converters/pokedex_local_converter.dart';

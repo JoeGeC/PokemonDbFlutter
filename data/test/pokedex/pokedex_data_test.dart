@@ -4,9 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:repository/models/data_failure.dart';
-import 'package:repository/models/data/pokedex/pokedex_data_model.dart';
-import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
+import 'package:repository/repository.dart';
 
 import '../mocks/pokedex_json_mocks.dart';
 import 'pokedex_data_test.mocks.dart';

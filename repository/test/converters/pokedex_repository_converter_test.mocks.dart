@@ -5,12 +5,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:domain/domain.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:repository/converters/pokemon/pokemon_repository_converter.dart'
+import 'package:repository/src/converters/pokemon/pokemon_repository_converter.dart'
     as _i3;
-import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart'
+import 'package:repository/src/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart'
     as _i6;
-import 'package:repository/models/data/pokemon/pokemon_data_model.dart' as _i5;
-import 'package:repository/models/local/pokemon_local_model.dart' as _i4;
+import 'package:repository/src/models/data/pokemon/pokemon_data_model.dart' as _i5;
+import 'package:repository/src/models/local/pokemon_local_model.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

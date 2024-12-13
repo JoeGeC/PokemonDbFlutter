@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/domain.dart';
-import 'package:repository/boundary/local/pokedex_local.dart';
+import 'package:repository/src/boundary/local/pokedex_local.dart';
 
 import '../boundary/remote/pokedex_data.dart';
 import '../converters/pokedex/pokedex_repository_converter.dart';

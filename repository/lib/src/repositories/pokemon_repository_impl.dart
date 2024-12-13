@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/domain.dart';
-import 'package:repository/models/local/pokemon_local_model.dart';
+import 'package:repository/src/models/local/pokemon_local_model.dart';
 
 import '../boundary/local/pokemon_local.dart';
 import '../boundary/remote/pokemon_data.dart';

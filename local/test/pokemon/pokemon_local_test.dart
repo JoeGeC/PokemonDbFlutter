@@ -5,7 +5,7 @@ import 'package:local/database_constants.dart';
 import 'package:local/pokemon/pokemon_local_impl.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:repository/models/data_failure.dart';
+import 'package:repository/repository.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import '../pokedex/pokedex_local_test.mocks.dart';

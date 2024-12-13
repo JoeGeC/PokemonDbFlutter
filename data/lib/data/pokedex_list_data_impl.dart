@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:data/data/base_data.dart';
-import 'package:repository/boundary/remote/pokedex_list_data.dart';
-import 'package:repository/models/data/pokedex_list/pokedex_list_data_model.dart';
-import 'package:repository/models/data_failure.dart';
+import 'package:repository/repository.dart';
 
 class PokedexListDataImpl extends BaseData<PokedexListDataModel>
     implements PokedexListData {

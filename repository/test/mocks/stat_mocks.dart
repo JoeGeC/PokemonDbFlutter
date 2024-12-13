@@ -1,4 +1,4 @@
-import 'package:repository/models/data/stat/pokemon_stat_data_model.dart';
+import 'package:repository/src/models/data/stat/pokemon_stat_data_model.dart';
 
 class StatRepoMocks {
   static final int baseStatHp = 11;

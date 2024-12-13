@@ -3,14 +3,14 @@ import 'package:domain/domain.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:repository/boundary/local/pokedex_local.dart';
-import 'package:repository/boundary/remote/pokedex_list_data.dart';
-import 'package:repository/converters/pokedex/pokedex_repository_converter.dart';
-import 'package:repository/models/data/pokedex_list/pokedex_list_data_model.dart';
-import 'package:repository/models/data/pokedex_list/pokedex_list_item_data_model.dart';
-import 'package:repository/models/data_failure.dart';
-import 'package:repository/models/local/pokedex_local_model.dart';
-import 'package:repository/repositories/pokedex_list_repository_impl.dart';
+import 'package:repository/src/boundary/local/pokedex_local.dart';
+import 'package:repository/src/boundary/remote/pokedex_list_data.dart';
+import 'package:repository/src/converters/pokedex/pokedex_repository_converter.dart';
+import 'package:repository/src/models/data/pokedex_list/pokedex_list_data_model.dart';
+import 'package:repository/src/models/data/pokedex_list/pokedex_list_item_data_model.dart';
+import 'package:repository/src/models/data_failure.dart';
+import 'package:repository/src/models/local/pokedex_local_model.dart';
+import 'package:repository/src/repositories/pokedex_list_repository_impl.dart';
 
 import 'pokedex_list_repository_test.mocks.dart';
 

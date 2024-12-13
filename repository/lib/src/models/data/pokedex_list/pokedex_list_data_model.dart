@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../pokedex_list/pokedex_list_item_data_model.dart';
+import 'pokedex_list_item_data_model.dart';
 
 part 'pokedex_list_data_model.g.dart';
 

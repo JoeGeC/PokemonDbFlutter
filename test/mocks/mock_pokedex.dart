@@ -1,5 +1,5 @@
 import 'package:local/database_constants.dart';
-import 'package:repository/models/local/pokedex_local_model.dart';
+import 'package:repository/src/models/local/pokedex_local_model.dart';
 
 import 'mock_pokemon.dart';
 

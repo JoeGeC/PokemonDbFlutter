@@ -1,7 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:repository/boundary/remote/pokemon_data.dart';
-import 'package:repository/models/data/pokemon/pokemon_data_model.dart';
-import 'package:repository/models/data_failure.dart';
+import 'package:repository/repository.dart';
 
 import 'base_data.dart';
 

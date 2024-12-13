@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
+import 'package:repository/src/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 
 part 'pokedex_data_model.g.dart';
 

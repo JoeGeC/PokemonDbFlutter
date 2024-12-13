@@ -8,15 +8,15 @@ import 'dart:async' as _i6;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:domain/domain.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:repository/boundary/local/pokedex_local.dart' as _i9;
-import 'package:repository/boundary/remote/pokedex_list_data.dart' as _i5;
-import 'package:repository/converters/pokedex/pokedex_repository_converter.dart'
+import 'package:repository/src/boundary/local/pokedex_local.dart' as _i9;
+import 'package:repository/src/boundary/remote/pokedex_list_data.dart' as _i5;
+import 'package:repository/src/converters/pokedex/pokedex_repository_converter.dart'
     as _i10;
-import 'package:repository/models/data/pokedex/pokedex_data_model.dart' as _i11;
-import 'package:repository/models/data/pokedex_list/pokedex_list_data_model.dart'
+import 'package:repository/src/models/data/pokedex/pokedex_data_model.dart' as _i11;
+import 'package:repository/src/models/data/pokedex_list/pokedex_list_data_model.dart'
     as _i8;
-import 'package:repository/models/data_failure.dart' as _i7;
-import 'package:repository/models/local/pokedex_local_model.dart' as _i4;
+import 'package:repository/src/models/data_failure.dart' as _i7;
+import 'package:repository/src/models/local/pokedex_local_model.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

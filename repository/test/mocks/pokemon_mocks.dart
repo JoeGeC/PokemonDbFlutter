@@ -1,7 +1,7 @@
 import 'package:domain/domain.dart';
-import 'package:repository/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
-import 'package:repository/models/data/pokemon/pokemon_data_model.dart';
-import 'package:repository/models/local/pokemon_local_model.dart';
+import 'package:repository/src/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
+import 'package:repository/src/models/data/pokemon/pokemon_data_model.dart';
+import 'package:repository/src/models/local/pokemon_local_model.dart';
 
 import 'stat_mocks.dart';
 

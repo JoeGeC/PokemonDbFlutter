@@ -1,1 +1,1 @@
-export 'src/injections.dart' show setupPresentationInjections, getIt;
+export 'src/injections.dart' show setupPresentationInjections;
