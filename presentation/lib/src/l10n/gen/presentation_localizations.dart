@@ -496,6 +496,228 @@ abstract class PresentationLocalizations {
   /// In en, this message translates to:
   /// **'The Indigo Disk'**
   String get theIndigoDisk;
+
+  /// No description provided for @normal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get normal;
+
+  /// No description provided for @fire.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire'**
+  String get fire;
+
+  /// No description provided for @water.
+  ///
+  /// In en, this message translates to:
+  /// **'Water'**
+  String get water;
+
+  /// No description provided for @electric.
+  ///
+  /// In en, this message translates to:
+  /// **'Electric'**
+  String get electric;
+
+  /// No description provided for @grass.
+  ///
+  /// In en, this message translates to:
+  /// **'Grass'**
+  String get grass;
+
+  /// No description provided for @ice.
+  ///
+  /// In en, this message translates to:
+  /// **'Ice'**
+  String get ice;
+
+  /// No description provided for @fighting.
+  ///
+  /// In en, this message translates to:
+  /// **'Fighting'**
+  String get fighting;
+
+  /// No description provided for @poison.
+  ///
+  /// In en, this message translates to:
+  /// **'Poison'**
+  String get poison;
+
+  /// No description provided for @ground.
+  ///
+  /// In en, this message translates to:
+  /// **'Ground'**
+  String get ground;
+
+  /// No description provided for @flying.
+  ///
+  /// In en, this message translates to:
+  /// **'Flying'**
+  String get flying;
+
+  /// No description provided for @psychic.
+  ///
+  /// In en, this message translates to:
+  /// **'Psychic'**
+  String get psychic;
+
+  /// No description provided for @bug.
+  ///
+  /// In en, this message translates to:
+  /// **'Bug'**
+  String get bug;
+
+  /// No description provided for @rock.
+  ///
+  /// In en, this message translates to:
+  /// **'Rock'**
+  String get rock;
+
+  /// No description provided for @ghost.
+  ///
+  /// In en, this message translates to:
+  /// **'Ghost'**
+  String get ghost;
+
+  /// No description provided for @dragon.
+  ///
+  /// In en, this message translates to:
+  /// **'Dragon'**
+  String get dragon;
+
+  /// No description provided for @dark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get dark;
+
+  /// No description provided for @steel.
+  ///
+  /// In en, this message translates to:
+  /// **'Steel'**
+  String get steel;
+
+  /// No description provided for @fairy.
+  ///
+  /// In en, this message translates to:
+  /// **'Fairy'**
+  String get fairy;
+
+  /// No description provided for @baseStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Base Stats'**
+  String get baseStats;
+
+  /// No description provided for @evYield.
+  ///
+  /// In en, this message translates to:
+  /// **'EV Yield'**
+  String get evYield;
+
+  /// No description provided for @hp.
+  ///
+  /// In en, this message translates to:
+  /// **'HP'**
+  String get hp;
+
+  /// No description provided for @attack.
+  ///
+  /// In en, this message translates to:
+  /// **'Attack'**
+  String get attack;
+
+  /// No description provided for @attackShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Atk'**
+  String get attackShort;
+
+  /// No description provided for @defense.
+  ///
+  /// In en, this message translates to:
+  /// **'Defense'**
+  String get defense;
+
+  /// No description provided for @defenseShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Def'**
+  String get defenseShort;
+
+  /// No description provided for @specialAttack.
+  ///
+  /// In en, this message translates to:
+  /// **'Special Attack'**
+  String get specialAttack;
+
+  /// No description provided for @specialAttackShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Sp.Atk'**
+  String get specialAttackShort;
+
+  /// No description provided for @specialAttackTwoLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Sp.\nAtk'**
+  String get specialAttackTwoLine;
+
+  /// No description provided for @specialDefense.
+  ///
+  /// In en, this message translates to:
+  /// **'Special Defense'**
+  String get specialDefense;
+
+  /// No description provided for @specialDefenseShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Sp.Def'**
+  String get specialDefenseShort;
+
+  /// No description provided for @specialDefenseTwoLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Sp.\nDef'**
+  String get specialDefenseTwoLine;
+
+  /// No description provided for @speed.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get speed;
+
+  /// No description provided for @speedShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Spd'**
+  String get speedShort;
+
+  /// No description provided for @zero.
+  ///
+  /// In en, this message translates to:
+  /// **'0'**
+  String get zero;
+
+  /// No description provided for @pokedex.
+  ///
+  /// In en, this message translates to:
+  /// **'Pokedex'**
+  String get pokedex;
+
+  /// No description provided for @pokedexEntryNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Pokedex entry number'**
+  String get pokedexEntryNumber;
+
+  /// No description provided for @pokemonName.
+  ///
+  /// In en, this message translates to:
+  /// **'PokemonName'**
+  String get pokemonName;
 }
 
 class _PresentationLocalizationsDelegate extends LocalizationsDelegate<PresentationLocalizations> {

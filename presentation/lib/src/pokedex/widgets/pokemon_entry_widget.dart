@@ -10,8 +10,7 @@ import '../../injections.dart';
 import '../bloc/pokedex_pokemon/pokedex_pokemon_bloc.dart';
 import '../models/pokedex_pokemon_presentation_model.dart';
 
-Widget buildPokemonEntry(
-        PokedexPokemonPresentationModel pokemon, int pokedexId,
+Widget buildPokemonEntry(PokedexPokemonPresentationModel pokemon, int pokedexId,
         {double imageSize = 100}) =>
     BlocProvider(
       create: (_) => PokedexPokemonBloc(getIt(), getIt())
@@ -49,8 +48,8 @@ Widget pokemonEntryWidget(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildPokedexNumberAndName(pokemon, context.theme),
-                buildPokemonTypes(types: pokemon.types, theme: context.theme)
+                buildPokedexNumberAndName(pokemon, context),
+                buildPokemonTypes(types: pokemon.types, context: context)
               ],
             ),
           ),
@@ -59,11 +58,11 @@ Widget pokemonEntryWidget(
     );
 
 Widget buildPokedexNumberAndName(
-        PokedexPokemonPresentationModel pokemon, ThemeData theme) =>
+        PokedexPokemonPresentationModel pokemon, BuildContext context) =>
     TwoSpacedTextsRow(
       label1: pokemon.pokedexEntryNumber,
       label2: pokemon.name,
-      textStyle: theme.textTheme.titleMedium!,
+      textStyle: context.theme.textTheme.titleMedium!,
       semanticsLabel:
-          "Pokedex entry number ${pokemon.pokedexEntryNumber}, Pokemon name: ${pokemon.name}",
+          "${context.localizations.pokedexEntryNumber} ${pokemon.pokedexEntryNumber}, ${context.localizations.pokemonName}: ${pokemon.name}",
     );

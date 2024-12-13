@@ -128,7 +128,7 @@ class _PokedexPageState extends State<PokedexPage> {
   SizedBox _buildDrawerTitle() => SizedBox(
         width: double.infinity,
         child: Text(
-          "Pokedex",
+          context.localizations.pokedex,
           style: context.theme.textTheme.headlineMedium,
           textAlign: TextAlign.center,
         ),

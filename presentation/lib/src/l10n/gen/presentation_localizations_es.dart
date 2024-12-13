@@ -206,4 +206,115 @@ class PresentationLocalizationsEs extends PresentationLocalizations {
 
   @override
   String get theIndigoDisk => 'The Indigo Disk';
+
+  @override
+  String get normal => 'Normal';
+
+  @override
+  String get fire => 'Fire';
+
+  @override
+  String get water => 'Water';
+
+  @override
+  String get electric => 'Electric';
+
+  @override
+  String get grass => 'Grass';
+
+  @override
+  String get ice => 'Ice';
+
+  @override
+  String get fighting => 'Fighting';
+
+  @override
+  String get poison => 'Poison';
+
+  @override
+  String get ground => 'Ground';
+
+  @override
+  String get flying => 'Flying';
+
+  @override
+  String get psychic => 'Psychic';
+
+  @override
+  String get bug => 'Bug';
+
+  @override
+  String get rock => 'Rock';
+
+  @override
+  String get ghost => 'Ghost';
+
+  @override
+  String get dragon => 'Dragon';
+
+  @override
+  String get dark => 'Dark';
+
+  @override
+  String get steel => 'Steel';
+
+  @override
+  String get fairy => 'Fairy';
+
+  @override
+  String get baseStats => 'Base Stats';
+
+  @override
+  String get evYield => 'EV Yield';
+
+  @override
+  String get hp => 'HP';
+
+  @override
+  String get attack => 'Attack';
+
+  @override
+  String get attackShort => 'Atk';
+
+  @override
+  String get defense => 'Defense';
+
+  @override
+  String get defenseShort => 'Def';
+
+  @override
+  String get specialAttack => 'Special Attack';
+
+  @override
+  String get specialAttackShort => 'Sp.Atk';
+
+  @override
+  String get specialAttackTwoLine => 'Sp.\nAtk';
+
+  @override
+  String get specialDefense => 'Special Defense';
+
+  @override
+  String get specialDefenseShort => 'Sp.Def';
+
+  @override
+  String get specialDefenseTwoLine => 'Sp.\nDef';
+
+  @override
+  String get speed => 'Speed';
+
+  @override
+  String get speedShort => 'Spd';
+
+  @override
+  String get zero => '0';
+
+  @override
+  String get pokedex => 'Pokedex';
+
+  @override
+  String get pokedexEntryNumber => 'Pokedex entry number';
+
+  @override
+  String get pokemonName => 'PokemonName';
 }

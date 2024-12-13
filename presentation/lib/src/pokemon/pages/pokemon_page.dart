@@ -31,17 +31,6 @@ class PokemonPage extends StatefulWidget {
 
 class _PokemonPageState extends State<PokemonPage> {
   final PokemonBloc _bloc = PokemonBloc(getIt(), getIt());
-  final String hpLabel = "HP";
-  final String attackLabel = "Attack";
-  final String attackShortLabel = "Atk";
-  final String defenseLabel = "Defense";
-  final String defenseShortLabel = "Def";
-  final String specialAttackLabel = "Sp.Atk";
-  final String specialAttackTwoLineLabel = "Sp.\nAtk";
-  final String specialDefenseLabel = "Sp.Def";
-  final String specialDefenseTwoLineLabel = "Sp.\nDef";
-  final String speedLabel = "Speed";
-  final String speedShortLabel = "Spd";
 
   @override
   void initState() {
@@ -71,14 +60,12 @@ class _PokemonPageState extends State<PokemonPage> {
 
   Widget getPageState(BaseState state) => switch (state) {
         PokemonSuccessState() => _buildSuccessPage(state.pokemon),
-        ExistingPokemonLoadingState() =>
-          _buildSuccessPage(state.pokemon),
+        ExistingPokemonLoadingState() => _buildSuccessPage(state.pokemon),
         LoadingState() => buildLoadingPage(),
         BaseState() => buildErrorPage(),
       };
 
-  Widget buildLoadingPage() =>
-      buildRefreshablePageWithBackground(
+  Widget buildLoadingPage() => buildRefreshablePageWithBackground(
         title: buildPokedexHeader(
             icon: PixelBackButton(onTap: goBack), title: buildShimmer()),
         body: LoadingPage(),
@@ -105,8 +92,7 @@ class _PokemonPageState extends State<PokemonPage> {
         ),
       );
 
-  Column _buildSections(PokemonPresentationModel pokemon) =>
-      Column(
+  Column _buildSections(PokemonPresentationModel pokemon) => Column(
         children: [
           buildPokemonImageWithBackground(
             _bloc.state,
@@ -118,15 +104,15 @@ class _PokemonPageState extends State<PokemonPage> {
           _buildPokemonName(pokemon),
           buildPokemonTypes(
               types: pokemon.types,
-              theme: context.theme,
+              context: context,
               alignment: MainAxisAlignment.center),
-          _buildSection("Base Stats", _buildStats(pokemon)),
-          _buildSection("EV Yield", _buildEvYieldSection(pokemon)),
+          _buildSection(context.localizations.baseStats, _buildStats(pokemon)),
+          _buildSection(
+              context.localizations.evYield, _buildEvYieldSection(pokemon)),
         ],
       );
 
-  Widget _buildSection(String title, Widget child) =>
-      PokemonSection(
+  Widget _buildSection(String title, Widget child) => PokemonSection(
         backgroundColor: context.theme.colorScheme.primary,
         titleBackgroundColor: context.theme.colorScheme.secondary,
         titleTextStyle: context.theme.textTheme.titleMediumWhite,
@@ -134,8 +120,7 @@ class _PokemonPageState extends State<PokemonPage> {
         child: child,
       );
 
-  Widget _buildPokemonName(PokemonPresentationModel pokemon) =>
-      Row(
+  Widget _buildPokemonName(PokemonPresentationModel pokemon) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
@@ -151,57 +136,59 @@ class _PokemonPageState extends State<PokemonPage> {
 
   Widget _buildStats(PokemonPresentationModel pokemon) {
     var theme = context.theme;
+    var localizations = context.localizations;
     return pokemon.statsNotNull
-          ? Semantics(
-              label:
-                  "Base stats: HP: ${pokemon.hp}, attack: ${pokemon.attack}, defense: ${pokemon.defense}, special attack: ${pokemon.specialAttack}, special defense: ${pokemon.specialDefense}, speed: ${pokemon.speed}",
-              child: Column(
-                children: [
-                  buildPokemonStatRow(theme, hpLabel, pokemon.hp),
-                  buildPokemonStatRow(theme, attackLabel, pokemon.attack),
-                  buildPokemonStatRow(theme, defenseLabel, pokemon.defense),
-                  buildPokemonStatRow(
-                      theme, specialAttackLabel, pokemon.specialAttack),
-                  buildPokemonStatRow(
-                      theme, specialDefenseLabel, pokemon.specialDefense),
-                  buildPokemonStatRow(theme, speedLabel, pokemon.speed),
-                ],
-              ),
-            )
-          : _bloc.state is ExistingPokemonLoadingState
-              ? buildShimmer()
-              : ErrorPage(textStyle: theme.textTheme.labelMediumWhite);
+        ? Semantics(
+            label:
+                "${localizations.baseStats}: ${localizations.hp}: ${pokemon.hp}, ${localizations.attack}: ${pokemon.attack}, ${localizations.defense}: ${pokemon.defense}, ${localizations.specialAttack}: ${pokemon.specialAttack}, ${localizations.specialDefense}: ${pokemon.specialDefense}, ${localizations.speed}: ${pokemon.speed}",
+            child: Column(
+              children: [
+                buildPokemonStatRow(theme, localizations.hp, pokemon.hp),
+                buildPokemonStatRow(theme, localizations.attack, pokemon.attack),
+                buildPokemonStatRow(theme, localizations.defense, pokemon.defense),
+                buildPokemonStatRow(
+                    theme, localizations.specialAttackShort, pokemon.specialAttack),
+                buildPokemonStatRow(
+                    theme, localizations.specialDefenseShort, pokemon.specialDefense),
+                buildPokemonStatRow(theme, localizations.speed, pokemon.speed),
+              ],
+            ),
+          )
+        : _bloc.state is ExistingPokemonLoadingState
+            ? buildShimmer()
+            : ErrorPage(textStyle: theme.textTheme.labelMediumWhite);
   }
 
-  Widget _buildEvYieldSection(PokemonPresentationModel pokemon) =>
-      pokemon.statsNotNull
-          ? Semantics(
-              label:
-                  "EV Yield: HP: ${pokemon.hpEvYield}, attack: ${pokemon.attackEvYield}, defense: ${pokemon.defenseEvYield}, special attack: ${pokemon.specialAttackEvYield}, special defense: ${pokemon.specialDefenseEvYield}, speed: ${pokemon.speedEvYield}",
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildEvYield(hpLabel, pokemon.hpEvYield),
-                  _buildEvYield(attackShortLabel, pokemon.attackEvYield),
-                  _buildEvYield(defenseShortLabel, pokemon.defenseEvYield),
-                  _buildEvYield(specialAttackLabel, pokemon.specialAttackEvYield),
-                  _buildEvYield(specialDefenseLabel, pokemon.specialDefenseEvYield),
-                  _buildEvYield(speedShortLabel, pokemon.speedEvYield),
-                ],
-              ),
-            )
-          : _bloc.state is ExistingPokemonLoadingState
-              ? buildShimmer()
-              : ErrorPage(textStyle: context.theme.textTheme.labelMediumWhite);
+  Widget _buildEvYieldSection(PokemonPresentationModel pokemon) {
+    var localizations = context.localizations;
+    return pokemon.statsNotNull
+      ? Semantics(
+          label:
+              "${localizations.evYield}: ${localizations.hp}: ${pokemon.hpEvYield}, ${localizations.attack}: ${pokemon.attackEvYield}, ${localizations.defense}: ${pokemon.defenseEvYield}, ${localizations.specialAttack}: ${pokemon.specialAttackEvYield}, ${localizations.specialDefense}: ${pokemon.specialDefenseEvYield}, ${localizations.speed}: ${pokemon.speedEvYield}",
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildEvYield(localizations.hp, pokemon.hpEvYield),
+              _buildEvYield(localizations.attackShort, pokemon.attackEvYield),
+              _buildEvYield(localizations.defenseShort, pokemon.defenseEvYield),
+              _buildEvYield(localizations.specialAttackShort, pokemon.specialAttackEvYield),
+              _buildEvYield(localizations.specialDefenseShort, pokemon.specialDefenseEvYield),
+              _buildEvYield(localizations.speedShort, pokemon.speedEvYield),
+            ],
+          ),
+        )
+      : _bloc.state is ExistingPokemonLoadingState
+          ? buildShimmer()
+          : ErrorPage(textStyle: context.theme.textTheme.labelMediumWhite);
+  }
 
-  Widget _buildEvYield(String label, int? value) =>
-      LabelValueColumn(
+  Widget _buildEvYield(String label, int? value) => LabelValueColumn(
         valueBackgroundColor: context.theme.colorScheme.secondary,
         valueTextStyle: context.theme.textTheme.labelMediumWhite,
         labelBackgroundColor: Colors.transparent,
         labelTextStyle: context.theme.textTheme.labelSmallWhite,
         label: label,
-        value: value?.toString() ?? "0",
+        value: value?.toString() ?? context.localizations.zero,
       );
 
   goBack() {
