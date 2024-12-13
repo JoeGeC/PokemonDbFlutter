@@ -1,4 +1,4 @@
-import 'package:domain/models/pokemon_model.dart';
+import 'package:domain/domain.dart';
 import 'package:presentation/src/pokedex/models/pokedex_pokemon_presentation_model.dart';
 
 abstract class PokedexPokemonPresentationConverter{

@@ -1,6 +1,4 @@
-import 'package:domain/boundary/repository/pokedex_repository.dart';
-import 'package:domain/boundary/repository/pokedexes_repository.dart';
-import 'package:domain/boundary/repository/pokemon_repository.dart';
+import 'package:domain/domain.dart';
 import 'package:get_it/get_it.dart';
 import 'package:repository/converters/pokedex/pokedex_repository_converter_impl.dart';
 import 'package:repository/repositories/pokedex_list_repository_impl.dart';

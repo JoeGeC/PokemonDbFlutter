@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:domain/models/Failure.dart';
+import 'package:domain/src/models/failure.dart';
 
 import '../boundary/repository/pokedex_repository.dart';
 import '../models/pokedex_model.dart';

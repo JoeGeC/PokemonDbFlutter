@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:domain/src/models/failure.dart';
 
 import '../boundary/repository/pokedexes_repository.dart';
-import '../models/Failure.dart';
 import '../models/pokedex_model.dart';
 
 class PokedexListUseCase {

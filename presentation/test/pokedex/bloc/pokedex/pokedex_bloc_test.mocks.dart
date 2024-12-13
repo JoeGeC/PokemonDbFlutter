@@ -6,14 +6,14 @@
 import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i2;
-import 'package:domain/models/Failure.dart';
-import 'package:domain/models/pokedex_model.dart' as _i6;
-import 'package:domain/usecases/pokedex_usecase.dart' as _i4;
+import 'package:domain/domain.dart' as _i4;
+import 'package:domain/src/models/failure.dart' as _i6;
+import 'package:domain/src/models/pokedex_model.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:presentation/src/pokedex/converters/pokedex_presentation_converter.dart'
-    as _i7;
-import 'package:presentation/src/pokedex/models/pokedex_group_presentation_model.dart'
     as _i8;
+import 'package:presentation/src/pokedex/models/pokedex_group_presentation_model.dart'
+    as _i9;
 import 'package:presentation/src/pokedex/models/pokedex_presentation_model.dart'
     as _i3;
 
@@ -60,34 +60,35 @@ class MockPokedexUseCase extends _i1.Mock implements _i4.PokedexUseCase {
   }
 
   @override
-  _i5.Future<_i2.Either<Failure, _i6.PokedexModel>> getPokedex(int? id) =>
+  _i5.Future<_i2.Either<_i6.Failure, _i7.PokedexModel>> getPokedex(int? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #getPokedex,
           [id],
         ),
-        returnValue: _i5.Future<_i2.Either<Failure, _i6.PokedexModel>>.value(
-            _FakeEither_0<Failure, _i6.PokedexModel>(
+        returnValue:
+            _i5.Future<_i2.Either<_i6.Failure, _i7.PokedexModel>>.value(
+                _FakeEither_0<_i6.Failure, _i7.PokedexModel>(
           this,
           Invocation.method(
             #getPokedex,
             [id],
           ),
         )),
-      ) as _i5.Future<_i2.Either<Failure, _i6.PokedexModel>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i7.PokedexModel>>);
 }
 
 /// A class which mocks [PokedexPresentationConverter].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPokedexPresentationConverter extends _i1.Mock
-    implements _i7.PokedexPresentationConverter {
+    implements _i8.PokedexPresentationConverter {
   MockPokedexPresentationConverter() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.PokedexPresentationModel convert(_i6.PokedexModel? pokedex) =>
+  _i3.PokedexPresentationModel convert(_i7.PokedexModel? pokedex) =>
       (super.noSuchMethod(
         Invocation.method(
           #convert,
@@ -103,13 +104,13 @@ class MockPokedexPresentationConverter extends _i1.Mock
       ) as _i3.PokedexPresentationModel);
 
   @override
-  List<_i8.PokedexGroupPresentationModel> convertAndOrder(
-          List<_i6.PokedexModel>? pokedex) =>
+  List<_i9.PokedexGroupPresentationModel> convertAndOrder(
+          List<_i7.PokedexModel>? pokedex) =>
       (super.noSuchMethod(
         Invocation.method(
           #convertAndOrder,
           [pokedex],
         ),
-        returnValue: <_i8.PokedexGroupPresentationModel>[],
-      ) as List<_i8.PokedexGroupPresentationModel>);
+        returnValue: <_i9.PokedexGroupPresentationModel>[],
+      ) as List<_i9.PokedexGroupPresentationModel>);
 }

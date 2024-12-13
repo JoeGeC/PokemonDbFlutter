@@ -1,8 +1,4 @@
-import 'package:domain/models/pokedex_constants/pokedex_name.dart';
-import 'package:domain/models/pokedex_constants/pokemon_region.dart';
-import 'package:domain/models/pokedex_constants/pokemon_version.dart';
-import 'package:domain/models/pokedex_model.dart';
-import 'package:domain/models/pokemon_model.dart';
+import 'package:domain/domain.dart';
 import 'package:presentation/src/pokedex/models/pokedex_group_presentation_model.dart';
 import 'package:presentation/src/pokedex/models/pokedex_pokemon_presentation_model.dart';
 import 'package:presentation/src/pokedex/models/pokedex_presentation_model.dart';

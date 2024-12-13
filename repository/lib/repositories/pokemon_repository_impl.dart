@@ -1,7 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:domain/boundary/repository/pokemon_repository.dart';
-import 'package:domain/models/Failure.dart';
-import 'package:domain/models/pokemon_model.dart';
+import 'package:domain/domain.dart';
 import 'package:repository/models/local/pokemon_local_model.dart';
 
 import '../boundary/local/pokemon_local.dart';

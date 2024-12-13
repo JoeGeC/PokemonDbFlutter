@@ -3,7 +3,7 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:domain/models/pokemon_model.dart' as _i4;
+import 'package:domain/domain.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:presentation/src/pokedex/converters/pokedex_pokemon_presentation_converter.dart'
     as _i3;

@@ -1,4 +1,4 @@
-import 'package:domain/usecases/pokedex_usecase.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/bloc/base_state.dart';

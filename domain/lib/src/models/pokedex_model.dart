@@ -1,7 +1,7 @@
-import 'package:domain/models/pokedex_constants/pokedex_name.dart';
-import 'package:domain/models/pokemon_model.dart';
-import 'package:domain/models/pokedex_constants/pokemon_region.dart';
-import 'package:domain/models/pokedex_constants/pokemon_version.dart';
+import 'package:domain/src/models/pokedex_constants/pokedex_name.dart';
+import 'package:domain/src/models/pokemon_model.dart';
+import 'package:domain/src/models/pokedex_constants/pokemon_region.dart';
+import 'package:domain/src/models/pokedex_constants/pokemon_version.dart';
 import 'package:equatable/equatable.dart';
 
 class PokedexModel extends Equatable {

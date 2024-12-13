@@ -6,12 +6,12 @@
 import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i2;
-import 'package:domain/models/Failure.dart';
-import 'package:domain/models/pokemon_model.dart' as _i6;
-import 'package:domain/usecases/pokemon_usecase.dart' as _i4;
+import 'package:domain/domain.dart' as _i4;
+import 'package:domain/src/models/failure.dart' as _i6;
+import 'package:domain/src/models/pokemon_model.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:presentation/src/pokemon/converters/pokemon_presentation_converter.dart'
-    as _i7;
+    as _i8;
 import 'package:presentation/src/pokemon/models/pokemon_presentation_model.dart'
     as _i3;
 
@@ -58,34 +58,35 @@ class MockPokemonUseCase extends _i1.Mock implements _i4.PokemonUseCase {
   }
 
   @override
-  _i5.Future<_i2.Either<Failure, _i6.PokemonModel>> getPokemon(int? id) =>
+  _i5.Future<_i2.Either<_i6.Failure, _i7.PokemonModel>> getPokemon(int? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #getPokemon,
           [id],
         ),
-        returnValue: _i5.Future<_i2.Either<Failure, _i6.PokemonModel>>.value(
-            _FakeEither_0<Failure, _i6.PokemonModel>(
+        returnValue:
+            _i5.Future<_i2.Either<_i6.Failure, _i7.PokemonModel>>.value(
+                _FakeEither_0<_i6.Failure, _i7.PokemonModel>(
           this,
           Invocation.method(
             #getPokemon,
             [id],
           ),
         )),
-      ) as _i5.Future<_i2.Either<Failure, _i6.PokemonModel>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i7.PokemonModel>>);
 }
 
 /// A class which mocks [PokemonPresentationConverter].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPokemonPresentationConverter extends _i1.Mock
-    implements _i7.PokemonPresentationConverter {
+    implements _i8.PokemonPresentationConverter {
   MockPokemonPresentationConverter() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.PokemonPresentationModel convert(_i6.PokemonModel? pokemon) =>
+  _i3.PokemonPresentationModel convert(_i7.PokemonModel? pokemon) =>
       (super.noSuchMethod(
         Invocation.method(
           #convert,

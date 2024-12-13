@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../models/Failure.dart';
-import '../../models/pokedex_model.dart';
+import 'package:domain/src/models/failure.dart';
+import 'package:domain/src/models/pokedex_model.dart';
 
 abstract class PokedexListRepository {
   Stream<Either<Failure, List<PokedexModel>>> getAllPokedexes();

@@ -1,10 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:domain/boundary/repository/pokedexes_repository.dart';
-import 'package:domain/models/Failure.dart';
-import 'package:domain/models/pokedex_constants/pokedex_name.dart';
-import 'package:domain/models/pokedex_constants/pokemon_region.dart';
-import 'package:domain/models/pokedex_constants/pokemon_version.dart';
-import 'package:domain/models/pokedex_model.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

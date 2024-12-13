@@ -1,4 +1,4 @@
-import 'package:domain/models/pokemon_model.dart';
+import 'package:domain/domain.dart';
 import 'package:presentation/src/common/utils/extensions.dart';
 import 'package:presentation/src/pokemon/converters/pokemon_presentation_converter.dart';
 import '../models/pokemon_presentation_model.dart';

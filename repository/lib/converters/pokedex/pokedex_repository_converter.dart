@@ -1,4 +1,4 @@
-import 'package:domain/models/pokedex_model.dart';
+import 'package:domain/domain.dart';
 import 'package:repository/models/local/pokedex_local_model.dart';
 
 import '../../models/data/pokedex/pokedex_data_model.dart';
