@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_db/src/l10n/AppL10n.dart';
 import 'package:pokemon_db/src/injections.dart';
+import 'package:pokemon_db/src/l10n/gen/app_localizations.dart';
+import 'package:pokemon_db/src/splash_page.dart';
 import 'package:pokemon_db/src/theme/colors.dart';
 import 'package:presentation/presentation.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setupDependencies();
   runApp(const MyApp());
 }
 
@@ -19,9 +20,9 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         theme: lightModeTheme(),
         darkTheme: darkModeTheme(),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: AppL10n.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: PokedexPage(),
+        home: SplashPage(),
       );
 
   lightModeTheme() => ThemeData(

@@ -1,0 +1,7 @@
+arb-dir: lib/src/l10n/arb
+template-arb-file: presentation_en.arb
+output-dir: lib/src/l10n/gen
+output-class: PresentationLocalizations
+output-localization-file: presentation_localizations.dart
+synthetic-package: false
+nullable-getter: false

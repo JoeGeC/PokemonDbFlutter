@@ -6,6 +6,7 @@ import '../../converters/pokedex_presentation_converter.dart';
 import '../../models/pokedex_presentation_model.dart';
 
 part 'pokedex_event.dart';
+
 part 'pokedex_state.dart';
 
 class PokedexBloc extends Bloc<PokedexEvent, BaseState> {
@@ -14,14 +15,18 @@ class PokedexBloc extends Bloc<PokedexEvent, BaseState> {
   PokedexEvent? _lastEvent;
 
   PokedexBloc(
-      PokedexUseCase pokedexUseCase, PokedexPresentationConverter pokedexConverter)
+      PokedexUseCase pokedexUseCase,
+      PokedexPresentationConverter pokedexConverter)
       : _pokedexUseCase = pokedexUseCase,
         _pokedexConverter = pokedexConverter,
         super(LoadingState()) {
     on<GetPokedexEvent>(_getPokedexEvent);
   }
 
-  _getPokedexEvent(GetPokedexEvent event, Emitter<BaseState> emitter) async {
+  _getPokedexEvent(
+    GetPokedexEvent event,
+    Emitter<BaseState> emitter,
+  ) async {
     if (event.isLoading) {
       emitter(LoadingState());
     }
@@ -42,7 +47,7 @@ class PokedexBloc extends Bloc<PokedexEvent, BaseState> {
   }
 
   void addLastEvent() {
-    if(_lastEvent == null) return;
+    if (_lastEvent == null) return;
     add(_lastEvent!);
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:presentation/presentation.dart';
 
 extension StringExtensions on String {
   String capitalise() {
-    if(isEmpty) return this;
+    if (isEmpty) return this;
     return this[0].toUpperCase() + substring(1);
   }
 }
@@ -17,7 +17,8 @@ extension ImageExtension on num {
 extension ContextExtensions on BuildContext {
   ThemeData get theme => Theme.of(this);
 
-  AppLocalizations get localizations => AppLocalizations.of(this)!;
+  PresentationLocalizations get localizations =>
+      PresentationLocalizations.of(this);
 
   bool get isDarkMode => theme.brightness == Brightness.dark;
 }

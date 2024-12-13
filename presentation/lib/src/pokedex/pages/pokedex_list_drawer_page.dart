@@ -36,10 +36,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return BlocProvider(
+  Widget build(BuildContext context) => BlocProvider(
       create: (context) {
         final bloc = PokedexListBloc(getIt(), getIt());
         bloc.add(GetPokedexListEvent());
@@ -50,7 +47,6 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
             children: _buildStateWithLoadingBar(state)),
       ),
     );
-  }
 
   Expanded _buildBackground(BaseState state, {children = const <Widget>[]}) =>
       Expanded(

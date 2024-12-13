@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+
 import '../models/pokedex_group_presentation_model.dart';
 import '../models/pokedex_presentation_model.dart';
 
