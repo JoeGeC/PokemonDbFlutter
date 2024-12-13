@@ -10,6 +10,7 @@ export 'src/models/data/pokedex_list/pokedex_list_data_model.dart' show PokedexL
 export 'src/models/data/pokemon/pokemon_data_model.dart' show PokemonDataModel;
 export 'src/models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart' show PokedexPokemonDataModel;
 export 'src/models/data/pokedex_list/pokedex_list_item_data_model.dart' show PokedexListItemDataModel;
+export 'src/models/data/stat/pokemon_stat_data_model.dart' show PokemonStatDataModel;
 
 export 'src/boundary/local/pokedex_local.dart' show PokedexLocal;
 export 'src/boundary/local/pokemon_local.dart' show PokemonLocal;
