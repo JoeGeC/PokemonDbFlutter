@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/src/common/utils/extensions.dart';
 
 import '../asset_constants.dart';
-import '../utils/is_dark_mode.dart';
 
 Widget buildRefreshablePageWithBackground({
-  required ThemeData theme,
   required BuildContext context,
   double headerHeight = 80.0,
   Widget? title,
@@ -12,7 +11,7 @@ Widget buildRefreshablePageWithBackground({
 }) =>
     Stack(
       children: [
-        _buildBackground(theme),
+        _buildBackground(context.isDarkMode),
         SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,9 +29,9 @@ Widget buildRefreshablePageWithBackground({
       ],
     );
 
-Positioned _buildBackground(ThemeData theme) => Positioned.fill(
+Positioned _buildBackground(bool isDarkMode) => Positioned.fill(
       child: Image.asset(
-        AssetConstants.pokedexBackground(isDarkMode(theme)),
+        AssetConstants.pokedexBackground(isDarkMode),
         fit: BoxFit.cover,
       ),
     );

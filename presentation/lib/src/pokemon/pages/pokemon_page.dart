@@ -82,14 +82,12 @@ class _PokemonPageState extends State<PokemonPage> {
         title: buildPokedexHeader(
             icon: PixelBackButton(onTap: goBack), title: buildShimmer()),
         body: LoadingPage(),
-        theme: context.theme,
         context: context,
       );
 
   Widget buildErrorPage() => buildRefreshablePageWithBackground(
         title: buildPokedexHeader(icon: PixelBackButton(onTap: goBack)),
         body: ErrorPage(),
-        theme: context.theme,
         context: context,
       );
 
@@ -98,7 +96,6 @@ class _PokemonPageState extends State<PokemonPage> {
         title: buildPokedexHeader(
             icon: PixelBackButton(onTap: goBack),
             title: buildPageTitle(theme: context.theme, title: pokemon.name)),
-        theme: context.theme,
         context: context,
         body: Center(
           child: Padding(
@@ -114,7 +111,6 @@ class _PokemonPageState extends State<PokemonPage> {
           buildPokemonImageWithBackground(
             _bloc.state,
             pokemon.artworkUrl,
-            context.theme,
             context,
             pokemon.name,
             size: 250,

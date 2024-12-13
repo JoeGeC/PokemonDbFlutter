@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:presentation/src/common/utils/extensions.dart';
-import 'package:presentation/src/common/utils/is_dark_mode.dart';
 
 import '../asset_constants.dart';
 import '../bloc/base_state.dart';
@@ -10,7 +9,6 @@ import '../bloc/base_state.dart';
 Widget buildPokemonImageWithBackground(
   BaseState state,
   String? imageUrl,
-  ThemeData theme,
   BuildContext context,
   String pokemonName, {
   double size = 100,
@@ -19,16 +17,16 @@ Widget buildPokemonImageWithBackground(
       label: "$pokemonName image",
       child: Stack(
         children: [
-          buildPokemonImageBackground(size, theme),
+          buildPokemonImageBackground(size, context),
           buildPokemonSprite(state, imageUrl, size, context)
         ],
       ),
     );
 
-Widget buildPokemonImageBackground(double size, ThemeData theme) => Opacity(
+Widget buildPokemonImageBackground(double size, BuildContext context) => Opacity(
       opacity: 0.4,
       child: SvgPicture.asset(
-        AssetConstants.pokeballBackground(isDarkMode(theme)),
+        AssetConstants.pokeballBackground(context.isDarkMode),
         height: size,
         width: size,
       ),

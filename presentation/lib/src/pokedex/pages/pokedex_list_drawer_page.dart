@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/src/common/asset_constants.dart';
 import 'package:presentation/src/common/utils/extensions.dart';
-import 'package:presentation/src/common/utils/is_dark_mode.dart';
 import 'package:presentation/src/common/widgets/loading_bar.dart';
 import 'package:presentation/src/pokedex/models/pokedex_group_presentation_model.dart';
 import 'package:presentation/src/pokedex/models/pokedex_presentation_model.dart';
@@ -62,7 +61,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
             children: [
               Positioned.fill(
                 child: Image.asset(
-                  AssetConstants.drawerBackground(isDarkMode(context.theme)),
+                  AssetConstants.drawerBackground(context.isDarkMode),
                   fit: BoxFit.cover,
                 ),
               ),

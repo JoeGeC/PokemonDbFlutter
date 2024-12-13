@@ -15,4 +15,6 @@ extension ImageExtension on num {
 
 extension ContextExtensions on BuildContext {
   ThemeData get theme => Theme.of(this);
+
+  bool get isDarkMode => theme.brightness == Brightness.dark;
 }

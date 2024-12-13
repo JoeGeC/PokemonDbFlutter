@@ -2,6 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/src/common/asset_constants.dart';
+import 'package:presentation/src/common/utils/extensions.dart';
 import 'package:presentation/src/common/widgets/refresh_page_with_background.dart';
 import 'package:presentation/src/common/widgets/scroll_up_header_list_widget.dart';
 import 'package:presentation/src/pokedex/bloc/pokedex/pokedex_bloc.dart';
@@ -12,7 +13,6 @@ import 'package:presentation/src/pokemon/pages/pokemon_page.dart';
 
 import '../../common/bloc/base_state.dart';
 import '../../common/pages/error_page.dart';
-import '../../common/utils/is_dark_mode.dart';
 import '../../common/widgets/header.dart';
 import '../../common/widgets/header_title.dart';
 import '../../common/widgets/menu_icon_button.dart';
@@ -47,46 +47,39 @@ class _PokedexPageState extends State<PokedexPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: theme.colorScheme.primary,
-      drawer: _buildDrawer(theme),
-      body: SafeArea(
-        child: BlocConsumer<PokedexBloc, BaseState>(
-          bloc: _bloc,
-          listener: (context, state) {},
-          builder: (context, state) => RefreshIndicator(
-              color: theme.colorScheme.primary,
-              backgroundColor: theme.colorScheme.onPrimary,
-              onRefresh: onRefresh,
-              child: getPageState(state, theme)),
+  Widget build(BuildContext context) => Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: context.theme.colorScheme.primary,
+        drawer: _buildDrawer(),
+        body: SafeArea(
+          child: BlocConsumer<PokedexBloc, BaseState>(
+            bloc: _bloc,
+            listener: (context, state) {},
+            builder: (context, state) => RefreshIndicator(
+                color: context.theme.colorScheme.primary,
+                backgroundColor: context.theme.colorScheme.onPrimary,
+                onRefresh: onRefresh,
+                child: getPageState(state)),
+          ),
         ),
-      ),
-    );
-  }
+      );
 
-  Widget getPageState(BaseState state, ThemeData theme) => switch (state) {
-        PokedexSuccessState() => _buildSuccessPage(theme, state.pokedex),
-        LoadingState() => _buildLoadingPage(theme),
-        BaseState() => _buildErrorPage(theme),
+  Widget getPageState(BaseState state) => switch (state) {
+        PokedexSuccessState() => _buildSuccessPage(state.pokedex),
+        LoadingState() => _buildLoadingPage(),
+        BaseState() => _buildErrorPage(),
       };
 
-  Widget _buildLoadingPage(ThemeData theme) =>
-      buildRefreshablePageWithBackground(
+  Widget _buildLoadingPage() => buildRefreshablePageWithBackground(
         title: _buildHeader(title: buildShimmer()),
         body: PokedexLoadingPage(_pokemonImageSize),
-        theme: theme,
         context: context,
         headerHeight: _headerHeight,
       );
 
-  Widget _buildErrorPage(ThemeData theme) => buildRefreshablePageWithBackground(
+  Widget _buildErrorPage() => buildRefreshablePageWithBackground(
         title: _buildHeader(),
         body: ErrorPage(),
-        theme: theme,
         context: context,
         headerHeight: _headerHeight,
       );
@@ -97,34 +90,34 @@ class _PokedexPageState extends State<PokedexPage> {
         height: _headerHeight,
       );
 
-  Widget _buildSuccessPage(ThemeData theme, PokedexPresentationModel pokedex) =>
+  Widget _buildSuccessPage(PokedexPresentationModel pokedex) =>
       ScrollUpHeaderListView(
         key: ValueKey(pokedex.id),
         headerBuilder: (headerKey) => buildPokedexHeader(
           icon: buildMenuIconButton(scaffoldKey: _scaffoldKey),
           title: buildPageTitle(
-              theme: theme,
+              theme: context.theme,
               headerKey: headerKey,
               title: pokedex.regionName,
               subtitle: pokedex.versionAbbreviation),
         ),
         itemCount: pokedex.pokemon.length,
         itemBuilder: (context, index) => buildPokemonEntry(
-            pokedex.pokemon[index], pokedex.id, theme,
+            pokedex.pokemon[index], pokedex.id,
             imageSize: _pokemonImageSize),
-        backgroundAsset: AssetConstants.pokedexBackground(isDarkMode(theme)),
+        backgroundAsset: AssetConstants.pokedexBackground(context.isDarkMode),
         headerHeight: _headerHeight,
         onItemTap: openPokemonPage,
       );
 
-  Widget _buildDrawer(ThemeData theme) => Drawer(
-        backgroundColor: theme.colorScheme.primary,
+  Widget _buildDrawer() => Drawer(
+        backgroundColor: context.theme.colorScheme.primary,
         child: SafeArea(
           child: Container(
-            color: theme.colorScheme.surface,
+            color: context.theme.colorScheme.surface,
             child: Column(
               children: <Widget>[
-                buildHeader(child: _buildDrawerTitle(theme)),
+                buildHeader(child: _buildDrawerTitle()),
                 PokedexListDrawerPage(onSelected: onPokedexSelected),
               ],
             ),
@@ -132,11 +125,11 @@ class _PokedexPageState extends State<PokedexPage> {
         ),
       );
 
-  SizedBox _buildDrawerTitle(ThemeData theme) => SizedBox(
+  SizedBox _buildDrawerTitle() => SizedBox(
         width: double.infinity,
         child: Text(
           "Pokedex",
-          style: theme.textTheme.headlineMedium,
+          style: context.theme.textTheme.headlineMedium,
           textAlign: TextAlign.center,
         ),
       );
