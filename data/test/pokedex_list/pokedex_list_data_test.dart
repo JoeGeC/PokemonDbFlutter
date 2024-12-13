@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:data/data/pokedex_list_data_impl.dart';
+import 'package:data/src/data/pokedex_list_data_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';

@@ -1,4 +1,4 @@
-import 'package:data/constants.dart';
+import 'package:data/src/constants.dart';
 import 'package:dio/dio.dart';
 
 class ApiService {

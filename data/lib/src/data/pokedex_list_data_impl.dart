@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:data/data/base_data.dart';
+import 'package:data/src/data/base_data.dart';
 import 'package:repository/repository.dart';
 
 class PokedexListDataImpl extends BaseData<PokedexListDataModel>

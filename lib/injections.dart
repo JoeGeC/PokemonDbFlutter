@@ -1,4 +1,4 @@
-import 'package:data/injections.dart';
+import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:presentation/presentation.dart';
 import 'package:repository/repository.dart';
