@@ -1,6 +1,5 @@
+import 'package:local/src/database_constants.dart';
 import 'package:repository/repository.dart';
-
-import '../database_constants.dart';
 
 class PokemonLocalConverter{
   Map<String, dynamic> convertToDatabase(PokemonLocalModel pokemon) => {

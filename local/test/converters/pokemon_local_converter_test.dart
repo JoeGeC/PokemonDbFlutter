@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:local/converters/pokemon_local_converter.dart';
-import 'package:local/database_constants.dart';
+import 'package:local/src/converters/pokemon_local_converter.dart';
+import 'package:local/src/database_constants.dart';
 
 import '../../../test/mocks/mock_pokemon.dart';
 

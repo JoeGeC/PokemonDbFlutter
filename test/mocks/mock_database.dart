@@ -1,5 +1,4 @@
-import 'package:local/database_constants.dart';
-import 'package:local/sql_commands.dart';
+import 'package:local/local.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'mock_pokemon.dart';

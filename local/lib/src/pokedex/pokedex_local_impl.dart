@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:local/converters/pokemon_local_converter.dart';
-import 'package:local/database_constants.dart';
-import 'package:local/sql_commands.dart';
+import 'package:local/src/converters/pokemon_local_converter.dart';
+import 'package:local/src/database_constants.dart';
+import 'package:local/src/sql_commands.dart';
 import 'package:repository/repository.dart';
 import 'package:sqflite/sqflite.dart';
 

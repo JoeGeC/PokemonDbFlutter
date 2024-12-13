@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:local/database_constants.dart';
-import 'package:local/database_initializer.dart';
+import 'package:local/src/database_constants.dart';
+import 'package:local/src/database_initializer.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {

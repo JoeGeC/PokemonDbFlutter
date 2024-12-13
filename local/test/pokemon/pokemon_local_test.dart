@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:local/converters/pokemon_local_converter.dart';
-import 'package:local/database_constants.dart';
-import 'package:local/pokemon/pokemon_local_impl.dart';
+import 'package:local/src/converters/pokemon_local_converter.dart';
+import 'package:local/src/database_constants.dart';
+import 'package:local/src/pokemon/pokemon_local_impl.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:repository/repository.dart';
