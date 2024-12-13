@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_db/injections.dart';
 import 'package:pokemon_db/theme/colors.dart';
-import 'package:presentation/src/common/text_theme.dart';
-import 'package:presentation/src/pokedex/pages/pokedex_page.dart';
+import 'package:presentation/presentation.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

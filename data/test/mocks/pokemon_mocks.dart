@@ -1,5 +1,4 @@
-import 'package:repository/src/models/data/pokemon/pokemon_data_model.dart';
-import 'package:repository/src/models/data/stat/pokemon_stat_data_model.dart';
+import 'package:repository/repository.dart';
 
 class PokemonDataMocks {
   static final int pokemonId = 1;
