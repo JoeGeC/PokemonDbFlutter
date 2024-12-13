@@ -6,11 +6,11 @@ import 'package:domain/models/pokemon_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:presentation/pokedex/converters/pokedex_pokemon_presentation_converter.dart';
-import 'package:presentation/pokedex/converters/pokedex_presentation_converter_impl.dart';
-import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dart';
-import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart';
-import 'package:presentation/pokedex/models/pokedex_presentation_model.dart';
+import 'package:presentation/src/pokedex/converters/pokedex_pokemon_presentation_converter.dart';
+import 'package:presentation/src/pokedex/converters/pokedex_presentation_converter_impl.dart';
+import 'package:presentation/src/pokedex/models/pokedex_group_presentation_model.dart';
+import 'package:presentation/src/pokedex/models/pokedex_pokemon_presentation_model.dart';
+import 'package:presentation/src/pokedex/models/pokedex_presentation_model.dart';
 
 import 'pokedex_presentation_converter_test.mocks.dart';
 

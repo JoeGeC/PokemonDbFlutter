@@ -10,11 +10,11 @@ import 'package:domain/models/Failure.dart';
 import 'package:domain/models/pokedex_model.dart' as _i6;
 import 'package:domain/usecases/pokedex_list_usecase.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart'
+import 'package:presentation/src/pokedex/converters/pokedex_presentation_converter.dart'
     as _i7;
-import 'package:presentation/pokedex/models/pokedex_group_presentation_model.dart'
+import 'package:presentation/src/pokedex/models/pokedex_group_presentation_model.dart'
     as _i8;
-import 'package:presentation/pokedex/models/pokedex_presentation_model.dart'
+import 'package:presentation/src/pokedex/models/pokedex_presentation_model.dart'
     as _i2;
 
 // ignore_for_file: type=lint

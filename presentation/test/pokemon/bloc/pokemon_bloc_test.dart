@@ -5,9 +5,9 @@ import 'package:domain/usecases/pokemon_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:presentation/common/bloc/base_state.dart';
-import 'package:presentation/pokemon/bloc/pokemon_bloc.dart';
-import 'package:presentation/pokemon/converters/pokemon_presentation_converter.dart';
+import 'package:presentation/src/common/bloc/base_state.dart';
+import 'package:presentation/src/pokemon/bloc/pokemon_bloc.dart';
+import 'package:presentation/src/pokemon/converters/pokemon_presentation_converter.dart';
 
 import '../../model_mocks.dart';
 import 'pokemon_bloc_test.mocks.dart';

@@ -5,9 +5,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:domain/models/pokemon_model.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:presentation/pokedex/converters/pokedex_pokemon_presentation_converter.dart'
+import 'package:presentation/src/pokedex/converters/pokedex_pokemon_presentation_converter.dart'
     as _i3;
-import 'package:presentation/pokedex/models/pokedex_pokemon_presentation_model.dart'
+import 'package:presentation/src/pokedex/models/pokedex_pokemon_presentation_model.dart'
     as _i2;
 
 // ignore_for_file: type=lint

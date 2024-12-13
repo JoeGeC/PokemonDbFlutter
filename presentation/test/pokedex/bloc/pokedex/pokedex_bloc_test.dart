@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
-import 'package:presentation/common/bloc/base_state.dart';
-import 'package:presentation/pokedex/bloc/pokedex/pokedex_bloc.dart';
-import 'package:presentation/pokedex/converters/pokedex_presentation_converter.dart';
+import 'package:presentation/src/common/bloc/base_state.dart';
+import 'package:presentation/src/pokedex/bloc/pokedex/pokedex_bloc.dart';
+import 'package:presentation/src/pokedex/converters/pokedex_presentation_converter.dart';
 
 import '../../../model_mocks.dart';
 import 'pokedex_bloc_test.mocks.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:presentation/pokemon/converters/pokemon_presentation_converter_impl.dart';
+import 'package:presentation/src/pokemon/converters/pokemon_presentation_converter_impl.dart';
 
 import '../../model_mocks.dart';
 
