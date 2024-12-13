@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pokemon_db/injections.dart';
-import 'package:pokemon_db/main.dart';
+import 'package:pokemon_db/src/injections.dart';
+import 'package:pokemon_db/src/main.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'mocks/mock_database.dart';
