@@ -47,7 +47,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
       },
       child: BlocBuilder<PokedexListBloc, BaseState>(
         builder: (context, state) => _buildBackground(state, theme,
-            children: _buildLoadingBar(state, theme)),
+            children: _buildStateWithLoadingBar(state, theme)),
       ),
     );
   }
@@ -72,7 +72,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         ),
       );
 
-  Widget _buildLoadingBar(BaseState state, ThemeData theme) {
+  Widget _buildStateWithLoadingBar(BaseState state, ThemeData theme) {
     if (state is CompletedState) {
       return _buildState(state.lastState, theme);
     } else {

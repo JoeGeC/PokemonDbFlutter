@@ -18,6 +18,7 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   dartz: ^0.10.1
   cached_network_image: ^3.4.1
+  flutter_svg: ^2.0.16
 
   domain:
     path: ../domain

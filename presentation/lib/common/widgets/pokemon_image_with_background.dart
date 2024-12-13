@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:presentation/common/utils/extensions.dart';
 import 'package:presentation/common/utils/is_dark_mode.dart';
 
@@ -14,21 +15,23 @@ Widget buildPokemonImageWithBackground(
   String pokemonName, {
   double size = 100,
 }) =>
-  Semantics(
-    label: "$pokemonName image",
-    child: Stack(
-      children: [
-        buildPokemonImageBackground(size, theme),
-        buildPokemonSprite(state, imageUrl, size, context)
-      ],
-    )
-    ,);
+    Semantics(
+      label: "$pokemonName image",
+      child: Stack(
+        children: [
+          buildPokemonImageBackground(size, theme),
+          buildPokemonSprite(state, imageUrl, size, context)
+        ],
+      ),
+    );
 
-Image buildPokemonImageBackground(double size, ThemeData theme) => Image(
-      image: AssetImage(AssetConstants.pokeballBackground(isDarkMode(theme))),
-      opacity: const AlwaysStoppedAnimation(.4),
-      height: size,
-      width: size,
+Widget buildPokemonImageBackground(double size, ThemeData theme) => Opacity(
+      opacity: 0.4,
+      child: SvgPicture.asset(
+        AssetConstants.pokeballBackground(isDarkMode(theme)),
+        height: size,
+        width: size,
+      ),
     );
 
 Image buildPokemonFallback(String asset, double size) => Image(
@@ -63,5 +66,5 @@ Widget buildPokemonSpriteFromUrl(
   );
 }
 
-Image _buildLoadingFallback(double size) =>
+Widget _buildLoadingFallback(double size) =>
     buildPokemonFallback(AssetConstants.pokemonFallback, size);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:presentation/common/asset_constants.dart';
 
 Widget PixelBackButton({
@@ -22,17 +23,16 @@ Widget PixelBackButton({
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top: 2, left: 2),
-                    child: Image.asset(
+                    child: SvgPicture.asset(
                       width: width,
                       height: height,
-                      AssetConstants.arrow,
+                      AssetConstants.blackArrow,
                     ),
                   ),
-                  Image.asset(
+                  SvgPicture.asset(
                     width: width,
                     height: height,
-                    AssetConstants.arrow,
-                    color: Colors.white,
+                    AssetConstants.whiteArrow,
                   ),
                 ],
               ),
