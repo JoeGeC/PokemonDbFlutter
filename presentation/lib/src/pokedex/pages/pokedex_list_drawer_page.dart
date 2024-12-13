@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/src/common/asset_constants.dart';
+import 'package:presentation/src/common/utils/extensions.dart';
 import 'package:presentation/src/common/utils/is_dark_mode.dart';
 import 'package:presentation/src/common/widgets/loading_bar.dart';
 import 'package:presentation/src/pokedex/models/pokedex_group_presentation_model.dart';
@@ -46,14 +47,13 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         return bloc;
       },
       child: BlocBuilder<PokedexListBloc, BaseState>(
-        builder: (context, state) => _buildBackground(state, theme,
-            children: _buildStateWithLoadingBar(state, theme)),
+        builder: (context, state) => _buildBackground(state,
+            children: _buildStateWithLoadingBar(state)),
       ),
     );
   }
 
-  Expanded _buildBackground(BaseState state, ThemeData theme,
-          {children = const <Widget>[]}) =>
+  Expanded _buildBackground(BaseState state, {children = const <Widget>[]}) =>
       Expanded(
         child: SizedBox(
           width: double.infinity,
@@ -62,7 +62,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
             children: [
               Positioned.fill(
                 child: Image.asset(
-                  AssetConstants.drawerBackground(isDarkMode(theme)),
+                  AssetConstants.drawerBackground(isDarkMode(context.theme)),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -72,26 +72,26 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         ),
       );
 
-  Widget _buildStateWithLoadingBar(BaseState state, ThemeData theme) {
+  Widget _buildStateWithLoadingBar(BaseState state) {
     if (state is CompletedState) {
-      return _buildState(state.lastState, theme);
+      return _buildState(state.lastState);
     } else {
-      return LoadingBar(child: _buildState(state, theme));
+      return LoadingBar(child: _buildState(state));
     }
   }
 
-  Widget _buildState(BaseState state, ThemeData theme) {
+  Widget _buildState(BaseState state) {
     switch (state) {
       case LoadingState():
         return LoadingPage();
       case PokedexListSuccessState():
-        return _buildPokedexList(state, theme);
+        return _buildPokedexList(state);
       default:
         return ErrorPage();
     }
   }
 
-  Widget _buildPokedexList(PokedexListSuccessState state, ThemeData theme) {
+  Widget _buildPokedexList(PokedexListSuccessState state) {
     var pokedexGroups = state.pokedexGroups;
     return ScrollablePositionedList.builder(
       itemScrollController: positionScroller.scrollController,
@@ -100,10 +100,10 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
       itemBuilder: (context, index) {
         final pokedexGroup = pokedexGroups.elementAt(index);
         if (pokedexGroup.title == "National") {
-          return _buildTappableGroupTitle(theme, pokedexGroup.title,
+          return _buildTappableGroupTitle(pokedexGroup.title,
               () => selectPokedex(pokedexGroup.pokedexList.first.id));
         } else {
-          return _buildRegionList(theme, pokedexGroup, index);
+          return _buildRegionList(pokedexGroup, index);
         }
       },
     );
@@ -115,22 +115,20 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
     }
   }
 
-  Column _buildRegionList(ThemeData theme,
-          PokedexGroupPresentationModel pokedexGroup, int index) =>
+  Column _buildRegionList(PokedexGroupPresentationModel pokedexGroup, int index) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTappableGroupTitle(theme, pokedexGroup.title,
+          _buildTappableGroupTitle(pokedexGroup.title,
               () => toggleExpanded(pokedexGroup, index)),
           buildAnimatedList(pokedexGroup, children: [
             ...pokedexGroup.pokedexList
-                .map((pokedex) => _buildPokedexGroupItem(theme, pokedex))
+                .map((pokedex) => _buildPokedexGroupItem(pokedex))
           ]),
         ],
       );
 
-  Widget _buildTappableGroupTitle(
-          ThemeData theme, String title, Function() onTap) =>
+  Widget _buildTappableGroupTitle(String title, Function() onTap) =>
       Column(
         children: [
           Padding(
@@ -148,7 +146,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
                       padding: const EdgeInsets.only(left: 8),
                       child: Text(
                         title,
-                        style: theme.textTheme.labelMedium,
+                        style: context.theme.textTheme.labelMedium,
                       ),
                     ),
                   ),
@@ -156,16 +154,15 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
               ),
             ),
           ),
-          buildDivider(theme),
+          _buildDivider(),
         ],
       );
 
-  Widget _buildPokedexGroupItem(
-          ThemeData theme, PokedexPresentationModel pokedex) =>
+  Widget _buildPokedexGroupItem(PokedexPresentationModel pokedex) =>
       Column(
         children: [
           RowWithStartColor(
-            startColor: theme.colorScheme.primary,
+            startColor: context.theme.colorScheme.primary,
             startColorWidth: 10,
             onTapped: widget.onSelected,
             id: pokedex.id,
@@ -176,7 +173,7 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
                 children: [
                   ...pokedex.displayNames.map(
                     (displayName) =>
-                        _buildPokedexVersionLabel(displayName, theme),
+                        _buildPokedexVersionLabel(displayName),
                   ),
                 ],
               ),
@@ -186,31 +183,31 @@ class _PokedexListExpandState extends State<PokedexListDrawerPage> {
         ],
       );
 
-  Widget _buildPokedexVersionLabel(String displayName, ThemeData theme) =>
+  Widget _buildPokedexVersionLabel(String displayName) =>
       Padding(
         padding: EdgeInsets.symmetric(vertical: 8),
         child: Text(
           displayName,
-          style: theme.textTheme.labelSmall,
+          style: context.theme.textTheme.labelSmall,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
       );
 
-  Widget buildDivider(ThemeData theme) => Stack(
+  Widget _buildDivider() => Stack(
         children: [
           Padding(
             padding: EdgeInsets.only(left: 18, top: 2, right: 14, bottom: 4),
             child: Container(
               height: 2,
-              color: theme.colorScheme.shadow,
+              color: context.theme.colorScheme.shadow,
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Container(
               height: 2,
-              color: theme.colorScheme.onSurface,
+              color: context.theme.colorScheme.onSurface,
             ),
           ),
         ],
