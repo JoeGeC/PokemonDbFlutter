@@ -5,6 +5,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:domain/domain.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i6;
+import 'package:presentation/src/l10n/gen/presentation_localizations.dart'
+    as _i5;
 import 'package:presentation/src/pokedex/converters/pokedex_pokemon_presentation_converter.dart'
     as _i3;
 import 'package:presentation/src/pokedex/models/pokedex_pokemon_presentation_model.dart'
@@ -83,4 +86,626 @@ class MockPokedexPokemonPresentationConverter extends _i1.Mock
           ),
         ),
       ) as _i2.PokedexPokemonPresentationModel);
+}
+
+/// A class which mocks [PresentationLocalizations].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockPresentationLocalizations extends _i1.Mock
+    implements _i5.PresentationLocalizations {
+  MockPresentationLocalizations() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  String get localeName => (super.noSuchMethod(
+        Invocation.getter(#localeName),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#localeName),
+        ),
+      ) as String);
+
+  @override
+  String get somethingWentWrong => (super.noSuchMethod(
+        Invocation.getter(#somethingWentWrong),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#somethingWentWrong),
+        ),
+      ) as String);
+
+  @override
+  String get emptyError => (super.noSuchMethod(
+        Invocation.getter(#emptyError),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#emptyError),
+        ),
+      ) as String);
+
+  @override
+  String get backButton => (super.noSuchMethod(
+        Invocation.getter(#backButton),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#backButton),
+        ),
+      ) as String);
+
+  @override
+  String get openNavigationMenu => (super.noSuchMethod(
+        Invocation.getter(#openNavigationMenu),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#openNavigationMenu),
+        ),
+      ) as String);
+
+  @override
+  String get image => (super.noSuchMethod(
+        Invocation.getter(#image),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#image),
+        ),
+      ) as String);
+
+  @override
+  String get pokemonTypes => (super.noSuchMethod(
+        Invocation.getter(#pokemonTypes),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#pokemonTypes),
+        ),
+      ) as String);
+
+  @override
+  String get national => (super.noSuchMethod(
+        Invocation.getter(#national),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#national),
+        ),
+      ) as String);
+
+  @override
+  String get kanto => (super.noSuchMethod(
+        Invocation.getter(#kanto),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#kanto),
+        ),
+      ) as String);
+
+  @override
+  String get johto => (super.noSuchMethod(
+        Invocation.getter(#johto),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#johto),
+        ),
+      ) as String);
+
+  @override
+  String get hoenn => (super.noSuchMethod(
+        Invocation.getter(#hoenn),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#hoenn),
+        ),
+      ) as String);
+
+  @override
+  String get sinnoh => (super.noSuchMethod(
+        Invocation.getter(#sinnoh),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#sinnoh),
+        ),
+      ) as String);
+
+  @override
+  String get unova => (super.noSuchMethod(
+        Invocation.getter(#unova),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#unova),
+        ),
+      ) as String);
+
+  @override
+  String get ransei => (super.noSuchMethod(
+        Invocation.getter(#ransei),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#ransei),
+        ),
+      ) as String);
+
+  @override
+  String get kalos => (super.noSuchMethod(
+        Invocation.getter(#kalos),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#kalos),
+        ),
+      ) as String);
+
+  @override
+  String get alola => (super.noSuchMethod(
+        Invocation.getter(#alola),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#alola),
+        ),
+      ) as String);
+
+  @override
+  String get melemele => (super.noSuchMethod(
+        Invocation.getter(#melemele),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#melemele),
+        ),
+      ) as String);
+
+  @override
+  String get akala => (super.noSuchMethod(
+        Invocation.getter(#akala),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#akala),
+        ),
+      ) as String);
+
+  @override
+  String get ulaula => (super.noSuchMethod(
+        Invocation.getter(#ulaula),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#ulaula),
+        ),
+      ) as String);
+
+  @override
+  String get poni => (super.noSuchMethod(
+        Invocation.getter(#poni),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#poni),
+        ),
+      ) as String);
+
+  @override
+  String get galar => (super.noSuchMethod(
+        Invocation.getter(#galar),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#galar),
+        ),
+      ) as String);
+
+  @override
+  String get hisui => (super.noSuchMethod(
+        Invocation.getter(#hisui),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#hisui),
+        ),
+      ) as String);
+
+  @override
+  String get paldea => (super.noSuchMethod(
+        Invocation.getter(#paldea),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#paldea),
+        ),
+      ) as String);
+
+  @override
+  String get rby => (super.noSuchMethod(
+        Invocation.getter(#rby),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#rby),
+        ),
+      ) as String);
+
+  @override
+  String get gsc => (super.noSuchMethod(
+        Invocation.getter(#gsc),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#gsc),
+        ),
+      ) as String);
+
+  @override
+  String get rse => (super.noSuchMethod(
+        Invocation.getter(#rse),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#rse),
+        ),
+      ) as String);
+
+  @override
+  String get frlg => (super.noSuchMethod(
+        Invocation.getter(#frlg),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#frlg),
+        ),
+      ) as String);
+
+  @override
+  String get dp => (super.noSuchMethod(
+        Invocation.getter(#dp),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#dp),
+        ),
+      ) as String);
+
+  @override
+  String get pt => (super.noSuchMethod(
+        Invocation.getter(#pt),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#pt),
+        ),
+      ) as String);
+
+  @override
+  String get hgss => (super.noSuchMethod(
+        Invocation.getter(#hgss),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#hgss),
+        ),
+      ) as String);
+
+  @override
+  String get bw => (super.noSuchMethod(
+        Invocation.getter(#bw),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#bw),
+        ),
+      ) as String);
+
+  @override
+  String get b2w2 => (super.noSuchMethod(
+        Invocation.getter(#b2w2),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#b2w2),
+        ),
+      ) as String);
+
+  @override
+  String get xy => (super.noSuchMethod(
+        Invocation.getter(#xy),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#xy),
+        ),
+      ) as String);
+
+  @override
+  String get oras => (super.noSuchMethod(
+        Invocation.getter(#oras),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#oras),
+        ),
+      ) as String);
+
+  @override
+  String get sm => (super.noSuchMethod(
+        Invocation.getter(#sm),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#sm),
+        ),
+      ) as String);
+
+  @override
+  String get usum => (super.noSuchMethod(
+        Invocation.getter(#usum),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#usum),
+        ),
+      ) as String);
+
+  @override
+  String get lgo => (super.noSuchMethod(
+        Invocation.getter(#lgo),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#lgo),
+        ),
+      ) as String);
+
+  @override
+  String get swsh => (super.noSuchMethod(
+        Invocation.getter(#swsh),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#swsh),
+        ),
+      ) as String);
+
+  @override
+  String get bdsp => (super.noSuchMethod(
+        Invocation.getter(#bdsp),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#bdsp),
+        ),
+      ) as String);
+
+  @override
+  String get pla => (super.noSuchMethod(
+        Invocation.getter(#pla),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#pla),
+        ),
+      ) as String);
+
+  @override
+  String get sv => (super.noSuchMethod(
+        Invocation.getter(#sv),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#sv),
+        ),
+      ) as String);
+
+  @override
+  String get lza => (super.noSuchMethod(
+        Invocation.getter(#lza),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#lza),
+        ),
+      ) as String);
+
+  @override
+  String get conq => (super.noSuchMethod(
+        Invocation.getter(#conq),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#conq),
+        ),
+      ) as String);
+
+  @override
+  String get sunMoon => (super.noSuchMethod(
+        Invocation.getter(#sunMoon),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#sunMoon),
+        ),
+      ) as String);
+
+  @override
+  String get ultraSunUltraMoon => (super.noSuchMethod(
+        Invocation.getter(#ultraSunUltraMoon),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#ultraSunUltraMoon),
+        ),
+      ) as String);
+
+  @override
+  String get redBlueYellow => (super.noSuchMethod(
+        Invocation.getter(#redBlueYellow),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#redBlueYellow),
+        ),
+      ) as String);
+
+  @override
+  String get fireRedLeafGreen => (super.noSuchMethod(
+        Invocation.getter(#fireRedLeafGreen),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#fireRedLeafGreen),
+        ),
+      ) as String);
+
+  @override
+  String get letsGoPikachuEevee => (super.noSuchMethod(
+        Invocation.getter(#letsGoPikachuEevee),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#letsGoPikachuEevee),
+        ),
+      ) as String);
+
+  @override
+  String get goldSilverCrystal => (super.noSuchMethod(
+        Invocation.getter(#goldSilverCrystal),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#goldSilverCrystal),
+        ),
+      ) as String);
+
+  @override
+  String get rubySapphireEmerald => (super.noSuchMethod(
+        Invocation.getter(#rubySapphireEmerald),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#rubySapphireEmerald),
+        ),
+      ) as String);
+
+  @override
+  String get diamondPearl => (super.noSuchMethod(
+        Invocation.getter(#diamondPearl),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#diamondPearl),
+        ),
+      ) as String);
+
+  @override
+  String get brilliantDiamondShiningPearl => (super.noSuchMethod(
+        Invocation.getter(#brilliantDiamondShiningPearl),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#brilliantDiamondShiningPearl),
+        ),
+      ) as String);
+
+  @override
+  String get platinum => (super.noSuchMethod(
+        Invocation.getter(#platinum),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#platinum),
+        ),
+      ) as String);
+
+  @override
+  String get heartGoldSoulSilver => (super.noSuchMethod(
+        Invocation.getter(#heartGoldSoulSilver),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#heartGoldSoulSilver),
+        ),
+      ) as String);
+
+  @override
+  String get blackWhite => (super.noSuchMethod(
+        Invocation.getter(#blackWhite),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#blackWhite),
+        ),
+      ) as String);
+
+  @override
+  String get black2White2 => (super.noSuchMethod(
+        Invocation.getter(#black2White2),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#black2White2),
+        ),
+      ) as String);
+
+  @override
+  String get conquest => (super.noSuchMethod(
+        Invocation.getter(#conquest),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#conquest),
+        ),
+      ) as String);
+
+  @override
+  String get central => (super.noSuchMethod(
+        Invocation.getter(#central),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#central),
+        ),
+      ) as String);
+
+  @override
+  String get coastal => (super.noSuchMethod(
+        Invocation.getter(#coastal),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#coastal),
+        ),
+      ) as String);
+
+  @override
+  String get mountain => (super.noSuchMethod(
+        Invocation.getter(#mountain),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#mountain),
+        ),
+      ) as String);
+
+  @override
+  String get omegaRubyAlphaSapphire => (super.noSuchMethod(
+        Invocation.getter(#omegaRubyAlphaSapphire),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#omegaRubyAlphaSapphire),
+        ),
+      ) as String);
+
+  @override
+  String get swordShield => (super.noSuchMethod(
+        Invocation.getter(#swordShield),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#swordShield),
+        ),
+      ) as String);
+
+  @override
+  String get isleOfArmor => (super.noSuchMethod(
+        Invocation.getter(#isleOfArmor),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#isleOfArmor),
+        ),
+      ) as String);
+
+  @override
+  String get crownTundra => (super.noSuchMethod(
+        Invocation.getter(#crownTundra),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#crownTundra),
+        ),
+      ) as String);
+
+  @override
+  String get legendsArceus => (super.noSuchMethod(
+        Invocation.getter(#legendsArceus),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#legendsArceus),
+        ),
+      ) as String);
+
+  @override
+  String get scarlettViolet => (super.noSuchMethod(
+        Invocation.getter(#scarlettViolet),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#scarlettViolet),
+        ),
+      ) as String);
+
+  @override
+  String get theTealMask => (super.noSuchMethod(
+        Invocation.getter(#theTealMask),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#theTealMask),
+        ),
+      ) as String);
+
+  @override
+  String get theIndigoDisk => (super.noSuchMethod(
+        Invocation.getter(#theIndigoDisk),
+        returnValue: _i6.dummyValue<String>(
+          this,
+          Invocation.getter(#theIndigoDisk),
+        ),
+      ) as String);
 }

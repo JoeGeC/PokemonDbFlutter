@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_db/src/l10n/AppL10n.dart';
-import 'package:pokemon_db/src/injections.dart';
 import 'package:pokemon_db/src/l10n/gen/app_localizations.dart';
 import 'package:pokemon_db/src/splash_page.dart';
 import 'package:pokemon_db/src/theme/colors.dart';
 import 'package:presentation/presentation.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Database? database;
+
+  const MyApp({this.database, super.key});
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         darkTheme: darkModeTheme(),
         localizationsDelegates: AppL10n.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: SplashPage(),
+        home: SplashPage(database: database),
       );
 
   lightModeTheme() => ThemeData(

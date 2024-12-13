@@ -2,6 +2,7 @@ import 'package:domain/domain.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:presentation/presentation.dart';
 import 'package:presentation/src/pokedex/converters/pokedex_pokemon_presentation_converter.dart';
 import 'package:presentation/src/pokedex/converters/pokedex_presentation_converter_impl.dart';
 import 'package:presentation/src/pokedex/models/pokedex_group_presentation_model.dart';
@@ -10,7 +11,7 @@ import 'package:presentation/src/pokedex/models/pokedex_presentation_model.dart'
 
 import 'pokedex_presentation_converter_test.mocks.dart';
 
-@GenerateMocks([PokedexPokemonPresentationConverter])
+@GenerateMocks([PokedexPokemonPresentationConverter, PresentationLocalizations])
 void main() {
   var pokedexId1 = 11;
   var pokedexId2 = 12;
@@ -79,9 +80,23 @@ void main() {
     pokemon: [],
   );
   var mockPokemonConverter = MockPokedexPokemonPresentationConverter();
-  var converter = PokedexPresentationConverterImpl(mockPokemonConverter);
+  var mockLocalizations = MockPresentationLocalizations();
+  var converter = PokedexPresentationConverterImpl(mockPokemonConverter, mockLocalizations);
 
-  setUp(() {});
+  setUp(() {
+    when(mockLocalizations.kanto).thenReturn("Kanto");
+    when(mockLocalizations.rby).thenReturn("RBY");
+    when(mockLocalizations.redBlueYellow).thenReturn("Red, Blue & Yellow");
+    when(mockLocalizations.frlg).thenReturn("FRLG");
+    when(mockLocalizations.fireRedLeafGreen).thenReturn("FireRed & LeafGreen");
+    when(mockLocalizations.johto).thenReturn("Johto");
+    when(mockLocalizations.gsc).thenReturn("GSC");
+    when(mockLocalizations.goldSilverCrystal).thenReturn("Gold, Silver & Crystal");
+    when(mockLocalizations.hgss).thenReturn("HGSS");
+    when(mockLocalizations.heartGoldSoulSilver).thenReturn("HeartGold & SoulSilver");
+    when(mockLocalizations.sunMoon).thenReturn("Sun & Moon");
+    when(mockLocalizations.ultraSunUltraMoon).thenReturn("Ultra Sun & Ultra Moon");
+  });
 
   group('convert', () {
     test('convert pokedex', () {

@@ -47,8 +47,7 @@ class _PokedexPageState extends State<PokedexPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         key: _scaffoldKey,
         backgroundColor: context.theme.colorScheme.primary,
         drawer: _buildDrawer(),
@@ -64,7 +63,6 @@ class _PokedexPageState extends State<PokedexPage> {
           ),
         ),
       );
-  }
 
   Widget getPageState(BaseState state) => switch (state) {
         PokedexSuccessState() => _buildSuccessPage(state.pokedex),
