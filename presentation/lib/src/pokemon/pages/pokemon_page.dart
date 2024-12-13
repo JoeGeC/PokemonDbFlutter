@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/src/common/text_theme.dart';
+import 'package:presentation/src/common/utils/extensions.dart';
 import 'package:presentation/src/common/widgets/back_button.dart';
 import 'package:presentation/src/common/widgets/pokemon_image_with_background.dart';
 import 'package:presentation/src/common/widgets/pokemon_types_widget.dart';
@@ -50,16 +51,15 @@ class _PokemonPageState extends State<PokemonPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return SafeArea(
       child: BlocConsumer<PokemonBloc, BaseState>(
         bloc: _bloc,
         listener: (context, state) {},
         builder: (context, state) => RefreshIndicator(
-          color: theme.colorScheme.primary,
-          backgroundColor: theme.colorScheme.onPrimary,
+          color: context.theme.colorScheme.primary,
+          backgroundColor: context.theme.colorScheme.onPrimary,
           onRefresh: onRefresh,
-          child: getPageState(state, theme),
+          child: getPageState(state),
         ),
       ),
     );
@@ -69,93 +69,93 @@ class _PokemonPageState extends State<PokemonPage> {
     _bloc.onRefresh(widget.pokemonId);
   }
 
-  Widget getPageState(BaseState state, ThemeData theme) => switch (state) {
-        PokemonSuccessState() => _buildSuccessPage(theme, state.pokemon),
+  Widget getPageState(BaseState state) => switch (state) {
+        PokemonSuccessState() => _buildSuccessPage(state.pokemon),
         ExistingPokemonLoadingState() =>
-          _buildSuccessPage(theme, state.pokemon),
-        LoadingState() => buildLoadingPage(theme),
-        BaseState() => buildErrorPage(theme),
+          _buildSuccessPage(state.pokemon),
+        LoadingState() => buildLoadingPage(),
+        BaseState() => buildErrorPage(),
       };
 
-  Widget buildLoadingPage(ThemeData theme) =>
+  Widget buildLoadingPage() =>
       buildRefreshablePageWithBackground(
         title: buildPokedexHeader(
             icon: PixelBackButton(onTap: goBack), title: buildShimmer()),
         body: LoadingPage(),
-        theme: theme,
+        theme: context.theme,
         context: context,
       );
 
-  Widget buildErrorPage(ThemeData theme) => buildRefreshablePageWithBackground(
+  Widget buildErrorPage() => buildRefreshablePageWithBackground(
         title: buildPokedexHeader(icon: PixelBackButton(onTap: goBack)),
         body: ErrorPage(),
-        theme: theme,
+        theme: context.theme,
         context: context,
       );
 
-  Widget _buildSuccessPage(ThemeData theme, PokemonPresentationModel pokemon) =>
+  Widget _buildSuccessPage(PokemonPresentationModel pokemon) =>
       buildRefreshablePageWithBackground(
         title: buildPokedexHeader(
             icon: PixelBackButton(onTap: goBack),
-            title: buildPageTitle(theme: theme, title: pokemon.name)),
-        theme: theme,
+            title: buildPageTitle(theme: context.theme, title: pokemon.name)),
+        theme: context.theme,
         context: context,
         body: Center(
           child: Padding(
             padding: EdgeInsets.all(16),
-            child: _buildSections(pokemon, theme),
+            child: _buildSections(pokemon),
           ),
         ),
       );
 
-  Column _buildSections(PokemonPresentationModel pokemon, ThemeData theme) =>
+  Column _buildSections(PokemonPresentationModel pokemon) =>
       Column(
         children: [
           buildPokemonImageWithBackground(
             _bloc.state,
             pokemon.artworkUrl,
-            theme,
+            context.theme,
             context,
             pokemon.name,
             size: 250,
           ),
-          _buildPokemonName(pokemon, theme),
+          _buildPokemonName(pokemon),
           buildPokemonTypes(
               types: pokemon.types,
-              theme: theme,
+              theme: context.theme,
               alignment: MainAxisAlignment.center),
-          _buildSection(theme, "Base Stats", _buildStats(theme, pokemon)),
-          _buildSection(
-              theme, "EV Yield", _buildEvYieldSection(theme, pokemon)),
+          _buildSection("Base Stats", _buildStats(pokemon)),
+          _buildSection("EV Yield", _buildEvYieldSection(pokemon)),
         ],
       );
 
-  Widget _buildSection(ThemeData theme, String title, Widget child) =>
+  Widget _buildSection(String title, Widget child) =>
       PokemonSection(
-        backgroundColor: theme.colorScheme.primary,
-        titleBackgroundColor: theme.colorScheme.secondary,
-        titleTextStyle: theme.textTheme.titleMediumWhite,
+        backgroundColor: context.theme.colorScheme.primary,
+        titleBackgroundColor: context.theme.colorScheme.secondary,
+        titleTextStyle: context.theme.textTheme.titleMediumWhite,
         title: title,
         child: child,
       );
 
-  Widget _buildPokemonName(PokemonPresentationModel pokemon, ThemeData theme) =>
+  Widget _buildPokemonName(PokemonPresentationModel pokemon) =>
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             "${pokemon.nationalDexNumber}: ",
-            style: theme.textTheme.titleMedium,
+            style: context.theme.textTheme.titleMedium,
           ),
           Text(
             pokemon.name,
-            style: theme.textTheme.titleMedium,
+            style: context.theme.textTheme.titleMedium,
           ),
         ],
       );
 
-  Widget _buildStats(ThemeData theme, PokemonPresentationModel pokemon) =>
-      pokemon.statsNotNull
+  Widget _buildStats(PokemonPresentationModel pokemon) {
+    var theme = context.theme;
+    return pokemon.statsNotNull
           ? Semantics(
               label:
                   "Base stats: HP: ${pokemon.hp}, attack: ${pokemon.attack}, defense: ${pokemon.defense}, special attack: ${pokemon.specialAttack}, special defense: ${pokemon.specialDefense}, speed: ${pokemon.speed}",
@@ -175,9 +175,9 @@ class _PokemonPageState extends State<PokemonPage> {
           : _bloc.state is ExistingPokemonLoadingState
               ? buildShimmer()
               : ErrorPage(textStyle: theme.textTheme.labelMediumWhite);
+  }
 
-  Widget _buildEvYieldSection(
-          ThemeData theme, PokemonPresentationModel pokemon) =>
+  Widget _buildEvYieldSection(PokemonPresentationModel pokemon) =>
       pokemon.statsNotNull
           ? Semantics(
               label:
@@ -185,28 +185,25 @@ class _PokemonPageState extends State<PokemonPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildEvYield(theme, hpLabel, pokemon.hpEvYield),
-                  _buildEvYield(theme, attackShortLabel, pokemon.attackEvYield),
-                  _buildEvYield(
-                      theme, defenseShortLabel, pokemon.defenseEvYield),
-                  _buildEvYield(
-                      theme, specialAttackLabel, pokemon.specialAttackEvYield),
-                  _buildEvYield(theme, specialDefenseLabel,
-                      pokemon.specialDefenseEvYield),
-                  _buildEvYield(theme, speedShortLabel, pokemon.speedEvYield),
+                  _buildEvYield(hpLabel, pokemon.hpEvYield),
+                  _buildEvYield(attackShortLabel, pokemon.attackEvYield),
+                  _buildEvYield(defenseShortLabel, pokemon.defenseEvYield),
+                  _buildEvYield(specialAttackLabel, pokemon.specialAttackEvYield),
+                  _buildEvYield(specialDefenseLabel, pokemon.specialDefenseEvYield),
+                  _buildEvYield(speedShortLabel, pokemon.speedEvYield),
                 ],
               ),
             )
           : _bloc.state is ExistingPokemonLoadingState
               ? buildShimmer()
-              : ErrorPage(textStyle: theme.textTheme.labelMediumWhite);
+              : ErrorPage(textStyle: context.theme.textTheme.labelMediumWhite);
 
-  Widget _buildEvYield(ThemeData theme, String label, int? value) =>
+  Widget _buildEvYield(String label, int? value) =>
       LabelValueColumn(
-        valueBackgroundColor: theme.colorScheme.secondary,
-        valueTextStyle: theme.textTheme.labelMediumWhite,
+        valueBackgroundColor: context.theme.colorScheme.secondary,
+        valueTextStyle: context.theme.textTheme.labelMediumWhite,
         labelBackgroundColor: Colors.transparent,
-        labelTextStyle: theme.textTheme.labelSmallWhite,
+        labelTextStyle: context.theme.textTheme.labelSmallWhite,
         label: label,
         value: value?.toString() ?? "0",
       );

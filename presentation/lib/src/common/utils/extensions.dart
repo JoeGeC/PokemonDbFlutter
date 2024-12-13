@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 extension StringExtensions on String {
   String capitalise() {
@@ -11,4 +11,8 @@ extension ImageExtension on num {
   int cacheSize(BuildContext context) {
     return (this * MediaQuery.of(context).devicePixelRatio).round();
   }
+}
+
+extension ContextExtensions on BuildContext {
+  ThemeData get theme => Theme.of(this);
 }
