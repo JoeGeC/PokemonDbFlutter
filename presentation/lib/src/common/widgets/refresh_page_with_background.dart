@@ -12,19 +12,22 @@ Widget buildRefreshablePageWithBackground({
     Stack(
       children: [
         _buildBackground(context.isDarkMode),
-        SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              title ?? Container(),
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height - headerHeight,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            title ?? Container(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight:
+                        MediaQuery.of(context).size.height - headerHeight,
+                  ),
+                  child: body ?? Container(),
                 ),
-                child: body ?? Container(),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
