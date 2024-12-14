@@ -14,7 +14,7 @@ Widget buildPokemonImageWithBackground(
   double size = 100,
 }) =>
     Semantics(
-      label: "$pokemonName image",
+      label: "$pokemonName ${context.localizations.image}",
       child: Stack(
         children: [
           buildPokemonImageBackground(size, context),
