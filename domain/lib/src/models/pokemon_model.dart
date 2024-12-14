@@ -1,3 +1,4 @@
+import 'package:domain/src/models/pokemon_constants/pokemon_types.dart';
 import 'package:equatable/equatable.dart';
 
 class PokemonModel extends Equatable {
@@ -6,7 +7,7 @@ class PokemonModel extends Equatable {
   final String name;
   final String? spriteUrl;
   final String? artworkUrl;
-  final List<String>? types;
+  final List<PokemonType>? types;
   final int? hp;
   final int? attack;
   final int? defense;

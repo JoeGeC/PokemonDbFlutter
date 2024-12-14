@@ -9,7 +9,7 @@ import '../type_colors.dart';
 Widget buildPokemonTypes(
     {required List<String>? types,
     required BuildContext context,
-    double typeBoxWidth = 100,
+    double typeBoxWidth = 120,
     double typeBoxHeight = 40,
     double borderRadius = 4,
     MainAxisAlignment alignment = MainAxisAlignment.start}) {
@@ -71,7 +71,7 @@ Widget _buildTypeBoxes(
   MainAxisAlignment alignment,
 ) =>
     Semantics(
-      label: "Pokemon types: ${types.join(", ")}",
+      label: "${context.localizations.pokemonTypes}: ${types.join(", ")}",
       child: Row(
         mainAxisAlignment: alignment,
         children: types
@@ -95,8 +95,8 @@ Widget _buildTypeBox(
       alignment: Alignment.center,
       children: [
         RoundedBox(
-          width: 100,
-          height: 40,
+          width: typeBoxWidth,
+          height: typeBoxHeight,
           color: getTypeColor(type, context.localizations),
           borderRadius: borderRadius,
           borderColor: getTypeBorderColor(type, context.localizations),

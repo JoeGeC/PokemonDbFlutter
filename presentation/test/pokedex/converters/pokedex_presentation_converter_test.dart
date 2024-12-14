@@ -27,7 +27,7 @@ void main() {
     name: "pokemon",
     pokedexEntryNumbers: {pokedexId1: 2, pokedexId2: 1},
     spriteUrl: "url/asd/asd/asd/",
-    types: ["grass", "flying"],
+    types: [PokemonType.grass, PokemonType.flying],
   );
   PokedexPokemonPresentationModel pokedexPokemonPresentation =
       PokedexPokemonPresentationModel(

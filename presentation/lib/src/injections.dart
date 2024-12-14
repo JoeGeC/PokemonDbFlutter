@@ -10,7 +10,7 @@ import 'package:presentation/src/pokemon/converters/pokemon_presentation_convert
 final getIt = GetIt.instance;
 
 setupPresentationInjections(PresentationLocalizations localizations){
-  getIt.registerSingleton<PokemonPresentationConverter>(PokemonPresentationConverterImpl());
-  getIt.registerSingleton<PokedexPokemonPresentationConverter>(PokedexPokemonPresentationConverterImpl());
+  getIt.registerSingleton<PokemonPresentationConverter>(PokemonPresentationConverterImpl(localizations));
+  getIt.registerSingleton<PokedexPokemonPresentationConverter>(PokedexPokemonPresentationConverterImpl(localizations));
   getIt.registerSingleton<PokedexPresentationConverter>(PokedexPresentationConverterImpl(getIt(), localizations));
 }

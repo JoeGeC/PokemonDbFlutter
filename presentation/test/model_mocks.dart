@@ -24,10 +24,24 @@ String pokedexEntryNumberPresentation = "101";
 String pokemonNationalDexNumber = "0001";
 String pokemonName = "Example Pokemon";
 List<String> pokemonPresenterTypes = ["Grass", "Psychic"];
-List<String> pokemonDomainTypes = ["grass", "psychic"];
+List<PokemonType> pokemonDomainTypes = [PokemonType.grass, PokemonType.psychic];
 Map<int, int> pokedexEntryNumbers = {pokedexId1: pokedexEntryNumber};
 String pokemonSpriteUrl = "https://pokeapi.com/image-sprite.png";
 String pokemonArtworkUrl = "https://pokeapi.com/image-artwork.png";
+
+int pokemonId2 = 2;
+int pokedexEntryNumber2 = 102;
+String pokedexEntryNumberPresentation2 = "102";
+String pokemonNationalDexNumber2 = "0002";
+String pokemonName2 = "Example Pokemon 2";
+List<String> pokemonPresenterTypes2 = ["Fire", "Fighting"];
+List<PokemonType> pokemonDomainTypes2 = [
+  PokemonType.fire,
+  PokemonType.fighting
+];
+Map<int, int> pokedexEntryNumbers2 = {pokedexId1: pokedexEntryNumber2};
+String pokemonSpriteUrl2 = "https://pokeapi.com/image-sprite2.png";
+String pokemonArtworkUrl2 = "https://pokeapi.com/image-artwork2.png";
 
 int baseStatHp = 11;
 int statEffortHp = 1;
@@ -63,6 +77,24 @@ PokemonModel pokemonModel = PokemonModel(
   speedEvYield: statEffortSpeed,
 );
 
+PokemonModel pokemonModelUndetailed = PokemonModel(
+  id: pokemonId,
+  name: pokemonName,
+  pokedexEntryNumbers: pokedexEntryNumbers,
+  spriteUrl: pokemonSpriteUrl,
+  artworkUrl: pokemonArtworkUrl,
+  types: pokemonDomainTypes,
+);
+
+PokemonModel pokemonModelUndetailed2 = PokemonModel(
+  id: pokemonId2,
+  name: pokemonName2,
+  pokedexEntryNumbers: pokedexEntryNumbers2,
+  spriteUrl: pokemonSpriteUrl2,
+  artworkUrl: pokemonArtworkUrl2,
+  types: pokemonDomainTypes2,
+);
+
 PokemonPresentationModel pokemonPresentationModel = PokemonPresentationModel(
   id: pokemonId,
   name: pokemonName,
@@ -84,15 +116,32 @@ PokemonPresentationModel pokemonPresentationModel = PokemonPresentationModel(
   speedEvYield: statEffortSpeed,
 );
 
+PokemonPresentationModel pokemonPresentationModel2 = PokemonPresentationModel(
+  id: pokemonId2,
+  name: pokemonName2,
+  spriteUrl: pokemonSpriteUrl2,
+  artworkUrl: pokemonArtworkUrl2,
+  nationalDexNumber: pokemonNationalDexNumber2,
+  types: pokemonPresenterTypes2,
+);
+
 PokedexPokemonPresentationModel pokedexPokemonPresentationModel =
     PokedexPokemonPresentationModel(
-  id: pokemonId,
-  nationalDexNumber: pokemonNationalDexNumber,
-  pokedexEntryNumber: pokedexEntryNumberPresentation,
-  name: pokemonName,
-  types: pokemonPresenterTypes,
-  imageUrl: pokemonSpriteUrl
-);
+        id: pokemonId,
+        nationalDexNumber: pokemonNationalDexNumber,
+        pokedexEntryNumber: pokedexEntryNumberPresentation,
+        name: pokemonName,
+        types: pokemonPresenterTypes,
+        imageUrl: pokemonSpriteUrl);
+
+PokedexPokemonPresentationModel pokedexPokemonPresentationModel2 =
+    PokedexPokemonPresentationModel(
+        id: pokemonId2,
+        nationalDexNumber: pokemonNationalDexNumber2,
+        pokedexEntryNumber: pokedexEntryNumberPresentation2,
+        name: pokemonName2,
+        types: pokemonPresenterTypes2,
+        imageUrl: pokemonSpriteUrl2);
 
 PokedexPokemonPresentationModel pokedexPokemonPresentationModelUndetailed =
     PokedexPokemonPresentationModel(
@@ -102,6 +151,21 @@ PokedexPokemonPresentationModel pokedexPokemonPresentationModelUndetailed =
   name: pokemonName,
   types: [],
 );
+
+List<PokemonModel> pokemonModelList = [
+  pokemonModelUndetailed,
+  pokemonModelUndetailed2
+];
+
+List<PokemonPresentationModel> pokemonPresentationModelList = [
+  pokemonPresentationModel,
+  pokemonPresentationModel2
+];
+
+List<PokedexPokemonPresentationModel> pokedexPokemonPresentationModelList = [
+  pokedexPokemonPresentationModel,
+  pokedexPokemonPresentationModel2
+];
 
 PokedexModel pokedexModel1 = PokedexModel(
   id: pokedexId1,

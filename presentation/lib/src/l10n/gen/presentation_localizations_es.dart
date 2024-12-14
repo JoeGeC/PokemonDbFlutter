@@ -25,7 +25,7 @@ class PresentationLocalizationsEs extends PresentationLocalizations {
   String get pokemonTypes => 'Tipos de pokemon: ';
 
   @override
-  String get national => 'National';
+  String get national => 'Nacional';
 
   @override
   String get kanto => 'Kanto';
@@ -40,7 +40,7 @@ class PresentationLocalizationsEs extends PresentationLocalizations {
   String get sinnoh => 'Sinnoh';
 
   @override
-  String get unova => 'Unova';
+  String get unova => 'Teselia';
 
   @override
   String get ransei => 'Ransei';
@@ -73,16 +73,16 @@ class PresentationLocalizationsEs extends PresentationLocalizations {
   String get paldea => 'Paldea';
 
   @override
-  String get rby => 'RBY';
+  String get rby => 'ROA';
 
   @override
-  String get gsc => 'GSC';
+  String get gsc => 'OPC';
 
   @override
-  String get rse => 'RSE';
+  String get rse => 'RZE';
 
   @override
-  String get frlg => 'FRLG';
+  String get frlg => 'RFVH';
 
   @override
   String get dp => 'DP';
@@ -94,37 +94,37 @@ class PresentationLocalizationsEs extends PresentationLocalizations {
   String get hgss => 'HGSS';
 
   @override
-  String get bw => 'BW';
+  String get bw => 'NB';
 
   @override
-  String get b2w2 => 'B2W2';
+  String get b2w2 => 'N2B2';
 
   @override
   String get xy => 'XY';
 
   @override
-  String get oras => 'ORAS';
+  String get oras => 'ROZA';
 
   @override
-  String get sm => 'SM';
+  String get sm => 'SL';
 
   @override
-  String get usum => 'USUM';
+  String get usum => 'USUL';
 
   @override
   String get lgo => 'LGo';
 
   @override
-  String get swsh => 'SwSh';
+  String get swsh => 'EE';
 
   @override
-  String get bdsp => 'BDSP';
+  String get bdsp => 'DBPR';
 
   @override
-  String get pla => 'PLA';
+  String get pla => 'LA';
 
   @override
-  String get sv => 'SV';
+  String get sv => 'EP';
 
   @override
   String get lza => 'LZA';
@@ -133,178 +133,178 @@ class PresentationLocalizationsEs extends PresentationLocalizations {
   String get conq => 'Conq';
 
   @override
-  String get sunMoon => 'Sun & Moon';
+  String get sunMoon => 'Sol & Luna';
 
   @override
-  String get ultraSunUltraMoon => 'Ultra Sun & Ultra Moon';
+  String get ultraSunUltraMoon => 'Ultrasol & Ultraluna';
 
   @override
-  String get redBlueYellow => 'Red, Blue & Yellow';
+  String get redBlueYellow => 'Rojo, Azul & Amarillo';
 
   @override
-  String get fireRedLeafGreen => 'FireRed & LeafGreen';
+  String get fireRedLeafGreen => 'Rojo Fuego & Verde Hoja';
 
   @override
   String get letsGoPikachuEevee => 'Let\'s Go Pikachu & Eevee';
 
   @override
-  String get goldSilverCrystal => 'Gold, Silver & Crystal';
+  String get goldSilverCrystal => 'Oro, Plata & Cristal';
 
   @override
-  String get rubySapphireEmerald => 'Ruby, Sapphire & Emerald';
+  String get rubySapphireEmerald => 'Rubí, Zafiro & Esmeralda';
 
   @override
-  String get diamondPearl => 'Diamond & Pearl';
+  String get diamondPearl => 'Diamante & Perla';
 
   @override
-  String get brilliantDiamondShiningPearl => 'Brilliant Diamond & Shining Pearl';
+  String get brilliantDiamondShiningPearl => 'Diamante Brillante & Perla Reluciente';
 
   @override
-  String get platinum => 'Platinum';
+  String get platinum => 'Platino';
 
   @override
-  String get heartGoldSoulSilver => 'HeartGold & SoulSilver';
+  String get heartGoldSoulSilver => 'Oro HeartGold & Plata SoulSilver';
 
   @override
-  String get blackWhite => 'Black & White';
+  String get blackWhite => 'Negro & Blanco';
 
   @override
-  String get black2White2 => 'Black 2 & White 2';
+  String get black2White2 => 'Negro 2 & Blanco 2';
 
   @override
   String get conquest => 'Conquest';
 
   @override
-  String get central => 'Central';
+  String get central => 'Centro';
 
   @override
-  String get coastal => 'Coastal';
+  String get coastal => 'Costero';
 
   @override
-  String get mountain => 'Mountain';
+  String get mountain => 'Montaña';
 
   @override
-  String get omegaRubyAlphaSapphire => 'Omega Ruby & Alpha Sapphire';
+  String get omegaRubyAlphaSapphire => 'Rubí Omega & Zafiro Alfa';
 
   @override
-  String get swordShield => 'Sword & Shield';
+  String get swordShield => 'Espada & Escudo';
 
   @override
-  String get isleOfArmor => 'Isle of Armor';
+  String get isleOfArmor => 'La Isla de la Armadura';
 
   @override
-  String get crownTundra => 'Crown Tundra';
+  String get crownTundra => 'Las Nieves de la Corona';
 
   @override
-  String get legendsArceus => 'Legends Arceus';
+  String get legendsArceus => 'Leyendas: Arceus';
 
   @override
-  String get scarlettViolet => 'Scarlett & Violet';
+  String get scarlettViolet => 'Escarlata & Púrpura';
 
   @override
-  String get theTealMask => 'The Teal Mask';
+  String get theTealMask => 'La Máscara Turquesa';
 
   @override
-  String get theIndigoDisk => 'The Indigo Disk';
+  String get theIndigoDisk => 'El Disco Índigo';
 
   @override
   String get normal => 'Normal';
 
   @override
-  String get fire => 'Fire';
+  String get fire => 'Fuego';
 
   @override
-  String get water => 'Water';
+  String get water => 'Agua';
 
   @override
-  String get electric => 'Electric';
+  String get electric => 'Eléctrico';
 
   @override
-  String get grass => 'Grass';
+  String get grass => 'Planta';
 
   @override
-  String get ice => 'Ice';
+  String get ice => 'Hielo';
 
   @override
-  String get fighting => 'Fighting';
+  String get fighting => 'Lucha';
 
   @override
-  String get poison => 'Poison';
+  String get poison => 'Veneno';
 
   @override
-  String get ground => 'Ground';
+  String get ground => 'Tierra';
 
   @override
-  String get flying => 'Flying';
+  String get flying => 'Volador';
 
   @override
-  String get psychic => 'Psychic';
+  String get psychic => 'Psíquico';
 
   @override
-  String get bug => 'Bug';
+  String get bug => 'Bicho';
 
   @override
-  String get rock => 'Rock';
+  String get rock => 'Roca';
 
   @override
-  String get ghost => 'Ghost';
+  String get ghost => 'Fantasma';
 
   @override
-  String get dragon => 'Dragon';
+  String get dragon => 'Dragón';
 
   @override
-  String get dark => 'Dark';
+  String get dark => 'Siniestro';
 
   @override
-  String get steel => 'Steel';
+  String get steel => 'Acero';
 
   @override
-  String get fairy => 'Fairy';
+  String get fairy => 'Hada';
 
   @override
-  String get baseStats => 'Base Stats';
+  String get baseStats => 'Estadísticas Base';
 
   @override
-  String get evYield => 'EV Yield';
+  String get evYield => 'Rendimiento de EV';
 
   @override
-  String get hp => 'HP';
+  String get hp => 'PS';
 
   @override
-  String get attack => 'Attack';
+  String get attack => 'Ataque';
 
   @override
   String get attackShort => 'Atk';
 
   @override
-  String get defense => 'Defense';
+  String get defense => 'Defensa';
 
   @override
   String get defenseShort => 'Def';
 
   @override
-  String get specialAttack => 'Special Attack';
+  String get specialAttack => 'Ataque Especial';
 
   @override
-  String get specialAttackShort => 'Sp.Atk';
+  String get specialAttackShort => 'Es.Atk';
 
   @override
-  String get specialAttackTwoLine => 'Sp.\nAtk';
+  String get specialAttackTwoLine => 'Es.\nAtk';
 
   @override
-  String get specialDefense => 'Special Defense';
+  String get specialDefense => 'Defensa Especial';
 
   @override
-  String get specialDefenseShort => 'Sp.Def';
+  String get specialDefenseShort => 'Es.Def';
 
   @override
-  String get specialDefenseTwoLine => 'Sp.\nDef';
+  String get specialDefenseTwoLine => 'Es.\nDef';
 
   @override
-  String get speed => 'Speed';
+  String get speed => 'Velocidad';
 
   @override
-  String get speedShort => 'Spd';
+  String get speedShort => 'Vel';
 
   @override
   String get zero => '0';
@@ -313,8 +313,8 @@ class PresentationLocalizationsEs extends PresentationLocalizations {
   String get pokedex => 'Pokedex';
 
   @override
-  String get pokedexEntryNumber => 'Pokedex entry number';
+  String get pokedexEntryNumber => 'Número de entrada de la Pokédex';
 
   @override
-  String get pokemonName => 'PokemonName';
+  String get pokemonName => 'Nombre del Pokémon';
 }

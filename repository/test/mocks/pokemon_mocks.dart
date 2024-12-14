@@ -10,9 +10,12 @@ class PokemonRepoMocks {
   static final int pokemonId = 1;
   static final int pokemonEntryId = 2;
   static final String pokemonName = "Sample Pokemon";
-  static final String pokemonType1 = "Grass";
-  static final String pokemonType2 = "Poison";
-  static final List<String> pokemonTypes = [pokemonType1, pokemonType2];
+  static final String pokemonTypeString1 = "grass";
+  static final String pokemonTypeString2 = "poison";
+  static final PokemonType pokemonType1 = PokemonType.grass;
+  static final PokemonType pokemonType2 = PokemonType.poison;
+  static final List<String> pokemonTypeStrings = [pokemonTypeString1, pokemonTypeString2];
+  static final List<PokemonType> pokemonTypes = [pokemonType1, pokemonType2];
   static final String frontSpriteUrl = "https://sample/pokemon-sprite.png";
   static final String artworkUrl = "https://sample/pokemon-artwork.png";
   static final String pokemonUrl =
@@ -31,7 +34,7 @@ class PokemonRepoMocks {
     id: pokemonId,
     pokedexEntryNumbers: {pokedexId: pokemonEntryId},
     name: pokemonName,
-    types: pokemonTypes,
+    types: pokemonTypeStrings,
     frontSpriteUrl: frontSpriteUrl,
   );
 
@@ -39,7 +42,7 @@ class PokemonRepoMocks {
       PokemonLocalModel(
     id: pokemonId,
     name: pokemonName,
-    types: pokemonTypes,
+    types: pokemonTypeStrings,
     frontSpriteUrl: frontSpriteUrl,
     artworkUrl: artworkUrl,
     hp: StatRepoMocks.baseStatHp,
@@ -60,7 +63,7 @@ class PokemonRepoMocks {
       PokemonLocalModel(
     id: pokemonId,
     name: pokemonName,
-    types: pokemonTypes,
+    types: pokemonTypeStrings,
     frontSpriteUrl: frontSpriteUrl,
     artworkUrl: artworkUrl,
     pokedexEntryNumbers: pokedexEntryNumbers,
@@ -123,7 +126,7 @@ class PokemonRepoMocks {
   static final PokemonDataModel pokemonDataModel = PokemonDataModel(
     id: pokemonId,
     name: pokemonName,
-    types: pokemonTypes,
+    types: pokemonTypeStrings,
     frontSpriteUrl: frontSpriteUrl,
     artworkUrl: artworkUrl,
     stats: StatRepoMocks.pokemonStats,
@@ -150,7 +153,7 @@ class PokemonRepoMocks {
   static final PokemonDataModel nullIdPokemonDataModel = PokemonDataModel(
     id: null,
     name: pokemonName,
-    types: [pokemonType1],
+    types: [pokemonTypeString1],
     frontSpriteUrl: frontSpriteUrl,
     artworkUrl: artworkUrl,
     stats: StatRepoMocks.pokemonStats,
@@ -159,7 +162,7 @@ class PokemonRepoMocks {
   static final PokemonDataModel nullNamePokemonDataModel = PokemonDataModel(
     id: pokemonId,
     name: null,
-    types: [pokemonType1],
+    types: [pokemonTypeString1],
     frontSpriteUrl: frontSpriteUrl,
     artworkUrl: artworkUrl,
     stats: StatRepoMocks.pokemonStats,

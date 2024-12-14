@@ -1,46 +1,36 @@
-import 'package:domain/domain.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:presentation/src/pokedex/models/pokedex_pokemon_presentation_model.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:presentation/presentation.dart';
 import 'package:presentation/src/pokedex/converters/pokedex_pokemon_presentation_converter_impl.dart';
 
+import '../../model_mocks.dart';
+import 'pokedex_pokemon_presentation_converter_test.mocks.dart';
+
+@GenerateMocks([PresentationLocalizations])
 void main() {
   late PokedexPokemonPresentationConverterImpl converter;
-  late PokemonModel pokemonModel;
-  late PokedexPokemonPresentationModel presentationPokemonModel;
-
-  const int pokedexId = 11;
+  late MockPresentationLocalizations mockLocalizations;
 
   setUp(() {
-    converter = PokedexPokemonPresentationConverterImpl();
-    pokemonModel = PokemonModel(
-      id: 1,
-      name: "pokemon",
-      pokedexEntryNumbers: {pokedexId : 2, 12: 1},
-      spriteUrl: "url/asd/asd/asd/",
-      types: ["grass", "flying"],
-    );
-    presentationPokemonModel = PokedexPokemonPresentationModel(
-        id: 1,
-        nationalDexNumber: "0001",
-        pokedexEntryNumber: "002",
-        name: "Pokemon",
-        imageUrl: "url/asd/asd/asd/",
-        types: ["Grass", "Flying"]
-    );
+    mockLocalizations = MockPresentationLocalizations();
+    converter = PokedexPokemonPresentationConverterImpl(mockLocalizations);
+
+    when(mockLocalizations.grass).thenReturn("Grass");
+    when(mockLocalizations.psychic).thenReturn("Psychic");
+    when(mockLocalizations.fire).thenReturn("Fire");
+    when(mockLocalizations.fighting).thenReturn("Fighting");
   });
 
   test('convert pokemon', () {
-    var result = converter.convertPokedexPokemon(pokemonModel, pokedexId);
+    var result = converter.convertPokedexPokemon(pokemonModel, pokedexId1);
 
-    expect(result, presentationPokemonModel);
+    expect(result, pokedexPokemonPresentationModel);
   });
 
   test('convert list of pokemon', () {
-    var pokemonModelList = [pokemonModel, pokemonModel];
-    var pokemonLocalModelList = [presentationPokemonModel, presentationPokemonModel];
+    var result = converter.convertList(pokemonModelList, pokedexId1);
 
-    var result = converter.convertList(pokemonModelList, pokedexId);
-
-    expect(result, pokemonLocalModelList);
+    expect(result, pokedexPokemonPresentationModelList);
   });
 }

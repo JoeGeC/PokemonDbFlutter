@@ -716,7 +716,7 @@ abstract class PresentationLocalizations {
   /// No description provided for @pokemonName.
   ///
   /// In en, this message translates to:
-  /// **'PokemonName'**
+  /// **'Pokemon Name'**
   String get pokemonName;
 }
 

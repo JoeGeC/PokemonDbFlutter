@@ -316,5 +316,5 @@ class PresentationLocalizationsEn extends PresentationLocalizations {
   String get pokedexEntryNumber => 'Pokedex entry number';
 
   @override
-  String get pokemonName => 'PokemonName';
+  String get pokemonName => 'Pokemon Name';
 }

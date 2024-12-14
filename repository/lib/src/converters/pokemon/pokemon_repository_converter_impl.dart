@@ -1,5 +1,6 @@
 import 'package:domain/domain.dart';
 import 'package:repository/src/converters/BaseRepositoryConverter.dart';
+import 'package:repository/src/converters/pokemon/pokemon_constants.dart';
 import 'package:repository/src/converters/pokemon/pokemon_repository_converter.dart';
 import 'package:repository/src/models/data/pokemon/pokemon_data_model.dart';
 import 'package:repository/src/models/exceptions/NullException.dart';
@@ -9,12 +10,6 @@ import '../../models/data/pokedex_pokemon/pokedex_pokemon_data_model.dart';
 
 class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
     implements PokemonRepositoryConverter {
-  final String hpName = "hp";
-  final String attackName = "attack";
-  final String defenseName = "defense";
-  final String specialAttackName = "special-attack";
-  final String specialDefenseName = "special-defense";
-  final String speed = "speed";
 
   @override
   List<PokemonModel> convertListToDomain(
@@ -26,7 +21,7 @@ class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
         id: pokemon.id,
         name: pokemon.name,
         pokedexEntryNumbers: pokemon.pokedexEntryNumbers,
-        types: pokemon.types,
+        types: convertTypes(pokemon.types),
         spriteUrl: pokemon.frontSpriteUrl,
         artworkUrl: pokemon.artworkUrl,
         hp: pokemon.hp,
@@ -52,18 +47,18 @@ class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
         types: pokemon.types,
         frontSpriteUrl: pokemon.frontSpriteUrl,
         artworkUrl: pokemon.artworkUrl,
-        hp: pokemon.getBaseStat(hpName),
-        attack: pokemon.getBaseStat(attackName),
-        defense: pokemon.getBaseStat(defenseName),
-        specialAttack: pokemon.getBaseStat(specialAttackName),
-        specialDefense: pokemon.getBaseStat(specialDefenseName),
-        speed: pokemon.getBaseStat(speed),
-        hpEvYield: pokemon.getEffortValue(hpName),
-        attackEvYield: pokemon.getEffortValue(attackName),
-        defenseEvYield: pokemon.getEffortValue(defenseName),
-        specialAttackEvYield: pokemon.getEffortValue(specialAttackName),
-        specialDefenseEvYield: pokemon.getEffortValue(specialDefenseName),
-        speedEvYield: pokemon.getEffortValue(speed),
+        hp: pokemon.getBaseStat(PokemonStatString.hp),
+        attack: pokemon.getBaseStat(PokemonStatString.attack),
+        defense: pokemon.getBaseStat(PokemonStatString.defense),
+        specialAttack: pokemon.getBaseStat(PokemonStatString.specialAttack),
+        specialDefense: pokemon.getBaseStat(PokemonStatString.specialDefense),
+        speed: pokemon.getBaseStat(PokemonStatString.speed),
+        hpEvYield: pokemon.getEffortValue(PokemonStatString.hp),
+        attackEvYield: pokemon.getEffortValue(PokemonStatString.attack),
+        defenseEvYield: pokemon.getEffortValue(PokemonStatString.defense),
+        specialAttackEvYield: pokemon.getEffortValue(PokemonStatString.specialAttack),
+        specialDefenseEvYield: pokemon.getEffortValue(PokemonStatString.specialDefense),
+        speedEvYield: pokemon.getEffortValue(PokemonStatString.speed),
       );
     } catch (e) {
       return null;
@@ -96,4 +91,32 @@ class PokemonRepositoryConverterImpl extends BaseRepositoryConverter
 
   String getPokemonName(String? pokemonName) =>
       pokemonName ?? (throw NullException(NullType.name));
+
+  List<PokemonType> convertTypes(List<String>? types) {
+    if (types == null) return [];
+    const typeMap = {
+      PokemonTypeString.normal: PokemonType.normal,
+      PokemonTypeString.fighting: PokemonType.fighting,
+      PokemonTypeString.flying: PokemonType.flying,
+      PokemonTypeString.poison: PokemonType.poison,
+      PokemonTypeString.ground: PokemonType.ground,
+      PokemonTypeString.rock: PokemonType.rock,
+      PokemonTypeString.bug: PokemonType.bug,
+      PokemonTypeString.ghost: PokemonType.ghost,
+      PokemonTypeString.steel: PokemonType.steel,
+      PokemonTypeString.fire: PokemonType.fire,
+      PokemonTypeString.water: PokemonType.water,
+      PokemonTypeString.grass: PokemonType.grass,
+      PokemonTypeString.electric: PokemonType.electric,
+      PokemonTypeString.psychic: PokemonType.psychic,
+      PokemonTypeString.ice: PokemonType.ice,
+      PokemonTypeString.dragon: PokemonType.dragon,
+      PokemonTypeString.dark: PokemonType.dark,
+      PokemonTypeString.fairy: PokemonType.fairy,
+    };
+    return types
+        .map((type) => typeMap[type])
+        .whereType<PokemonType>()
+        .toList();
+  }
 }
