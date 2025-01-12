@@ -10,7 +10,7 @@ Presentation
 
 Domain
 * Business logic (usecases)
-* Models
+* Entity models
 
 Repository
 * Handles and converts data from API and local storage
@@ -22,6 +22,8 @@ Local
 Data
 * Gets data from API
 * Dio
+
+[Check here if you want to see a project modularised by feature](https://github.com/JoeGeC/MovieDB-Android)
 
 # Comprehensive unit testing in all modules.
 
